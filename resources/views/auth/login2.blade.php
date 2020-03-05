@@ -25,10 +25,10 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
-  <body class="hold-transition login-page">
+  <body class="login-page" style="min-height: 512.32px">
     <div class="login-box">
       <div class="login-logo">
-        <b>Login</b>COS</a>
+        <a href="{{asset('index2.html')}}"><b>Login</b>COS</a>
       </div>
       <!-- /.login-logo -->
       <div class="login-box-body">
@@ -42,7 +42,6 @@
             <input id="email" type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" ><span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 			
           </div>
-		  
 		  @error('email')
                 <div class="callout callout-danger">
 				<h4>Oops</h4>

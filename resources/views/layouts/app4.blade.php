@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html>
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>COS</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Select2 -->
@@ -30,9 +35,11 @@
   <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   <!-- jvectormap -->
   <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+  
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect. -->
+  <link rel="stylesheet" href="{{asset('dist/css/skins/skin-green-light.css')}}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,121 +49,82 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition fixed  skin-green-light sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="#" class="navbar-brand"><b>Cafeteria </b>Ordering System</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+@include('inc.header')
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-           
-            <!-- User Account Menu -->
-            <li class="dropdown user user-menu">
-              <!-- Menu Toggle Button -->
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- The user image in the navbar-->
-                <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <span class="hidden-xs">{{ Auth::user()->name }}</span>
-              </a>
-              <ul class="dropdown-menu">
-                <!-- The user image in the menu -->
-                <li class="user-header">
-                  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+@include('inc.side')
 
-                  <p>
-                    {{ Auth::user()->name }} - {{ Auth::user()->usertype }}
-                    <small>{{ Auth::user()->created_at}}</small>
-                  </p>
-                </li>
-                <!-- Menu Body -->
-                
-				
-				
-				
-                <!-- Menu Footer-->
-                <li class="user-footer">
-                  <div class="pull-left">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  </div>
-                  <div class="pull-right">
-				  <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                           @csrf
-					<button type="submit" class="btn btn-primary btn-flat">Sign out</button>
-                  </form>
-                  </div>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-custom-menu -->
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Full Width Column -->
-  
-	
-  <div class="content-wrapper">
-    <div class="container">
-      <!-- Content Header (Page header) -->
-      @if(session()->has('success'))
-		<input type="hidden" value="{{Session::get('success')}}" id="hiddensuccesswcs">
-	@endif
-	@if(session()->has('error'))
-		<input type="hidden" value="{{Session::get('error')}}" id="hiddenerrorwcs">
-	@endif
-	@if(session()->has('warning'))
-		<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
-	@endif
-	@yield('content')
-    </div>
-    <!-- /.container -->
-  </div>
+  <!-- Content Wrapper. Contains page content -->
+  <!--<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+   <!-- <section class="content-header">
+      <h1>
+        Page Header
+        <small>Optional description</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+   <!-- <section class="content container-fluid">-->
+
+      <!--------------------------
+        | Your Page Content Here |
+        -------------------------->
+		@if(session()->has('success'))
+			<input type="hidden" value="{{Session::get('success')}}" id="hiddensuccesswcs">
+		@endif
+		@if(session()->has('error'))
+			<input type="hidden" value="{{Session::get('error')}}" id="hiddenerrorwcs">
+		@endif
+		@if(session()->has('warning'))
+			<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
+		@endif
+		@yield('content')
+    <!--</section>-->
+    <!-- /.content -->
+<!--  </div>
   <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
   <footer class="main-footer">
-    <div class="container">
-      <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.13
-      </div>
-      <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
-      reserved.
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Anything you want
     </div>
-    <!-- /.container -->
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2020 <a href="#">COS</a>.</strong> All rights reserved.
   </footer>
-</div>
+
+ 
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->

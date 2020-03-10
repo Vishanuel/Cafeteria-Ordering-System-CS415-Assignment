@@ -355,42 +355,7 @@
 			}
 		}
 	}
-	
-	var l = 0;
-	for(l;l<count;l++){
-		$('#removefood'+l).click(function(){
-			var id = $(this).attr('id');
-			var change = id.replace( /^\D+/g, '');
-			$('#priced'+change).remove();
-			$('#qavailabled'+change).remove();
-			$('#quantityd'+change).remove();
-			$('#food_itemd'+change).remove();
-			$('#removefood'+change).remove();
-			var k = $('#q').html();
-			
-			for(k;k >= (count-1); k-- ){
-				$('#priced'+k).attr('id','priced'+(k-1));
-				$('#qavailabled'+k).attr('id','qavailabled'+(k-1));
-				$('#quantityd'+k).attr('id','quantityd'+(k-1));
-				$('#food_itemd'+k).attr('id','food_itemd'+(k-1));
-				$('#price'+k).attr('name','price'+(k-1));
-				$('#qavailable'+k).attr('name','qavailable'+(k-1));
-				$('#quantity'+k).attr('name','quantity'+(k-1));
-				$('#food_item'+k).attr('name','food_item'+(k-1));
-				$('#price'+k).attr('id','price'+(k-1));
-				$('#qavailable'+k).attr('id','qavailable'+(k-1));
-				$('#quantity'+k).attr('id','quantity'+(k-1));
-				$('#food_item'+k).attr('id','food_item'+(k-1));
-				$('#removefood'+k).attr('id','removefood'+(k-1));
-				
-			}
-			count--;
-			$('#q').html(count);
-			$('#ite').val(count);
-			//document.getElementById('ite').value = count;
-			tcost();			
-		});
-	}	
+
 	 // use selector for your select
 	
 	tcost();

@@ -18,4 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
-
+Route::resource('order','OrderController');
+Route::post('order_payment', [
+    'uses' => 'OrderController@payment'
+  ]);

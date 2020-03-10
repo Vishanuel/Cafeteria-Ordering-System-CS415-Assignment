@@ -25,16 +25,19 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-              <form id="orderform" role="form" method="POST" action="{{action('OrderController@store')}}" enctype="multipart/form-data">
+              <form id="orderform" role="form" method="POST" action="{{action('OrderController@confirm')}}" enctype="multipart/form-data">
 			   @csrf
+				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
                 <!-- text input -->
+				<?php $i = 1;?>
+				@foreach($food_selecteds as $food_select)
 				
-				<div id="food_itemd1" class="form-group col-md-6">
+				<div id="food_itemd{{$i}}" class="form-group col-md-6">
 					<label>Food Item</label>
-					<select class="food form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food">
-						<option disabled>Select food</option> 
+					<select class="form-control select2" readonly id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
+						<option  disabled>Select food</option> 
 						@foreach ($foods as $food )
-							<option  Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}">
+							<option readonly Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @endif >
 								{{ $food->Food_Name }}
 							</option>
 							
@@ -44,22 +47,23 @@
 					
 					
 					
-					<div id="quantityd1" class="form-group col-md-2">
+					<div id="quantityd{{$i}}" class="form-group col-md-2">
 					  <label>Quantity</label>
-					  <input type="number" class="form-control" id="quantity1" name="quantity1" max="" min="1" Required value="1">
+					  <input type="number" class="form-control" readonly id="quantity{{$i}}" name="quantity{{$i}}" max="" min="1" Required value="{{$food_select->Quantity}}">
 					</div>
-					<div id="qavailabled1" class="form-group col-md-2">
+					<div id="qavailabled{{$i}}" class="form-group col-md-2">
 					  <label>Max Quantity Available</label>
-					  <input type="number" class="form-control" id="qavailable1" name="qavailable1" Required readonly value="">
+					  <input type="number" class="form-control" readonly id="qavailable{{$i}}" name="qavailable{{$i}}" Required readonly value="">
 					</div>
-					<div id="priced1" class="form-group col-md-2">
+					<div id="priced{{$i}}" class="form-group col-md-2">
 					  <label>Price ($)</label>
-					  <input type="number" class="form-control" id="price1" name="price1" Required readonly value="">
+					  <input type="number" class="form-control" readonly id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
+					
+					<?php $i= $i + 1; ?>
+					
+				@endforeach
 				
-				<div class="col-md-10">
-					<a type="button" id="addfood" class="btn bg-olive btn-flat margin">Add more food item</a>
-				</div>
 				<div id="tcostd" class="form-group col-md-2">
 				  <label>Total Cost ($)</label>
 				  <input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
@@ -69,7 +73,7 @@
 				<div class="form-group">
 					<div class="radio col-md-3">
 						<label id="del">
-						  <input type="radio" name="mealmethod" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
+						  <input type="radio" name="mealmethod" readonly id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
 						  Get meal delivered
 						</label>
 					  </div>
@@ -77,21 +81,21 @@
 				<div class="form-group">
 					  <div class="radio col-md-9 ">
 						<label>
-						  <input type="radio" name="mealmethod" id="optionsRadios2" value="pick-up" checked>
+						  <input type="radio" name="mealmethod" readonly id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
 						  Pick-up meal from restaurant
 						</label>
 					 </div>
 				 </div>
-				<div class="has-error col-md-12" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div>
+				
 				<div id="delivery" name="delivery">
 				
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Location</label>
-					  <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id1" name="location_id1"  disabled>Select location</option> 
+					  <select class="form-control select2" readonly id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
+							<option id="location_id" name="location_id"  disabled>Select location</option> 
 							@foreach ($locations as $location )
-								<option id="location_id" name="location_id" Required value="{{ $location->Location_ID}}">
+								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
 								</option>
 								
@@ -103,9 +107,11 @@
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Time</label>
-					  <select class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
-							<option id="location_time1" name="location_time1"  disabled>Select delivery time </option> 
-							
+					  <select class="form-control select2" readonly id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
+							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
+							@if($mealmethod == "delivery")
+								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
+							@endif 
 						</select>
 						
 					</div>
@@ -119,14 +125,14 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="meal_date" id="meal_date" value="{{date("Y-m-d")}}" required>
+                  <input type="text" class="form-control" readonly name="meal_date" id="meal_date" value="{{$cos_order->Cos_Meal_Date_Time}}" required>
                 </div>
-				<div class="has-error" id="cwarning" name="cwarning"><span class="help-block">The current order time has exceeded the order cutoff time set for today, therefore you cannot order your meal(s) today. Sorry for the inconvience caused.</span></div>
+				
                 <!-- /.input group -->
               </div>
 			  
 			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
-			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>
+			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
 			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
             </div>
             <!-- /.box-body -->

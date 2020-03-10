@@ -31,8 +31,8 @@
 				
 				<div id="food_itemd1" class="form-group col-md-6">
 					<label>Food Item</label>
-					<select class="food form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food">
-						<option disabled>Select food</option> 
+					<select class="form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food">
+						<option  disabled>Select food</option> 
 						@foreach ($foods as $food )
 							<option  Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}">
 								{{ $food->Food_Name }}
@@ -68,7 +68,7 @@
 				
 				<div class="form-group">
 					<div class="radio col-md-3">
-						<label id="del">
+						<label>
 						  <input type="radio" name="mealmethod" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
 						  Get meal delivered
 						</label>
@@ -82,14 +82,14 @@
 						</label>
 					 </div>
 				 </div>
-				<div class="has-error col-md-12" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div>
+				<div class="has-error" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div>
 				<div id="delivery" name="delivery">
 				
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Location</label>
 					  <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id1" name="location_id1"  disabled>Select location</option> 
+							<option id="location_id" name="location_id"  disabled>Select location</option> 
 							@foreach ($locations as $location )
 								<option id="location_id" name="location_id" Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
@@ -103,8 +103,8 @@
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Time</label>
-					  <select class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
-							<option id="location_time1" name="location_time1"  disabled>Select delivery time </option> 
+					  <select class="form-control select2" id="location_time" name="location_time" style="width: 100%;" Required placeholder="Select location">
+							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
 							
 						</select>
 						
@@ -119,19 +119,19 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="meal_date" id="meal_date" value="{{date("Y-m-d")}}" required>
+                  <input type="text" class="form-control" name="meal_date" id="meal_date" required>
                 </div>
 				<div class="has-error" id="cwarning" name="cwarning"><span class="help-block">The current order time has exceeded the order cutoff time set for today, therefore you cannot order your meal(s) today. Sorry for the inconvience caused.</span></div>
                 <!-- /.input group -->
               </div>
 			  
-			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
+			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none"> 
 			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+			
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel</a>
+                <a href="{{url('smpdevice')}}" class="btn btn-default btn-flat">Back</a>
                 <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
               </div>
               <!-- /.box-footer -->

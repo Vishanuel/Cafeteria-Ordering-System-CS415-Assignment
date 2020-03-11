@@ -38,5 +38,5 @@ Route::match(['get', 'post'],'order_edit/{orderid}', [
 
 Route::resource('restaurant','RestaurantController');
 
-Route::redirect('/home', '/restaurant');
+//Route::redirect('/home', '/restaurant');
   

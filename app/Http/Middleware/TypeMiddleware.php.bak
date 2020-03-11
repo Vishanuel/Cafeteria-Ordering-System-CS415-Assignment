@@ -24,7 +24,7 @@ class TypeMiddleware
         //If user role is patron
         if(Auth::check() && auth()->user()->usertype === 'Patron')
         {
-             return redirect('/restaurant');
+             return Response::redirect('/restaurant');
         }
 
         //If user role is menu manager

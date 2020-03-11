@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
 Route::resource('order','OrderController');
-
+Route::resource('menu', 'MenuController');
 Route::match(['get', 'post'],'order_create/{menuid}', [
     'uses' => 'OrderController@create'
 ]);

@@ -155,10 +155,9 @@
 			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel Order</a>
+                <a href="{{route('order_remove', $cos_order->Cos_Order_Num)}}" class="btn btn-default btn-flat">Cancel Order</a>
 				
-                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Confirm Order</button>
-				
+
 				<a href="{{route('order_edit', $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
               </div>
               <!-- /.box-footer -->

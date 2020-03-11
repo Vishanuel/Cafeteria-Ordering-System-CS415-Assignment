@@ -536,7 +536,7 @@ class OrderController extends Controller
 		->first();
 				
 
-		
+		$approved  = $cos_order->Cos_Order_Meal_Status;
 		
 		$food_count=DB::table('ordered_food_item')
 		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
@@ -566,10 +566,10 @@ class OrderController extends Controller
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('patron.orderview')->with(['mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+			return view('patron.orderview')->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		return view('patron.orderview')->with(['mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		return view('patron.orderview')->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
 
@@ -629,7 +629,7 @@ class OrderController extends Controller
 		->first();
 				
 		
-		
+		//$approved = $cos_order->Cos_Order_Meal_Status;
 		if($cos_order->Cos_Order_Meal_Status == "Approved"){
 			$permission = "edit";
 			
@@ -686,7 +686,9 @@ class OrderController extends Controller
 		return view('patron.orderfinal')->with(['menuid' => $menuid, 'orderid' => $orderid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds, 'food_count' => $food_count]);
 			
     }
-
+	
+	
+	
     /**
      * Update the specified resource in storage.
      *
@@ -705,8 +707,105 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+	public function remove($id)
+    {
+        //
+		if(!empty($id)){
+			DB::table('cos_order')->where('Cos_Order_Num', '=', $id_deletion->Cos_Order_Num)->delete();
+			DB::table('ordered_food_item')->where('Cos_Order_Num', '=', $id_deletion->Cos_Order_Num)->delete();
+			DB::table('delivery_instruction')->where('Cos_Order_Num', '=', $id_deletion->Cos_Order_Num)->delete();
+		}
+		
+		return redirect('/restaurant');
+    } 
+	 
+	 
     public function destroy($id)
     {
         //
+    }
+	
+	public function detailshow($id)
+    {
+        //
+		$employee_id = DB::table('patron')
+		->select('Employee_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first();
+		
+		$cos_order=DB::table('cos_order')
+		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Cos_Order_Num','=',$id)
+		->first();
+		
+		$menuid=DB::table('ordered_food_item')	
+		->join('menu_food','menu_food.Menu_Food_Item_ID','=','ordered_food_item.Menu_Food_Item_ID')
+		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
+		->where('Cos_Order_Num','=',$id)
+		->first();
+		
+		$menuid=$menuid->Menu_ID;
+		
+		$foods=DB::table('menu')
+		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->where('menu.Menu_ID','=','1')
+		->get();
+		
+		//	$foods=DB::table('menu')
+		//	->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
+		//	->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		//	->where('menu.Menu_Date','=',date("Y-m-d"))
+		//    ->where('menu_food_item.Quantity','>','0')
+		//	->get();
+		
+		$locations=DB::table('location')
+		->get();
+		
+		$order_cutoff=DB::table('order_cutoff')
+		->select('Order_Cutoff_Time')
+		->first();
+					
+		$deduction=DB::table('patron')
+		->where('Patron_FName','=', Auth::user()->name)
+		->select('Patron_Deduction_Status')
+		->first();
+				
+
+		$approved  = $cos_order->Cos_Order_Meal_Status;
+		
+		$food_count=DB::table('ordered_food_item')
+		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
+		->count();
+		
+		$food_selecteds = DB::table('ordered_food_item')
+		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
+		->orderBy('Ordered_Food_Item_ID', 'DESC')
+		->get();
+		
+		$mealmethodcheck=DB::table('delivery_instruction')
+			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
+			->first();
+			
+		if(empty($mealmethodcheck)){
+			$mealmethod = "pick-up";
+			
+		}	
+		
+		else{
+			$mealmethod = "delivery";
+			
+		}
+		
+		if($mealmethod == "delivery"){
+			$delivery_info=DB::table('delivery_instruction')
+			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
+			->first();
+			
+			return view('patron.orderviewdetails')->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+		
+		}
+		return view('patron.orderviewdetails')->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		
     }
 }

@@ -28,6 +28,10 @@ Route::match(['get', 'post'],'order_payment', [
     'uses' => 'OrderController@payment'
   ]);
  
+Route::match(['get', 'post'],'order_edit_details/{id}', [
+    'uses' => 'OrderController@detailshow'
+  ]); 
+ 
 Route::match(['get', 'post'],'order_payment_confirm', [
     'uses' => 'OrderController@confirm'
 ]);
@@ -38,5 +42,5 @@ Route::match(['get', 'post'],'order_edit/{orderid}', [
 
 Route::resource('restaurant','RestaurantController');
 
-Route::redirect('/home', '/restaurant');
+//Route::redirect('/home', '/restaurant');
   

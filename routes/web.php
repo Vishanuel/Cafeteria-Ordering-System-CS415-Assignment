@@ -28,6 +28,14 @@ Route::match(['get', 'post'],'order_payment', [
     'uses' => 'OrderController@payment'
   ]);
  
+Route::match(['get', 'post'],'order_edit_details/{id}', [
+    'uses' => 'OrderController@detailshow'
+  ]); 
+  
+Route::match(['get', 'post'],'order_remove/{id}', [
+    'uses' => 'OrderController@remove'
+  ]); 
+ 
 Route::match(['get', 'post'],'order_payment_confirm', [
     'uses' => 'OrderController@confirm'
 ]);

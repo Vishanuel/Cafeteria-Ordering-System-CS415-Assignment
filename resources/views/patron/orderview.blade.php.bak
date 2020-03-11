@@ -151,11 +151,14 @@
 			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
 			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$cos_order->Cos_Order_Num}}">
+			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
 			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
                 <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel Order</a>
+				@if($approved ?? '' == "Approved")
                 <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Confirm Order</button>
+				@endif
 				<a href="{{route('order_edit', $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
               </div>
               <!-- /.box-footer -->

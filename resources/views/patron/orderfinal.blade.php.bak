@@ -19,7 +19,7 @@
       <div class="row">
         <!-- left column -->
         <div class="col-md-12">
-		  <div class="box box-success">
+		  <div class="box box-warning">
             <div class="box-header with-border">
               <h3 class="box-title">Order</h3>
             </div>
@@ -29,9 +29,9 @@
 			   @csrf
 				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
                 <!-- text input -->
-				<?php $i = 1;?>
+				<?php $i = $food_count;?>
 				@foreach($food_selecteds as $food_select)
-				@if($i > 1) <div class="col-md-12"><a type="button" id="removefood{{$i}}" class="btn bg-maroon btn-flat margin">Remove item</a></div> @endif
+				
 				<div id="food_itemd{{$i}}" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select class="form-control select2" id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
@@ -59,8 +59,8 @@
 					  <label>Price ($)</label>
 					  <input type="number" class="form-control" id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
-					
-					<?php $i= $i + 1; ?>
+					@if($i > 1) <div class="col-md-12"><a type="button" id="removefood{{$i}}" class="btn bg-maroon btn-flat margin">Remove item</a></div> @endif
+					<?php $i= $i - 1; ?>
 					
 				@endforeach
 				
@@ -135,8 +135,10 @@
               </div>
 			  
 			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
-			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
+			<div id="q" name="q" value="{{$food_count+1}}" class="form-group col-md-12" style="display: none">{{$food_count+1}}</div>
 			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+			<input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}"> 
+			<input id="id" name="id" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">

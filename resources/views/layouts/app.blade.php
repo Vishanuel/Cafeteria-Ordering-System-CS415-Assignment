@@ -60,20 +60,20 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
+            <li class="active"><a href="{{URL::to('restaurant')}}">Restaurants <span class="sr-only">(current)</span></a></li>
+            <li><a href="{{URL::to('order')}}">View previous orders</a></li>
+            <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
+                <li><a href="#">View Previous Orders</a></li>
+                <!--<li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li class="divider"></li>
                 <li><a href="#">Separated link</a></li>
                 <li class="divider"></li>
                 <li><a href="#">One more separated link</a></li>
               </ul>
-            </li>
+            </li>-->
           </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -503,19 +503,36 @@
 	function meal_date(){
 		
 		var today = new Date();
-		var time = today.getHours()+":00:00";
+		var time = today.getHours();
 		var cutoff = $('#cutoff').val();
 		
 		var tomorrow = new Date(today)
 		tomorrow.setDate(tomorrow.getDate() + 1)
 		
+		var dd1 = String(today.getDate()).padStart(2, '0');
+		var mm1 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy1 = today.getFullYear();
+
+		var	todaydate = yyyy1 + '-' + mm1 + '-' + dd1;
+		
+		var dd = String(tomorrow.getDate()).padStart(2, '0');
+		var mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = tomorrow.getFullYear();
+
+		var	tomorrowdate = yyyy + '-' + mm + '-' + dd;
+		
+		cutoff = cutoff.match(/\d+/)[0];
+		//alert(cutoff);
+		//alert(time);
 		if(time >= cutoff){
+			//alert(1);
 			$('#meal_date').datepicker({
 			  autoclose: true,
 			  startDate: tomorrow,
 			  format: 'yyyy-mm-dd'
 			})
 			document.getElementById('cwarning').style.display = 'block';
+			$('#meal_date').val(tomorrowdate);
 		}
 		
 		else{
@@ -525,26 +542,33 @@
 			  format: 'yyyy-mm-dd'
 			})
 			document.getElementById('cwarning').style.display = 'none';
+			$('#meal_date').val(todaydate);
 		}
 		
 		
 	}
 	
-	var reload = function() {
-		populate('#location_time');
-		setTimeout(function() {
-             reload();
-          }, 100);
-		  
-	};
+	
 	
 	
 	$( document ).ready(function() {
+		
+		var reload = function() {
+			$('#location_time').find('option').remove().end();
+			meal_date();
+			populate('#location_time');
+			delivery_time();
+			
+			setTimeout(function() {
+				 reload();
+          }, 100);
+		  
+		};
 		reload();
 		
 	
-		meal_date();
-		delivery_time();
+		
+		//delivery_time();
 		
 		if(document.getElementById('optionsRadios1').checked) {
 		  document.getElementById('delivery').style.display = 'block';

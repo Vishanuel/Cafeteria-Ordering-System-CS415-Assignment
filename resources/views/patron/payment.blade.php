@@ -21,7 +21,7 @@
         <div class="col-md-12">
 		  <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Payment method</h3>
+              <h3 class="box-title">Select payment method</h3>
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
@@ -50,13 +50,14 @@
 				<input id="tcost" name="tcost" class="form-group col-md-12" style="display: none" value="{{$total_cost}}"> 
 				<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction}}"> 
 				<input id="mealmethodn" name="mealmethodn" class="form-group col-md-12" style="display: none" value="{{$mealmethod}}">
-			
+				<input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid ?? ''}}">
+				<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel</a>
-                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
-				<a href="#" onClick="javascript:history.go(-1)" class="btn btn-warning btn-flat pull-right">Edit</a>
+                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel Order</a>
+                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Continue</button>
+				<a href="{{route('order_edit', $orderid ?? '')}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
               </div>
               <!-- /.box-footer -->
 			 </form>

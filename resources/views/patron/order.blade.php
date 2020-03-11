@@ -35,7 +35,7 @@
 						<option disabled>Select food</option> 
 						@foreach ($foods as $food )
 							<option  Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}">
-								{{ $food->Food_Name }}
+								{{ $food->Food_Name." - ".$food->Food_Desc }} 
 							</option>
 							
 						@endforeach
@@ -128,11 +128,13 @@
 			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>
 			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
-            </div>
+            <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}"> 
+			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}">
+			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
                 <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel</a>
-                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
+                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Order</button>
               </div>
               <!-- /.box-footer -->
 			 </form>

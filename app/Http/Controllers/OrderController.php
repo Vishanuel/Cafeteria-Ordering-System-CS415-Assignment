@@ -50,17 +50,14 @@ class OrderController extends Controller
 		->where('menu_food_item.Quantity','>','0')
 		->get();
 		
+		/*
 		$specialfoods=DB::table('specials')
 		->join('menu','menu.Menu_ID','=','specials.Menu_ID')
-		//->join('special_food','special_food.Special_ID','=','specials.Special_ID')
-		//->join('menu_food','menu_food.Menu_Food_ID','=','special_food.Menu_Food_ID')
-		//->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
 		->where('specials.Menu_ID','=',$menuid)
-		//->where('menu_food_item.Quantity','>','0')
 		->get();
-		//dd($specialfoods);
+		
 		$counter = 0;
-		//dd($counter);
+
 		
 		$specialfood = json_decode(json_encode($specialfoods), true);
 		
@@ -72,32 +69,26 @@ class OrderController extends Controller
 			->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
 			->where('specials.Menu_ID','=',$menuid)
 			->where('specials.Special_ID','=',$sfood->Special_ID)
-			//->where('menu_food_item.Quantity','>','0')
 			->min('menu_food_item.Quantity');
 			
-		//	dd($specialquan);
-			//if($specialquan <= 0){
-			//	$specialfoods=new stdClass;
-			//}
-			
+
 			if($specialquan <= 0){
 				unset($specialfood[$counter]);
 			}
 			else{
 				
-				//dd[]
 				$specialfood = array_merge($specialfood[$counter], ["Quantity" => $specialquan]);
 				 
 			}
 			
-			//echo $counter;
+	
 			$counter++;
 			
 		}
 		$specialfoods = json_decode(json_encode($specialfood));
-		//dd($specialfoods);
 		
-		
+		*/
+		//$specialfoods = new stdClass;
 		$locations=DB::table('location')
 		->get();
 		
@@ -139,7 +130,7 @@ class OrderController extends Controller
 		
 		
 		
-		return view('patron.order')->with(['specialfoods' => $specialfoods, 'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
+		return view('patron.order')->with([ 'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
     
 	}
 

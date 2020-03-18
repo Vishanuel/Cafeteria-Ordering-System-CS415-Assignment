@@ -34,18 +34,13 @@
 					<select class="food form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food">
 						<option disabled>Select food</option> 
 						@foreach ($foods as $food )
-							<option  Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}">
+			 			<option  Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}">
 								{{ $food->Food_Name." - ".$food->Food_Desc }} 
 							</option>
 							
 						@endforeach
 						<option disabled>----Special----</option>
-						@foreach ($specialfoods as $food )
-							<option  Required value="{{ $food->Special_ID}} {{$food->Quantity}} {{$food->Special_Price}}">
-								{{ $food->Special_Desc }} 
-							</option>
-							
-						@endforeach
+						
 					</select>
 				</div>
 					

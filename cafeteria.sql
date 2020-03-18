@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Mar 11, 2020 at 02:51 PM
+-- Generation Time: Mar 18, 2020 at 02:22 PM
 -- Server version: 10.3.14-MariaDB
 -- PHP Version: 7.2.18
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `cafeteria`
 --
+CREATE DATABASE IF NOT EXISTS `cafeteria` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `cafeteria`;
 
 -- --------------------------------------------------------
 
@@ -39,18 +41,19 @@ CREATE TABLE IF NOT EXISTS `cos_order` (
   `Cos_Order_Payment_Method` varchar(45) NOT NULL,
   PRIMARY KEY (`Cos_Order_Num`),
   KEY `Idx_Emp_ID` (`Employee_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cos_order`
 --
 
 INSERT INTO `cos_order` (`Cos_Order_Num`, `Employee_ID`, `Cos_Order_Date_Time`, `Cos_Meal_Date_Time`, `Cos_Order_Meal_Status`, `Cos_Order_Cost`, `Cos_Order_Payment_Method`) VALUES
-(1, 1234, '2020-03-10', '2020-03-11', 'Approved', 12, 'payroll'),
-(2, 1234, '2020-03-11', '2020-03-11', 'Approved', 5, 'cash'),
-(3, 1234, '2020-03-11', '2020-03-11', 'Approved', 35, 'cash'),
-(4, 1234, '2020-03-11', '2020-03-11', 'Approved', 5, 'payroll'),
-(5, 1234, '2020-03-11', '2020-03-11', 'orderingg', 5, 'NN');
+(1, 1234, '2020-03-13', '2020-03-18', 'Approved', 25, 'payroll'),
+(2, 1234, '2020-03-16', '2020-03-17', 'Approved', 36, 'payroll'),
+(3, 1234, '2020-03-16', '2020-03-17', 'Approved', 27, 'payroll'),
+(4, 1234, '2020-03-16', '2020-03-16', 'Approved', 9, 'payroll'),
+(6, 1236, '2020-03-17', '2020-03-17', 'Approved', 6, 'cash'),
+(7, 1236, '2020-03-17', '2020-03-17', 'orderingg', 15, 'NN');
 
 -- --------------------------------------------------------
 
@@ -65,7 +68,17 @@ CREATE TABLE IF NOT EXISTS `delivery_instruction` (
   `D_Time_Window` varchar(45) NOT NULL,
   `Cos_Order_Num` int(11) NOT NULL,
   PRIMARY KEY (`D_Instruction_ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `delivery_instruction`
+--
+
+INSERT INTO `delivery_instruction` (`D_Instruction_ID`, `D_Location`, `D_Time_Window`, `Cos_Order_Num`) VALUES
+(1, '1', '9:45 PM', 1),
+(2, '1', '1:30 PM', 2),
+(3, '2', '1:45 PM', 3),
+(4, '2', '7:15 PM', 4);
 
 -- --------------------------------------------------------
 
@@ -101,14 +114,15 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `Menu_Date` date NOT NULL,
   PRIMARY KEY (`Menu_ID`),
   KEY `Idx_Restaurant_Menu_ID` (`Restaurant_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `menu`
 --
 
 INSERT INTO `menu` (`Menu_ID`, `Restaurant_ID`, `Menu_Date`) VALUES
-(1, 1, '2020-03-11');
+(1, 1, '2020-03-18'),
+(2, 1, '2020-03-19');
 
 -- --------------------------------------------------------
 
@@ -124,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `menu_food` (
   PRIMARY KEY (`Menu_Food_ID`),
   KEY `Idx2_Menu_ID` (`Menu_ID`),
   KEY `Idx2_Menu_Food_Item_ID` (`Menu_Food_Item_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `menu_food`
@@ -132,7 +146,8 @@ CREATE TABLE IF NOT EXISTS `menu_food` (
 
 INSERT INTO `menu_food` (`Menu_Food_ID`, `Menu_ID`, `Menu_Food_Item_ID`) VALUES
 (1, 1, 1),
-(2, 1, 2);
+(2, 1, 2),
+(3, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -148,15 +163,16 @@ CREATE TABLE IF NOT EXISTS `menu_food_item` (
   `Quantity` int(11) NOT NULL,
   `Price` decimal(3,2) NOT NULL,
   PRIMARY KEY (`Menu_Food_Item_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `menu_food_item`
 --
 
 INSERT INTO `menu_food_item` (`Menu_Food_Item_ID`, `Food_Name`, `Food_Desc`, `Quantity`, `Price`) VALUES
-(1, 'Dhal and Bhaat', 'Dhal ', 7, '5.00'),
-(2, 'Bhaat and Dhal v2', 'Test', 2, '6.00');
+(1, 'Dhal Bhaat', 'Dhal and rice', 26, '5.00'),
+(2, 'Fried Chicken', 'Test', 0, '6.00'),
+(3, 'Spicy chicken and chips', 'Spicy fried chicken with chips', 2, '9.00');
 
 -- --------------------------------------------------------
 
@@ -211,20 +227,20 @@ CREATE TABLE IF NOT EXISTS `ordered_food_item` (
   PRIMARY KEY (`Ordered_Food_Item_ID`),
   KEY `Idx_Cos_Order_ID` (`Cos_Order_Num`),
   KEY `Idx_Menu_Food_Item_ID` (`Menu_Food_Item_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ordered_food_item`
 --
 
 INSERT INTO `ordered_food_item` (`Ordered_Food_Item_ID`, `Cos_Order_Num`, `Menu_Food_Item_ID`, `Quantity`) VALUES
-(1, 1, 2, 1),
-(2, 1, 2, 1),
-(3, 2, 1, 1),
-(4, 3, 1, 3),
-(5, 3, 1, 4),
-(6, 4, 1, 1),
-(7, 5, 1, 1);
+(1, 1, 1, 3),
+(2, 1, 1, 2),
+(3, 2, 3, 4),
+(4, 3, 3, 3),
+(5, 4, 3, 1),
+(8, 6, 2, 1),
+(9, 7, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -261,14 +277,15 @@ CREATE TABLE IF NOT EXISTS `patron` (
   `Patron_Deduction_Status` tinyint(1) DEFAULT NULL,
   `User_ID` int(11) NOT NULL,
   PRIMARY KEY (`Employee_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1235 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1237 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `patron`
 --
 
 INSERT INTO `patron` (`Employee_ID`, `Patron_FName`, `Patron_SName`, `Patron_PHNum`, `Patron_Location`, `Patron_Deduction_Status`, `User_ID`) VALUES
-(1234, 'Test Patron', '@gmail.com', '9999999', 'Labasa', 1, 1);
+(1234, 'Test Patron', '@gmail.com', '9999999', 'Labasa', 1, 1),
+(1236, 'Rakess', 'Misra', '98765432', 'Nadi', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -289,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `payroll` (
 --
 
 INSERT INTO `payroll` (`Payroll_ID`, `Employee_ID`, `Salary`) VALUES
-(10001, 1234, 90);
+(10001, 1234, 200);
 
 -- --------------------------------------------------------
 
@@ -310,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `restaurant` (
 --
 
 INSERT INTO `restaurant` (`Restaurant_ID`, `Restaurant_Name`, `Restaurant_Location`) VALUES
-(1, 'Dummy', 'Dummy 2');
+(1, 'Harry Kitchen', 'White Tables');
 
 -- --------------------------------------------------------
 
@@ -326,7 +343,15 @@ CREATE TABLE IF NOT EXISTS `specials` (
   `Special_Price` decimal(3,2) NOT NULL,
   PRIMARY KEY (`Special_ID`),
   KEY `Idx2_Menu_ID` (`Menu_ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `specials`
+--
+
+INSERT INTO `specials` (`Special_ID`, `Menu_ID`, `Special_Desc`, `Special_Price`) VALUES
+(1, 1, 'Dhal Bhaat and Fried Chicken', '4.00'),
+(2, 1, 'Dhal Bhaat Special', '4.00');
 
 -- --------------------------------------------------------
 
@@ -342,7 +367,16 @@ CREATE TABLE IF NOT EXISTS `special_food` (
   PRIMARY KEY (`Special_Food_ID`),
   KEY `Idx_Special_ID` (`Special_ID`),
   KEY `Idx2_Menu_Food_ID` (`Menu_Food_ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `special_food`
+--
+
+INSERT INTO `special_food` (`Special_Food_ID`, `Special_ID`, `Menu_Food_ID`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -362,7 +396,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -370,7 +404,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `usertype`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Test Patron', 'is314lcnotif@gmail.com', 'Patron', NULL, '$2y$10$rlJYGJBXXGbIP/UEwdzKmeVMu71srbLW58u9Wjjeg.4vNDhXgOhEO', NULL, NULL, NULL),
-(2, 'Test Manager', 'test@gmail.com', 'Menu Manager', NULL, '$2y$10$rlJYGJBXXGbIP/UEwdzKmeVMu71srbLW58u9Wjjeg.4vNDhXgOhEO', NULL, NULL, NULL);
+(2, 'Test Manager', 'test@gmail.com', 'Menu Manager', NULL, '$2y$10$rlJYGJBXXGbIP/UEwdzKmeVMu71srbLW58u9Wjjeg.4vNDhXgOhEO', NULL, NULL, NULL),
+(3, 'Rakess', 'cs324assignment@gmail.com', 'Patron', '2020-03-09 12:00:00', '$2y$10$rlJYGJBXXGbIP/UEwdzKmeVMu71srbLW58u9Wjjeg.4vNDhXgOhEO', NULL, NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -16,13 +16,19 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::redirect('/','/login');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
 Route::resource('order','OrderController');
+Route::resource('specialmenu', 'SpecialsController');
 Route::resource('menu', 'MenuController');
 Route::match(['get', 'post'],'order_create/{menuid}', [
     'uses' => 'OrderController@create'
 ]);
+
+Route::match(['get', 'post'],'order_remove/{id}', [
+    'uses' => 'OrderController@remove'
+  ]); 
+ 
 
 Route::match(['get', 'post'],'order_payment', [
     'uses' => 'OrderController@payment'
@@ -32,12 +38,13 @@ Route::match(['get', 'post'],'order_edit_details/{id}', [
     'uses' => 'OrderController@detailshow'
   ]); 
   
-Route::match(['get', 'post'],'order_remove/{id}', [
-    'uses' => 'OrderController@remove'
-  ]); 
- 
+
 Route::match(['get', 'post'],'order_payment_confirm', [
     'uses' => 'OrderController@confirm'
+]);
+
+Route::match(['get', 'post'],'order_cancel', [
+    'uses' => 'OrderController@cancel'
 ]);
 
 Route::match(['get', 'post'],'order_edit/{orderid}', [

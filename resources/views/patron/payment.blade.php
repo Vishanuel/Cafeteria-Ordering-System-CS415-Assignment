@@ -55,7 +55,7 @@
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel Order</a>
+                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel Order</a>
                 <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Continue</button>
 				<a href="{{route('order_edit', $orderid ?? '')}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
               </div>

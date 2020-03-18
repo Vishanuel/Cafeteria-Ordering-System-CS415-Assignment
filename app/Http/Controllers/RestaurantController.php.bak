@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
+use DB;
 
 class RestaurantController extends Controller
 {
@@ -48,19 +49,21 @@ class RestaurantController extends Controller
      */
     public function show($id)
     {
-        //
-		//echo $id;
-		//echo 1;
-		$foods=DB::table('menu')
-		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
-		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+
+		$foods=DB::table('menu_food_item')
+		->join('menu_food','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
+		
 		//->where('menu.Menu_ID','=','1')
 		->where('menu_food_item.Quantity','>','0')
 		->where('menu.Menu_Date','=',date("Y-m-d"))
 		->where('menu.Restaurant_ID','=',$id)
-		->first();
+		->get();
 		
-		return redirect('order_create/'.$foods->Menu_ID);
+		//dd($foods);
+		//dd(count($foods));
+		
+		return view('restaurants.menu')->with(['foods' => $foods]);
 		
 		
     }

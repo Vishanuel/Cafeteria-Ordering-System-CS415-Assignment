@@ -39,6 +39,13 @@
 							</option>
 							
 						@endforeach
+						<option disabled>----Special----</option>
+						@foreach ($specialfoods as $food )
+							<option  Required value="{{ $food->Special_ID}} {{$food->Quantity}} {{$food->Special_Price}} Special">
+								{{ $food->Special_Desc }} 
+							</option>
+							
+						@endforeach
 					</select>
 				</div>
 					
@@ -70,7 +77,7 @@
 					<div class="radio col-md-3">
 						<label id="del">
 						  <input type="radio" name="mealmethod" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
-						  Get meal delivered
+						  Get meal delivered 
 						</label>
 					  </div>
 				</div>
@@ -130,10 +137,11 @@
 			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}"> 
 			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}">
+
 			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel</a>
+                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
                 <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Order</button>
               </div>
               <!-- /.box-footer -->

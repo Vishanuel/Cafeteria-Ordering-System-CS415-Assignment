@@ -29,43 +29,43 @@
 			</div>
             <!-- /.box-header -->
             <div  class="box-body">
-			
+			@if(count($foods) > 0)
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Cos_Order_Num</th>
-                  <th>Cos_Order_Date_Time</th>
-                  <th>Cos_Meal_Date_Time</th>
-                  <th>Cos_Order_Meal_Status</th>
-                  <th>Cos_Order_Cost</th>
-                  <th>Action</th>
+                  <th>Food Name</th>
+                  <th>Food Description</th>
                 </tr>
                 </thead>
                 <tbody>
-               @foreach($orderall as $order)
-                <tr>
-                  <td style="text-overflow: ellipsis;">{{ $order->Cos_Order_Num }}</td>
-                  <td style="text-overflow: ellipsis;">{{ $order->Cos_Order_Date_Time}}</td>
-                  <td style="text-overflow: ellipsis;">{{ $order->Cos_Meal_Date_Time}}</td>
-                  <td style="text-overflow: ellipsis;">{{ $order->Cos_Order_Meal_Status}}</td>
-                  <td style="text-overflow: ellipsis;">{{ $order->Cos_Order_Cost}}</td>
-				  <td style="text-overflow: ellipsis;" class="text-center">
-                        
-						 
-					<a class="btn btn-info btn-flat" type="button" href="{{URL::to('order/'.$order->Cos_Order_Num)}}">
-                              <span class="fa fa-pencil">
-                              </span>
-                        Show details
-					</a>
-							
-                    </td>
-                </tr>
-				@endforeach
+				
+				   @foreach($foods as $food)
+					<tr>
+					  <td style="text-overflow: ellipsis;">{{ $food->Food_Name }}</td>
+					  <td style="text-overflow: ellipsis;">{{ $food->Food_Desc}}</td>
+					  <td style="text-overflow: ellipsis;" class="text-center">
+							<?php ?>
+						<?php $menuid = $food->Menu_ID ?? ""?>	 
+						
+								
+						</td>
+					</tr>
+					@endforeach
+				
 				
                 </tbody>
                 
               </table>
 			  
+			 
+			  <a class="btn btn-info btn-flat pull-right" type="button" href="{{URL::to('order_create/'.$menuid)}}">
+                    Place order
+				</a>
+			  @else
+					<div id="2" class="callout callout-danger col-md-6" ><p>No available menu for this date. Sorry for the inconvenience caused.</p></div>
+					
+			  @endif
+				
 			</div>
             <!-- /.box-body -->
 			 

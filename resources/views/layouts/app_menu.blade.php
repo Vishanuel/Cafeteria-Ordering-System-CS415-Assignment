@@ -60,10 +60,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
-			<li class="active"><a href="menu">Display Menu<span class="sr-only">(current)</span></a></li>
-			<li class="active"><a href="menu/create">Create Menu <span class="sr-only">(current)</span></a></li>
-			
-            <li><a href="#">Link</a></li>
+			<li class="active"><a href="{{URL::to('menu')}}">Display Menu<span class="sr-only">(current)</span></a></li>
+			<li class="active"><a href="{{URL::to('menu/create')}}">Create Menu <span class="sr-only">(current)</span></a></li>
+			<li class="active"><a href="{{URL::to('specialmenu')}}">Display Special Menu<span class="sr-only">(current)</span></a></li>
+            {{-- <li><a href="#">Link</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -75,7 +75,7 @@
                 <li class="divider"></li>
                 <li><a href="#">One more separated link</a></li>
               </ul>
-            </li>
+            </li> --}}
           </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -163,6 +163,8 @@
 
 <!-- REQUIRED JS SCRIPTS -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{{-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
 <!-- jQuery 3 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -197,6 +199,7 @@
 <script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
+
 <!-- jvectormap  -->
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
@@ -285,6 +288,13 @@
        hiddenwarning=$("#hiddenwarningwcs").val();
        swal("Access Denied", hiddenwarning, "error");
     });
+
+	$(document).ready(function(){
+    $('input[type="checkbox"]').click(function(){
+        var inputValue = $(this).attr("value");
+        $("." + inputValue).toggle();
+    });
+});
 	
 	var count = $('#q').html();
 	$('#ite').val(count);
@@ -548,8 +558,6 @@
 	}
 	
 	
-	
-	
 	$( document ).ready(function() {
 		
 		var reload = function() {
@@ -611,6 +619,17 @@
 			$('#location_time').find('option').remove().end();
 			populate('#location_time');
 		});
+
+		$('#price').css('display','none'); // Hide the text input box in default
+		function myFunction() {
+   		if($('#Menu_Food_Item_ID').prop('checked')) {
+         $('#price').css('display','block');
+       } else {
+         $('#price').css('display','none');
+       }
+		}
+			
+
 	});
 	
 </script>

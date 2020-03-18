@@ -33,7 +33,7 @@ class MenuController extends Controller
             ->select('menu_food_item.Food_Name','menu_food_item.Food_Desc','menu_food_item.Price')                    ->get()
             ->toArray();
         }
-        //dd(count($val[0]));
+        //dd($val[0]);
         //echo count($data);
         // dd($val[0][0]);
 
@@ -50,6 +50,8 @@ class MenuController extends Controller
         $val= DB::table('menu_food_item')
                   ->get()
                   ->toArray();
+
+                //  dd($val);
     
         return view('menu manager.create_menu',compact('val'));
 
@@ -64,11 +66,13 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //  $this->validate($request, [
-    //     'Menu_Date' => 'required',
-    //      ]);
+       
+          $this->validate($request, [
+         'Menu_Date' => 'required',
+         'Food' => 'required',
+         ]);
        $input = $request->all();
-
+ //dd($input);
        $usr = Auth::user()->id;    //Get the user identification
         
             $data = DB::table('Menu_Manager')
@@ -94,7 +98,7 @@ class MenuController extends Controller
 
                 }
     
-
+                return redirect('menu');
        
     }
 
@@ -115,9 +119,18 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('menu manager.edit_menu');
+        $val= DB::table('menu_food_item')
+        ->get()
+        ->toArray();
+
+        $data = DB::table('Menu')
+            ->where('Menu.Menu_ID',$id)
+            ->get();
+            foreach($data as $menu){
+                return view('menu manager.edit_menu', compact('menu','val')); 
+            }
     }
 
     /**
@@ -129,7 +142,46 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'Menu_Date' => 'required',
+            'Food' => 'required',
+            ]);
+            
+        $input = $request->all();
+        //dd($input);
+              $usr = Auth::user()->id;    //Get the user identification
+               
+                   $data = DB::table('Menu_Manager')
+                   ->where('Menu_Manager.User_ID',$usr)
+                   ->get();
+       
+                  // dd(count($input["Food"]));
+       
+                foreach($data as $user){
+                           
+       
+                        for($i=0;$i<count($input["Food"]);$i++)
+                        {
+
+                        //    DB::table('menu_food')
+                        //    ->where('Menu_ID','=', $id)
+                        //    ->update(['Menu_Food_Item_ID' => $input["Food"][$i]]);  
+                           DB::table('menu_food')
+                           ->where('Menu_ID','=', $id)
+                           ->delete();  
+
+                           DB::table('menu_food')->insert(
+                            ['Menu_Food_Item_ID' => $input["Food"][$i],
+                             'Menu_ID' => $id]
+                             );  
+                        }
+
+                        $id =DB::table('menu')
+                            ->where('Menu_ID','=',$id)
+                            ->update(['Menu_Date' => $input["Menu_Date"]]); 
+       
+                       }
+                       return redirect('menu');
     }
 
     /**
@@ -140,6 +192,8 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('menu')->where('Menu_ID', '=', $id)->delete();
+
+        return redirect('menu');
     }
 }

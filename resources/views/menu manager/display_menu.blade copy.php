@@ -8,7 +8,7 @@
         </div>
         <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-striped" id ="example1">
+                <table class="table table-bordered table-striped">
                 <tr>
                     <th>Menu Date</th>
                     <th>Menu Item</th>

@@ -84,15 +84,63 @@
 					 </div>
 				 </div>
 				
+                <div class="form-group col-md-12">
+                <label>Meal Date</label>
 				
+				<input id="cutoff" name="cutoff" type="hidden" value="{{$order_cutoff->Order_Cutoff_Time }}">
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control" disabled readonly name="meal_date" id="meal_date" value="{{$cos_order->Cos_Meal_Date_Time}}" required>
+                </div>
 				
-				@if($mealmethod == "delivery")
+                <!-- /.input group -->
+              </div>
+			
+			  
+			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
+			<input id="cwarning" name="cwarning" class="form-group col-md-12" style="display: none" value=""> 
+			<input id="dwarn" name="dwarn" class="form-group col-md-12" style="display: none" value=""> 
+			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
+			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+            <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$cos_order->Cos_Order_Num}}">
+			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
+			</div>
+            <!-- /.box-body -->
+			 <div class="box-footer">
+                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel Order</a>
+				
+                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Confirm Order</button>
+				
+				<a href="{{route('order_edit', $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
+              </div>
+              <!-- /.box-footer -->
+			 </form>
+          </div>
+		  
+          <!-- /.box -->
+        </div>
+		
+        <!--/.col (right) -->
+      </div>
+	  @if($mealmethod == "delivery")
+	  <div class="row">
+		<div class="col-md-12">
+		  <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Delivery Info</h3>
+            </div>
+            <!-- /.box-header -->
+            <div id="box" class="box-body">
+			<form action="">
+				
 				<div id="delivery" name="delivery">
 				
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Location</label>
-					  <select disabled class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
+					  <select disabled class="form-control " id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
 							<option id="location_id" name="location_id"  disabled>Select location</option> 
 							@foreach ($locations as $location )
 								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
@@ -107,7 +155,7 @@
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Time</label>
-					  <select disabled class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
+					  <select disabled class="form-control " id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
 							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
 							@if($mealmethod == "delivery")
 								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
@@ -116,58 +164,45 @@
 						
 					</div>
                 </div>
-				@endif
-                <div class="form-group col-md-12">
-                <label>Meal Date</label>
 				
-				<input id="cutoff" name="cutoff" type="hidden" value="{{$order_cutoff->Order_Cutoff_Time }}">
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control" disabled readonly name="meal_date" id="meal_date" value="{{$cos_order->Cos_Meal_Date_Time}}" required>
-                </div>
-				
-                <!-- /.input group -->
-              </div>
-			<div class="form-group">
-					<div class="radio col-md-6">
+				 </form>
+			</div>
+			
+			</div>
+		  </div>
+		</div>
+		@endif
+	  <div class="row">
+		<div class="col-md-12">
+		  <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Payment Method</h3>
+            </div>
+            <!-- /.box-header -->
+            <div id="box" class="box-body">
+
+				<div class="form-group col-md-6">
+					<div class="radio">
 						<label>
 						  <input type="radio" disabled name="mealmethod3" id="optionsRadios1" value="payroll"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") checked @endif>
 						  Payroll deduction payment
 						</label>
 					  </div>
 				</div>
-				<div class="form-group">
-					  <div class="radio col-md-6 ">
+				<div class="form-group col-md-6">
+					  <div class="radio">
 						<label>
 						  <input type="radio" disabled name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif @if($deduction->Patron_Deduction_Status == 0) checked @endif @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
 						  Cash Payment at pickup
 						</label>
 					 </div>
 				 </div>  
-			  
-			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
-			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
-            <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$cos_order->Cos_Order_Num}}">
-			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
+				 
 			</div>
-            <!-- /.box-body -->
-			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel Order</a>
-				@if($approved ?? '' == "Approved")
-                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Confirm Order</button>
-				@endif
-				<a href="{{route('order_edit', $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
-              </div>
-              <!-- /.box-footer -->
-			 </form>
-          </div>
-          <!-- /.box -->
-        </div>
-        <!--/.col (right) -->
-      </div>
+			
+			</div>
+		  </div>
+		</div>
       <!-- /.row -->
     </section>
     <!-- /.content -->

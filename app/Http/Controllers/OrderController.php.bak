@@ -39,22 +39,64 @@ class OrderController extends Controller
     public function create($menuid)
     {
         //
+		DB::statement("ALTER TABLE `ordered_food_item` AUTO_INCREMENT = 1;");
+		DB::statement("ALTER TABLE `delivery_instruction` AUTO_INCREMENT = 1;");
+		DB::statement("ALTER TABLE `cos_order` AUTO_INCREMENT = 1;");
+		
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
 		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
 		->where('menu.Menu_ID','=',$menuid)
-		//->where('menu.Restaurant_ID','=',$id)
-		//->where('menu.Menu_Date','=',date("Y-m-d"))
 		->where('menu_food_item.Quantity','>','0')
 		->get();
 		
-	//	$foods=DB::table('menu')
-	//	->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
-	//	->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
-	//	->where('menu.Menu_Date','=',date("Y-m-d"))
-	//  ->where('menu_food_item.Quantity','>','0')
-	//  ->where('menu.Menu_ID','=','1')
-	//	->get();
+		$specialfoods=DB::table('specials')
+		->join('menu','menu.Menu_ID','=','specials.Menu_ID')
+		//->join('special_food','special_food.Special_ID','=','specials.Special_ID')
+		//->join('menu_food','menu_food.Menu_Food_ID','=','special_food.Menu_Food_ID')
+		//->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->where('specials.Menu_ID','=',$menuid)
+		//->where('menu_food_item.Quantity','>','0')
+		->get();
+		//dd($specialfoods);
+		$counter = 0;
+		//dd($counter);
+		
+		$specialfood = json_decode(json_encode($specialfoods), true);
+		
+		foreach($specialfoods as $sfood){
+			$specialquan=DB::table('specials')
+			->join('menu','menu.Menu_ID','=','specials.Menu_ID')
+			->join('special_food','special_food.Special_ID','=','specials.Special_ID')
+			->join('menu_food','menu_food.Menu_Food_ID','=','special_food.Menu_Food_ID')
+			->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+			->where('specials.Menu_ID','=',$menuid)
+			->where('specials.Special_ID','=',$sfood->Special_ID)
+			//->where('menu_food_item.Quantity','>','0')
+			->min('menu_food_item.Quantity');
+			
+		//	dd($specialquan);
+			//if($specialquan <= 0){
+			//	$specialfoods=new stdClass;
+			//}
+			
+			if($specialquan <= 0){
+				unset($specialfood[$counter]);
+			}
+			else{
+				
+				//dd[]
+				$specialfood = array_merge($specialfood[$counter], ["Quantity" => $specialquan]);
+				 
+			}
+			
+			//echo $counter;
+			$counter++;
+			
+		}
+		$specialfoods = json_decode(json_encode($specialfood));
+		dd($specialfoods);
+		
 		
 		$locations=DB::table('location')
 		->get();
@@ -68,12 +110,13 @@ class OrderController extends Controller
 		->select('Patron_Deduction_Status')
 		->first();
 		
+		
 		$employee_id = DB::table('patron')
 		->select('Employee_ID')
 		->where('User_ID','=',Auth::user()->id)
 		->first();
 		
-		$orderid=DB::table('cos_order')->max('Cos_Order_Num');
+		//
 		
 		$id_deletion=DB::table('cos_order')
 		->where('Employee_ID','=', $employee_id->Employee_ID)
@@ -87,10 +130,16 @@ class OrderController extends Controller
 		}
 		
 		if(empty($orderid)){
-			$orderid = 1;
+			$orderid=DB::table('cos_order')->max('Cos_Order_Num');
+			$orderid++;
+			if(empty($orderid)){
+				$orderid = 1;
+			}
 		}	
 		
-		return view('patron.order')->with(['foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
+		
+		
+		return view('patron.order')->with(['specialfoods' => $specialfoods, 'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
     
 	}
 
@@ -104,6 +153,7 @@ class OrderController extends Controller
     {
         //
 		$orderid = $request->input('orderid');
+		
 		$menuid = $request->input('menuid');
 		$employee_id = DB::table('patron')
 		->select('Employee_ID')
@@ -151,9 +201,9 @@ class OrderController extends Controller
 		if (empty($idofd)) {
 		  $idofd = 1;
 		}
-		//echo $idofd;
+	
 		$mealmethod = $request->input('mealmethod');
-		//echo $mealmethod;
+		
 		if($mealmethod == "delivery"){
 			DB::table('delivery_instruction')
 				->insert([
@@ -216,7 +266,7 @@ class OrderController extends Controller
 						$foods=DB::table('menu')
 						->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
 						->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
-						->where('menu.Menu_ID','=','1')
+						->where('menu.Menu_ID','=',$menuid)
 						->where('menu_food_item.Quantity','>','0')
 						->get();
 						
@@ -246,7 +296,7 @@ class OrderController extends Controller
 						$cos_order=DB::table('cos_order')
 						->where('Employee_ID','=',$employee_id->Employee_ID)
 						//->where('Cos_Order_Meal_Status','=','orderingg')
-						->where('Cos_Order_Num','=',$orderid)
+						->where('Cos_Order_Num','=',$id)
 						->first();
 						
 						$orderid = $cos_order->Cos_Order_Num;
@@ -292,11 +342,12 @@ class OrderController extends Controller
 		$orderid = $request->input('orderid');
 		$mealmethod = $request->input('mealmethodn');
 		$deduction = $request->input('deduction');
+		
 		$employee_id = DB::table('patron')
 			->select('Employee_ID')
 			->where('User_ID','=',Auth::user()->id)
 			->first();
-			
+		
 		if($mealmethodp == "payroll"){
 			
 			
@@ -307,33 +358,20 @@ class OrderController extends Controller
 			$error = "Total cost exceeded current salary amount. Either cancel or edit the order.";
 			if($pay->Salary - $request->input("tcost") <= 0){
 				$total_cost=$request->input("tcost");
+				
 				return view('patron.payment')->with(['orderid'=>$orderid,'menuid'=>$menuid ,'mealmethod' => $mealmethod, 'deduction' => $deduction, 'total_cost' => $total_cost, 'error' => $error]);
 			}
 			
 			else{
 				$salary = $pay->Salary - $request->input("tcost");
-				
-			//	DB::table('payroll')
-			//		->where('Employee_ID','=' ,$employee_id->Employee_ID)
-			//		->update(['Salary' => $salary]);
-				
-			}
-			//$request->input("tcost");			
+			}	
 		}
 		
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
 		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
-		->where('menu.Menu_ID','=','1')
+		->where('menu.Menu_ID','=',$menuid)
 		->get();
-		
-		//	$foods=DB::table('menu')
-		//	->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
-		//	->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
-		//	->where('menu.Menu_Date','=',date("Y-m-d"))
-		//  ->where('menu_food_item.Quantity','>','0')
-		// 	->where('menu.Menu_ID','=','1')
-		//	->get();
 			
 		$locations=DB::table('location')
 		->get();
@@ -346,8 +384,6 @@ class OrderController extends Controller
 		->where('Patron_FName','=', Auth::user()->name)
 		->select('Patron_Deduction_Status')
 		->first();
-			
-		
 				
 		$cos_order=DB::table('cos_order')
 		->where('Employee_ID','=',$employee_id->Employee_ID)
@@ -377,7 +413,7 @@ class OrderController extends Controller
 		return view('patron.orderview')->with(['menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 				
 		
-		//echo $request->input("tcost");
+		
     }
 	
     /**
@@ -417,16 +453,10 @@ class OrderController extends Controller
 			
 		}
 		
-		$pay = DB::table('payroll')
-		->select('Salary')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
-		->first();
 		
-		$salary = $pay->Salary - $cos_order->Cos_Order_Cost;
 		
-		DB::table('payroll')->where('Employee_ID', '=',$employee_id->Employee_ID)->update(['Salary' => $salary]);
 		DB::table('cos_order')->where('Cos_Order_Num', '=',$orderid)->update(['Cos_Order_Meal_Status' => 'Approved']);
-		//echo $request->input("tcost");
+		
 		
 		
 		$data = array();
@@ -439,12 +469,27 @@ class OrderController extends Controller
 			$data['delivery_time'] = "Nan";
 			$data['delivery_location'] = "Nan";
 			
+			
+			
 		}	
 		
 		else{
 			$mealmethod = "delivery";
 			$data['delivery_time'] = $mealmethodcheck->D_Time_Window;
 			$data['delivery_location'] = $mealmethodcheck->D_Location;
+		}
+		
+		if($cos_order->Cos_Order_Payment_Method == "payroll"){
+			$pay = DB::table('payroll')
+			->select('Salary')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->first();
+				
+			$salary = $pay->Salary - $cos_order->Cos_Order_Cost;
+				
+			DB::table('payroll')->where('Employee_ID', '=',$employee_id->Employee_ID)->update(['Salary' => $salary]);
+		
+				
 		}
 		
 		$data['Cos_Order_Num'] = $cos_order->Cos_Order_Num;
@@ -513,7 +558,7 @@ class OrderController extends Controller
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
 		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
-		->where('menu.Menu_ID','=','1')
+		->where('menu.Menu_ID','=',$menuid)
 		->get();
 		
 		//	$foods=DB::table('menu')
@@ -581,8 +626,6 @@ class OrderController extends Controller
      */
     public function edit($orderid)
     {
-        //
-		//$orderid = $request->input('orderid');
 		
 		$employee_id = DB::table('patron')
 		->select('Employee_ID')
@@ -605,16 +648,10 @@ class OrderController extends Controller
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
 		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
-		->where('menu.Menu_ID','=','1')
+		->where('menu.Menu_ID','=',$menuid)
 		->where('menu_food_item.Quantity','>','0')
 		->get();
 		
-		//	$foods=DB::table('menu')
-		//	->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
-		//	->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
-		//	->where('menu.Menu_Date','=',date("Y-m-d"))
-		//    ->where('menu_food_item.Quantity','>','0')
-		//	->get();
 		
 		$locations=DB::table('location')
 		->get();
@@ -637,16 +674,35 @@ class OrderController extends Controller
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->orderBy('Ordered_Food_Item_ID', 'DESC')
 			->get();
-			
+			//$finalquantity = 0;
 			foreach($food_selecteds as $food_select){
 				$quantity = DB::table('menu_food_item')
 				->where('Menu_Food_Item_ID','=',$food_select->Menu_Food_Item_ID)
 				->first();
-				
-				$finalquantity = $quantity->Quantity + $food_select->Quantity;
-
-				DB::table('menu_food_item')->where('Menu_Food_Item_ID', '=',$food_select->Menu_Food_Item_ID)->update(['Quantity' => $finalquantity]);
-				
+				//26
+				$finalquantity = $quantity->Quantity;
+				foreach($food_selecteds as $food_select2){
+					if($food_select2->Menu_Food_Item_ID == $food_select->Menu_Food_Item_ID){ //2
+						$finalquantity =  $finalquantity + $food_select2->Quantity;
+						//28
+						
+					}
+					else{
+						$finalquantity = $finalquantity + $food_select->Quantity;
+					}
+					
+				}
+				//DB::table('menu_food_item')->where('Menu_Food_Item_ID', '=',$food_select->Menu_Food_Item_ID)->update(['Quantity' => $finalquantity]);
+				$count = count($foods);
+				$foods = json_decode(json_encode($foods), true);
+				for($i = 0;$i < $count;$i++){
+					if($foods[$i]["Menu_Food_Item_ID"] == $food_select->Menu_Food_Item_ID){
+						$foods[$i]["Quantity"] = $finalquantity;
+						  
+					}
+					
+				}
+				$foods = json_decode(json_encode($foods));
 			}
 			
 			
@@ -710,15 +766,84 @@ class OrderController extends Controller
 	public function remove($id)
     {
         //
+		$cos_order=DB::table('cos_order')
+		->where('Cos_Order_Num','=',$id)
+		->first();
+		
+		
+		
 		if(!empty($id)){
+			if($cos_order->Cos_Order_Payment_Method == "payroll"){
+				$employee_id = DB::table('patron')
+				->select('Employee_ID')
+				->where('User_ID','=',Auth::user()->id)
+				->first();
+				
+				$pay = DB::table('payroll')
+				->select('Salary')
+				->where('Employee_ID','=',$employee_id->Employee_ID)
+				->first();
+					
+				$salary = $pay->Salary + $cos_order->Cos_Order_Cost;
+					
+				DB::table('payroll')->where('Employee_ID', '=',$employee_id->Employee_ID)->update(['Salary' => $salary]);
+			
+					
+			}
+			
+			$food_selecteds = DB::table('ordered_food_item')
+			->where('Cos_Order_Num','=',$id)
+			->orderBy('Ordered_Food_Item_ID', 'DESC')
+			->get();
+			
+			foreach($food_selecteds as $food_select){
+				$quantity = DB::table('menu_food_item')
+				->where('Menu_Food_Item_ID','=',$food_select->Menu_Food_Item_ID)
+				->first();
+				
+				$finalquantity = $quantity->Quantity + $food_select->Quantity;
+
+				DB::table('menu_food_item')->where('Menu_Food_Item_ID', '=',$food_select->Menu_Food_Item_ID)->update(['Quantity' => $finalquantity]);
+				
+			}
+			
+			
+			
+			DB::table('cos_order')->where('Cos_Order_Num', '=', $id)->delete();
+			DB::table('ordered_food_item')->where('Cos_Order_Num', '=', $id)->delete();
+			DB::table('delivery_instruction')->where('Cos_Order_Num', '=', $id)->delete();
+		}
+		
+		return redirect('/order');
+    } 
+	 
+	 
+	public function cancel()
+    {
+        //
+		$employee_id = DB::table('patron')
+		->select('Employee_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first();
+			
+		$id_deletion=DB::table('cos_order')
+		->where('Employee_ID','=', $employee_id->Employee_ID)
+		->where('Cos_Order_Meal_Status','=','orderingg')
+		->select('Cos_Order_Num')
+		->first();
+				
+		if(!empty($id_deletion->Cos_Order_Num)){
 			DB::table('cos_order')->where('Cos_Order_Num', '=', $id_deletion->Cos_Order_Num)->delete();
 			DB::table('ordered_food_item')->where('Cos_Order_Num', '=', $id_deletion->Cos_Order_Num)->delete();
 			DB::table('delivery_instruction')->where('Cos_Order_Num', '=', $id_deletion->Cos_Order_Num)->delete();
 		}
 		
-		return redirect('/restaurant');
+		DB::statement("ALTER TABLE `ordered_food_item` AUTO_INCREMENT = 1;");
+		DB::statement("ALTER TABLE `delivery_instruction` AUTO_INCREMENT = 1;");
+		DB::statement("ALTER TABLE `cos_order` AUTO_INCREMENT = 1;");
+		
+		return redirect("/restaurant");
     } 
-	 
 	 
     public function destroy($id)
     {
@@ -749,7 +874,7 @@ class OrderController extends Controller
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
 		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
-		->where('menu.Menu_ID','=','1')
+		->where('menu.Menu_ID','=',$menuid)
 		->get();
 		
 		//	$foods=DB::table('menu')

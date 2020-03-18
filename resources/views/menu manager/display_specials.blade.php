@@ -4,7 +4,7 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Menu</h3>
+            <h3 class="panel-title">Special Menu</h3>
         </div>
         <div class="panel-body">
             <div class="table-responsive">
@@ -29,31 +29,25 @@
                     </td>
                     <td >
                         @for($j=0;$j<count($val[$i]);$j++)
-                        <div>{{$val[$i][$j]->Food_Desc}}</div>
+                        <div>{{$val[$i][$j]->Special_Desc}}</div>
                         @endfor
                     </td>
                     <td >
                         @for($j=0;$j<count($val[$i]);$j++)
-                        <div>{{$val[$i][$j]->Price}}</div>
+                        <div>{{$val[$i][$j]->Special_Price}}</div>
                         @endfor
                     </td>
                 @endfor
                     <td>
-                        <button class="btn btn-info open-modal" value="{{$data[$i]->Menu_ID}}" >
-                            <a href="{{ route('menu.edit',$data[$i]->Menu_ID) }}">Edit</a>
+                        <button class="btn btn-info open-modal" value="{{$data[$i]->Special_ID}}" >
+                            <a href="{{ route('specialmenu.edit',$data[$i]->Special_ID) }}">Edit</a>
                         </button>
-                        <form method="post" action="{{ route('menu.destroy', $data[$i]->Menu_ID) }}">
+                        <form method="post" action="{{ route('menu.destroy', $data[$i]->Special_ID) }}">
                             {{csrf_field()}}
                             <input name="_method" type="hidden" value="DELETE">
                             <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
                     </td>
-                    <td>
-                            <button class="btn btn-info open-modal" value="{{$data[$i]->Menu_ID}}" >
-                                <a href="{{ route('specialmenu.show',$data[$i]->Menu_ID)}}">Create Special menu</a>
-                            </button>
-                            
-                        </td>
                 </tr>
                  @endfor
                 </table>

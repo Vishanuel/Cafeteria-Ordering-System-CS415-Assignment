@@ -20,29 +20,25 @@
         <div class="col-md-8">
             <div class="card">
                 {{-- <div class="card-header">Add New Menu</div> --}}
-                <h1>Add New Menu</h1>
+                <h1>Add New Special Menu</h1>
                  <div class="card-body">
-                  <form id ="createmenu" role="form" method="POST" action="{{route('menu.store')}}" 
-                  enctype="multipart/form-data">
+                  <form id ="createmenu" role="form" method="POST" action="{{route('specialmenu.store')}}" 
+                 enctype="multipart/form-data">
                   @csrf
-                    <div class="form-group">
-                        <label for="Menu_Date">Menu Date:</label>
-        
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" class="form-control pull-right" id="datepicker" name = "Menu_Date">
-                        </div>
-                        <!-- /.input group -->
-                      </div>
+                  <div class="form-group">    
+                      <label for="Special_Desc">Special Menu Description:</label>
+                      <input type="text" class="form-control" name="Special_Desc"/>
+                  </div>
                       <h2>Menu Items</h2>
-                      
+                <input type="text" class="form-control" name="menu" value="{{$id}}" style="display: none"/>
                       @for($i=0;$i<count($val);$i++)
                             <div class="form-check" name="Food Item">
-                            <input type="checkbox" value="{{$val[$i]->Menu_Food_Item_ID}}"  name="Food[{{$i}}]">
-                                <label for="Food[{{$i}}]">{{$val[$i]->Food_Name}}</label>
+                                <label><input type="checkbox" value="{{$val[$i]->Menu_Food_Item_ID}}"  name="Food[{{$i}}]">{{$val[$i]->Food_Name}}</label>
                              </div>
+
+                            <div class="{{$val[$i]->Menu_Food_Item_ID}}" style="display: none">
+                                <label>Enter Amount: <input type="text" name="price[{{$i}}]" data-type="currency" placeholder="$1,000.00"></label>
+                            </div>
                       @endfor    
                    
                     <div class="box-footer">

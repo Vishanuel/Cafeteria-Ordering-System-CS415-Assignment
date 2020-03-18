@@ -50,14 +50,14 @@
 				<input id="tcost" name="tcost" class="form-group col-md-12" style="display: none" value="{{$total_cost}}"> 
 				<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction}}"> 
 				<input id="mealmethodn" name="mealmethodn" class="form-group col-md-12" style="display: none" value="{{$mealmethod}}">
-				<input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}">
-				<input id="id" name="id" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
+				<input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid ?? ''}}">
+				<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel Order</a>
+                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel Order</a>
                 <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Continue</button>
-				<a href="{{route('order_edit', $orderid)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
+				<a href="{{route('order_edit', $orderid ?? '')}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
               </div>
               <!-- /.box-footer -->
 			 </form>

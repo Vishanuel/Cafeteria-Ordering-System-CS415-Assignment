@@ -142,7 +142,7 @@
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel</a>
+                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
                 <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
               </div>
               <!-- /.box-footer -->

@@ -4,8 +4,50 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>COS</title>
-  <!-- Tell the browser to be responsive to screen width -->
+  <!-- REQUIRED JS SCRIPTS -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- jQuery 3 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<!-- Bootstrap 3.3.7 -->
+
+<script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<!-- SlimScroll -->
+<script src="{{asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+<!-- FastClick -->
+<script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+<!-- InputMask -->
+<script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+<!-- date-range-picker -->
+<script src="{{asset('bower_components/moment/min/moment.min.js')}}"></script>
+<script src="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<!-- bootstrap color picker -->
+<script src="{{asset('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
+<!-- bootstrap time picker -->
+<script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+<!-- ChartJS -->
+<script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
+<!-- jvectormap  -->
+  
+  <!-- Tell the browser to be responsive to screen width -->
+  
   <!-- Select2 -->
   <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
   
@@ -44,6 +86,8 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+
+</head>
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
@@ -60,7 +104,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="{{URL::to('restaurant')}}">Restaurants <span class="sr-only">(current)</span></a></li>
+            <li ><a href="{{URL::to('restaurant')}}">Restaurants <span class="sr-only">(current)</span></a></li>
             <li><a href="{{URL::to('order')}}">View previous orders</a></li>
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -159,48 +203,7 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED JS SCRIPTS -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- jQuery 3 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
-<!-- DataTables -->
-<script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-<!-- SlimScroll -->
-<script src="{{asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
-<!-- FastClick -->
-<script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<!-- iCheck 1.0.1 -->
-<script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
-<!-- Select2 -->
-<script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-<!-- InputMask -->
-<script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
-<script src="{{asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
-<script src="{{asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
-<!-- date-range-picker -->
-<script src="{{asset('bower_components/moment/min/moment.min.js')}}"></script>
-<script src="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
-<!-- bootstrap datepicker -->
-<script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-<!-- bootstrap color picker -->
-<script src="{{asset('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
-<!-- bootstrap time picker -->
-<script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
-<!-- ChartJS -->
-<script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
-<!-- jvectormap  -->
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
-	 <script>
+<script>
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({
@@ -312,8 +315,10 @@
 	var	todaydate = yyyy + '-' + mm + '-' + dd;
 	//$('#meal_date').val(todaydate);
 	
-	function populate(selector) {
+	function populate(selector,value) {
 		var select = $(selector);
+	//	var value = value);
+		
 		var today = new Date();
 		var time = (today.getHours()*60)+today.getMinutes();
 		while((time % 5) != 0){
@@ -335,6 +340,8 @@
 			time = 600;	
 		}
 		
+		
+		
 		var hours, minutes, ampm;
 		for(var i = 600; i <= 1320; i += 15){
 			hours = Math.floor(i / 60);
@@ -352,8 +359,18 @@
 				select.append($('<option></option>')
 					.attr('value', hours + ':' + minutes + ' ' + ampm)
 					.text(hours + ':' + minutes + ' ' + ampm)); 
+					//alert($('#meal_date').val());
+					if(value != null){
+						$('#location_time').val(value);
+					}
+
+					if($('#location_time').val() == null){
+						$('#location_time').val($('#location_time option:first').val())
+					}
 			}
 		}
+		
+		
 	}
 	
 	var l = 0;
@@ -486,21 +503,30 @@
 	});
 	
 	function delivery_time(){
-		var len = document.getElementById("location_time").length;
-		//alert(len);
-		if(len <= 1){
-			//alert(len);
-			document.getElementById('dwarn').style.display = 'block';
+		var deduction = $('#deduction').val();
+
+		if(deduction == 0){
 			document.getElementById('optionsRadios1').disabled = true;
+			document.getElementById('dwarn').style.display = 'none';
 		}
 		else{
-			document.getElementById('dwarn').style.display = 'none';
-			document.getElementById('optionsRadios1').disabled = false;
+			var len = document.getElementById("location_time").length;
+			//alert(len);
+			if(len <= 1){
+				//alert(len);
+				document.getElementById('dwarn').style.display = 'block';
+				document.getElementById('optionsRadios1').disabled = true;
+			}
+			else{
+				document.getElementById('dwarn').style.display = 'none';
+				document.getElementById('optionsRadios1').disabled = false;
+			}
 		}
 	}
 	
 	
 	function meal_date(){
+		var dateselect = $('#meal_date').val();
 		
 		var today = new Date();
 		var time = today.getHours();
@@ -532,7 +558,12 @@
 			  format: 'yyyy-mm-dd'
 			})
 			document.getElementById('cwarning').style.display = 'block';
-			$('#meal_date').val(tomorrowdate);
+			if(dateselect == todaydate){
+				$('#meal_date').val(tomorrowdate);
+			}
+			else{
+				$('#meal_date').val(dateselect);
+			}
 		}
 		
 		else{
@@ -542,7 +573,13 @@
 			  format: 'yyyy-mm-dd'
 			})
 			document.getElementById('cwarning').style.display = 'none';
-			$('#meal_date').val(todaydate);
+			if(dateselect == todaydate){
+				$('#meal_date').val(todaydate);
+			}
+			else{
+				$('#meal_date').val(dateselect);
+			}
+			
 		}
 		
 		
@@ -552,16 +589,17 @@
 	
 	
 	$( document ).ready(function() {
-		
+		$valuetime=$('#location_time').val();
 		var reload = function() {
 			$('#location_time').find('option').remove().end();
 			meal_date();
-			populate('#location_time');
+			
+			populate('#location_time', $valuetime);
 			delivery_time();
 			
 			setTimeout(function() {
 				 reload();
-          }, 100);
+          }, 300000);
 		  
 		};
 		reload();
@@ -609,11 +647,18 @@
 	
 		$('#meal_date').datepicker().on('changeDate', function (ev) {
 			//alert(1);
+			$value=$('#location_time').val();
 			$('#location_time').find('option').remove().end();
-			populate('#location_time');
+			populate('#location_time',$value);
+			//$('#location_time').val($value);
 		});
 	});
 	
 </script>
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+	 
 </body>
 </html>

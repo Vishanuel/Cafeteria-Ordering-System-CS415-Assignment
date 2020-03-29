@@ -16,16 +16,17 @@
     </section>
 <!-- Main content -->
     <section class="content">
-      <div class="row">
+    
+	<div class="row">
         <!-- left column -->
-        <div class="col-md-12">
+        <div class="col-md-6">
 		  <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Order</h3>
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-              <form id="orderform" role="form" method="POST" action="" enctype="multipart/form-data">
+              <form id="orderform" role="form" method="POST" action="{{action('OrderController@confirm')}}" enctype="multipart/form-data">
 			   @csrf
 				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
                 <!-- text input -->
@@ -49,21 +50,47 @@
 					
 					<div id="quantityd{{$i}}" class="form-group col-md-2">
 					  <label>Quantity</label>
-					  <input type="number" class="form-control" readonly id="quantity{{$i}}" name="quantity{{$i}}" max="" min="1" Required value="{{$food_select->Quantity}}">
+					  <input type="number" class="form-control" disabled id="quantity{{$i}}" name="quantity{{$i}}" max="" min="1" Required value="{{$food_select->Quantity}}">
 					</div>
 			
 					<div id="priced{{$i}}" class="form-group col-md-2">
 					  <label>Price ($)</label>
-					  <input type="number" class="form-control" readonly id="price{{$i}}" name="price{{$i}}" Required readonly value="">
+					  <input type="number" class="form-control" disabled id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
 					
 					<?php $i= $i + 1; ?>
 					
 				@endforeach
 				
+				
+				@if($special_id != null && !empty($specialfoods))
+				<div id="specialfoods123" class="form-group col-md-6">
+				<label>Special</label>
+				<select disabled class="food form-control select2" id="specialfoods" name="specialfoods" style="width: 100%;" placeholder="Select special">
+					<option>No special selected</option>
+						@foreach ($specialfoods as $food )
+							<option @if($food->Special_ID == $special_id->Special_ID) selected @endif value="{{ $food->Special_ID}} {{$food->Quantity}} {{$food->Special_Price}}">
+								{{ $food->Special_Desc }} 
+							</option>
+							
+						@endforeach
+				</select>
+				</div>
+				<div id="specialfoodsqavailabled" class="form-group" style="display: none"></div>
+				<div id="specialfoodsquantityd" class="form-group col-md-2">
+				  <label>Quantity</label>
+				  <input disabled type="number" class="form-control" id="specialfoodsquantity" name="specialfoodsquantity" max="" min="1" value="{{$special_id->Quantity}}">
+				</div>
+				<div id="specialfoodspriced" class="form-group col-md-2">
+				  <label>Price($)</label>
+				  <input type="number" class="form-control" id="specialfoodsprice" name="specialfoodsprice" disabled value="">
+				</div>
+				@endif
+				
 				<div id="tcostd" class="form-group col-md-2">
-				  <label>Total Cost ($)</label>
-				  <input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
+				  <label>Total($)</label>
+				
+				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>
 				<!-- <div id="food" ></div>-->
 				
@@ -84,18 +111,61 @@
 					 </div>
 				 </div>
 				
+                <div class="form-group col-md-12">
+                <label>Meal Date</label>
 				
+				<input id="cutoff" name="cutoff" type="hidden" value="{{$order_cutoff->Order_Cutoff_Time }}">
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control" disabled readonly name="meal_date" id="meal_date" value="{{$cos_order->Cos_Meal_Date_Time}}" required>
+                </div>
 				
-				@if($mealmethod == "delivery")
+                <!-- /.input group -->
+              </div>
+			
+			  
+			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
+			<div id="cwarning" name="cwarning" class="form-group col-md-12" style="display: none" value=""> </div>
+			<input id="dwarn" name="dwarn" class="form-group col-md-12" style="display: none" value=""> 
+			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
+			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+            <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$cos_order->Cos_Order_Num}}">
+			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
+			<div id="delivery" name="delivery" class="form-group col-md-12" style="display: none" value=""></div>
+			</div>
+            <!-- /.box-body -->
+			 
+              <!-- /.box-footer -->
+			 </form>
+          </div>
+		  
+          <!-- /.box -->
+        </div>
+		
+        <!--/.col (right) -->
+    
+	  @if($mealmethod == "delivery")
+
+		<div class="col-md-6">
+		  <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Delivery Info</h3>
+            </div>
+            <!-- /.box-header -->
+            <div id="box" class="box-body">
+			<form action="">
+				
 				<div id="delivery" name="delivery">
 				
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Location</label>
-					  <select disabled class="form-control select2" id="location_" name="location_" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_" name="location_"  disabled>Select location</option> 
+					  <select disabled class="form-control " id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
+							<option id="location_id" name="location_id"  disabled>Select location</option> 
 							@foreach ($locations as $location )
-								<option id="location_" name="location_" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
+								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
 								</option>
 								
@@ -107,66 +177,74 @@
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Time</label>
-					  <select disabled class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
-							<option id="location_ti" name="location_ti"  disabled>Select delivery time </option> 
+					  <select disabled class="form-control " id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
+							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
 							@if($mealmethod == "delivery")
-								<option id="location_ti" name="location_ti"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
+								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
 							@endif 
 						</select>
 						
 					</div>
                 </div>
-				@endif
-                <div class="form-group col-md-12">
-                <label>Meal Date</label>
 				
-				<input id="cutoff" name="cutoff" type="hidden" value="{{$order_cutoff->Order_Cutoff_Time }}">
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control" disabled readonly name="meal_da" id="meal_da" value="{{$cos_order->Cos_Meal_Date_Time}}" required>
-                </div>
-				
-                <!-- /.input group -->
-              </div>
-			<div class="form-group">
-					<div class="radio col-md-6">
+				 </form>
+			</div>
+			
+			</div>
+		  </div>
+		
+		@endif
+	  
+		<div class="col-md-6">
+		  <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Payment Method</h3>
+            </div>
+            <!-- /.box-header -->
+            <div id="box" class="box-body">
+
+				<div class="form-group col-md-6">
+					<div class="radio">
 						<label>
 						  <input type="radio" disabled name="mealmethod3" id="optionsRadios1" value="payroll"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") checked @endif>
 						  Payroll deduction payment
 						</label>
 					  </div>
 				</div>
-				<div class="form-group">
-					  <div class="radio col-md-6 ">
+				<div class="form-group col-md-6">
+					  <div class="radio">
 						<label>
 						  <input type="radio" disabled name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif @if($deduction->Patron_Deduction_Status == 0) checked @endif @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
 						  Cash Payment at pickup
 						</label>
 					 </div>
 				 </div>  
-			  
-			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
-			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
-            <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$cos_order->Cos_Order_Num}}">
-			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
+				 
 			</div>
-            <!-- /.box-body -->
-			 <div class="box-footer">
-                <a href="{{URL::to('order_remove/'. $cos_order->Cos_Order_Num)}}" class="btn btn-default btn-flat">Cancel Order</a>
+			
+			</div>
+		</div>
+		  
+		</div>
 				
+				
+		<div class="row">
+		  <div class="col-md-6">
+		  <div class="box box-default">
+          
+			<div class="box-header">
+			<div class="btn-toolbar block">
+			 	<a href="{{url('order')}}" class="btn btn-default btn-flat">Back</a>
 
-				<a href="{{URL::to('order_edit/'. $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
+				@if($approved == "Approved")
+			 		<a href="{{URL::to('order_remove/'. $cos_order->Cos_Order_Num)}}" class="btn btn-danger btn-flat"><li class="glyphicon glyphicon-remove"></li> Cancel</a>
+					<a href="{{URL::to('order_edit/'. $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li> Edit</a>
+				@endif
               </div>
-              <!-- /.box-footer -->
-			 </form>
-          </div>
-          <!-- /.box -->
-        </div>
-        <!--/.col (right) -->
-      </div>
+			</div>
+			</div>
+		  </div>
+		  </div>		
       <!-- /.row -->
     </section>
     <!-- /.content -->

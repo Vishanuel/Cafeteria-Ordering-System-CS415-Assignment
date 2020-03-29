@@ -128,7 +128,6 @@ class MenuController extends Controller
         $data = DB::table('Menu')
             ->where('Menu.Menu_ID',$id)
             ->get();
-			
             foreach($data as $menu){
                 return view('menu manager.edit_menu', compact('menu','val')); 
             }

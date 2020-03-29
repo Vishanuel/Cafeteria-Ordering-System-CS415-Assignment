@@ -32,14 +32,13 @@
 				<div id="food_itemd1" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select class="food form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food">
-						<option disabled>--Select food--</option> 
+						<option disabled>Select food</option> 
 						@foreach ($foods as $food )
 			 			<option  Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}">
 								{{ $food->Food_Name." - ".$food->Food_Desc }} 
 							</option>
 							
 						@endforeach
-						<option disabled>----Special----</option>
 						
 					</select>
 				</div>
@@ -59,30 +58,62 @@
 					  <input type="number" class="form-control" id="price1" name="price1" Required readonly value="">
 					</div>
 				
+				
+				
 				<div class="col-md-10">
 					<a type="button" id="addfood" class="btn bg-olive btn-flat margin">Add more food item</a>
 				</div>
-				<div id="tcostd" class="form-group col-md-2">
-				  <label>Total Cost ($)</label>
-				  <input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
-			   </div>
-				<!-- <div id="food" ></div>-->
 				
-				<div class="form-group">
-					<div class="radio col-md-3">
+				@if(!empty($specialfoods))
+				<div id="specialfoods123" class="form-group col-md-6">
+				<label>Special</label>
+				<select class="food form-control select2" id="specialfoods" name="specialfoods" style="width: 100%;" placeholder="Select special">
+					<option>No special selected</option>
+						@foreach ($specialfoods as $food )
+							<option value="{{ $food->Special_ID}} {{$food->Quantity}} {{$food->Special_Price}}">
+								{{ $food->Special_Desc }} 
+							</option>
+							
+						@endforeach
+				</select>
+				</div>
+				<div id="specialfoodsquantityd" class="form-group col-md-2">
+				  <label>Quantity</label>
+				  <input type="number" class="form-control" id="specialfoodsquantity" name="specialfoodsquantity" max="" min="1" value="1">
+				</div>
+				<div id="specialfoodsqavailabled" class="form-group col-md-2">
+				  <label>Max Quantity Available</label>
+				  <input type="number" class="form-control" id="specialfoodsqavailable" name="specialfoodsqavailable" readonly value="">
+				</div>
+				<div id="specialfoodspriced" class="form-group col-md-2">
+				  <label>Price ($)</label>
+				  <input type="number" class="form-control" id="specialfoodsprice" name="specialfoodsprice" readonly value="">
+				</div>
+				@endif
+
+				<div id="tcostd" class="form-group col-md-2 pull-right">
+				  <label>Total Cost ($)</label>
+				  <input type="number" class="form-control " id="tcost" name="tcost" Required readonly value="">
+			   </div>
+			   
+				<!-- <div id="food" ></div>-->
+				<div class="form-group col-md-10">
+				<!--<label >Pick meal collection method</label>-->
+					<div class="radio">
 						<label id="del">
-						  <input type="radio" name="mealmethod" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
+						  <input type="radio" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
 						  Get meal delivered 
 						</label>
 					  </div>
-				</div>
-				<div class="form-group">
-					  <div class="radio col-md-9 ">
+				
+				
+					  <div class="radio">
 						<label>
-						  <input type="radio" name="mealmethod" id="optionsRadios2" value="pick-up" checked>
+						  <input type="radio" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios2" value="pick-up" checked>
 						  Pick-up meal from restaurant
 						</label>
 					 </div>
+				 
 				 </div>
 				<div class="has-error col-md-12" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div>
 				<div id="delivery" name="delivery">
@@ -108,7 +139,7 @@
 					  <select class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
 							<option id="location_time1" name="location_time1"  disabled>Select delivery time </option> 
 							
-						</select>
+					</select>
 						
 					</div>
                 </div>

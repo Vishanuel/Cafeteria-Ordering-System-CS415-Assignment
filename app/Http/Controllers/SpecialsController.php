@@ -36,9 +36,6 @@ class SpecialsController extends Controller
             ->select('menu_food_item.Food_Name','specials.Special_Desc','specials.Special_Price')                    ->get()
             ->toArray();
         }
-        //dd($val);
-        //echo count($data);
-        // dd($val[0][0]);
 
         return view('menu manager.display_specials', compact('data','val'));
     }
@@ -155,7 +152,7 @@ class SpecialsController extends Controller
 
                            $id =DB::table('specials')->insert(
                             ['Special_ID' =>  $menuid->Special_ID,
-                            'Special_ID' =>  $menuid->Menu_ID,
+                            'Menu_ID' =>  $menuid->Menu_ID,
                              'Special_Desc' =>  $input["Special_Desc"],
                              'Special_Price' =>  $input["price"][$i]]
                              ); 

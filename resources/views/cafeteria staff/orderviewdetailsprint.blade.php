@@ -4,23 +4,187 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>COS</title>
-  <!-- REQUIRED JS SCRIPTS -->
+  <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- jQuery 3 -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Select2 -->
+ 
+  <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/pace/pace.min.css')}}">
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="{{asset('plugins/iCheck/all.css')}}">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+</head>
+
+
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Delivery
+        <small>information</small>
+      </h1>
+    </section>
+<!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+		  <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Order</h3>
+            </div>
+            <!-- /.box-header -->
+            <div id="box" class="box-body">
+              <form id="orderform" role="form" method="POST" action="{{action('CafeteriaController@update',[$cos_order->Cos_Order_Num])}}" enctype="multipart/form-data">
+			   @csrf
+			   @method('PUT')
+				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
+                <!-- text input -->
+				<?php $i = 1;?>
+				@foreach($food_selecteds as $food_select)
+				
+				<div id="food_itemd{{$i}}" class="form-group col-md-6">
+					<label>Food Item</label>
+					<select disabled class="form-control select2" id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
+						<option  disabled>Select food</option> 
+						@foreach ($foods as $food )
+							<option Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @endif >
+								{{ $food->Food_Name }}
+							</option>
+							
+						@endforeach
+					</select>
+				</div>
+					
+					
+					
+					<div id="quantityd{{$i}}" class="form-group col-md-2">
+					  <label>Quantity</label>
+					  <input type="number" class="form-control" readonly id="quantity{{$i}}" name="quantity{{$i}}" max="" min="1" Required value="{{$food_select->Quantity}}">
+					</div>
+			
+					
+					
+					<?php $i= $i + 1; ?>
+					
+				@endforeach
+				
+				
+				<!-- <div id="food" ></div>-->
+				
+				
+				
+				@if($mealmethod == "delivery")
+				<div id="delivery" name="delivery">
+				
+					<div class="form-group col-md-6">
+					
+					  <label>Delivery Location</label>
+					  <select disabled class="form-control select2" id="location_" name="location_" style="width: 100%;" Required placeholder="Select location">
+							<option id="location_" name="location_"  disabled>Select location</option> 
+							@foreach ($locations as $location )
+								<option id="location_" name="location_" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
+									{{ $location->Location_Name }}
+								</option>
+								
+							@endforeach
+						</select>
+						
+					</div>
+					
+					<div class="form-group col-md-6">
+					
+					  <label>Delivery Time</label>
+					  <select disabled class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
+							<option id="location_ti" name="location_ti"  disabled>Select delivery time </option> 
+							@if($mealmethod == "delivery")
+								<option id="location_ti" name="location_ti"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
+							@endif 
+						</select>
+						 
+					</div>
+                </div>
+				@endif
+                <div class="form-group col-md-12">
+                <label>Meal Date</label>
+				
+				<input id="cutoff" name="cutoff" type="hidden" value="{{$order_cutoff->Order_Cutoff_Time }}">
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control" disabled readonly name="meal_date" id="meal_date" value="{{$cos_order->Cos_Meal_Date_Time}}" required>
+                </div>
+				
+                <!-- /.input group -->
+              </div>
+			 			
+			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
+			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
+			
+            <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$cos_order->Cos_Order_Num}}">
+			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
+			<div id="cwarning" name="cwarning" class="form-group col-md-12" style="display: none" value=""></div>
+			<input id="dwarn" name="dwarn" class="form-group col-md-12" style="display: none" value="">
+			<input id="delivery" name="delivery" class="form-group col-md-12" style="display: none" value="">
+			</div>
+            <!-- /.box-body -->
+			 
+              <!-- /.box-footer -->
+			 </form>
+          </div>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+ 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
+{{-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
+<!-- jQuery 3 -->
+<script src="{{asset('bower_components/PACE/pace.min.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-
 <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
-<!-- <script src="{{asset('bower_components/PACE/pace.min.js')}}"></script> -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <!-- DataTables -->
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- SlimScroll -->
 <script src="{{asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
@@ -47,175 +211,15 @@
 <script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
+
 <!-- jvectormap  -->
-  
-  <!-- Tell the browser to be responsive to screen width -->
-  <link rel="stylesheet" href="{{asset('plugins/pace/pace.min.css')}}">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
-  
-  <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
-  <!-- daterange picker -->
-  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
-  <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="{{asset('plugins/iCheck/all.css')}}">
-  <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
-  <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
-  <!-- jvectormap -->
- 
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-
-</head>
-<body class="hold-transition skin-blue layout-top-nav" >
-<div class="wrapper">
-
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="#" class="navbar-brand"><b>Cafeteria </b>Ordering System</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li ><a href="{{URL::to('restaurant')}}">Place Order <span class="sr-only">(current)</span></a></li>
-            <li><a href="{{URL::to('order')}}">View Previous Orders</a></li>
-            <!-- <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">View Previous Orders</a></li>
-                <!--<li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>-->
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-           
-            <!-- User Account Menu -->
-            <li class="dropdown user user-menu">
-              <!-- Menu Toggle Button -->
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- The user image in the navbar-->
-                <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <span class="hidden-xs">{{ Auth::user()->name }}</span>
-              </a>
-              <ul class="dropdown-menu">
-                <!-- The user image in the menu -->
-                <li class="user-header">
-                  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                  <p>
-                    {{ Auth::user()->name }} - {{ Auth::user()->usertype }}
-                    <small>{{ Auth::user()->created_at}}</small>
-                  </p>
-                </li>
-                <!-- Menu Body -->
-                
-				
-				
-				
-                <!-- Menu Footer-->
-                <li class="user-footer">
-                  <div class="pull-left">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  </div>
-                  <div class="pull-right">
-				  <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                           @csrf
-					<button type="submit" class="btn btn-primary btn-flat">Sign out</button>
-                  </form>
-                  </div>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-custom-menu -->
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Full Width Column -->
-  
-	
-  <div class="content-wrapper">
-    <div class="container">
-      <!-- Content Header (Page header) -->
-      @if(session()->has('success'))
-		<input type="hidden" value="{{Session::get('success')}}" id="hiddensuccesswcs">
-	@endif
-	@if(session()->has('error'))
-		<input type="hidden" value="{{Session::get('error')}}" id="hiddenerrorwcs">
-	@endif
-	@if(session()->has('warning'))
-		<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
-	@endif
-	@yield('content')
-    </div>
-    <!-- /.container -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="container">
-      <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.13
-      </div>
-      <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
-      reserved.
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
-
-<script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+	 <script>
   $(function () {
-    $('#example1').DataTable({
-		rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
-        responsive: true
-	});
+    $('#example1').DataTable()
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,
@@ -223,7 +227,7 @@
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
-    });
+    })
     //Initialize Select2 Elements
     $('.select2').select2()
     //Datemask dd/mm/yyyy
@@ -256,7 +260,8 @@
     )
     //Date picker
     $('#datepicker').datepicker({
-      autoclose: true
+	  autoclose: true,
+	  format: 'yyyy-mm-dd'
     })
     //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -295,8 +300,24 @@
        hiddenwarning=$("#hiddenwarningwcs").val();
        swal("Access Denied", hiddenwarning, "error");
     });
+
+	$(document).ready(function(){
+    $('input[type="checkbox"]').click(function(){
+        var inputValue = $(this).attr("value");
+        $("." + inputValue).toggle();
+    });
 	
-	
+		var count = $('#q').html();
+	$('#ite').val(count);
+	var k=1;
+	for(k;k<count;k++){
+		var str = $('#food_item'+k).val();
+		var food = str.split(/(\s+)/);
+	 
+		$('#price'+k).val($('#quantity'+k).val()*food[4]);
+		$('#quantity'+k).attr({'max':food[2]});
+		$('#qavailable'+k).val(food[2]);
+	}
 	
 	function tcost(){
 		var e;
@@ -305,65 +326,7 @@
 			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));
 			
 		}
-		if($('#specialfoodsprice').val()){
-			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#specialfoodsprice').val()));
-		}
-		
 	}
-	
-	var count = $('#q').html();
-	//alert(count);
-	$('#ite').val(count);
-	//alert(count);
-	var k=1;
-	for(k;k<count;k++){
-		var ids = $('#food_item'+k).attr('id');
-		var changes = ids.replace( /^\D+/g, '');
-		var str = $('#food_item'+changes).val();
-		
-		var food = str.split(/(\s+)/);
-	 
-		$('#price'+changes).val($('#quantity'+changes).val()*food[4]);
-		$('#quantity'+changes).attr({'max':food[2]});
-		$('#qavailable'+changes).val(food[2]);
-	//	alert(food[4]);
-		$('#quantity'+changes).on("keyup change click paste ", function(){
-			
-			
-			var id = $(this).attr('id');
-			var change = id.replace( /^\D+/g, '');
-			var str = $('#food_item'+change).val();
-			var food = str.split(/(\s+)/);
-			//alert(change);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
-			tcost();
-		});
-	
-		$('#food_item'+changes).change(function(){
-			//alert("helo");
-			var id = $(this).attr('id');
-			//alert(id);
-			var change = id.replace( /^\D+/g, '');
-			//alert( $(this).find("option:selected").attr('value') );
-			var str = $('#food_item'+change).val();
-			var food = str.split(/(\s+)/);
-			//alert(food[2]);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
-		///	$('#Quantity').val();
-			$('#qavailable'+change).val(food[2]);		
-			$('#quantity'+change).attr({'max':food[2]});
-			$("#quantity"+change).on("keyup change click paste ", function(){
-				//alert(food[4]);
-				$('#price'+change).val($('#quantity'+change).val()*food[4]);
-				tcost();
-			})
-			tcost();
-		});
-		
-		
-	}
-	
-	
 	
 	var today = new Date();
 	var dd = String(today.getDate()).padStart(2, '0');
@@ -373,10 +336,8 @@
 	var	todaydate = yyyy + '-' + mm + '-' + dd;
 	//$('#meal_date').val(todaydate);
 	
-	function populate(selector,value) {
+	function populate(selector) {
 		var select = $(selector);
-	//	var value = value);
-		
 		var today = new Date();
 		var time = (today.getHours()*60)+today.getMinutes();
 		while((time % 5) != 0){
@@ -398,8 +359,6 @@
 			time = 600;	
 		}
 		
-		
-		
 		var hours, minutes, ampm;
 		for(var i = 600; i <= 1320; i += 15){
 			hours = Math.floor(i / 60);
@@ -417,18 +376,8 @@
 				select.append($('<option></option>')
 					.attr('value', hours + ':' + minutes + ' ' + ampm)
 					.text(hours + ':' + minutes + ' ' + ampm)); 
-					//alert($('#meal_date').val());
-					if(value != null){
-						$('#location_time').val(value);
-					}
-
-					if($('#location_time').val() == null){
-						$('#location_time').val($('#location_time option:first').val())
-					}
 			}
 		}
-		
-		
 	}
 	
 	var l = 0;
@@ -482,8 +431,9 @@
 		
 		var str = $('#food_item'+count).val();
 		var food = str.split(/(\s+)/);
-		
+		//alert(food[2]);
 		$('#price'+count).val($('#quantity'+count).val()*food[4]);
+	///	$('#Quantity').val();
 		$('#qavailable'+count).val(food[2]);
 		$('#quantity'+count).attr({'max':food[2]});
 		
@@ -560,36 +510,24 @@
 	});
 	
 	function delivery_time(){
-		var deduction = $('#deduction').val();
-
-		if(deduction == 0){
+		var len = document.getElementById("location_time").length;
+		//alert(len);
+		if(len <= 1){
+			//alert(len);
+			document.getElementById('dwarn').style.display = 'block';
 			document.getElementById('optionsRadios1').disabled = true;
-			document.getElementById('dwarn').style.display = 'none';
 		}
 		else{
-			var len = document.getElementById("location_time").length;
-			//alert(len);
-			if(len <= 1){
-				//alert(len);
-				document.getElementById('dwarn').style.display = 'block';
-				document.getElementById('optionsRadios1').disabled = true;
-				$("#optionsRadios2").prop("checked", true);
-				document.getElementById('delivery').style.display = 'none';
-					
-			}
-			else{
-				document.getElementById('dwarn').style.display = 'none';
-				document.getElementById('optionsRadios1').disabled = false;
-			}
+			document.getElementById('dwarn').style.display = 'none';
+			document.getElementById('optionsRadios1').disabled = false;
 		}
 	}
 	
 	
 	function meal_date(){
-		var dateselect = $('#meal_date').val();
 		
 		var today = new Date();
-		var time = today.getHours();
+		var time = today.getHours()+":00:00";
 		var cutoff = $('#cutoff').val();
 		
 		var tomorrow = new Date(today)
@@ -607,23 +545,14 @@
 
 		var	tomorrowdate = yyyy + '-' + mm + '-' + dd;
 		
-		cutoff = cutoff.match(/\d+/)[0];
-		//alert(cutoff);
-		//alert(time);
 		if(time >= cutoff){
-			//alert(1);
 			$('#meal_date').datepicker({
 			  autoclose: true,
 			  startDate: tomorrow,
 			  format: 'yyyy-mm-dd'
 			})
 			document.getElementById('cwarning').style.display = 'block';
-			if(dateselect == todaydate){
-				$('#meal_date').val(tomorrowdate);
-			}
-			else{
-				$('#meal_date').val(dateselect);
-			}
+			$('#meal_date').val(tomorrowdate);
 		}
 		
 		else{
@@ -633,87 +562,31 @@
 			  format: 'yyyy-mm-dd'
 			})
 			document.getElementById('cwarning').style.display = 'none';
-			if(dateselect == todaydate){
-				$('#meal_date').val(todaydate);
-			}
-			else{
-				$('#meal_date').val(dateselect);
-			}
-			
+			$('#meal_date').val(todaydate);
 		}
 		
 		
-	}
-	
-	
-	//k=1;
-	//for(k;k<count;k++){
-		
-	//}
-	if($('#specialfoods').val()){
-		if($('#specialfoods').val() == "No special selected"){
-			$('#specialfoodsprice').val("0");
-			document.getElementById('specialfoodspriced').style.display = "none";
-			document.getElementById('specialfoodsqavailabled').style.display = "none";
-			document.getElementById('specialfoodsquantityd').style.display = "none";
-			tcost();
-		}
-		
-		else{
-			var str = $('#specialfoods').val();
-			var food = str.split(/(\s+)/);
-			$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
-			$('#specialfoodsqavailable').val(food[2]);		
-			$('#specialfoodsquantity').attr({'max':food[2]});
-			document.getElementById('specialfoodspriced').style.display = "block";
-			document.getElementById('specialfoodsqavailabled').style.display = "block";
-			document.getElementById('specialfoodsquantityd').style.display = "block";
-			tcost();
-		}
 	}
 	
 	
 	$( document ).ready(function() {
-		//if($('#example1'))
-		$('form').on('focus', 'input[type=number]', function (e) {
-		  $(this).on('wheel.disableScroll', function (e) {
-			e.preventDefault()
-		  })
-		})
-		$('form').on('blur', 'input[type=number]', function (e) {
-		  $(this).off('wheel.disableScroll')
-		})
 		
-		tcost();
-		
-		
-		$valuetime=$('#location_time').val();
 		var reload = function() {
 			$('#location_time').find('option').remove().end();
 			meal_date();
-			
-			populate('#location_time', $valuetime);
+			populate('#location_time');
 			delivery_time();
-			
-			
 			
 			setTimeout(function() {
 				 reload();
-          }, 300000);
+          }, 100);
 		  
 		};
 		reload();
 		
+	
 		
-		$('#meal_date').datepicker().on('changeDate', function (ev) {
-			//alert(1);
-			$value=$('#location_time').val();
-			$('#location_time').find('option').remove().end();
-			populate('#location_time',$value);
-			delivery_time();
-				//$('#location_time').val($value);
-		});
-		
+		//delivery_time();
 		
 		if(document.getElementById('optionsRadios1').checked) {
 		  document.getElementById('delivery').style.display = 'block';
@@ -721,7 +594,10 @@
 		  document.getElementById('delivery').style.display = 'none';
 		}
 		
-		
+		$("#quantity1").on("keyup change click paste mousewheel", function(){
+			$('#price1').val($('#quantity1').val()*food[4]);
+			tcost();
+		})
 		
 		$('input:radio[name=mealmethod]').change(function() {
 			if (this.value == 'pick-up') {
@@ -731,49 +607,43 @@
 				document.getElementById('delivery').style.display = 'block';
 			}
 		});
-				
-		if($('#specialfoods').val()){
-			$("#specialfoodsquantity").on("keyup change click paste mousewheel", function(){
-				$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
+		
+		$('#food_item1').change(function(){
+			//alert( $(this).find("option:selected").attr('value') );
+			var str = $('#food_item1').val();
+			var food = str.split(/(\s+)/);
+			//alert(food[2]);
+			$('#price1').val($('#quantity1').val()*food[4]);
+		///	$('#Quantity').val();
+			$('#qavailable1').val(food[2]);		
+			$('#quantity1').attr({'max':food[2]});
+			$("#quantity1").on("keyup change click paste mousewheel", function(){
+				$('#price1').val($('#quantity1').val()*food[4]);
 				tcost();
 			})
-			
-			$('#specialfoods').change(function(){
-
-				var str = $('#specialfoods').val();
-				var food = str.split(/(\s+)/);
-				$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
-				$('#specialfoodsqavailable').val(food[2]);		
-				$('#specialfoodsquantity').attr({'max':food[2]});
-				document.getElementById('specialfoodspriced').style.display = "block";
-				document.getElementById('specialfoodsqavailabled').style.display = "block";
-				document.getElementById('specialfoodsquantityd').style.display = "block";
-				$("#specialfoodsquantity").on("keyup change click paste mousewheel", function(){
-					$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
-					tcost();
-				})
-				if($('#specialfoods').val() == "No special selected"){
-					$('#specialfoodsprice').val("0");
-					document.getElementById('specialfoodspriced').style.display = "none";
-					document.getElementById('specialfoodsqavailabled').style.display = "none";
-					document.getElementById('specialfoodsquantityd').style.display = "none";
-				}
-				
-				tcost();
-				
-				
-				
-			});
-		}
+			tcost();
+		});
 		
-		
-	});
 	
-</script>
+		$('#meal_date').datepicker().on('changeDate', function (ev) {
+			//alert(1);
+			$('#location_time').find('option').remove().end();
+			populate('#location_time');
+		});
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
+		$('#price').css('display','none'); // Hide the text input box in default
+		function myFunction() {
+   		if($('#Menu_Food_Item_ID').prop('checked')) {
+         $('#price').css('display','block');
+       } else {
+         $('#price').css('display','none');
+       }
+		}
+			
+
+	});
 	 
-</body>
-</html>
+  window.addEventListener("load", window.print());
+});
+
+  </script>

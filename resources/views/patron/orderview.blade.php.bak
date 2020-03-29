@@ -18,7 +18,7 @@
     <section class="content">
       <div class="row">
         <!-- left column -->
-        <div class="col-md-12">
+        <div class="col-md-6">
 		  <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Order</h3>
@@ -61,9 +61,35 @@
 					
 				@endforeach
 				
+				
+				@if($special_id != null && !empty($specialfoods))
+				<div id="specialfoods123" class="form-group col-md-6">
+				<label>Special</label>
+				<select disabled class="food form-control select2" id="specialfoods" name="specialfoods" style="width: 100%;" placeholder="Select special">
+					<option>No special selected</option>
+						@foreach ($specialfoods as $food )
+							<option @if($food->Special_ID == $special_id->Special_ID) selected @endif value="{{ $food->Special_ID}} {{$food->Quantity}} {{$food->Special_Price}}">
+								{{ $food->Special_Desc }} 
+							</option>
+							
+						@endforeach
+				</select>
+				</div>
+				<div id="specialfoodsqavailabled" class="form-group" style="display: none"></div>
+				<div id="specialfoodsquantityd" class="form-group col-md-2">
+				  <label>Quantity</label>
+				  <input readonly type="number" class="form-control" id="specialfoodsquantity" name="specialfoodsquantity" max="" min="1" value="{{$special_id->Quantity}}">
+				</div>
+				<div id="specialfoodspriced" class="form-group col-md-2">
+				  <label>Price($)</label>
+				  <input type="number" class="form-control" id="specialfoodsprice" name="specialfoodsprice" readonly value="">
+				</div>
+				@endif
+				
 				<div id="tcostd" class="form-group col-md-2">
-				  <label>Total Cost ($)</label>
-				  <input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
+				  <label>Total($)</label>
+				
+				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>
 				<!-- <div id="food" ></div>-->
 				
@@ -100,21 +126,32 @@
 			
 			  
 			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
-			<input id="cwarning" name="cwarning" class="form-group col-md-12" style="display: none" value=""> 
+			<div id="cwarning" name="cwarning" class="form-group col-md-12" style="display: none" value=""> </div>
 			<input id="dwarn" name="dwarn" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
 			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$cos_order->Cos_Order_Num}}">
 			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
+			
+			
+			@if($special_id == null)
+				<input id="special_id" name="special_id" class="form-group col-md-12" style="display: none" value="null"> 
+				
+			@else
+				<input id="special_id" name="special_id" class="form-group col-md-12" style="display: none" value="{{$special_id->Special_ID}}"> 
+			@endif
+			
 			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel Order</a>
+			 <div class="btn-toolbar">
+                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat pull-left">Cancel Order</a>
 				
                 <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Confirm Order</button>
 				
 				<a href="{{route('order_edit', $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
               </div>
+			  </div>
               <!-- /.box-footer -->
 			 </form>
           </div>
@@ -123,10 +160,10 @@
         </div>
 		
         <!--/.col (right) -->
-      </div>
+    
 	  @if($mealmethod == "delivery")
-	  <div class="row">
-		<div class="col-md-12">
+
+		<div class="col-md-6">
 		  <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Delivery Info</h3>
@@ -170,10 +207,10 @@
 			
 			</div>
 		  </div>
-		</div>
+		
 		@endif
-	  <div class="row">
-		<div class="col-md-12">
+	  
+		<div class="col-md-6">
 		  <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Payment Method</h3>

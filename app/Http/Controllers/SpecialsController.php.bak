@@ -153,16 +153,16 @@ class SpecialsController extends Controller
                            ->where('Special_ID','=', $id)
                            ->delete();  
 
-                           $id =DB::table('specials')->where('Special_ID',  $menuid->Special_ID)->update(
-                            [
+                           $id =DB::table('specials')->insert(
+                            ['Special_ID' =>  $menuid->Special_ID,
                             'Menu_ID' =>  $menuid->Menu_ID,
                              'Special_Desc' =>  $input["Special_Desc"],
                              'Special_Price' =>  $input["price"][$i]]
                              ); 
 
-                       DB::table('special_food')->where('Special_ID', $id)->update(
-                           ['Menu_Food_ID' => $input["Food"][$i]
-                            ]
+                       DB::table('special_food')->insert(
+                           ['Menu_Food_ID' => $input["Food"][$i],
+                            'Special_ID' => $id]
                             );  
                         }
 

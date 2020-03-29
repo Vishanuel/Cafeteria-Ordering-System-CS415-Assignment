@@ -51,14 +51,22 @@
 				<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction}}"> 
 				<input id="mealmethodn" name="mealmethodn" class="form-group col-md-12" style="display: none" value="{{$mealmethod}}">
 				<input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid ?? ''}}">
-				<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
-            </div>
+				<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}">
+				@if($special_id == null)
+					<input id="special_id" name="special_id" class="form-group col-md-12" style="display: none" value="null"> 
+				
+				@else
+					<input id="special_id" name="special_id" class="form-group col-md-12" style="display: none" value="{{$special_id->Special_ID}}"> 
+				@endif
+			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel Order</a>
-                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Continue</button>
-				<a href="{{route('order_edit', $orderid ?? '')}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
-              </div>
+				<div class="btn-toolbar">
+					<a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel Order</a>
+					<button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Continue</button>
+					<a href="{{route('order_edit', $orderid ?? '')}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
+				</div>	
+			  </div>
               <!-- /.box-footer -->
 			 </form>
           </div>

@@ -7,8 +7,9 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Select2 -->
+ 
   <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
-  
+  <link rel="stylesheet" href="{{asset('plugins/pace/pace.min.css')}}">
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -44,6 +45,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+</head>
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
@@ -166,6 +168,7 @@
 
 {{-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
 <!-- jQuery 3 -->
+<script src="{{asset('bower_components/PACE/pace.min.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>

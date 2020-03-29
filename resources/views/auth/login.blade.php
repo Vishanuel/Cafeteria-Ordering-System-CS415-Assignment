@@ -49,7 +49,7 @@
 				<p>{{ $message }}</p>
 				</div>
           @enderror
-          <div class="form-group has-feedback @error('password') has-error @enderror">
+          <div class="form-group has-feedback @error('email') has-error @enderror">
             <input id="password" type="password" name="password" class="form-control" required placeholder="Password"><span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
 		  @error('password')

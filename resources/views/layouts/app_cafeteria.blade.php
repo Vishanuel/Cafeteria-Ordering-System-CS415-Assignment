@@ -10,17 +10,14 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
+<script src="{{asset('bower_components/PACE/pace.min.js')}}"></script>
 <!-- Bootstrap 3.3.7 -->
 
 <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
-<!-- <script src="{{asset('bower_components/PACE/pace.min.js')}}"></script> -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <!-- DataTables -->
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- SlimScroll -->
 <script src="{{asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
@@ -50,7 +47,7 @@
 <!-- jvectormap  -->
   
   <!-- Tell the browser to be responsive to screen width -->
-  <link rel="stylesheet" href="{{asset('plugins/pace/pace.min.css')}}">
+  
   <!-- Select2 -->
   <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
   
@@ -74,12 +71,10 @@
   <!-- Bootstrap time Picker -->
   <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   <!-- jvectormap -->
- 
+  <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -93,7 +88,7 @@
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 
 </head>
-<body class="hold-transition skin-blue layout-top-nav" >
+<body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
   <header class="main-header">
@@ -109,8 +104,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li ><a href="{{URL::to('restaurant')}}">Place Order <span class="sr-only">(current)</span></a></li>
-            <li><a href="{{URL::to('order')}}">View Previous Orders</a></li>
+            <li ><a href="{{URL::to('cafeteria')}}">View Orders <span class="sr-only">(current)</span></a></li>
+          <!--  <li><a href="{{URL::to('order')}}">View Orders</a></li> -->
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -210,12 +205,7 @@
 
 <script>
   $(function () {
-    $('#example1').DataTable({
-		rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
-        responsive: true
-	});
+    $('#example1').DataTable()
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,
@@ -223,7 +213,7 @@
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
-    });
+    })
     //Initialize Select2 Elements
     $('.select2').select2()
     //Datemask dd/mm/yyyy
@@ -296,7 +286,17 @@
        swal("Access Denied", hiddenwarning, "error");
     });
 	
-	
+	var count = $('#q').html();
+	$('#ite').val(count);
+	var k=1;
+	for(k;k<count;k++){
+		var str = $('#food_item'+k).val();
+		var food = str.split(/(\s+)/);
+	 
+		$('#price'+k).val($('#quantity'+k).val()*food[4]);
+		$('#quantity'+k).attr({'max':food[2]});
+		$('#qavailable'+k).val(food[2]);
+	}
 	
 	function tcost(){
 		var e;
@@ -305,65 +305,7 @@
 			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));
 			
 		}
-		if($('#specialfoodsprice').val()){
-			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#specialfoodsprice').val()));
-		}
-		
 	}
-	
-	var count = $('#q').html();
-	//alert(count);
-	$('#ite').val(count);
-	//alert(count);
-	var k=1;
-	for(k;k<count;k++){
-		var ids = $('#food_item'+k).attr('id');
-		var changes = ids.replace( /^\D+/g, '');
-		var str = $('#food_item'+changes).val();
-		
-		var food = str.split(/(\s+)/);
-	 
-		$('#price'+changes).val($('#quantity'+changes).val()*food[4]);
-		$('#quantity'+changes).attr({'max':food[2]});
-		$('#qavailable'+changes).val(food[2]);
-	//	alert(food[4]);
-		$('#quantity'+changes).on("keyup change click paste ", function(){
-			
-			
-			var id = $(this).attr('id');
-			var change = id.replace( /^\D+/g, '');
-			var str = $('#food_item'+change).val();
-			var food = str.split(/(\s+)/);
-			//alert(change);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
-			tcost();
-		});
-	
-		$('#food_item'+changes).change(function(){
-			//alert("helo");
-			var id = $(this).attr('id');
-			//alert(id);
-			var change = id.replace( /^\D+/g, '');
-			//alert( $(this).find("option:selected").attr('value') );
-			var str = $('#food_item'+change).val();
-			var food = str.split(/(\s+)/);
-			//alert(food[2]);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
-		///	$('#Quantity').val();
-			$('#qavailable'+change).val(food[2]);		
-			$('#quantity'+change).attr({'max':food[2]});
-			$("#quantity"+change).on("keyup change click paste ", function(){
-				//alert(food[4]);
-				$('#price'+change).val($('#quantity'+change).val()*food[4]);
-				tcost();
-			})
-			tcost();
-		});
-		
-		
-	}
-	
-	
 	
 	var today = new Date();
 	var dd = String(today.getDate()).padStart(2, '0');
@@ -482,8 +424,9 @@
 		
 		var str = $('#food_item'+count).val();
 		var food = str.split(/(\s+)/);
-		
+		//alert(food[2]);
 		$('#price'+count).val($('#quantity'+count).val()*food[4]);
+	///	$('#Quantity').val();
 		$('#qavailable'+count).val(food[2]);
 		$('#quantity'+count).attr({'max':food[2]});
 		
@@ -573,9 +516,6 @@
 				//alert(len);
 				document.getElementById('dwarn').style.display = 'block';
 				document.getElementById('optionsRadios1').disabled = true;
-				$("#optionsRadios2").prop("checked", true);
-				document.getElementById('delivery').style.display = 'none';
-					
 			}
 			else{
 				document.getElementById('dwarn').style.display = 'none';
@@ -646,47 +586,9 @@
 	}
 	
 	
-	//k=1;
-	//for(k;k<count;k++){
-		
-	//}
-	if($('#specialfoods').val()){
-		if($('#specialfoods').val() == "No special selected"){
-			$('#specialfoodsprice').val("0");
-			document.getElementById('specialfoodspriced').style.display = "none";
-			document.getElementById('specialfoodsqavailabled').style.display = "none";
-			document.getElementById('specialfoodsquantityd').style.display = "none";
-			tcost();
-		}
-		
-		else{
-			var str = $('#specialfoods').val();
-			var food = str.split(/(\s+)/);
-			$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
-			$('#specialfoodsqavailable').val(food[2]);		
-			$('#specialfoodsquantity').attr({'max':food[2]});
-			document.getElementById('specialfoodspriced').style.display = "block";
-			document.getElementById('specialfoodsqavailabled').style.display = "block";
-			document.getElementById('specialfoodsquantityd').style.display = "block";
-			tcost();
-		}
-	}
 	
 	
 	$( document ).ready(function() {
-		//if($('#example1'))
-		$('form').on('focus', 'input[type=number]', function (e) {
-		  $(this).on('wheel.disableScroll', function (e) {
-			e.preventDefault()
-		  })
-		})
-		$('form').on('blur', 'input[type=number]', function (e) {
-		  $(this).off('wheel.disableScroll')
-		})
-		
-		tcost();
-		
-		
 		$valuetime=$('#location_time').val();
 		var reload = function() {
 			$('#location_time').find('option').remove().end();
@@ -695,8 +597,6 @@
 			populate('#location_time', $valuetime);
 			delivery_time();
 			
-			
-			
 			setTimeout(function() {
 				 reload();
           }, 300000);
@@ -704,16 +604,9 @@
 		};
 		reload();
 		
+	
 		
-		$('#meal_date').datepicker().on('changeDate', function (ev) {
-			//alert(1);
-			$value=$('#location_time').val();
-			$('#location_time').find('option').remove().end();
-			populate('#location_time',$value);
-			delivery_time();
-				//$('#location_time').val($value);
-		});
-		
+		//delivery_time();
 		
 		if(document.getElementById('optionsRadios1').checked) {
 		  document.getElementById('delivery').style.display = 'block';
@@ -721,7 +614,10 @@
 		  document.getElementById('delivery').style.display = 'none';
 		}
 		
-		
+		$("#quantity1").on("keyup change click paste mousewheel", function(){
+			$('#price1').val($('#quantity1').val()*food[4]);
+			tcost();
+		})
 		
 		$('input:radio[name=mealmethod]').change(function() {
 			if (this.value == 'pick-up') {
@@ -731,42 +627,31 @@
 				document.getElementById('delivery').style.display = 'block';
 			}
 		});
-				
-		if($('#specialfoods').val()){
-			$("#specialfoodsquantity").on("keyup change click paste mousewheel", function(){
-				$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
+		
+		$('#food_item1').change(function(){
+			//alert( $(this).find("option:selected").attr('value') );
+			var str = $('#food_item1').val();
+			var food = str.split(/(\s+)/);
+			//alert(food[2]);
+			$('#price1').val($('#quantity1').val()*food[4]);
+		///	$('#Quantity').val();
+			$('#qavailable1').val(food[2]);		
+			$('#quantity1').attr({'max':food[2]});
+			$("#quantity1").on("keyup change click paste mousewheel", function(){
+				$('#price1').val($('#quantity1').val()*food[4]);
 				tcost();
 			})
-			
-			$('#specialfoods').change(function(){
-
-				var str = $('#specialfoods').val();
-				var food = str.split(/(\s+)/);
-				$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
-				$('#specialfoodsqavailable').val(food[2]);		
-				$('#specialfoodsquantity').attr({'max':food[2]});
-				document.getElementById('specialfoodspriced').style.display = "block";
-				document.getElementById('specialfoodsqavailabled').style.display = "block";
-				document.getElementById('specialfoodsquantityd').style.display = "block";
-				$("#specialfoodsquantity").on("keyup change click paste mousewheel", function(){
-					$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
-					tcost();
-				})
-				if($('#specialfoods').val() == "No special selected"){
-					$('#specialfoodsprice').val("0");
-					document.getElementById('specialfoodspriced').style.display = "none";
-					document.getElementById('specialfoodsqavailabled').style.display = "none";
-					document.getElementById('specialfoodsquantityd').style.display = "none";
-				}
-				
-				tcost();
-				
-				
-				
-			});
-		}
+			tcost();
+		});
 		
-		
+	
+		$('#meal_date').datepicker().on('changeDate', function (ev) {
+			//alert(1);
+			$value=$('#location_time').val();
+			$('#location_time').find('option').remove().end();
+			populate('#location_time',$value);
+			//$('#location_time').val($value);
+		});
 	});
 	
 </script>

@@ -32,5 +32,15 @@ class TypeMiddleware
         {
              return Response::view('menu manager.home');
         }   
+		
+		else if(Auth::check() && auth()->user()->usertype ==='Cafeteria Staff')
+        {
+             return redirect('/cafeteria');
+        } 
+		
+		else if(Auth::check() && auth()->user()->usertype ==='Meal Deliverer')
+        {
+             return Response::view('meal deliverer.home');
+        } 
     }
 }

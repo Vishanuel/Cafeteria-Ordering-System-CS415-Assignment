@@ -5,6 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+	   <small>Your</small>
         Menu
         <small>information</small>
       </h1>
@@ -16,66 +17,85 @@
     </section>
 <!-- Main content -->
     <section class="content">
-      <div class="row">
+     
+		<?php $menuid = -1;?>
+						
         <!-- left column -->
-        <div class="col-md-12">
-		  <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Menu</h3>
-            </div>
-            <!-- /.box-header -->
-            <div id="box" class="box-body">
-              
+        @foreach($categories as $category)
+		
+		 <div class="row">
+			 <div class="col-md-12">
+			  <div class="box loading" style="background: rgba(255, 255, 255, 1); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);z-index:999;">
+				<div class="box-header">
+					<h3 class="box-title">{{$category->Category_Name}} Menu</h3>
+				</div>
+			  </div>
 			</div>
-            <!-- /.box-header -->
-            <div  class="box-body">
-			@if(count($foods) > 0)
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Food Name</th>
-                  <th>Food Description</th>
-                </tr>
-                </thead>
-                <tbody>
+		
+					
 				
 				   @foreach($foods as $food)
-					<tr>
-					  <td style="text-overflow: ellipsis;">{{ $food->Food_Name }}</td>
-					  <td style="text-overflow: ellipsis;">{{ $food->Food_Desc}}</td>
-					  <td style="text-overflow: ellipsis;" class="text-center">
-							<?php ?>
-						<?php $menuid = $food->Menu_ID ?? ""?>	 
+						@if($category->Category_ID == $food->Category_ID )
+			
+						<div class="col-md-6">
 						
-								
-						</td>
-					</tr>
-					@endforeach
-				
-				
-                </tbody>
-                
-              </table>
-			  
-			 
-			  <a class="btn btn-info btn-flat" type="button" href="{{URL::to('order_create/'.$menuid)}}">
-                    Place order
-				</a>
-			  @else
-					<div id="2" class="callout callout-danger col-md-6" ><p>No available menu for this date. Sorry for the inconvenience caused.</p></div>
+						<div class="box loading box-widget widget-user">
+						<!-- Add the bg color to the header using any of the bg-* classes -->
+						<div class="widget-user-header bg-black" style="height:175px; background: url('../{{$food->Food_Pic}}') center center;">
+						 <!-- <h3 class="widget-user-username">Elizabeth Pierce</h3>
+						  <h5 class="widget-user-desc">Web Designer</h5> -->
+						  <div class="box-footer" style="opacity: 0.5;">
+						  <div class="row" style="">
+							<div class="col-sm-12 border-bottom">
+							  <div class="description-block ">
+								<h5  style="color: black;">{{ $food->Food_Desc}}</h5>
+								<span class="description-text" style="color: black;"></br>{{ $food->Food_Name }}</span>
+							  </div>
+							  <!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+							
+							<!-- /.col -->
+						  </div>
+						  </div>
+						</div>
+						
+						
+						  <?php $menuid = $food->Menu_ID;?>
 					
-			  @endif
+						
+					  </div>
+					</div>
+					
+						@endif
+						
+					@endforeach
+					
+					@if($menuid != -1)
+					<div class="form-group col-md-12">
+					    <a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('order_create/'.$menuid )}}">
+							Place order
+					    </a>
+				    </div>
+					 @endif
+				
+					@if($menuid == -1 || !isset($menuid))
+					
+					<div class="box-header" style="background: rgba(255, 255, 255, 0); "> 
+						<div class="col-md-12">
+							<div id="2" class="callout callout-danger" ><p>Unfortunately, there is no available {{$category->Category_Name}} menu for this date. Sorry for any inconvenience caused.</p></div>
+						<div>
+					</div>
+					
+						
+					@endif
+					
+			 
 				
 			</div>
-            <!-- /.box-body -->
-			 
-              <!-- /.box-footer -->
-			 
-          </div>
-          <!-- /.box -->
-        </div>
+		@endforeach
         <!--/.col (right) -->
-      </div>
+      
       <!-- /.row -->
     </section>
     <!-- /.content -->

@@ -19,10 +19,12 @@ Auth::routes();
 Route::redirect('/','/login');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
 Route::resource('order','OrderController');
+Route::resource('home','HomeController');
 Route::resource('specialmenu', 'SpecialsController');
 Route::resource('menu', 'MenuController');
 Route::resource('cafeteria', 'CafeteriaController');
 Route::resource('deliverer', 'DelivererController');
+Route::resource('register','RegisterController');
 
 Route::match(['get', 'post'],'delivery_request/{id}', [
     'uses' => 'CafeteriaController@delivery_request'

@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" >
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+		<small>Pick a </small>
         Restaurant
-        <small>information</small>
+        <small> to order from ....</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -18,54 +19,27 @@
     <section class="content">
       <div class="row">
         <!-- left column -->
-        <div class="col-md-12">
-		  <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Restaurant</h3>
-            </div>
-            <!-- /.box-header -->
-            <div id="box" class="box-body">
-              
-			</div>
-            <!-- /.box-header -->
-            <div  class="box-body">
-			
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Restaurant</th>
-                  <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-               @foreach($restaurants as $restaurant)
-                <tr>
-                  <td style="text-overflow: ellipsis;">{{ $restaurant->Restaurant_Name }}</td>
-				  <td style="text-overflow: ellipsis;" class="text-center">
-                        
-						 
-					<a class="btn btn-info btn-flat" type="button" href="{{URL::to('restaurant/'.$restaurant->Restaurant_ID)}}">
-                              <span class="fa fa-pencil">
-                              </span>
-                        Show menu
-					</a>
-							
-                    </td>
-                </tr>
-				@endforeach
+		
+		
+		@foreach($restaurants as $restaurant)
+		<div class="col-lg-12 col-md-12 col-xs-12"  width="100%">
+          
 				
-                </tbody>
-                
-              </table>
+			<div class="box loading box-widget widget-user item"  >
+            <!-- Add the bg color to the header using any of the bg-* classes --><a href="{{URL::to('restaurant/'.$restaurant->Restaurant_ID)}}" class="small-box-footer">
+            <div class="widget-user-header bg-black" style="height: 200px; background: url('../{{$restaurant->Restaurant_Pic}}') center center;  background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+              <h3 class="widget-user-username">{{ $restaurant->Restaurant_Name }}</h3>
+              <h5 class="widget-user-desc">{{ $restaurant->Restaurant_Location }}</h5>
+            </div>
+              
+			
+          </div>	
+		</div>
+			   
+		@endforeach
+       
 			  
-			</div>
-            <!-- /.box-body -->
-			 
-              <!-- /.box-footer -->
-			 
-          </div>
-          <!-- /.box -->
-        </div>
+			
         <!--/.col (right) -->
       </div>
       <!-- /.row -->

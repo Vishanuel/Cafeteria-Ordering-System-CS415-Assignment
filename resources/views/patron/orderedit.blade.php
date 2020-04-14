@@ -19,7 +19,7 @@
       <div class="row">
         <!-- left column -->
         <div class="col-md-12">
-		  <div class="box box-warning">
+		  <div class="box loading box-warning">
             <div class="box-header with-border">
               <h3 class="box-title">Order</h3>
             </div>
@@ -67,7 +67,7 @@
 				<div class="col-md-10">
 					<a type="button" id="addfood" class="btn bg-olive btn-flat margin">Add more food item</a>
 				</div>
-				<div id="tcostd" class="form-group col-md-2">
+				<div id="tcostd" class="form-group col-md-2 col-xs-12">
 				  <label>Total Cost ($)</label>
 				  <input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>
@@ -143,7 +143,7 @@
             <!-- /.box-body -->
 			 <div class="box-footer">
                 <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel</a>
-                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
+                <button type="submit" data-barba-prevent="self" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
               </div>
               <!-- /.box-footer -->
 			 </form>

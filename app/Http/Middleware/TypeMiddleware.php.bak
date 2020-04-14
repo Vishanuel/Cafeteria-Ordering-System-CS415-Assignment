@@ -24,7 +24,7 @@ class TypeMiddleware
         //If user role is patron
         if(Auth::check() && auth()->user()->usertype === 'Patron')
         {
-             return redirect('/restaurant');
+             return redirect('/order');
         }
 
         //If user role is menu manager
@@ -35,7 +35,7 @@ class TypeMiddleware
 		
 		else if(Auth::check() && auth()->user()->usertype ==='Cafeteria Staff')
         {
-             return Response::view('cafeteria staff.home');
+             return redirect('/cafeteria');
         } 
 		
 		else if(Auth::check() && auth()->user()->usertype ==='Meal Deliverer')

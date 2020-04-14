@@ -93,7 +93,7 @@ class OrderController extends Controller
 				
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status')
+		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
 		
 		
@@ -101,9 +101,7 @@ class OrderController extends Controller
 		->select('Employee_ID')
 		->where('User_ID','=',Auth::user()->id)
 		->first();
-		
-		//
-		
+			
 		$id_deletion=DB::table('cos_order')
 		->where('Employee_ID','=', $employee_id->Employee_ID)
 		->where('Cos_Order_Meal_Status','=','orderingg')
@@ -122,8 +120,6 @@ class OrderController extends Controller
 				$orderid = 1;
 			}
 		}	
-		
-		
 		
 		return view('patron.order')->with(['specialfoods'=>$specialfoods, 'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
     
@@ -189,6 +185,11 @@ class OrderController extends Controller
 		if (empty($idofd)) {
 		  $idofd = 1;
 		}
+		
+		DB::table('cos_order')
+			->insert([
+				['Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN'],
+		]);	
 	
 		$mealmethod = $request->input('mealmethod');
 		//dd($total_cost);
@@ -199,11 +200,6 @@ class OrderController extends Controller
 			]);	
 		}
 				
-		DB::table('cos_order')
-			->insert([
-				['Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN'],
-		]);	
-		
 		
 		
 		$employee_id = DB::table('patron')
@@ -217,7 +213,7 @@ class OrderController extends Controller
 		->where('menu.Menu_ID','=',$menuid)
 		->where('menu_food_item.Quantity','>','0')
 		->get();
-			
+		
 		$locations=DB::table('location')
 		->get();
 		
@@ -227,7 +223,7 @@ class OrderController extends Controller
 		
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status')
+		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
 			
 		$cos_order=DB::table('cos_order')
@@ -578,8 +574,6 @@ class OrderController extends Controller
 					if($j != $i){
 						if($food_id1 == $food_id[$j]){
 							
-							
-							
 							$inputquan = $inputquan + $request->input('quantity'.$j);
 							
 							if(!empty($request->input('specialfoodsqavailable')) || $request->input('specialfoodsqavailable') != ""){
@@ -668,11 +662,11 @@ class OrderController extends Controller
 		
 		$deductions=DB::table('patron')
 		->where('User_ID','=', Auth::user()->id)
-		->select('Patron_Deduction_Status')
+		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
-		$deduction=$deductions->Patron_Deduction_Status;
+		//$deduction=$deductions->Patron_Deduction_Status;
 		
-		return view('patron.payment')->with(['special_id'=>$special_id,'mealmethod' => $mealmethod, 'deduction' => $deduction, 'total_cost' => $total_cost, 'orderid' => $orderid, 'menuid' => $menuid]);
+		return view('patron.payment')->with(['special_id'=>$special_id,'mealmethod' => $mealmethod, 'deductions' => $deductions, 'total_cost' => $total_cost, 'orderid' => $orderid, 'menuid' => $menuid]);
     }
 	
 	 public function payment(Request $request)
@@ -692,10 +686,10 @@ class OrderController extends Controller
 		//dd($specialfoods);
 		$counter = 0;
 
-		//if($special_id != null){
-			//dd("null");
-			$special_id = DB::table('ordered_special')->where('Cos_Order_Num','=',$orderid)->where('Special_ID','=',$special_id)->first();
-		//}
+		
+		
+		$special_id = DB::table('ordered_special')->where('Cos_Order_Num','=',$orderid)->where('Special_ID','=',$special_id)->first();
+		
 		
 		$specialfood = json_decode(json_encode($specialfoods), true);
 		
@@ -726,10 +720,7 @@ class OrderController extends Controller
 			->select('Employee_ID')
 			->where('User_ID','=',Auth::user()->id)
 			->first();
-		
-		///////////
-		
-		
+		/*
 		if($mealmethodp != "payroll"){
 			$pay = DB::table('payroll')
 			->select('Salary')
@@ -756,9 +747,41 @@ class OrderController extends Controller
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 		}
-		////////////////
 		
+		else if($mealmethodp != "card"){
+			$card = DB::table("card_payment")
+			->select('Card_Number')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->first();
 			
+			$card_balance = DB::table('card_bank')
+			->select('Card_Balance')
+			->where('Card_Number','=',$card->Card_Number)
+			->first();
+			
+			$card_balance=$card->Card_Number;
+			
+			$cos_order=DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Meal_Status','=','Editing')
+			->first();
+				
+			
+			if(!empty($cos_order) && $cos_order->Cos_Order_Meal_Status == "Editing" && $cos_order->Cos_Order_Payment_Method == "card"){
+				
+				$card_balance = $card_balance + $cos_order->Cos_Order_Cost;
+				DB::table('card_bank')->where('Card_Number', '=',$card->Card_Number)->update(['Card_Balance' => $card_balance]);
+				
+			}
+			
+			$cos_order=DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Num','=',$orderid)
+			->first();
+			
+			
+		}
+		*/
 		if($mealmethodp == "payroll"){
 
 			$pay = DB::table('payroll')
@@ -798,7 +821,46 @@ class OrderController extends Controller
 				$salary = $pay->Salary - $request->input("tcost");
 			}	
 		}
-	//	echo "Tcost: ".$request->input("tcost");
+		
+		if($mealmethodp == "card"){
+
+			$card = DB::table("card_payment")
+			->select('Card_Number')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->first();
+			
+			$card_balance = DB::table('card_bank')
+			->select('Card_Balance')
+			->where('Card_Number','=',$card->Card_Number)
+			->first();
+			
+			$card_balance=$card_balance->Card_Balance;
+			
+			$cos_order=DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Meal_Status','=','Editing')
+			->first();
+			
+			if(!empty($cos_order) && $cos_order->Cos_Order_Meal_Status == "Editing" && $cos_order->Cos_Order_Payment_Method == "card"){
+				
+				
+				$card_balance = $card_balance + $cos_order->Cos_Order_Cost;
+			}
+			
+			$cos_order=DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Num','=',$orderid)
+			->first();
+			
+			$error = "Insufficient funds. Either cancel or edit the order.";
+			if($card_balance - $request->input("tcost") <= 0){
+				$total_cost=$request->input("tcost");
+				
+				return view('patron.payment')->with(['special_id'=>$special_id,'orderid'=>$orderid,'menuid'=>$menuid ,'mealmethod' => $mealmethod, 'deduction' => $deduction, 'total_cost' => $total_cost, 'error' => $error]);
+			}
+			
+		}
+		
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
 		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
@@ -814,7 +876,7 @@ class OrderController extends Controller
 					
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status')
+		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
 				
 		$cos_order=DB::table('cos_order')
@@ -834,7 +896,7 @@ class OrderController extends Controller
 		->where('Cos_Order_Num','=',$orderid)
 		->first();
 		
-			
+		//dd($mealmethod);
 		
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
@@ -845,8 +907,6 @@ class OrderController extends Controller
 		
 		}
 		return view('patron.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
-				
-		
 		
     }
 	
@@ -1253,6 +1313,40 @@ class OrderController extends Controller
 			->first();
 		}
 		
+		else if($mealmethodp != "card"){
+			$card = DB::table("card_payment")
+			->select('Card_Number')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->first();
+			
+			$card_balance = DB::table('card_bank')
+			->select('Card_Balance')
+			->where('Card_Number','=',$card->Card_Number)
+			->first();
+			
+			$card_balance=$card_balance->Card_Balance;
+			
+			$cos_order=DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Meal_Status','=','Editing')
+			->first();
+				
+			
+			if(!empty($cos_order) && $cos_order->Cos_Order_Meal_Status == "Editing" && $cos_order->Cos_Order_Payment_Method == "card"){
+				
+				$card_balance = $card_balance + $cos_order->Cos_Order_Cost;
+				DB::table('card_bank')->where('Card_Number', '=',$card->Card_Number)->update(['Card_Balance' => $card_balance]);
+				
+			}
+			
+			$cos_order=DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Num','=',$orderid)
+			->first();
+			
+			
+		}
+		
 		//payroll deduction		
 		if($cos_order->Cos_Order_Payment_Method == "payroll"){
 			$pay = DB::table('payroll')
@@ -1283,6 +1377,50 @@ class OrderController extends Controller
 			DB::table('payroll')->where('Employee_ID', '=',$employee_id->Employee_ID)->update(['Salary' => $salary]);
 		
 				
+		}
+		
+		if($mealmethodp == "card"){
+
+			$card = DB::table("card_payment")
+			->select('Card_Number')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->first();
+			
+			$card_balance = DB::table('card_bank')
+			->select('Card_Balance')
+			->where('Card_Number','=',$card->Card_Number)
+			->first();
+			
+			$card_balance=$card_balance->Card_Balance;
+			
+			$cos_order=DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Meal_Status','=','Editing')
+			->first();
+			
+			if(!empty($cos_order) && $cos_order->Cos_Order_Meal_Status == "Editing" && $cos_order->Cos_Order_Payment_Method == "card"){
+				$card_balance = $card_balance + $cos_order->Cos_Order_Cost;
+			}
+			
+			$cos_order=DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Num','=',$orderid)
+			->first();
+			
+			$card_balance = $card_balance - $cos_order->Cos_Order_Cost;
+			
+			$error = "Insufficient funds. Either cancel or edit the order.";
+			if($card_balance - $request->input("tcost") <= 0){
+				$total_cost=$request->input("tcost");
+				
+				return view('patron.payment')->with(['special_id'=>$special_id,'orderid'=>$orderid,'menuid'=>$menuid ,'mealmethod' => $mealmethod, 'deduction' => $deduction, 'total_cost' => $total_cost, 'error' => $error]);
+			}
+			
+			else{
+				DB::table('card_bank')->where('Card_Number', '=',$card->Card_Number)->update(['Card_Balance' => $card_balance]);
+				
+			}
+			
 		}
 		
 		$cos_order=DB::table('cos_order')
@@ -1411,7 +1549,7 @@ class OrderController extends Controller
 					
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status')
+		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
 				
 
@@ -1542,7 +1680,7 @@ class OrderController extends Controller
 					
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status')
+		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
 				
 		if($cos_order->Cos_Order_Meal_Status == "Editing" || $cos_order->Cos_Order_Meal_Status == "Approved"){
@@ -1774,12 +1912,9 @@ class OrderController extends Controller
 						$salary = $pay->Salary + $cos_order->Cos_Order_Cost;
 							
 						DB::table('payroll')->where('Employee_ID', '=',$employee_id->Employee_ID)->update(['Salary' => $salary]);
-					
-							
+												
 					}
 				}
-
-				
 
 				$special_id=DB::table('ordered_special')
 				->where('Cos_Order_Num','=',$id)
@@ -1925,12 +2060,11 @@ class OrderController extends Controller
 		$order_cutoff=DB::table('order_cutoff')
 		->select('Order_Cutoff_Time')
 		->first();
-					
+		
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status')
-		->first();
-				
+		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
+		->first();	
 
 		$approved  = $cos_order->Cos_Order_Meal_Status;
 		
@@ -1946,7 +2080,7 @@ class OrderController extends Controller
 		$mealmethodcheck=DB::table('delivery_instruction')
 		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 		->first();
-			
+		
 		$special_id=DB::table('ordered_special')
 		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 		->first();

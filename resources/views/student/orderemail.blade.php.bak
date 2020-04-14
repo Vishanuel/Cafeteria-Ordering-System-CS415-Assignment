@@ -1,0 +1,114 @@
+
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Order
+        <small>information</small>
+      </h1>
+     
+    </section>
+<!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+		  <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Order</h3>
+            </div>
+            <!-- /.box-header -->
+            <div id="box" class="box-body">
+             
+                <!-- text input -->
+				
+				@for($i = 0; $i < $count; $i++)
+				
+				<div id="food_ite{{$i}}" class="form-group col-md-6">
+					<label>Food Item</label>
+					<input type="text" class="form-control" readonly id="food_it{{$i}}" name="food_it{{$i}}" Required value="{{$Food_Name[$i]}}">
+				</div>
+					
+					
+					
+					<div id="quantit{{$i}}" class="form-group col-md-2">
+					  <label>Quantity</label>
+					  <input type="number" class="form-control" readonly id="quanti{{$i}}" name="quanti{{$i}}" max="" min="1" Required value="{{$Quantity[$i]}}">
+					</div>
+			
+					<div id="pric{{$i}}" class="form-group col-md-2">
+					  <label>Price ($)</label>
+					  <input type="number" class="form-control" readonly id="pri{{$i}}" name="pri{{$i}}" Required readonly value="{{$Price[$i]}}">
+					</div>
+					
+					
+					
+				@endfor
+				
+				<div id="tcos" class="form-group col-md-2">
+				  <label>Total Cost ($)</label>
+				  <input type="number" class="form-control" id="tco" name="tco" Required readonly value="{{$Cos_Order_Cost}}">
+			   </div>
+				<!-- <div id="food" ></div>-->
+				
+				<div id="drp" class="form-group col-md-2">
+				  <label>Deliver/Restuarant pickup </label>
+				  <input type="text" class="form-control" id="dr" name="dr" Required readonly value="{{$delivery_pickup}}">
+			   </div>
+			   
+			   <div id="pcp" class="form-group col-md-2">
+				  <label>Payroll Deduction/Cash Payment</label>
+				  <input type="text" class="form-control" id="pc" name="pc" Required readonly value="{{$Cos_Order_Payment_Method}}">
+			   </div>
+				
+				@if($delivery_pickup == "delivery")
+				<div id="locati_id" class="form-group col-md-6">
+				  <label>Delivery Location</label>
+				  <input type="text" class="form-control" id="locatio_id" name="locati_id" Required readonly value="{{$delivery_time}}">
+			   </div>
+			   
+			   <div id="locati_time" class="form-group col-md-6">
+				  <label>Delivery Time</label>
+				  <input type="text" class="form-control" id="locatio_time" name="locati_time" Required readonly value="{{$delivery_location}}">
+			   </div>
+			   
+			   @endif
+			   
+				<div id="meal_dat" class="form-group col-md-6">
+				  <label>Meal Date</label>
+				  <input type="text" class="form-control" id="meal_da" name="meal_da" Required readonly value="{{$Cos_Meal_Date_Time}}">
+			   </div>
+			   
+			   <div id="order_dat" class="form-group col-md-6">
+				  <label>Order Date</label>
+				  <input type="text" class="form-control" id="order_da" name="order_da" Required readonly value="{{$Cos_Order_Date_Time}}">
+			   </div>
+			   
+			   <div id="order_status" class="form-group col-md-6">
+				  <label>Order Status</label>
+				  <input type="text" class="form-control" id="order_statu" name="order_statu" Required readonly value="{{$Cos_Order_Meal_Status}}">
+			   </div>
+			   
+                
+				
+                <!-- /.input group -->
+              </div>
+			  
+			
+			</div>
+            <!-- /.box-body -->
+			 
+          </div>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <script>
+	
+  </script>

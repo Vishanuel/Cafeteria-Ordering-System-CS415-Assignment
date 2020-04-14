@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper"  >
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+        <small>Your detailed</small>
         Order
-        <small>information</small>
+        <small>information .....</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -19,7 +20,7 @@
       <div class="row">
         <!-- left column -->
         <div class="col-md-6">
-		  <div class="box box-primary">
+		  <div class="box loading box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Order</h3>
             </div>
@@ -47,13 +48,13 @@
 					
 					
 					
-					<div id="quantityd{{$i}}" class="form-group col-md-2">
+					<div id="quantityd{{$i}}" class="form-group col-md-2 col-sm-4">
 					  <label>Quantity</label>
 					  <input type="number" class="form-control" readonly id="quantity{{$i}}" name="quantity{{$i}}" max="" min="1" Required value="{{$food_select->Quantity}}">
 					</div>
 			
-					<div id="priced{{$i}}" class="form-group col-md-2">
-					  <label>Price ($)</label>
+					<div id="priced{{$i}}" class="form-group col-md-2 col-sm-4">
+					  <label>Price($)</label>
 					  <input type="number" class="form-control" readonly id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
 					
@@ -96,15 +97,17 @@
 				<div class="form-group">
 					<div class="radio col-md-6">
 						<label id="del">
-						  <input type="radio" disabled name="mealmethod" readonly id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" style="clear: none; width: auto;" value="delivery" @if($mealmethod == "delivery") checked @endif>
 						  Get meal delivered
 						</label>
 					  </div>
 				</div>
+				
+				
 				<div class="form-group">
 					  <div class="radio col-md-6 ">
 						<label>
-						  <input type="radio"  disabled name="mealmethod" readonly id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios2" style="clear: none; width: auto;" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
 						  Pick-up meal from restaurant
 						</label>
 					 </div>
@@ -143,17 +146,9 @@
 			
 			</div>
             <!-- /.box-body -->
-			 <div class="box-footer">
-			 <div class="btn-toolbar">
-                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat pull-left">Cancel Order</a>
-				
-                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Confirm Order</button>
-				
-				<a href="{{route('order_edit', $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li>Edit Order</a>
-              </div>
-			  </div>
+			 
               <!-- /.box-footer -->
-			 </form>
+			 
           </div>
 		  
           <!-- /.box -->
@@ -164,13 +159,13 @@
 	  @if($mealmethod == "delivery")
 
 		<div class="col-md-6">
-		  <div class="box box-info">
+		  <div class="box loading box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Delivery Info</h3>
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-			<form action="">
+			
 				
 				<div id="delivery" name="delivery">
 				
@@ -202,7 +197,7 @@
 					</div>
                 </div>
 				
-				 </form>
+				 
 			</div>
 			
 			</div>
@@ -211,7 +206,7 @@
 		@endif
 	  
 		<div class="col-md-6">
-		  <div class="box box-success">
+		  <div class="box loading box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Payment Method</h3>
             </div>
@@ -221,7 +216,7 @@
 				<div class="form-group col-md-6">
 					<div class="radio">
 						<label>
-						  <input type="radio" disabled name="mealmethod3" id="optionsRadios1" value="payroll"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") checked @endif>
+						  <input type="radio" class="minimal" disabled name="mealmethod3" id="optionsRadios1" value="payroll"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") checked @endif>
 						  Payroll deduction payment
 						</label>
 					  </div>
@@ -229,21 +224,48 @@
 				<div class="form-group col-md-6">
 					  <div class="radio">
 						<label>
-						  <input type="radio" disabled name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif @if($deduction->Patron_Deduction_Status == 0) checked @endif @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
+						  <input type="radio" class="minimal" disabled name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif @if($deduction->Patron_Deduction_Status == 0) checked @endif @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
 						  Cash Payment at pickup
 						</label>
 					 </div>
-				 </div>  
+				</div>  
+				<div class="form-group">
+					<div class="radio col-md-6 ">
+						<label>
+						  <input type="radio" class="minimal" disabled name="mealmethod" id="optionsRadios3" value="card" @if($deduction->Patron_CardRegister_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="card") checked @endif>
+						  Credit/Debit card payment
+						</label>
+				    </div>
+				</div>
 				 
 			</div>
 			
 			</div>
 		  </div>
+		  
+		  
+		  
+		<div class="col-md-6 col-xs-12 pull-left">
+			<div class="box loading box-default">
+				<div class="box-header with-border">
+					<div class="btn-toolbar">
+						<a href="{{url('order_cancel')}}" class="btn btn-default btn-flat pull-left">Cancel</a>
+						
+						<button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Confirm</button>
+						
+						<a href="{{route('order_edit', $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li> Edit</a>
+					</div>
+				</div>
+			</div> 
+		</div> 
+		</form>
 		</div>
+		
       <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
+  
   <script>
 	
   </script>

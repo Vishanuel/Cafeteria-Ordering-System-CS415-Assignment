@@ -1,0 +1,106 @@
+/**CSS FOR THE RING**/
+
+.glyphicon-ring {
+  width: 60px;
+  height: 60px;
+  border-radius: 40%;
+  border: 4px solid white;
+  color: white;
+  display: inline-table;
+  text-align: center;
+}
+
+/**CSS FOR ICON WITH NO BACKGROUND COLOR**/
+
+.glyphicon-ring .glyphicon-bordered {
+  font-size: 20px;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.glyphicon-white {
+  background: white;
+  color: black;
+  border: 4px solid black;
+}
+
+.glyphicon-teal {
+  background: teal;
+  color: orange;
+}
+
+.glyphicon-blue{
+  background: dodgerblue;
+  color: orange;
+}
+
+.glyphicon-red {
+  background: red;
+}
+
+.item
+{
+    position: relative;
+    display: inline-block;
+    width: 50%;
+   
+   
+ 
+    transition: all 1s ease;
+}
+
+.item:hover
+{
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: auto;
+    z-index: 2;	
+    transform: scale(1.05);  
+}
+
+
+.blur {
+    display: block;
+    z-index: 1;
+    -webkit-filter: blur(2px);
+}
+
+html.sr .loading {
+    visibility: hidden;
+}
+
+	.fade-leave-active,
+	.fade-enter-active,
+	.slide-leave-active,
+	.slide-enter-active {
+	  transition: opacity 450ms ease, transform 650ms ease-in-out;
+	}
+
+	/* fade transition states */
+	.fade-leave,
+	.fade-enter-to {
+	  opacity: 1;
+	}
+
+	.fade-enter,
+	.fade-leave-to {
+	  opacity: 0;
+	}
+
+	/* slide transition states */
+	.slide-leave,
+	.slide-enter-to {
+	  transform: translateX(0);
+	}
+
+	.slide-enter,
+	.slide-leave-to {
+	  transform: translateX(100%);
+	}
+
+//https://stackoverflow.com/questions/31548154/make-div-expand-on-hover
+//credits to stackoverflow user: Hayden Schiff
+//https://stackoverflow.com/questions/33846244/how-to-add-a-ring-around-bootstrap-glyphicons
+//credits to stackoverflow user: vanburen
+//https://stackoverflow.com/questions/19375311/div-blur-of-part-of-background-image-with-css
+//credits to stackoverflow user: EdenSource

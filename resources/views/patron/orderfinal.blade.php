@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" >
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Place Order
-        <small>form</small>
+		<small>The edit your</small>
+        Order
+        <small>form ....</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -19,7 +20,7 @@
       <div class="row">
         <!-- left column -->
         <div class="col-md-12">
-		  <div class="box box-warning">
+		  <div class="box loading box-warning">
             <div class="box-header with-border">
               <h3 class="box-title">Order</h3>
             </div>
@@ -90,7 +91,7 @@
 				  <input readonly type="number" class="form-control" id="specialfoodsprice" name="specialfoodsprice"  value="">
 				</div>
 				@endif
-				<div id="tcostd" class="form-group col-md-2 pull-right">
+				<div id="tcostd" class="form-group col-md-2 col-xs-12 pull-right">
 				  <label>Total Cost ($)</label>
 				  <input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>
@@ -99,7 +100,7 @@
 				
 					<div class="radio">
 						<label id="del">
-						  <input type="radio" name="mealmethod" id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
 						  Get meal delivered
 						</label>
 					  </div>
@@ -107,7 +108,7 @@
 				
 					  <div class="radio">
 						<label>
-						  <input type="radio" name="mealmethod" id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
 						  Pick-up meal from restaurant
 						</label>
 					 </div>
@@ -167,7 +168,7 @@
             <!-- /.box-body -->
 			 <div class="box-footer">
                 <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
-                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
+                <button type="submit"  class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
               </div>
               <!-- /.box-footer -->
 			 </form>

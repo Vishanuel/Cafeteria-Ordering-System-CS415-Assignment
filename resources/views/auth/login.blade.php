@@ -1,6 +1,6 @@
  <!DOCTYPE html>
 <html>
-  <head>
+  <head >
     <meta charset="utf-8">
     
     <title>Log in</title>
@@ -24,22 +24,35 @@
   <![endif]-->
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<style>
+	 body{
+		 background: url('../dist/img/restaurant/login2.jpg') center center; 
+		// background: background: rgba(0, 0, 0, 5); 
+		 color:white;
+		 background-repeat: no-repeat;
+		 background-attachment: fixed;
+		 background-size: cover;
+		// color: rgba(255, 255, 255, 0.6);
+		 height: 100%;
+		 style="opacity: 0.5;"
+	 }
+	</style>
   </head>
-  <body class="hold-transition login-page">
-    <div class="login-box">
+  <body class="hold-transition" style="height:100px;">
+    <div class="login-box" >
       <div class="login-logo">
-        <b>Login</b>COS</a>
+        <b style="color: rgba(255, 255, 255, 0.6);" >Login</b><span >COS</span></a>
       </div>
       <!-- /.login-logo -->
-      <div class="login-box-body">
-        <p class="login-box-msg">
+      <div class="login-box-body" style="background: rgba(255, 255, 255, 0.8);" >
+        <p class="login-box-msg"  >
           Sign in to start your session
         </p>
         <form method="POST" action="{{ route('login') }}">
 			@csrf
 			
-          <div class="form-group has-feedback @error('email') has-error @enderror">
-            <input id="email" type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" ><span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          <div class="form-group has-feedback @error('email') has-error @enderror" >
+            <input id="email"  type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" ><span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 			
           </div>
 		  

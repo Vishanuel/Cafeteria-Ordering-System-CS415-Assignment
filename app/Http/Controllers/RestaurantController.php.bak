@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class RestaurantController extends Controller
 {
@@ -53,17 +54,16 @@ class RestaurantController extends Controller
 		$foods=DB::table('menu_food_item')
 		->join('menu_food','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
 		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
-		
-		//->where('menu.Menu_ID','=','1')
+		->join('category','menu.Category_ID','=','category.Category_ID')
 		->where('menu_food_item.Quantity','>','0')
 		->where('menu.Menu_Date','=',date("Y-m-d"))
 		->where('menu.Restaurant_ID','=',$id)
+		->orderby('category.Category_ID')
 		->get();
 		
+		$categories=DB::table('category')->get();
 		//dd($foods);
-		//dd(count($foods));
-		
-		return view('restaurants.menu')->with(['foods' => $foods]);
+		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
 		
 		
     }

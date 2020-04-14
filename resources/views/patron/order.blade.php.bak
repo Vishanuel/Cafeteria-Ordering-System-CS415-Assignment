@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" >
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Place Order
+	  <small>The place your</small>
+        Order
         <small>form</small>
       </h1>
       <ol class="breadcrumb">
@@ -19,7 +20,7 @@
       <div class="row">
         <!-- left column -->
         <div class="col-md-12">
-		  <div class="box box-success">
+		  <div class="box loading box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Order</h3>
             </div>
@@ -101,7 +102,7 @@
 				<!--<label >Pick meal collection method</label>-->
 					<div class="radio">
 						<label id="del">
-						  <input type="radio" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
 						  Get meal delivered 
 						</label>
 					  </div>
@@ -109,7 +110,7 @@
 				
 					  <div class="radio">
 						<label>
-						  <input type="radio" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios2" value="pick-up" checked>
+						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios2" value="pick-up" checked>  
 						  Pick-up meal from restaurant
 						</label>
 					 </div>
@@ -139,7 +140,7 @@
 					  <select class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
 							<option id="location_time1" name="location_time1"  disabled>Select delivery time </option> 
 							
-						</select>
+					</select>
 						
 					</div>
                 </div>

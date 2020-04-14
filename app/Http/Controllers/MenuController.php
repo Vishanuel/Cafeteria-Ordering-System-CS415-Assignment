@@ -33,10 +33,7 @@ class MenuController extends Controller
             ->select('menu_food_item.Food_Name','menu_food_item.Food_Desc','menu_food_item.Price')                    ->get()
             ->toArray();
         }
-        //dd($val[0]);
-        //echo count($data);
-        // dd($val[0][0]);
-
+        
         return view('menu manager.display_menu', compact('data','val'));
     }
 
@@ -50,8 +47,6 @@ class MenuController extends Controller
         $val= DB::table('menu_food_item')
                   ->get()
                   ->toArray();
-
-                //  dd($val);
     
         return view('menu manager.create_menu',compact('val'));
 
@@ -72,7 +67,7 @@ class MenuController extends Controller
          'Food' => 'required',
          ]);
        $input = $request->all();
- //dd($input);
+ 
        $usr = Auth::user()->id;    //Get the user identification
         
             $data = DB::table('Menu_Manager')

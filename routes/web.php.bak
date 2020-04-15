@@ -19,11 +19,50 @@ Auth::routes();
 Route::redirect('/','/login');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
 Route::resource('order','OrderController');
+Route::resource('student_order','OrderController');
+Route::resource('home','HomeController');
+Route::resource('student_home','HomeStudentController');
 Route::resource('specialmenu', 'SpecialsController');
 Route::resource('menu', 'MenuController');
 Route::resource('cafeteria', 'CafeteriaController');
 Route::resource('deliverer', 'DelivererController');
 Route::resource('register','RegisterController');
+
+Route::match(['get', 'post'],'student_order_create/{menuid}', [
+    'uses' => 'OrderStudentController@create'
+]);
+
+Route::match(['get', 'post'],'student_order_remove/{id}', [
+    'uses' => 'OrderStudentController@remove'
+]); 
+ 
+
+Route::match(['get', 'post'],'student_order_payment', [
+    'uses' => 'OrderStudentController@payment'
+]);
+ 
+Route::match(['get', 'post'],'student_order_edit_details/{id}', [
+    'uses' => 'OrderStudentController@detailshow'
+]); 
+  
+
+Route::match(['get', 'post'],'student_order_payment_confirm', [
+    'uses' => 'OrderStudentController@confirm'
+]);
+
+Route::match(['get', 'post'],'student_order_cancel', [
+    'uses' => 'OrderStudentController@cancel'
+]);
+
+Route::match(['get', 'post'],'student_order_edit/{orderid}', [
+    'uses' => 'OrderStudentController@edit'
+])->name('student_order_edit');
+
+Route::match(['get', 'post'],'student_order_edit_approved/{orderid}', [
+    'uses' => 'OrderStudentController@editapproved'
+])->name('student_order_edit_approved');
+
+///
 
 Route::match(['get', 'post'],'delivery_request/{id}', [
     'uses' => 'CafeteriaController@delivery_request'

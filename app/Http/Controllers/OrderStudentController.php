@@ -7,7 +7,7 @@ use DB;
 use Auth;
 use Mail;
 
-class OrderController extends Controller
+class OrderStudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -189,12 +189,14 @@ class OrderController extends Controller
 		
 		DB::table('cos_order')
 			->insert([
-				['Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN'],
+				['Student_ID' => $student_id->Student_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN'],
 		]);	
 	
-		/*
+		
 		$mealmethod = $request->input('mealmethod');
 		//dd($total_cost);
+		
+		/*
 		if($mealmethod == "delivery"){
 			DB::table('delivery_instruction')
 				->insert([
@@ -202,12 +204,6 @@ class OrderController extends Controller
 			]);	
 		}
 		*/	
-		
-		
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
-		->where('User_ID','=',Auth::user()->id)
-		->first();
 		
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
@@ -223,13 +219,13 @@ class OrderController extends Controller
 		->select('Order_Cutoff_Time')
 		->first();
 		
-		$deduction=DB::table('patron')
+		/*$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
 		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
-		->first();
+		->first();*/
 			
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$id)
 		->first();
 		
@@ -261,7 +257,7 @@ class OrderController extends Controller
 		}
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
 		->first();
 		
@@ -333,7 +329,7 @@ class OrderController extends Controller
 		}
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$id)
 		->first();
 		
@@ -406,7 +402,7 @@ class OrderController extends Controller
 				$error = $error."Not enough food item in inventory to cater for your special meal order. Either edit your order or cancel it.\n";
 				
 				$cos_order=DB::table('cos_order')
-				->where('Employee_ID','=',$employee_id->Employee_ID)
+				->where('Student_ID','=',$student_id->Student_ID)
 				->where('Cos_Order_Meal_Status','=','Editing')
 				->first();
 				
@@ -434,10 +430,10 @@ class OrderController extends Controller
 				}
 				
 				$cos_order=DB::table('cos_order')
-				->where('Employee_ID','=',$employee_id->Employee_ID)
+				->where('Student_ID','=',$student_id->Student_ID)
 				->where('Cos_Order_Num','=',$id)
 				->first();
-				
+				/*
 				if($mealmethod == "delivery"){
 					$delivery_info=DB::table('delivery_instruction')
 					->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
@@ -445,15 +441,15 @@ class OrderController extends Controller
 						
 					return redirect('order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);
 					
-				}
-				return redirect('order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);	
+				}*/
+				return redirect('student_order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);	
 			}
 			
 			else if($specialquan - $request->input('specialfoodsquantity') < 0){
 				$error = $error."Not enough food item in inventory to cater for your special meal order. Either edit your order or cancel it.\n";
 
 				$cos_order=DB::table('cos_order')
-				->where('Employee_ID','=',$employee_id->Employee_ID)
+				->where('Student_ID','=',$student_id->Student_ID)
 				->where('Cos_Order_Meal_Status','=','Editing')
 				->first();
 				
@@ -481,10 +477,10 @@ class OrderController extends Controller
 				}
 				
 				$cos_order=DB::table('cos_order')
-				->where('Employee_ID','=',$employee_id->Employee_ID)
+				->where('Student_ID','=',$student_id->Student_ID)
 				->where('Cos_Order_Num','=',$id)
 				->first();
-				
+				/*
 				if($mealmethod == "delivery"){
 					$delivery_info=DB::table('delivery_instruction')
 					->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
@@ -492,7 +488,8 @@ class OrderController extends Controller
 						
 					return redirect('order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);
 				}
-				return redirect('order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);		
+				*/
+				return redirect('student_order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);		
 			}
 			
 			else{
@@ -529,8 +526,8 @@ class OrderController extends Controller
 
 		for($i = 1;$i<$iteration;$i++){
 			
-			$employee_id = DB::table('patron')
-			->select('Employee_ID')
+			$student_id = DB::table('student')
+			->select('Student_ID')
 			->where('User_ID','=',Auth::user()->id)
 			->first();
 			
@@ -548,7 +545,7 @@ class OrderController extends Controller
 			$quan = $quantity->Quantity;
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Meal_Status','=','Editing')
 			->first();
 			
@@ -566,7 +563,7 @@ class OrderController extends Controller
 			}
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Num','=',$id)
 			->first();
 			
@@ -588,7 +585,7 @@ class OrderController extends Controller
 						if(($quan - $inputquan) < 0){
 
 							$cos_order=DB::table('cos_order')
-							->where('Employee_ID','=',$employee_id->Employee_ID)
+							->where('Student_ID','=',$student_id->Student_ID)
 							->where('Cos_Order_Meal_Status','=','Editing')
 							->first();
 							
@@ -616,11 +613,11 @@ class OrderController extends Controller
 							}
 							
 							$cos_order=DB::table('cos_order')
-							->where('Employee_ID','=',$employee_id->Employee_ID)
+							->where('Student_ID','=',$student_id->Student_ID)
 							->where('Cos_Order_Num','=',$id)
 							->first();
 							
-							return redirect('order_edit/'.$cos_order->Cos_Order_Num)->with("Error","Not enough food item in inventory to cater for your order. Either edit your order or cancel it."); 
+							return redirect('student_order_edit/'.$cos_order->Cos_Order_Num)->with("Error","Not enough food item in inventory to cater for your order. Either edit your order or cancel it."); 
 					
 							
 						}
@@ -629,7 +626,7 @@ class OrderController extends Controller
 		}
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
 		->first();
 		
@@ -657,18 +654,18 @@ class OrderController extends Controller
 		}
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		//->where('Cos_Order_Meal_Status','=','orderingg')
 		->where('Cos_Order_Num','=',$id)
 		->first();
 		
-		$deductions=DB::table('patron')
+		/*$deductions=DB::table('patron')
 		->where('User_ID','=', Auth::user()->id)
 		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
-		//$deduction=$deductions->Patron_Deduction_Status;
+		//$deduction=$deductions->Patron_Deduction_Status;*/
 		
-		return view('patron.payment')->with(['special_id'=>$special_id,'mealmethod' => $mealmethod, 'deductions' => $deductions, 'total_cost' => $total_cost, 'orderid' => $orderid, 'menuid' => $menuid]);
+		return view('student.payment')->with(['special_id'=>$special_id,'mealmethod' => $mealmethod, 'total_cost' => $total_cost, 'orderid' => $orderid, 'menuid' => $menuid]);
     }
 	
 	 public function payment(Request $request)
@@ -718,8 +715,8 @@ class OrderController extends Controller
 		}
 		$specialfoods = json_decode(json_encode($specialfood));
 		
-		$employee_id = DB::table('patron')
-			->select('Employee_ID')
+		$student_id = DB::table('student')
+			->select('Student_ID')
 			->where('User_ID','=',Auth::user()->id)
 			->first();
 		/*
@@ -783,7 +780,7 @@ class OrderController extends Controller
 			
 			
 		}
-		*/
+		
 		if($mealmethodp == "payroll"){
 
 			$pay = DB::table('payroll')
@@ -862,7 +859,7 @@ class OrderController extends Controller
 			}
 			
 		}
-		
+		*/
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
 		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
@@ -875,14 +872,14 @@ class OrderController extends Controller
 		$order_cutoff=DB::table('order_cutoff')
 		->select('Order_Cutoff_Time')
 		->first();
-					
+		/*			
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
 		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
-				
+		*/		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$orderid)
 		->first();
 		
@@ -894,12 +891,12 @@ class OrderController extends Controller
 		DB::table('cos_order')->where('Cos_Order_Num', '=',$cos_order->Cos_Order_Num)->update(['Cos_Order_Payment_Method' => $mealmethodp]);
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$orderid)
 		->first();
 		
 		//dd($mealmethod);
-		
+		/*
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
@@ -908,7 +905,8 @@ class OrderController extends Controller
 			return view('patron.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		return view('patron.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		*/
+		return view('student.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
 	
@@ -927,13 +925,13 @@ class OrderController extends Controller
 		
 		$special_id = $request->input('special_id');
 		
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
+		$student_id = DB::table('student')
+		->select('Student_ID')
 		->where('User_ID','=',Auth::user()->id)
 		->first();
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$orderid)
 		->first();
 		
@@ -958,7 +956,7 @@ class OrderController extends Controller
 		}
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
 		->first();
 			
@@ -976,7 +974,7 @@ class OrderController extends Controller
 		}
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$orderid)
 		->first();
 				
@@ -986,7 +984,7 @@ class OrderController extends Controller
 			//dd("null");
 			//echo "null";
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Meal_Status','=','Editing')
 			->first();
 			
@@ -1016,7 +1014,7 @@ class OrderController extends Controller
 			}
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 		}
@@ -1067,7 +1065,7 @@ class OrderController extends Controller
 			$selected_special_quan = $special_selected->Quantity;
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Meal_Status','=','Editing')
 			->first();
 			
@@ -1097,7 +1095,7 @@ class OrderController extends Controller
 			}
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 			
@@ -1105,12 +1103,12 @@ class OrderController extends Controller
 			if($specialquan <= 0){
 				$error = $error."Not enough food item in inventory to cater for your special meal order. Either edit your order or cancel it.\n";
 					
-				return redirect('order_edit/'.$orderid)->with('error',$error);
+				return redirect('student_order_edit/'.$orderid)->with('error',$error);
 			}
 			
 			else if($specialquan - $selected_special_quan < 0){
 				$error = $error."Not enough food item in inventory to cater for your special meal order. Either edit your order or cancel it.\n";
-				return redirect('order_edit/'.$orderid)->with('error',$error);	
+				return redirect('student_order_edit/'.$orderid)->with('error',$error);	
 			}
 			
 			else{
@@ -1155,7 +1153,7 @@ class OrderController extends Controller
 				for($j = 1;$j<($food_counters);$j++){
 					
 					$cos_order=DB::table('cos_order')
-					->where('Employee_ID','=',$employee_id->Employee_ID)
+					->where('Student_ID','=',$student_id->Student_ID)
 					->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 					->first();
 					
@@ -1177,7 +1175,7 @@ class OrderController extends Controller
 
 							$error = $error."Not enough food item in inventory to cater for your order. Either edit your order or cancel it.";
 							//dd("died");
-							return redirect('order_edit/'.$orderid)->with('error',$error);
+							return redirect('student_order_edit/'.$orderid)->with('error',$error);
 							
 						}
 					}		
@@ -1200,7 +1198,7 @@ class OrderController extends Controller
 			->get();
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Meal_Status','=','Editing')
 			->first();
 
@@ -1236,7 +1234,7 @@ class OrderController extends Controller
 			}
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 			
@@ -1249,7 +1247,7 @@ class OrderController extends Controller
 		->get();
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
 		->first();
 		
@@ -1283,11 +1281,11 @@ class OrderController extends Controller
 		}
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$orderid)
 		->first();
 			
-		
+		/*
 		if($cos_order->Cos_Order_Payment_Method != "payroll"){
 			$pay = DB::table('payroll')
 			->select('Salary')
@@ -1315,7 +1313,7 @@ class OrderController extends Controller
 			->first();
 		}
 		
-		else if($mealmethodp != "card"){
+		else if($$cos_order->Cos_Order_Payment_Method != "card"){
 			$card = DB::table("card_payment")
 			->select('Card_Number')
 			->where('Employee_ID','=',$employee_id->Employee_ID)
@@ -1424,9 +1422,9 @@ class OrderController extends Controller
 			}
 			
 		}
-		
+		*/
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
 		->first();
 			
@@ -1440,7 +1438,7 @@ class OrderController extends Controller
 		}
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$orderid)
 		->first();
 		
@@ -1458,13 +1456,13 @@ class OrderController extends Controller
 			$data['delivery_time'] = "Nan";
 			$data['delivery_location'] = "Nan";
 		}	
-		
+		/*
 		else{
 			$mealmethod = "delivery";
 			$data['delivery_time'] = $mealmethodcheck->D_Time_Window;
 			$data['delivery_location'] = $mealmethodcheck->D_Location;
 		}
-		
+		*/
 		
 		
 		$data['Cos_Order_Num'] = $cos_order->Cos_Order_Num;
@@ -1490,7 +1488,7 @@ class OrderController extends Controller
 		
 		$data['count'] = $i;
 		
-        Mail::send('patron.orderemail', $data, function($message) {
+        Mail::send('student.orderemail', $data, function($message) {
  
             $message->to(Auth::user()->email, 'LCNotif')
  
@@ -1498,14 +1496,14 @@ class OrderController extends Controller
         });
 		
 		$data['username'] = Auth::user()->name;
-		Mail::send('patron.restaurantemail', $data, function($message) {
+		Mail::send('student.restaurantemail', $data, function($message) {
  
-            $message->to(Auth::user()->email, 'LCNotif')
+            $message->to("cs324assignment@gmail.com", 'LCNotif')
  
                     ->subject('Restaurant Order Info');
         });
 		
-		return redirect('order')->with('success','Order successful');
+		return redirect('student_order')->with('success','Order successful');
 		}
 		
 		catch(exception $e){
@@ -1518,13 +1516,13 @@ class OrderController extends Controller
     public function show($id)
     {
         //
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
+		$student_id = DB::table('student')
+		->select('Student_ID')
 		->where('User_ID','=',Auth::user()->id)
 		->first();
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$id)
 		->first();
 		
@@ -1548,12 +1546,12 @@ class OrderController extends Controller
 		$order_cutoff=DB::table('order_cutoff')
 		->select('Order_Cutoff_Time')
 		->first();
-					
+		/*
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
 		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
-				
+		*/	
 
 		$approved  = $cos_order->Cos_Order_Meal_Status;
 		
@@ -1566,6 +1564,7 @@ class OrderController extends Controller
 		->orderBy('Ordered_Food_Item_ID', 'DESC')
 		->get();
 		
+		
 		$mealmethodcheck=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
@@ -1574,11 +1573,12 @@ class OrderController extends Controller
 			$mealmethod = "pick-up";
 			
 		}	
-		
+		/*
 		else{
 			$mealmethod = "delivery";
 			
 		}
+		*/
 		
 		$special_id=DB::table('ordered_special')
 		->where('Cos_Order_Num','=',$id)
@@ -1620,7 +1620,7 @@ class OrderController extends Controller
 			
 		}
 		$specialfoods = json_decode(json_encode($specialfood));
-		
+		/*
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
@@ -1628,8 +1628,8 @@ class OrderController extends Controller
 			
 			return view('patron.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
-		}
-		return view('patron.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		}*/
+		return view('student.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
 
@@ -1651,13 +1651,13 @@ class OrderController extends Controller
 		$menuid=$menuid->Menu_ID;
 
 		
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
+		$student_id = DB::table('student')
+		->select('Student_ID')
 		->where('User_ID','=',Auth::user()->id)
 		->first();
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
         ->where('Cos_Order_Num', '=', $orderid)
         ->orWhere('Cos_Order_Meal_Status', '=', 'Editing')
 		->first();
@@ -1679,12 +1679,12 @@ class OrderController extends Controller
 		$order_cutoff=DB::table('order_cutoff')
 		->select('Order_Cutoff_Time')
 		->first();
-					
+		/*	
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
 		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
-				
+		*/	
 		if($cos_order->Cos_Order_Meal_Status == "Editing" || $cos_order->Cos_Order_Meal_Status == "Approved"){
 			$permission = "edit";
 			
@@ -1836,6 +1836,7 @@ class OrderController extends Controller
 		->orderBy('Ordered_Food_Item_ID', 'DESC')
 		->get();
 		
+		
 		$mealmethodcheck=DB::table('delivery_instruction')
 		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 		->first();
@@ -1844,16 +1845,16 @@ class OrderController extends Controller
 			$mealmethod = "pick-up";
 			
 		}	
-		
+		/*
 		else{
 			$mealmethod = "delivery";
 			
 		}
-		
+		*/
 		if(empty($special_id)){
 			$special_id = null;
 		}	
-		
+		/*
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
@@ -1862,7 +1863,8 @@ class OrderController extends Controller
 			return view('patron.orderfinal')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'orderid' => $orderid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds, 'food_count' => $food_count]);
 		
 		}
-		return view('patron.orderfinal')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'orderid' => $orderid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds, 'food_count' => $food_count]);
+		*/
+		return view('student.orderfinal')->with(['mealmethod' => $mealmethod,'specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'orderid' => $orderid, 'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds, 'food_count' => $food_count]);
 			
     }
 	
@@ -1900,6 +1902,7 @@ class OrderController extends Controller
 			if($cos_order->Cos_Order_Meal_Status == "Approved" || $cos_order->Cos_Order_Meal_Status == "Prepared" || $cos_order->Cos_Order_Meal_Status == "Pending Delivery" || $cos_order->Cos_Order_Meal_Status == "Delivered"){
 				
 				if($cos_order->Cos_Order_Meal_Status != "Prepared"){
+					/*
 					if($cos_order->Cos_Order_Payment_Method == "payroll"){
 						$employee_id = DB::table('patron')
 						->select('Employee_ID')
@@ -1916,6 +1919,7 @@ class OrderController extends Controller
 						DB::table('payroll')->where('Employee_ID', '=',$employee_id->Employee_ID)->update(['Salary' => $salary]);
 												
 					}
+					*/
 				}
 
 				$special_id=DB::table('ordered_special')
@@ -1974,7 +1978,7 @@ class OrderController extends Controller
 		}
 		
 		$message = "Your order has been cancelled.";
-		
+		/*
 		if($cos_order->Cos_Order_Meal_Status == "Prepared" && $cos_order->Cos_Order_Payment_Method != "payroll"){
 				$message = $message."\nHowever, you will be charged by the restaurant for the prepared meal.";
 		}
@@ -1986,27 +1990,27 @@ class OrderController extends Controller
 		if($cos_order->Cos_Order_Meal_Status == "Approved" && $cos_order->Cos_Order_Payment_Method == "payroll"){
 				$message = $message."\nYour payroll deduction has been refunded.";
 		}
-		
-		return redirect('/order')->with('success',$message);
+		*/
+		return redirect('/student_order')->with('success',$message);
    } 
 	 
 	 
 	public function cancel()
     {
         //
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
+		$student_id = DB::table('student')
+		->select('Student_ID')
 		->where('User_ID','=',Auth::user()->id)
 		->first();
 			
 		$id_deletion=DB::table('cos_order')
-		->where('Employee_ID','=', $employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Meal_Status','=','orderingg')
 		->select('Cos_Order_Num')
 		->first();
 				
 		DB::table('cos_order')
-		->where('Employee_ID','=', $employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
 		->update(['Cos_Order_Meal_Status'=>'Approved']);
 		
@@ -2032,13 +2036,13 @@ class OrderController extends Controller
 	public function detailshow($id)
     {
         //
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
+		$student_id = DB::table('student')
+		->select('Student_ID')
 		->where('User_ID','=',Auth::user()->id)
 		->first();
 		
 		$cos_order=DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$id)
 		->first();
 		
@@ -2062,12 +2066,12 @@ class OrderController extends Controller
 		$order_cutoff=DB::table('order_cutoff')
 		->select('Order_Cutoff_Time')
 		->first();
-		
+		/*
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
 		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();	
-
+		*/
 		$approved  = $cos_order->Cos_Order_Meal_Status;
 		
 		$food_count=DB::table('ordered_food_item')
@@ -2129,11 +2133,11 @@ class OrderController extends Controller
 			
 		}	
 		
-		else{
-			$mealmethod = "delivery";
+		//else{
+		//	$mealmethod = "delivery";
 			
-		}
-		
+		//}
+		/*
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
@@ -2142,7 +2146,8 @@ class OrderController extends Controller
 			return view('patron.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		return view('patron.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		*/
+		return view('student.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
 }

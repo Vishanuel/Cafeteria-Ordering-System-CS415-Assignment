@@ -53,7 +53,7 @@
 				  <td style="text-overflow: ellipsis;" class="text-center">
                         
 						 
-					<a class="btn btn-info btn-flat" type="button" href="{{URL::to('order_edit_details/'.$order->Cos_Order_Num)}}">
+					<a class="btn btn-info btn-flat" type="button" href="{{URL::to('student_order_edit_details/'.$order->Cos_Order_Num)}}">
                               <span class="fa fa-pencil">
                               </span>
                         Show details

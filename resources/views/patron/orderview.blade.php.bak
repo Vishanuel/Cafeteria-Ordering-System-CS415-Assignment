@@ -48,12 +48,12 @@
 					
 					
 					
-					<div id="quantityd{{$i}}" class="form-group col-md-2 col-sm-4">
+					<div id="quantityd{{$i}}" class="form-group col-md-2 ">
 					  <label>Quantity</label>
 					  <input type="number" class="form-control" readonly id="quantity{{$i}}" name="quantity{{$i}}" max="" min="1" Required value="{{$food_select->Quantity}}">
 					</div>
 			
-					<div id="priced{{$i}}" class="form-group col-md-2 col-sm-4">
+					<div id="priced{{$i}}" class="form-group col-md-2 ">
 					  <label>Price($)</label>
 					  <input type="number" class="form-control" readonly id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>

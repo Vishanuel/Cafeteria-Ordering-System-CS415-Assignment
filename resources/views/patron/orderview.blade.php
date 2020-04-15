@@ -93,26 +93,26 @@
 				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>
 				<!-- <div id="food" ></div>-->
-				
+				@if($mealmethod == "delivery")
 				<div class="form-group">
 					<div class="radio col-md-6">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" style="clear: none; width: auto;" value="delivery" @if($mealmethod == "delivery") checked @endif>
+						  <input type="radio" disabled class="minimal" name="mealmethod" id="optionsRadios1" style="clear: none; width: auto;" value="delivery" @if($mealmethod == "delivery") checked @endif>
 						  Get meal delivered
 						</label>
 					  </div>
 				</div>
-				
-				
+				@endif
+				@if($mealmethod == "pick-up")
 				<div class="form-group">
 					  <div class="radio col-md-6 ">
 						<label>
-						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios2" style="clear: none; width: auto;" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
+						  <input type="radio" disabled class="minimal" name="mealmethod" id="optionsRadios2" style="clear: none; width: auto;" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
 						  Pick-up meal from restaurant
 						</label>
 					 </div>
 				 </div>
-				
+				@endif
                 <div class="form-group col-md-12">
                 <label>Meal Date</label>
 				

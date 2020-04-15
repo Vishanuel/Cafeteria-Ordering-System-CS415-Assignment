@@ -25,7 +25,7 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-              <form id="orderform" role="form" method="POST" action="{{action('OrderController@store')}}" enctype="multipart/form-data">
+              <form id="orderform" role="form" method="POST" action="{{action('OrderStudentController@store')}}" enctype="multipart/form-data">
 			   @csrf
                 <!-- text input -->
 				
@@ -99,12 +99,12 @@
 				<!-- <div id="food" ></div>-->
 				<div class="form-group col-md-10">
 				<!--<label >Pick meal collection method</label>-->
-					<div class="radio">
+					<!-- div class="radio">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  disabled >
 						  Get meal delivered 
 						</label>
-					  </div>
+					  </div-->
 				
 				
 					  <div class="radio">
@@ -116,7 +116,7 @@
 				 
 				 </div>
 				<div class="has-error col-md-12" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div>
-				<div id="delivery" name="delivery">
+				<!--div id="delivery" name="delivery">
 				
 					<div class="form-group col-md-6">
 					
@@ -142,7 +142,7 @@
 					</select>
 						
 					</div>
-                </div>
+                </div-->
 				
                 <div class="form-group col-md-12">
                 <label>Meal Date</label>
@@ -160,15 +160,15 @@
 			  
 			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}"> 
 			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}">
 
 			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
-                <button type="submit" data-barba-prevent="self" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Order</button>
+                <a href="{{url('student_order_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
+                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Order</button>
               </div>
               <!-- /.box-footer -->
 			 </form>

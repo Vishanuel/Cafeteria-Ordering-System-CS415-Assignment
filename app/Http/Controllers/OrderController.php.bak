@@ -896,7 +896,7 @@ class OrderController extends Controller
 		->where('Cos_Order_Num','=',$orderid)
 		->first();
 		
-		dd($mealmethod);
+		//dd($mealmethod);
 		
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
@@ -1379,7 +1379,7 @@ class OrderController extends Controller
 				
 		}
 		
-		if($mealmethodp == "card"){
+		if($cos_order->Cos_Order_Payment_Method == "card"){
 
 			$card = DB::table("card_payment")
 			->select('Card_Number')

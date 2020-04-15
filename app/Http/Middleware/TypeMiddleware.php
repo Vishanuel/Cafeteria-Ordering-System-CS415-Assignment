@@ -26,6 +26,11 @@ class TypeMiddleware
         {
              return redirect('/home');
         }
+		
+		else if(Auth::check() && auth()->user()->usertype === 'Student')
+        {
+             return redirect('/student_home');
+        }
 
         //If user role is menu manager
         else if(Auth::check() && auth()->user()->usertype ==='Menu Manager')

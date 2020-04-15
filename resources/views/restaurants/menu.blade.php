@@ -73,9 +73,15 @@
 					
 					@if($menuid != -1)
 					<div class="form-group col-md-12">
-					    <a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('order_create/'.$menuid )}}">
+						@if(Auth::user()->usertype == "Patron")
+						<a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('order_create/'.$menuid )}}">
 							Place order
 					    </a>
+						@elseif(Auth::user()->usertype == "Student")
+					    <a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('student_order_create/'.$menuid )}}">
+							Place order
+					    </a>
+						@endif
 				    </div>
 					 @endif
 				

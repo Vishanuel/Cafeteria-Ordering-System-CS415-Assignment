@@ -26,7 +26,7 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-              <form id="orderform" role="form" method="POST" action="{{action('OrderController@store')}}" enctype="multipart/form-data">
+              <form id="orderform" role="form" method="POST" action="{{action('OrderStudentController@store')}}" enctype="multipart/form-data">
 			   @csrf
 				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
                 <!-- text input -->
@@ -98,12 +98,7 @@
 				<!-- <div id="food" ></div>-->
 				<div class="form-group col-md-10">
 				
-					<div class="radio">
-						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
-						  Get meal delivered
-						</label>
-					  </div>
+
 				
 				
 					  <div class="radio">
@@ -114,36 +109,7 @@
 					 </div>
 				
 				 </div>
-				<div class="has-error col-md-12" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div>
-				<div id="delivery" name="delivery">
-				
-					<div class="form-group col-md-6">
-					
-					  <label>Delivery Location</label>
-					  <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id" name="location_id"  disabled>Select location</option> 
-							@foreach ($locations as $location )
-								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
-									{{ $location->Location_Name }}
-								</option>
-								
-							@endforeach
-						</select>
-						
-					</div>
-					
-					<div class="form-group col-md-6">
-					
-					  <label>Delivery Time</label>
-					  <select class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
-							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
-							@if($mealmethod == "delivery")
-								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
-							@endif 
-						</select>
-						
-					</div>
-                </div>
+
 				
                 <div class="form-group col-md-12">
                 <label>Meal Date</label>
@@ -161,14 +127,14 @@
 			  
 			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="{{$food_count+1}}" class="form-group col-md-12" style="display: none">{{$food_count+1}}</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+			
 			<input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}"> 
 			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
-                <button type="submit" data-barba-prevent="self" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
+                <a href="{{url('student_order_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
+                <button type="submit"  class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> Order</button>
               </div>
               <!-- /.box-footer -->
 			 </form>

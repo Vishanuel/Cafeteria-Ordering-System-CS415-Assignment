@@ -27,7 +27,7 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-              <form id="orderform" role="form" method="POST" action="{{action('OrderController@confirm')}}" enctype="multipart/form-data">
+              <form id="orderform" role="form" method="POST" action="{{action('OrderStudentController@confirm')}}" enctype="multipart/form-data">
 			   @csrf
 				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
                 <!-- text input -->
@@ -93,16 +93,7 @@
 				
 				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>
-				<!-- <div id="food" ></div>-->
-				
-				<div class="form-group">
-					<div class="radio col-md-6">
-						<label id="del">
-						  <input type="radio" disabled class="minimal" name="mealmethod" readonly id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
-						  Get meal delivered
-						</label>
-					  </div>
-				</div>
+	
 				<div class="form-group">
 					  <div class="radio col-md-6 ">
 						<label>
@@ -131,7 +122,7 @@
 			<div id="cwarning" name="cwarning" class="form-group col-md-12" style="display: none" value=""> </div>
 			<input id="dwarn" name="dwarn" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+			<!--input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value=""--> 
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$cos_order->Cos_Order_Num}}">
 			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
 			<div id="delivery" name="delivery" class="form-group col-md-12" style="display: none" value=""></div>
@@ -145,57 +136,7 @@
           <!-- /.box -->
         </div>
 		
-        <!--/.col (right) -->
-    
-	  @if($mealmethod == "delivery")
-
-		<div class="col-md-6">
-		  <div class="box loading box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Delivery Info.</h3>
-            </div>
-            <!-- /.box-header -->
-            <div id="box" class="box-body">
-			<form action="">
-				
-				<div id="delivery" name="delivery">
-				
-					<div class="form-group col-md-6">
-					
-					  <label>Delivery Location</label>
-					  <select disabled class="form-control " id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id" name="location_id"  disabled>Select location</option> 
-							@foreach ($locations as $location )
-								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
-									{{ $location->Location_Name }}
-								</option>
-								
-							@endforeach
-						</select>
-						
-					</div>
-					
-					<div class="form-group col-md-6">
-					
-					  <label>Delivery Time</label>
-					  <select disabled class="form-control " id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
-							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
-							@if($mealmethod == "delivery")
-								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
-							@endif 
-						</select>
-						
-					</div>
-                </div>
-				
-				 </form>
-			</div>
-			
-			</div>
-		  </div>
-		
-		@endif
-	  
+  
 		<div class="col-md-6">
 		  <div class="box loading box-success">
             <div class="box-header with-border">
@@ -204,30 +145,16 @@
             <!-- /.box-header -->
             <div id="box" class="box-body">
 
-				<div class="form-group col-md-6">
-					<div class="radio">
-						<label>
-						  <input type="radio" disabled class="minimal"  name="mealmethod3" id="optionsRadios1" value="payroll"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") checked @endif>
-						  Payroll deduction payment
-						</label>
-					  </div>
-				</div>
+				
 				<div class="form-group col-md-6">
 					  <div class="radio">
 						<label>
-						  <input type="radio" disabled class="minimal" name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif @if($deduction->Patron_Deduction_Status == 0) checked @endif @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
+						  <input type="radio" disabled class="minimal" name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif  @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
 						  Cash Payment at pickup
 						</label>
 					 </div>
 				 </div>  
-				 <div class="form-group">
-					<div class="radio col-md-6 ">
-						<label>
-						  <input type="radio" class="minimal" disabled name="mealmethod" id="optionsRadios3" value="card" @if($deduction->Patron_CardRegister_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="card") checked @endif>
-						  Credit/Debit card payment
-						</label>
-				    </div>
-				</div>
+				
 			</div>
 			
 			</div>
@@ -245,8 +172,8 @@
 			 	<a href="{{url('order')}}" class="btn btn-default btn-flat">Back</a>
 
 				@if($approved == "Approved")
-			 		<a href="{{URL::to('order_remove/'. $cos_order->Cos_Order_Num)}}" class="btn btn-danger btn-flat"><li class="glyphicon glyphicon-remove"></li> Cancel</a>
-					<a href="{{URL::to('order_edit/'. $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li> Edit</a>
+			 		<a href="{{URL::to('student_order_remove/'. $cos_order->Cos_Order_Num)}}" class="btn btn-danger btn-flat"><li class="glyphicon glyphicon-remove"></li> Cancel</a>
+					<a href="{{URL::to('student_order_edit/'. $cos_order->Cos_Order_Num)}}"  class="btn btn-warning btn-flat pull-right"><li class="glyphicon glyphicon-pencil"></li> Edit</a>
 				@endif
               </div>
 			</div>

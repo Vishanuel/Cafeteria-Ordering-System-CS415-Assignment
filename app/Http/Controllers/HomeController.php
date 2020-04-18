@@ -32,11 +32,35 @@ class HomeController extends Controller
 			->first();
 			
 			$orderall=DB::table('cos_order')
-				->where('Employee_ID','=',$employee_id->Employee_ID)
-				->where('Cos_Order_Meal_Status','!=','orderingg')
-				->get();
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Meal_Status','!=','orderingg')
+			->get();
 			
-			return view('patron.home')->with(['orderall' => $orderall]);
+			$employee_id = DB::table('patron')
+			->select('Employee_ID')
+			->where('User_ID','=',Auth::user()->id)
+			->first();
+			
+			$reg_patron=DB::table('patron')->where('Employee_ID','=',$employee_id->Employee_ID)->first();
+			
+			$payrollinfo = DB::table('payroll')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->first();
+			
+			$card_payment = DB::table('card_payment')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->first();
+			
+			if(empty($payrollinfo)){
+				$payrollstat = 0;
+			}
+			
+			else{
+				$payrollstat = 1;
+			}
+					
+			//return view('patron.register')->with(['reg_patron' => $reg_patron, 'payrollstat' => $payrollstat, 'card_payment' => $card_payment]);
+			return view('patron.home')->with(['orderall' => $orderall,'reg_patron' => $reg_patron, 'payrollstat' => $payrollstat, 'card_payment' => $card_payment]);
 		}
 		
 		if(Auth::user()->usertype == "Student"){

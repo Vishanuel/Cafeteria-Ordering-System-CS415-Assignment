@@ -39,7 +39,7 @@ class HomeController extends Controller
 			return view('patron.home')->with(['orderall' => $orderall]);
 		}
 		
-		if(Auth::user()->usertype == "Patron"){
+		if(Auth::user()->usertype == "Student"){
 			$student_id = DB::table('student')
 			->select('Student_ID')
 			->where('User_ID','=',Auth::user()->id)

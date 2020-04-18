@@ -7,7 +7,7 @@
   <!-- REQUIRED JS SCRIPTS -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- jQuery 3 -->
-    <script src="https://unpkg.com/scrollreveal@4.0.6/dist/scrollreveal.js"></script>
+  <script src="https://unpkg.com/scrollreveal@4.0.6/dist/scrollreveal.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- Bootstrap 3.3.7 -->
@@ -98,13 +98,10 @@
   <link href='https://fonts.googleapis.com/css?family=Actor' rel='stylesheet'>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 
-	<script>
 
-	
-	</script>
 </head>
 
-<body class="hold-transition skin-blue layout-top-nav" data-barba="wrapper" >
+<body class="hold-transition skin-blue layout-top-nav "  >
 
 <div class="wrapper">
 
@@ -119,14 +116,16 @@
           </button>
         </div>
 		 
+	
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left"  id="navbar-collapse" >
-          <ul class="nav navbar-nav" >
+        <div class="collapse navbar-collapse pull-left"  id="navbar-collapse"  >
+		  
+          <ul class="nav navbar-nav"   >
 		  @if(Auth::user()->usertype == "Patron")
             <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
-            <li><a href="{{URL::to('order')}}" >View Previous Orders</a></li>
+            <li><a href="{{URL::to('order')}}" >Order History</a></li>
 			<li class="divider"></li>
-			<li><a href="{{URL::to('register')}}" >Register for Payment Options</a></li>
+			<li><a href="{{URL::to('register')}}" >Payment Option Registration</a></li>
 		  @elseif(Auth::user()->usertype == "Student")
 		    <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
             <li><a href="{{URL::to('student_order')}}" >View Previous Orders</a></li>
@@ -145,13 +144,14 @@
             </li>-->
           </ul>
         </div>
+		
         <!-- /.navbar-collapse -->
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu" >
           <ul class="nav navbar-nav" style="z-index:999;">
            
             <!-- User Account Menu -->
-            <li class="dropdown user user-menu" >
+            <li class="dropdown user user-menu full" >
               <!-- Menu Toggle Button -->
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
@@ -159,34 +159,36 @@
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                 <span class="hidden-xs">{{ Auth::user()->name }}</span>
               </a>
-              <ul class="dropdown-menu" >
-                <!-- The user image in the menu -->
-                <li class="user-header" >
-                  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+			
+				  <ul class="dropdown-menu " >
+					<!-- The user image in the menu -->
+					<li class="user-header" >
+					  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
-                  <p>
-                    {{ Auth::user()->name }} - {{ Auth::user()->usertype }}
-                    <small>{{ Auth::user()->created_at}}</small>
-                  </p>
-                </li>
-                <!-- Menu Body -->
-                
-				
-				
-				
-                <!-- Menu Footer-->
-                <li class="user-footer" >
-                  <div class="pull-left">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  </div>
-                  <div class="pull-right">
-				  <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                           @csrf
-					<button type="submit" class="btn btn-primary btn-flat">Sign out</button>
-                  </form>
-                  </div>
-                </li>
-              </ul>
+					  <p>
+						{{ Auth::user()->name }} - {{ Auth::user()->usertype }}
+						<small>{{ Auth::user()->created_at}}</small>
+					  </p>
+					</li>
+					<!-- Menu Body -->
+					
+					
+					
+					
+					<!-- Menu Footer-->
+					<li class="user-footer" >
+					  <div class="pull-left">
+						<a href="#" class="btn btn-default btn-flat">Profile</a>
+					  </div>
+					  <div class="pull-right">
+					  <form id="logout-form" action="{{ route('logout') }}" method="POST">
+							   @csrf
+						<button type="submit" class="btn btn-primary btn-flat">Sign out</button>
+					  </form>
+					  </div>
+					</li>
+				  </ul>
+		
             </li>
           </ul>
         </div>
@@ -690,8 +692,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		var time = today.getHours();
 		var cutoff = $('#cutoff').val();
 		
-		var tomorrow = new Date(today)
-		tomorrow.setDate(tomorrow.getDate() + 1)
+		var tomorrow = new Date(today);
+		tomorrow.setDate(tomorrow.getDate() + 1);
+		
+		var two_weeks = new Date();
+		two_weeks.setDate(two_weeks.getDate() + 14);	
+		
+		var tmoro_two_weeks = new Date(today);
+		tmoro_two_weeks.setDate(tmoro_two_weeks.getDate() + 15);
+	
 		
 		var dd1 = String(today.getDate()).padStart(2, '0');
 		var mm1 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -712,6 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			$('#meal_date').datepicker({
 			  autoclose: true,
 			  startDate: tomorrow,
+			  endDate: tmoro_two_weeks,
 			  format: 'yyyy-mm-dd'
 			})
 			document.getElementById('cwarning').style.display = 'block';
@@ -727,6 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			$('#meal_date').datepicker({
 			  autoclose: true,
 			  startDate: today,
+			  endDate: two_weeks,
 			  format: 'yyyy-mm-dd'
 			})
 			document.getElementById('cwarning').style.display = 'none';
@@ -769,6 +780,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			
 	
 	$( document ).ready(function() {		
+	
+		
 		if($('#cardmethod').val() && $('#payrollmethod').val()){
 			
 			$('#expdate').datepicker({
@@ -936,92 +949,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 	//initjs();
 	}
-	
-
-	
-	barba.hooks.afterEnter(({ el }) => {
-		
-	   initjs();
-	   prevent: ({ el }) => el.classList && el.classList.contains('btn-success');
-//	    ScrollReveal().reveal('.box'); 
-//		ScrollReveal({ reset: true });
-    });
-	
-	barba.hooks.after(({ el }) => {
-	  // initjs();
-	  prevent: ({ el }) => el.classList && el.classList.contains('btn-success');
-	function tcost(){
-		var e;
-		$('#tcost').val(0);
-		for(e = 1; e < $('#q').html(); e++){
-			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));
-			
-		}
-		if($('#specialfoodsprice').val()){
-			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#specialfoodsprice').val()));
-		}
-		
-	}
-	
-	var count = $('#q').html();
-	//alert(count);
-	$('#ite').val(count);
-	//alert(count);
-	var k=1;
-	for(k;k<count;k++){
-		var ids = $('#food_item'+k).attr('id');
-		var changes = ids.replace( /^\D+/g, '');
-		var str = $('#food_item'+changes).val();
-		
-		var food = str.split(/(\s+)/);
-	 
-		$('#price'+changes).val($('#quantity'+changes).val()*food[4]);
-		$('#quantity'+changes).attr({'max':food[2]});
-		$('#qavailable'+changes).val(food[2]);
-	//	alert(food[4]);
-		$('#quantity'+changes).on("keyup change click paste ", function(){
-			
-			
-			var id = $(this).attr('id');
-			var change = id.replace( /^\D+/g, '');
-			var str = $('#food_item'+change).val();
-			var food = str.split(/(\s+)/);
-			//alert(change);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
-			tcost();
-		});
-	
-		$('#food_item'+changes).change(function(){
-			//alert("helo");
-			var id = $(this).attr('id');
-			//alert(id);
-			var change = id.replace( /^\D+/g, '');
-			//alert( $(this).find("option:selected").attr('value') );
-			var str = $('#food_item'+change).val();
-			var food = str.split(/(\s+)/);
-			//alert(food[2]);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
-		///	$('#Quantity').val();
-			$('#qavailable'+change).val(food[2]);		
-			$('#quantity'+change).attr({'max':food[2]});
-			$("#quantity"+change).on("keyup change click paste ", function(){
-				//alert(food[4]);
-				$('#price'+change).val($('#quantity'+change).val()*food[4]);
-				tcost();
-			})
-			tcost();
-		});
-		
-		
-	}
-	
-   });
-	/*
-	barba.init({
-  // define a custom function that will prevent Barba
-  // from working on links that contains a `prevent` CSS class
-		prevent: ({ el }) => el.classList && el.classList.contains('btn-success'),
-	});*/
 	initjs();
 });
 

@@ -93,26 +93,28 @@
 				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>
 				<!-- <div id="food" ></div>-->
-				@if($mealmethod == "delivery")
+				
+				
 				<div class="form-group">
 					<div class="radio col-md-6">
 						<label id="del">
-						  <input type="radio" disabled class="minimal" name="mealmethod" id="optionsRadios1" style="clear: none; width: auto;" value="delivery" @if($mealmethod == "delivery") checked @endif>
+						  <input type="radio" class="minimal" name="mealmethod" id="1optionsRadios1"  value="delivery" @if($mealmethod == "delivery") checked @else disabled @endif >
 						  Get meal delivered
 						</label>
 					  </div>
 				</div>
-				@endif
-				@if($mealmethod == "pick-up")
+				
+			
 				<div class="form-group">
 					  <div class="radio col-md-6 ">
 						<label>
-						  <input type="radio" disabled class="minimal" name="mealmethod" id="optionsRadios2" style="clear: none; width: auto;" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
+						  <input type="radio" class="minimal" name="mealmethod" id="2optionsRadios2"  value="pick-up"  @if($mealmethod == "pick-up") checked @else disabled @endif >
 						  Pick-up meal from restaurant
 						</label>
 					 </div>
 				 </div>
-				@endif
+				
+				<!--input type="text" class="form-control" id="fse" name="tcosfset" Required readonly value="{{$mealmethod}}"-->
                 <div class="form-group col-md-12">
                 <label>Meal Date</label>
 				
@@ -216,7 +218,7 @@
 				<div class="form-group col-md-6">
 					<div class="radio">
 						<label>
-						  <input type="radio" class="minimal" disabled name="mealmethod3" id="optionsRadios1" value="payroll"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") checked @endif>
+						  <input type="radio" class="minimal"  name="mealmethod3" id="optionsRadios1" value="payroll"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") checked @else disabled @endif>
 						  Payroll deduction payment
 						</label>
 					  </div>
@@ -224,7 +226,7 @@
 				<div class="form-group col-md-6">
 					  <div class="radio">
 						<label>
-						  <input type="radio" class="minimal" disabled name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif @if($deduction->Patron_Deduction_Status == 0) checked @endif @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
+						  <input type="radio" class="minimal"  name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif @if($deduction->Patron_Deduction_Status == 0) checked @endif @if($cos_order->Cos_Order_Payment_Method=="cash") checked @else disabled @endif>
 						  Cash Payment at pickup
 						</label>
 					 </div>
@@ -232,12 +234,12 @@
 				<div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio" class="minimal" disabled name="mealmethod" id="optionsRadios3" value="card" @if($deduction->Patron_CardRegister_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="card") checked @endif>
-						  Credit/Debit card payment
+						  <input type="radio" class="minimal"  name="mealmethod3" id="optionsRadios3" value="card" @if($deduction->Patron_CardRegister_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="card") checked @else disabled @endif>
+						  Card payment
 						</label>
 				    </div>
 				</div>
-				 
+				
 			</div>
 			
 			</div>

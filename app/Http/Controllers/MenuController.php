@@ -15,26 +15,62 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+       
         $usr = Auth::user()->id;    //Get the user identification
         
-            $data = DB::table('Menu_Manager')
+        $rest = DB::table('Menu_Manager')
+        ->where('Menu_Manager.User_ID',$usr)
+        ->leftJoin('menu_food_item', 'Menu_Manager.Restaurant_ID', '=', 'menu_food_item.Restaurant_ID')
+        ->get()
+        ->toArray();
+
+        
+
+        $cat = DB::table('category')
+        ->get()
+        ->toArray();
+
+        $dish = DB::table('menu')
+        ->get()
+        ->toArray();
+
+        for($j=0;$j<count($dish);$j++)
+            {
+                $item[$j]= DB::table('menu_food')
+                ->where('menu_food.Menu_ID','=',$dish[$j]->Menu_ID)
+                ->LeftJoin('menu_food_item','menu_food.Menu_Food_Item_ID','=','menu_food_item.Menu_Food_Item_ID')
+                ->select('menu_food_item.Menu_Food_Item_ID','menu_food_item.Food_Name','menu_food_item.Food_Desc','menu_food_item.Price')                   
+                ->get()
+                ->toArray();
+             
+            }
+
+
+        for($i=0;$i<count($cat);$i++)
+        {   
+            $menu[$i] = DB::table('Menu_Manager')
             ->where('Menu_Manager.User_ID',$usr)
             ->leftJoin('menu', 'Menu_Manager.Restaurant_ID', '=', 'menu.Restaurant_ID')
+            ->where('menu.Category_ID','=',$cat[$i]->Category_ID)
             ->get()
             ->toArray();
+        }  
 
-
-        for($i=0;$i<count($data);$i++)
+        for($i=0;$i<count($menu);$i++)
         {
-            $val[$i] = DB::table('menu_food')
-            ->where('menu_food.Menu_ID','=',$data[$i]->Menu_ID)
-            ->LeftJoin('menu_food_item','menu_food.Menu_Food_Item_ID','=','menu_food_item.Menu_Food_Item_ID')
-            ->select('menu_food_item.Food_Name','menu_food_item.Food_Desc','menu_food_item.Price')                    ->get()
-            ->toArray();
+            for($j=0;$j<count($menu[$i]);$j++)
+            {
+                $val[$i][$j]= DB::table('menu_food')
+                ->where('menu_food.Menu_ID','=',$menu[$i][$j]->Menu_ID)
+                ->LeftJoin('menu_food_item','menu_food.Menu_Food_Item_ID','=','menu_food_item.Menu_Food_Item_ID')
+                ->select('menu_food_item.Menu_Food_Item_ID','menu_food_item.Food_Name','menu_food_item.Food_Desc','menu_food_item.Price')                   
+                ->get()
+                ->toArray();
+             
+            }
         }
-        
-        return view('menu manager.display_menu', compact('data','val'));
+
+        return view('menu manager.display_menu', compact('val','menu','cat','rest','dish','item'));
     }
 
     /**
@@ -45,12 +81,14 @@ class MenuController extends Controller
     public function create()
     {
         $val= DB::table('menu_food_item')
-                  ->get()
-                  ->toArray();
-    
-        return view('menu manager.create_menu',compact('val'));
+        ->get()
+        ->toArray();
 
-       
+        $cat=DB::table('category')
+        ->get()
+        ->toArray();
+
+        return view('menu manager.create_menu',compact('val','cat'));
     }
 
     /**
@@ -62,39 +100,32 @@ class MenuController extends Controller
     public function store(Request $request)
     {
        
-          $this->validate($request, [
-         'Menu_Date' => 'required',
-         'Food' => 'required',
-         ]);
+        $this->validate($request, [
+        'Menu_Date' => 'required',
+        'Food' => 'required',]);
+
        $input = $request->all();
  
        $usr = Auth::user()->id;    //Get the user identification
         
-            $data = DB::table('Menu_Manager')
-            ->where('Menu_Manager.User_ID',$usr)
-            ->get();
+        $data = DB::table('Menu_Manager')
+        ->where('Menu_Manager.User_ID',$usr)
+        ->get();
 
-           // dd(count($input["Food"]));
-
-         foreach($data as $user){
-                    
+         foreach($data as $user)
+         {      
             $id =DB::table('menu')->insertGetId(
-                ['Menu_Date' => $input["Menu_Date"],
-                 'Restaurant_ID' => $user->Restaurant_ID]
-                 ); 
+            ['Menu_Date' => $input["Menu_Date"],
+            'Restaurant_ID' => $user->Restaurant_ID]); 
 
-                 for($i=0;$i<count($input["Food"]);$i++)
-                 {
-                    DB::table('menu_food')->insert(
-                        ['Menu_Food_Item_ID' => $input["Food"][$i],
-                         'Menu_ID' => $id]
-                         );  
-                 }
-
-                }
-    
-                return redirect('menu')->with('success','Menu added');
-       
+            for($i=0;$i<count($input["Food"]);$i++)
+            {
+                DB::table('menu_food')->insert(
+                ['Menu_Food_Item_ID' => $input["Food"][$i],
+                'Menu_ID' => $id]);  
+            }
+        }
+        return redirect('menu');
     }
 
     /**
@@ -116,17 +147,43 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $val= DB::table('menu_food_item')
+        $usr = Auth::user()->id; 
+
+        $cat = DB::table('category')
+        ->where('Category_ID','=',$id)
         ->get()
         ->toArray();
 
-        $data = DB::table('Menu')
-            ->where('Menu.Menu_ID',$id)
-            ->get();
-			
-            foreach($data as $menu){
-                return view('menu manager.edit_menu', compact('menu','val')); 
-            }
+        //dd($cat);
+        
+        // this is for getting all the menu items that  belong to that restaurant
+        $rest = DB::table('Menu_Manager')
+        ->where('Menu_Manager.User_ID',$usr)
+        ->leftJoin('menu_food_item', 'Menu_Manager.Restaurant_ID', '=', 'menu_food_item.Restaurant_ID')
+        ->get()
+        ->toArray();
+        //this is for getting all the menu for the $id category
+        $menu = DB::table('Menu_Manager')
+        ->where('Menu_Manager.User_ID',$usr)
+        ->leftJoin('menu', 'Menu_Manager.Restaurant_ID', '=', 'menu.Restaurant_ID')
+        ->where('menu.Category_ID','=',$id)
+        ->get()
+        ->toArray();
+        //dd(count($menu));
+        // this is for getting the menu items for the above $menu
+        for($i=0;$i<count($menu);$i++)
+        {
+            $item[$i] = DB::table('menu_food')
+            ->where('menu_food.Menu_ID','=',$menu[$i]->Menu_ID)
+            ->LeftJoin('menu_food_item','menu_food.Menu_Food_Item_ID','=','menu_food_item.Menu_Food_Item_ID')
+            ->select('menu_food_item.Menu_Food_Item_ID','menu_food_item.Food_Name','menu_food_item.Food_Desc','menu_food_item.Price')                   
+            ->get()
+            ->toArray();
+         } 
+
+         return view('menu manager.edit_menu', compact('rest','menu','item','cat')); 
+
+     
     }
 
     /**
@@ -138,46 +195,35 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //$id is Menu_ID
+        //$food is array of food items selected
+        //Menu_Date is the date of the menu
+
         $this->validate($request, [
             'Menu_Date' => 'required',
             'Food' => 'required',
             ]);
             
         $input = $request->all();
-        //dd($input);
-              $usr = Auth::user()->id;    //Get the user identification
-               
-                   $data = DB::table('Menu_Manager')
-                   ->where('Menu_Manager.User_ID',$usr)
-                   ->get();
-       
-                  // dd(count($input["Food"]));
-       
-                foreach($data as $user){
-                           
-       
-                        for($i=0;$i<count($input["Food"]);$i++)
-                        {
 
-                        //    DB::table('menu_food')
-                        //    ->where('Menu_ID','=', $id)
-                        //    ->update(['Menu_Food_Item_ID' => $input["Food"][$i]]);  
-                           DB::table('menu_food')
-                           ->where('Menu_ID','=', $id)
-                           ->delete();  
+        //dd($input["Food"]);
 
-                           DB::table('menu_food')->insert(
-                            ['Menu_Food_Item_ID' => $input["Food"][$i],
-                             'Menu_ID' => $id]
-                             );  
-                        }
+         DB::table('menu_food')
+         ->where('Menu_ID','=', $id)
+         ->delete(); 
 
-                        $id =DB::table('menu')
-                            ->where('Menu_ID','=',$id)
-                            ->update(['Menu_Date' => $input["Menu_Date"]]); 
+         for($i=0;$i<count($input["Food"]);$i++)
+        {
+            DB::table('menu_food')
+            ->updateOrInsert(['Menu_Food_Item_ID' => $input["Food"][$i],'Menu_ID' => $id]);  
+        }
+
+        DB::table('menu')
+        ->where('Menu_ID','=',$id)
+        ->update(['Menu_Date' => $input["Menu_Date"]]); 
        
-                       }
-                       return redirect('menu');
+                       
+        return redirect('menu');
     }
 
     /**
@@ -188,6 +234,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
+        
         DB::table('menu')->where('Menu_ID', '=', $id)->delete();
 
         return redirect('menu');

@@ -347,11 +347,12 @@ a:focus {
 @media (max-width: 991px) {
   .content-header > .breadcrumb {
     position: relative;
+	display: none;
     margin-top: 5px;
     top: 0;
     right: 0;
     float: none;
-    background: #d2d6de;
+   // background: #d2d6de;
     padding-left: 0px;
   }
   .content-header > .breadcrumb li:before {

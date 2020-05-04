@@ -105,11 +105,7 @@
 					  <form role="form" method="POST" action="{{action('RegisterController@store')}}" enctype="multipart/form-data">
 						@csrf
 						<!-- text input -->
-						<div class="col-md-12 callout callout-info">
-							<h4><i class="icon fa fa-info"></i> Attention!</h4>
-							If you are unable to select "Payroll deduction" payment method buttons in this form, you may not be registered in the USP payroll system.					
-						</div>
-						
+											
 						
 						<div class="col-md-12">
 							<label class="col-md-12">

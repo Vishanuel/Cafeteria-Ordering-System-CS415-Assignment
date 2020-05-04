@@ -62,7 +62,7 @@ class HomeController extends Controller
 			//return view('patron.register')->with(['reg_patron' => $reg_patron, 'payrollstat' => $payrollstat, 'card_payment' => $card_payment]);
 			return view('patron.home')->with(['orderall' => $orderall,'reg_patron' => $reg_patron, 'payrollstat' => $payrollstat, 'card_payment' => $card_payment]);
 		}
-		
+		/*
 		if(Auth::user()->usertype == "Student"){
 			$student_id = DB::table('student')
 			->select('Student_ID')
@@ -76,6 +76,7 @@ class HomeController extends Controller
 			
 			return view('student.home')->with(['orderall' => $orderall]);
 		}
+		*/
       //  return view('patron.home');
     }
 }

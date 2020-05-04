@@ -84,7 +84,7 @@
   <link rel="stylesheet" href="../../dist/css/skins/skin-transparent.css">
    
   <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -101,7 +101,7 @@
 
 </head>
 
-<body class="hold-transition skin-blue layout-top-nav " data-barba="wrapper" >
+<body class="hold-transition skin-blue layout-top-nav "  >
 
 <div class="wrapper">
 
@@ -284,16 +284,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 	
-	
-	
-	
-  
-	 
-	  
     $('#example1').DataTable({
+		scrollCollapse: true,
+		
 		retrieve: true,
 		rowReorder: {
-            selector: 'td:nth-child(2)'
+            selector: 'td:nth-child(3)'
         },
         responsive: true
 	});
@@ -949,92 +945,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 	//initjs();
 	}
-	
-
-	
-	barba.hooks.afterEnter(({ el }) => {
-		
-	   initjs();
-	   prevent: ({ el }) => el.classList && el.classList.contains('btn-success');
-//	    ScrollReveal().reveal('.box'); 
-//		ScrollReveal({ reset: true });
-    });
-	
-	barba.hooks.after(({ el }) => {
-	  // initjs();
-	  prevent: ({ el }) => el.classList && el.classList.contains('btn-success');
-	function tcost(){
-		var e;
-		$('#tcost').val(0);
-		for(e = 1; e < $('#q').html(); e++){
-			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));
-			
-		}
-		if($('#specialfoodsprice').val()){
-			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#specialfoodsprice').val()));
-		}
-		
-	}
-	
-	var count = $('#q').html();
-	//alert(count);
-	$('#ite').val(count);
-	//alert(count);
-	var k=1;
-	for(k;k<count;k++){
-		var ids = $('#food_item'+k).attr('id');
-		var changes = ids.replace( /^\D+/g, '');
-		var str = $('#food_item'+changes).val();
-		
-		var food = str.split(/(\s+)/);
-	 
-		$('#price'+changes).val($('#quantity'+changes).val()*food[4]);
-		$('#quantity'+changes).attr({'max':food[2]});
-		$('#qavailable'+changes).val(food[2]);
-	//	alert(food[4]);
-		$('#quantity'+changes).on("keyup change click paste ", function(){
-			
-			
-			var id = $(this).attr('id');
-			var change = id.replace( /^\D+/g, '');
-			var str = $('#food_item'+change).val();
-			var food = str.split(/(\s+)/);
-			//alert(change);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
-			tcost();
-		});
-	
-		$('#food_item'+changes).change(function(){
-			//alert("helo");
-			var id = $(this).attr('id');
-			//alert(id);
-			var change = id.replace( /^\D+/g, '');
-			//alert( $(this).find("option:selected").attr('value') );
-			var str = $('#food_item'+change).val();
-			var food = str.split(/(\s+)/);
-			//alert(food[2]);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
-		///	$('#Quantity').val();
-			$('#qavailable'+change).val(food[2]);		
-			$('#quantity'+change).attr({'max':food[2]});
-			$("#quantity"+change).on("keyup change click paste ", function(){
-				//alert(food[4]);
-				$('#price'+change).val($('#quantity'+change).val()*food[4]);
-				tcost();
-			})
-			tcost();
-		});
-		
-		
-	}
-	
-   });
-	/*
-	barba.init({
-  // define a custom function that will prevent Barba
-  // from working on links that contains a `prevent` CSS class
-		prevent: ({ el }) => el.classList && el.classList.contains('btn-success'),
-	});*/
 	initjs();
 });
 

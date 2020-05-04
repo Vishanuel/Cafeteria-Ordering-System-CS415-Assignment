@@ -1313,7 +1313,7 @@ class OrderController extends Controller
 			->first();
 		}
 		
-		else if($mealmethodp != "card"){
+		else if($cos_order->Cos_Order_Payment_Method != "card"){
 			$card = DB::table("card_payment")
 			->select('Card_Number')
 			->where('Employee_ID','=',$employee_id->Employee_ID)

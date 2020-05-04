@@ -1445,6 +1445,8 @@ class OrderController extends Controller
 		//change meal status to Approved
 		DB::table('cos_order')->where('Cos_Order_Num', '=',$orderid)->update(['Cos_Order_Meal_Status' => 'Approved']);
 			
+		$restaurant_id = DB::table("menu")->select('Restaurant_ID')->where('Menu_ID','=',$menuid)->first();
+		$restaurant_email = DB::table("restaurant")->select('Restaurant_Email')->where('Restaurant_ID','=',$restaurant_id->Restaurant_ID)->first(); 
 		
 		$data = array();
 		$mealmethodcheck=DB::table('delivery_instruction')
@@ -1498,7 +1500,7 @@ class OrderController extends Controller
 		$data['username'] = Auth::user()->name;
 		Mail::send('patron.restaurantemail', $data, function($message) {
  
-            $message->to(Auth::user()->email, 'LCNotif')
+            $message->to($restaurant_email->Restaurant_Email, 'LCNotif')
  
                     ->subject('Restaurant Order Info');
         });

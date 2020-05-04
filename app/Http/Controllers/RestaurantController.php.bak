@@ -62,7 +62,7 @@ class RestaurantController extends Controller
 		->get();
 		
 		$categories=DB::table('category')->get();
-		//dd($foods);
+		
 		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
 		
 		

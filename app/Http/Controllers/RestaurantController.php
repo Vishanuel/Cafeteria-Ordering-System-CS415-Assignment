@@ -67,7 +67,69 @@ class RestaurantController extends Controller
 		
 		
     }
+	
+	public function showbreakfast($id)
+    {
 
+		$foods=DB::table('menu_food_item')
+		->join('menu_food','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('category','menu.Category_ID','=','category.Category_ID')
+		->where('menu_food_item.Quantity','>','0')
+		->where('menu.Menu_Date','=',date("Y-m-d"))
+		->where('menu.Restaurant_ID','=',$id)
+		->where('category.Category_Name','=','Dinner')
+		->orderby('category.Category_ID')
+		->get();
+		
+		$categories=DB::table('category')->get();
+		
+		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
+		
+		
+    }
+	
+	public function showlunch($id)
+    {
+
+		$foods=DB::table('menu_food_item')
+		->join('menu_food','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('category','menu.Category_ID','=','category.Category_ID')
+		->where('menu_food_item.Quantity','>','0')
+		->where('menu.Menu_Date','=',date("Y-m-d"))
+		->where('menu.Restaurant_ID','=',$id)
+		->where('category.Category_Name','=','Dinner')
+		->orderby('category.Category_ID')
+		->get();
+		
+		$categories=DB::table('category')->get();
+		
+		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
+		
+		
+    }
+	
+	public function showdinner($id)
+    {
+
+		$foods=DB::table('menu_food_item')
+		->join('menu_food','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('category','menu.Category_ID','=','category.Category_ID')
+		->where('menu_food_item.Quantity','>','0')
+		->where('menu.Menu_Date','=',date("Y-m-d"))
+		->where('menu.Restaurant_ID','=',$id)
+		->where('category.Category_Name','=','Dinner')
+		->orderby('category.Category_ID')
+		->get();
+		
+		$categories=DB::table('category')->get();
+		
+		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
+		
+		
+    }
     /**
      * Show the form for editing the specified resource.
      *

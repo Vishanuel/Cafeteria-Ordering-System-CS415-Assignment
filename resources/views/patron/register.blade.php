@@ -184,7 +184,7 @@
 				<div class="box box-default loading" >
 					<div class="box-header with-border">
 						<!--<a href="#" class="btn btn-default btn-flat">Cancel</a>	-->
-						<button type="submit"  value="submit" class="prevent btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Submit</button>	
+						<button type="submit"  value="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Submit</button>	
 						</form>
 					</div>	
 				</div> 

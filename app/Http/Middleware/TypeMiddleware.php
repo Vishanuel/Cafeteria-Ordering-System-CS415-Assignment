@@ -24,28 +24,35 @@ class TypeMiddleware
         //If user role is patron
         if(Auth::check() && auth()->user()->usertype === 'Patron')
         {
-             return redirect('/home');
+            return redirect('/home');
         }
 		
 		else if(Auth::check() && auth()->user()->usertype === 'Student')
         {
-             return redirect('/student_home');
+            return redirect('/student_home');
         }
 
         //If user role is menu manager
-        else if(Auth::check() && auth()->user()->usertype ==='Menu Manager')
+        else if(Auth::check() && auth()->user()->usertype === "Menu Manager")
         {
-             return Response::view('menu manager.home');
+            return Response::view('menu manager.home');
         }   
 		
-		else if(Auth::check() && auth()->user()->usertype ==='Cafeteria Staff')
+		else if(Auth::check() && auth()->user()->usertype === 'Cafeteria Staff')
         {
+			//dd(5);
              return redirect('/cafeteria');
         } 
 		
-		else if(Auth::check() && auth()->user()->usertype ==='Meal Deliverer')
+		else if(Auth::check() && auth()->user()->usertype === 'Meal Deliverer')
         {
              return Response::view('meal deliverer.home');
         } 
+		
+		else{
+			return redirect('/home');
+			
+		}
     }
+    
 }

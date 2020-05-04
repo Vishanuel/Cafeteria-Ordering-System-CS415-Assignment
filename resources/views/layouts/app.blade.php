@@ -84,7 +84,7 @@
   <link rel="stylesheet" href="../../dist/css/skins/skin-transparent.css">
    
   <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -284,18 +284,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 	
-	
-	
-	
-  
-	 
-	  
     $('#example1').DataTable({
+		
+		
 		retrieve: true,
 		rowReorder: {
-            selector: 'td:nth-child(2)'
+            selector: 'td:nth-child(3)'
         },
-        responsive: true
+        responsive: true,
+		scrollCollapse: true
 	});
     $('#example2').DataTable({
       'paging'      : true,

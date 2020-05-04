@@ -10,15 +10,15 @@ Installation:
  3. Configure the environmental variables in .env file (This includes setting up MySQL variable needed for the project)
  4. Add virtual host to your httpd.conf(or httpd-vhosts.conf) file in your Apache Web Server installation directory: 
  
-      "<VirtualHost *:80>
-            ServerName (*localhost is set by default but welcome to pick any.)
-            DocumentRoot "(*Directory in which COS application is)/COS/public"
-            <Directory  "(*Directory in which COS application is)/COS/">
+      <VirtualHost *:80>
+            ServerName (*localhost is set by default but welcome to pick any*.)
+            DocumentRoot "(*Directory in which COS application is*)/COS/public"
+            <Directory  "(*Directory in which COS application is*)/COS/">
                 Options +Indexes +Includes +FollowSymLinks +MultiViews
                 AllowOverride All
                 Require local
             </Directory>
-       </VirtualHost>"
+       </VirtualHost>
        
   5. Access COS app using URL - http://yourhostname:80/ .
 
@@ -26,19 +26,19 @@ Installation:
   1. Javascript enabled browser.
   2. CSS-enabled browser.
   
-  User login info:
+ User login info:
 	
     Menu Manager: 
 		1. Email: test@gmail.com
 		   Password: password
 		
 	Patron:
-		1. Email: is314lcnotif@gmail.com
+        1. Email: is314lcnotif@gmail.com
 		   Password: password	
 		2. Email: cs324assignment@gmail.com
 		   Password: password
-        3. Email: mishra@gmail.com
-           Password: password
+		3. Email: mishra@gmail.com
+           Password: password        
     
     Cafeteria Staff:
         1. Email: cafeteria@gmail.com

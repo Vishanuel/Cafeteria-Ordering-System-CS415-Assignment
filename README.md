@@ -19,8 +19,8 @@ Installation:
                 Require local
             </Directory>
        </VirtualHost>
-       
-  5. Access COS app using URL - http://yourhostname:80/ .
+  5. Configure the .env file.    
+  6. Access COS app using URL - http://yourhostname:80/ .
 
  Requirements for Web Access:
   1. Javascript enabled browser.

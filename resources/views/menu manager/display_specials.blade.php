@@ -1,12 +1,14 @@
 @extends('layouts.app_menu')
 
 @section('content')
-<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Special Menu</h3>
-        </div>
-        <div class="panel-body">
+<section class="content-header text-center"></section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header with-border text-center">
+                <h3 class="box-title">Special Menus</h3>
+            </div>
+
+            <div class="box-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped" id ="example1">
                 <tr>
@@ -131,7 +133,7 @@
                  @endfor
                 </table>
                 <a data-toggle="modal" data-target="#add">
-                        <span class="glyphicon glyphicon-plus pull-right"></span>
+                        <span class="glyphicon glyphicon-plus pull-right">Add Special Menu</span>
                     </a>
 
                     <div class="modal fade" id="add" data-backdrop="static" data-keyboard="false">
@@ -188,10 +190,8 @@
                         </div>
                         
             </div>
-        </div>
-    </div>
     
-</div>
+    </section>
      
 
 

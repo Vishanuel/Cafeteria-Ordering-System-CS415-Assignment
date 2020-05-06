@@ -60,7 +60,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Ingredient Name</label>
-                                                        <input type="text" class="form-control" name="ingredient_name"value="{{$ingredients[$i]->Ingredient_Name}}">
+                                                        <input type="text" class="form-control" name="ingredient_name"value="{{$ingredients[$i]->Ingredient_Name}}" required>
                                                   </div>
                                                  
                                                         @for($k=0;$k<count($type);$k++)
@@ -138,7 +138,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Ingredient Name</label>
-                                                        <input type="text" class="form-control" name="ingredient_name">
+                                                        <input type="text" class="form-control" name="ingredient_name" required>
                                                   </div>
                                                  
                                                         @for($k=0;$k<count($type);$k++)

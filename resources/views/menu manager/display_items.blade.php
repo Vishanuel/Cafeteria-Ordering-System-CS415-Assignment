@@ -51,15 +51,15 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label>Item Name</label>
-                                                        <input type="text" class="form-control" name="item_name" value="{{$dish[$i]->Food_Name}}">
+                                                        <input type="text" class="form-control" name="item_name" value="{{$dish[$i]->Food_Name}}" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Item Description</label>
-                                                        <input type="text" class="form-control" name="item_desc"value="{{$dish[$i]->Food_Desc}}">
+                                                        <input type="text" class="form-control" name="item_desc"value="{{$dish[$i]->Food_Desc}}" required>
                                                   </div>
                                                   <div class="form-group">
                                                           <label>Item Price</label>
-                                                          <input type="text" class="form-control" name="item_price" value="{{$dish[$i]->Price}}">
+                                                          <input type="text" class="form-control" name="item_price" value="{{$dish[$i]->Price}}" required>
                                                   </div>
                                                     
                                                 </div>
@@ -119,15 +119,15 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label>Item Name</label>
-                                                    <input type="text" class="form-control" name="item_name">
+                                                    <input type="text" class="form-control" name="item_name" required>
                                                 </div>
                                                 <div class="form-group">
                                                         <label>Item Description</label>
-                                                        <input type="text" class="form-control" name="item_desc">
+                                                        <input type="text" class="form-control" name="item_desc" required>
                                                 </div>
                                                 <div class="form-group">
                                                         <label>Item Price</label>
-                                                        <input type="text" class="form-control" name="item_price">
+                                                        <input type="text" class="form-control" name="item_price" required>
                                                 </div>
                                                 
                                             </div>

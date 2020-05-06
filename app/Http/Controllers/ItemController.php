@@ -94,7 +94,7 @@ class ItemController extends Controller
             ['Food_Name' => $input["item_name"],
             'Food_Desc' => $input["item_desc"],'Price' => $input["item_price"],'Restaurant_ID' => $data->Restaurant_ID]); 
             
-        return redirect('item');
+            return back()->with('success', 'New Menu Item Added Successfully');
             
 
     }
@@ -136,7 +136,7 @@ class ItemController extends Controller
         ->where('Menu_Food_Item_ID','=',$id)
         ->update(['Food_Name' => $input["item_name"],'Food_Desc'=>$input["item_desc"],'Price'=>$input["item_price"]]); 
 
-        return redirect('item');
+        return back()->with('success', 'Menu Item Updated Successfully');
 
     }
 
@@ -150,6 +150,6 @@ class ItemController extends Controller
     {
         DB::table('menu_food_item')->where('Menu_Food_Item_ID', '=', $id)->delete();
 
-        return redirect('item');
+        return back()->with('success', 'Menu Item Deleted Successfully');
     }
 }

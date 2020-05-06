@@ -8,9 +8,9 @@
         <div class="box">
             <div class="box-header with-border text-center">
                 <h3 class="box-title">{{$cat[$i]->Category_Name}}</h3>
-                <a href="{{ route('menu.edit',$cat[$i]->Category_ID) }}">
+                {{-- <a href="{{ route('menu.edit',$cat[$i]->Category_ID) }}">
                     <span class="glyphicon glyphicon-edit"></span>
-                  </a>
+                  </a> --}}
             </div>
 
             <div class="box-body">
@@ -78,7 +78,7 @@
                                                     <div class="input-group-addon">
                                                       <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="date" class="form-control pull-right" id="datepicker" name="Menu_Date" value={{$menu[$i][$j]->Menu_Date}}>
+                                                    <input type="date" class="form-control pull-right" id="datepicker" name="Menu_Date" value={{$menu[$i][$j]->Menu_Date}} required>
                                                     </div>
 
                                             </div>
@@ -164,10 +164,9 @@
                                  <div class="input-group-addon">
                                      <i class="fa fa-calendar"></i>
                                   </div>
-                                    <input type="date" class="form-control pull-right" id="datepicker" name="Menu_Date">
+                                    <input type="date" class="form-control pull-right" id="datepicker" name="Menu_Date" required >
                                 </div>
                               <h4>Menu Items</h4>
-                      
                              @for($j=0;$j<count($rest);$j++)
                                   <div class="form-check" name="Food Item">
                                   <label for="Food[{{$j}}]">

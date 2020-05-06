@@ -106,7 +106,7 @@ class IngredientController extends Controller
                 ['Item_ID' => $input["menu_item"],
                 'Ingredient_ID' => $ingredient]);  
 
-                return redirect('ingredient');
+                return back()->with('success', 'New Ingredient Added Successfully');
         //dd($input);
     }
 
@@ -141,6 +141,10 @@ class IngredientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'type' => 'required',
+            ]);
+
         $input = $request->all();
         
         $data = DB::table('item_ingredient')
@@ -158,7 +162,7 @@ class IngredientController extends Controller
         ->update(['Ingredient_Name' => $input["ingredient_name"],'Ingredient_Type_ID'=>$input["type"]]); 
 
 
-        return redirect('ingredient');
+        return back()->with('success', 'Ingredient Updated Successfully');
         //dd($data);
     }
 
@@ -171,6 +175,6 @@ class IngredientController extends Controller
     public function destroy($id)
     {
         DB::table('ingredient')->where('Ingredient_ID', '=', $id)->delete();
-        return redirect('ingredient');
+        return back()->with('success', 'Ingredient Deleted Successfully');
     }
 }

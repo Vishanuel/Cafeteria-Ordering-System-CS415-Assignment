@@ -910,6 +910,18 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 			*/	
+
+			$('#food_item1').change(function(){
+			//this is just getting the value that is selected
+			$('.optional').css('display','none');
+
+			var str = $(this).val();
+			var food = str.split(/(\s+)/);
+			if(food){
+				$('#hello'+food[0]).show();
+			}
+			});
+
 		if($('#specialfoods').val()){
 			$("#specialfoodsquantity").on("keyup change click paste mousewheel", function(){
 				$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);

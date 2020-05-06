@@ -50,6 +50,22 @@ class OrderController extends Controller
 		->where('menu_food_item.Quantity','>','0')
 		->get();
 		
+		$items=DB::table('menu')
+		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->where('menu.Menu_ID','=',$menuid)
+		->where('menu_food_item.Quantity','>','0')
+		->get()
+		->toArray();
+
+		for($i=0;$i<count($items);$i++)
+		{
+			$ingredients[$i] = DB::table('item_ingredient')
+			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->leftjoin('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->get()
+			->toArray();
+		}
 		
 		$specialfoods=DB::table('specials')
 		->join('menu','menu.Menu_ID','=','specials.Menu_ID')
@@ -121,7 +137,7 @@ class OrderController extends Controller
 			}
 		}	
 		
-		return view('patron.order')->with(['specialfoods'=>$specialfoods, 'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
+		return view('patron.order',compact('items','ingredients'))->with(['specialfoods'=>$specialfoods, 'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
     
 	}
 

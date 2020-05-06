@@ -45,7 +45,8 @@
 						@endforeach
 					</select>
 				</div>
-					
+
+				
 					
 					
 					<div id="quantityd{{$i}}" class="form-group col-md-2 ">
@@ -59,7 +60,33 @@
 					</div>
 					
 					<?php $i= $i + 1; ?>
-					
+					@for($i=0;$i<count($items);$i++)
+						@if($items[$i]->Menu_Food_Item_ID==$food_select->Menu_Food_Item_ID)
+							<div class="col-md-12">
+							<label>Optional</label>
+							@for($j=0;$j<count($ingredients[$i]);$j++)
+								@if($ingredients[$i][$j]->Ingredient_Type_ID == 1)
+									<div><input type="radio" name="option"value="{{$ingredients[$i][$j]->Ingredient_ID}}" 
+										@for($k=0;$k<count($ingredient);$k++)
+											@if(($ingredient[$k]->Ingredient_ID)==($ingredients[$i][$j]->Ingredient_ID))  ? checked : 
+										@endif @endfor>
+									<label>{{$ingredients[$i][$j]->Ingredient_Name}}</label></div>
+								@endif
+							@endfor
+
+									<label>Selective</label>
+							@for($j=0;$j<count($ingredients[$i]);$j++)
+								@if($ingredients[$i][$j]->Ingredient_Type_ID == 2)
+									<div><input type="checkbox" name="selected[]"value="{{$ingredients[$i][$j]->Ingredient_ID}}"
+										@for($k=0;$k<count($ingredient);$k++)
+											@if(($ingredient[$k]->Ingredient_ID)==($ingredients[$i][$j]->Ingredient_ID))  ? checked : 
+										@endif @endfor>
+									<label>{{$ingredients[$i][$j]->Ingredient_Name}}</label></div>
+								@endif
+							@endfor
+							</div>
+						@endif
+				 @endfor
 				@endforeach
 				
 				
@@ -75,6 +102,7 @@
 							
 						@endforeach
 				</select>
+				
 				</div>
 				<div id="specialfoodsqavailabled" class="form-group" style="display: none"></div>
 				<div id="specialfoodsquantityd" class="form-group col-md-2">

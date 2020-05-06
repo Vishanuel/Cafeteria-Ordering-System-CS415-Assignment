@@ -91,7 +91,7 @@
 				  <input readonly type="number" class="form-control" id="specialfoodsprice" name="specialfoodsprice"  value="">
 				</div>
 				@endif
-				<div id="tcostd" class="form-group col-md-2 pull-right">
+				<div id="tcostd" class="form-group col-md-2 col-xs-12 pull-right">
 				  <label>Total Cost ($)</label>
 				  <input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>

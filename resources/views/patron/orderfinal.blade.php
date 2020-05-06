@@ -44,6 +44,40 @@
 							
 						@endforeach
 					</select>
+					@for($i=0;$i<count($items);$i++)
+				<div class="modal fade" tabindex="-1" role="dialog" id="hello{{$items[$i]->Menu_Food_Item_ID}}">
+					<div class="modal-dialog" role="document">
+					  <div class="modal-content">
+						<div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						  <h4 class="modal-title">{{$items[$i]->Food_Name}}</h4>
+						</div>
+						<div class="modal-body">
+							<label>Optional</label>
+							@for($j=0;$j<count($ingredients[$i]);$j++)
+								@if($ingredients[$i][$j]->Ingredient_Type_ID == 1)
+								<div><input type="radio" name="option"value="{{$ingredients[$i][$j]->Ingredient_ID}}" >
+								<label>{{$ingredients[$i][$j]->Ingredient_Name}}</label></div>
+								@endif
+							@endfor
+
+							<label>Selective</label>
+							@for($j=0;$j<count($ingredients[$i]);$j++)
+								@if($ingredients[$i][$j]->Ingredient_Type_ID == 2)
+								<div><input type="checkbox" name="selected[]"value="{{$ingredients[$i][$j]->Ingredient_ID}}">
+								<label>{{$ingredients[$i][$j]->Ingredient_Name}}</label></div>
+								@endif
+							@endfor
+							
+						</div>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						  {{-- <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button> --}}
+						</div>
+					  </div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				  </div><!-- /.modal -->
+				 @endfor
 				</div>
 					
 					<div id="quantityd{{$i}}" class="form-group col-md-2">

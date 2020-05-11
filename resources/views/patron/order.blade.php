@@ -40,20 +40,19 @@
 							</option>
 						@endforeach
 					</select>
-
-				@for($i=0;$i<count($items);$i++)
-
-					<div class="optional" id="hello{{$items[$i]->Menu_Food_Item_ID}}" style="display: none;">
-						@if(count($ingredients[$i])>0)
-						<label>Ingredients</label>
-						@for($j=0;$j<count($ingredients[$i]);$j++)
-							<div class="radio"><input type="radio" class="minimal" name="option"value="{{$ingredients[$i][$j]->Ingredient_ID}}" >
-							<label>{{$ingredients[$i][$j]->Ingredient_Name}}</label></div>
-						@endfor
-						@endif
+					<div id="Ingredient1" >
+						@for($i=0;$i<count($items);$i++)
+						<div class="optional1" id="hello{{$items[$i]->Menu_Food_Item_ID}}" type="hidden">
+							@if(count($ingredients[$i])>0)
+							<label>Ingredients</label>
+							@for($j=0;$j<count($ingredients[$i]);$j++)
+								<div class="checkbox" id="check1"><input type="checkbox" id="optional1" class="minimal" name="optional1[{{$i}}][]"value="{{$ingredients[$i][$j]->Ingredient_ID}}" >
+								<label >{{$ingredients[$i][$j]->Ingredient_Name}}</label></div>
+							@endfor
+							@endif
 						</div>
-				 @endfor
-
+						@endfor
+					</div>
 				</div>
 					
 					

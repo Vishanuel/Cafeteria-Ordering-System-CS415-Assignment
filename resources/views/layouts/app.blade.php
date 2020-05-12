@@ -952,6 +952,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				// });
 			// }
 
+				// $('#menus').change(function(){
+				// var str = $(this).val();
+				// $('#item'+str).show();
+				// });
+
 		if($('#specialfoods').val()){
 			$("#specialfoodsquantity").on("keyup change click paste mousewheel", function(){
 				$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
@@ -990,6 +995,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	initjs();
 });
+
+$('#menus').change(function(){
+	var str = $(this).val();
+	$('.items').hide();
+	$('#item'+str).show();
+});
+
 
 
 </script>

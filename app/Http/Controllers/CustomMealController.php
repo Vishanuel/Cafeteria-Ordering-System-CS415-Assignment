@@ -60,22 +60,40 @@ class CustomMealController extends Controller
      */
     public function show($id)
     {
-        //dd($id);
+       // dd($id);
+        $items=DB::table('menu')
+		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->where('menu_food_item.Quantity','>','0')
+		->get()
+		->toArray();
+
+		for($i=0;$i<count($items);$i++)
+		{
+			$ingredients[$i] = DB::table('item_ingredient')
+			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+            ->leftjoin('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+            ->where('ingredient.Restaurant_ID','=',$id)
+            ->where('ingredient.Ingredient_Quantity','>',0)
+			->get()
+			->toArray();
+        }
+        
         $type= DB::table('ingredient_type')
         ->get()
         ->toArray();
 
-        for($i=0;$i<count($type);$i++)
-        {
-            $ingredients[$i]= DB::table('ingredient')
-            ->where('Ingredient_Type_ID','=',$type[$i]->Ingredient_Type_ID)
-            ->where('Restaurant_ID','=',$id)
-            ->where('Ingredient_Quantity','>',0)
-            ->get()
-            ->toArray();
-        }
+        // for($i=0;$i<count($type);$i++)
+        // {
+        //     $ingredients[$i]= DB::table('ingredient')
+        //     ->where('Ingredient_Type_ID','=',$type[$i]->Ingredient_Type_ID)
+        //     ->where('Restaurant_ID','=',$id)
+        //     ->where('Ingredient_Quantity','>',0)
+        //     ->get()
+        //     ->toArray();
+        // }
         //dd($ingredients);
-        return view('patron.custommeal',compact('ingredients','type'));
+        return view('patron.custommeal',compact('ingredients','type','items'));
     }
 
     /**

@@ -84,7 +84,7 @@
   <link rel="stylesheet" href="../../dist/css/skins/skin-transparent.css">
    
   <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.6/css/rowReorder.dataTables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -124,6 +124,17 @@
 		  @if(Auth::user()->usertype == "Patron")
             <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
             <li><a href="{{URL::to('order')}}" >Order History</a></li>
+			<li class="divider"></li>			
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions</a>
+				<div class="dropdown-menu">
+					
+					<a href="{{URL::to('mealsub')}}" class="dropdown-item">View Subscriptions</a>	
+					<div class="dropdown-divider"></div>			
+					<a href="{{URL::to('mealsub_add')}}" class="dropdown-item">New Subscription</a>					
+					
+				</div>
+			</li>
 			<li class="divider"></li>
 			<li><a href="{{URL::to('register')}}" >Payment Option Registration</a></li>
 		  @elseif(Auth::user()->usertype == "Student")
@@ -284,18 +295,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 	
-	
-	
-	
-  
-	 
-	  
     $('#example1').DataTable({
+		
+		
 		retrieve: true,
 		rowReorder: {
-            selector: 'td:nth-child(2)'
+            selector: 'td:nth-child(3)'
         },
-        responsive: true
+        responsive: true,
+		scrollCollapse: true
 	});
     $('#example2').DataTable({
       'paging'      : true,
@@ -421,19 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			$('#price'+change).val($('#quantity'+change).val()*food[4]);
 			tcost();
 		});
-		/*
-		$('#food_item'+changes).change(function(){
-			//this is just getting the value that is selected
-			var id = $(this).attr('id');
-			var change = id.replace( /^\D+/g, '');
-			var str = $('#food_item'+change).val();
-			var food = str.split(/(\s+)/);
-			//  title = $(this).val();
-			 //var food = str.split(/(\s+)/);
-			 //$('.modal-title').html(food[0]);
-			$('#hello'+food[0]).modal('show');
-		});
-		*/
+	
 		$('#food_item'+changes).change(function(){
 			//alert("helo");
 			var id = $(this).attr('id');
@@ -595,23 +591,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		
 		$('#food_item'+(count-1)).find('option').clone().appendTo('#food_item'+count);
 		
-		/*$('#food_item'+count).change(function(){
-			//this is just getting the value that is selected
-			var str = $(this).val();
-			var food = str.split(/(\s+)/);
-			//  title = $(this).val();
-			//var food = str.split(/(\s+)/);
-			//$('.modal-title').html(food[0]);
-			$('#hello'+food[0]).modal('show');
-		});
-		*/
+		
 		var str = $('#food_item'+count).val();
 		var food = str.split(/(\s+)/);
 		
 		$('#price'+count).val($('#quantity'+count).val()*food[4]);
 		$('#qavailable'+count).val(food[2]);
 		$('#quantity'+count).attr({'max':food[2]});
-		
 		
 		
 			$("#quantity"+count).on("keyup change click paste mousewheel", function(){
@@ -909,8 +895,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			delivery_time();
 				//$('#location_time').val($value);
 		});
-
-
 		
 		
 		if(document.getElementById('optionsRadios1').checked) {
@@ -937,18 +921,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 			*/	
-		
-			$('#food_item1').change(function(){
-			//this is just getting the value that is selected
-				var str = $(this).val();
-				var food = str.split(/(\s+)/);
-				//  title = $(this).val();
-				 //var food = str.split(/(\s+)/);
-				 //$('.modal-title').html(food[0]);
-				$('#hello'+food[0]).modal('show');
-			});
-
-
 		if($('#specialfoods').val()){
 			$("#specialfoodsquantity").on("keyup change click paste mousewheel", function(){
 				$('#specialfoodsprice').val($('#specialfoodsquantity').val()*food[4]);
@@ -987,6 +959,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	initjs();
 });
+
+
 </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

@@ -40,7 +40,7 @@
 							</option>
 						@endforeach
 					</select>
-					<div id="Ingredient1" >
+					{{-- <div id="Ingredient1" >
 						@for($i=0;$i<count($items);$i++)
 						<div class="optional1" id="hello{{$items[$i]->Menu_Food_Item_ID}}" type="hidden">
 							@if(count($ingredients[$i])>0)
@@ -52,7 +52,7 @@
 							@endif
 						</div>
 						@endfor
-					</div>
+					</div> --}}
 				</div>
 					
 					

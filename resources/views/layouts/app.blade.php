@@ -390,6 +390,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		
 	}
+
+	var number_of_type = $('#type').val();
+			
+			for(i=0;i<number_of_type;i++){
+
+				$('#ingredient_type'+i).change(function(){
+				var str = $(this).val();
+				$('#ingredient_price'+i).val(str);
+				});
+			}
 	
 	var count = $('#q').html();
 	//alert(count);
@@ -576,12 +586,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		$('<div id="priced'+count+'" class="form-group col-md-2"><label>Price ($)</label><input type="number" class="form-control" id="price'+count+'" name="price'+count+'" Required readonly value=""></div>').prependTo('#orderform');
 		$('<div id="qavailabled'+count+'" class="form-group col-md-2"><label>Max Quantity Available</label><input type="number" class="form-control" id="qavailable'+count+'" name="qavailable'+count+'" Required readonly value=""></div>').prependTo('#orderform');
 		$('<div id="quantityd'+count+'" class="form-group col-md-2"><label>Quantity</label><input type="number" class="form-control" id="quantity'+count+'" name="quantity'+count+'" max="" min="1" Required value="1"></div>').prependTo('#orderform');
-		$('<div id="food_itemd'+count+'" class="form-group col-md-6"><label>Food Item</label><select class="food form-control select2" id="food_item'+count+'" name="food_item'+count+'" style="width: 100%;" Required placeholder="Select food"></select><div id="Ingredient'+count+'" ></div>').prependTo('#orderform');
+		$('<div id="food_itemd'+count+'" class="form-group col-md-6"><label>Food Item</label><select class="food form-control select2" id="food_item'+count+'" name="food_item'+count+'" style="width: 100%;" Required placeholder="Select food"></select>').prependTo('#orderform');
 		
 		$('#food_item'+(count-1)).find('option').clone().appendTo('#food_item'+count);
-		$('#food_itemd'+(count-1)).find('#Ingredient1').contents().clone().appendTo('#Ingredient'+count);
-		$('#Ingredient'+count).find('.optional1').attr('class','optional'+count);
-		$('#Ingredient'+count).find('#check1').attr('id','check'+count);
+		// $('#food_itemd'+(count-1)).find('#Ingredient1').contents().clone().appendTo('#Ingredient'+count);
+		// $('#Ingredient'+count).find('.optional1').attr('class','optional'+count);
+		// $('#Ingredient'+count).find('#check1').attr('id','check'+count);
 		//$('#Ingredient'+count).find('input').attr('name','optional'+count+'[][]');
 		//$('#Ingredient'+count).find('input').attr('id','optional'+count);
 		//$('#optional'+count).find('input').prop('checked',false);
@@ -611,11 +621,11 @@ document.addEventListener('DOMContentLoaded', () => {
 					var str = $('#food_item'+change).val();
 					var food = str.split(/(\s+)/);
 
-					$('.optional'+change).hide(); //hide all elements with class optional
+					// $('.optional'+change).hide(); //hide all elements with class optional
 					
-					if(food){
-						$('#Ingredient'+change).find('#hello'+food[0]).find('.checkbox').prop('checked',false).show(); //show the ingredients of selected food item
-					} 
+					// if(food){
+					// 	$('#Ingredient'+change).find('#hello'+food[0]).find('.checkbox').prop('checked',false).show(); //show the ingredients of selected food item
+					// } 
 					$('#price'+change).val($('#quantity'+change).val()*food[4]);
 					$('#qavailable'+change).val(food[2]);
 					$('#quantity'+change).attr({'max':food[2]});				
@@ -924,14 +934,23 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 			*/	
 
-			$('#food_item1').change(function(){
-			$('.optional1').hide();
-			var str = $(this).val();
-			var food = str.split(/(\s+)/);
-			if(food){
-				$('#Ingredient1').find('#hello'+food[0]).show();
-			}
-			});
+			// $('#food_item1').change(function(){
+			// $('.optional1').hide();
+			// var str = $(this).val();
+			// var food = str.split(/(\s+)/);
+			// if(food){
+			// 	$('#Ingredient1').find('#hello'+food[0]).show();
+			// }
+			// });
+			// var number_of_type = $('#type').val();
+			// alert(number_of_type);
+			// for(i=0;i<number_of_type;i++){
+
+				// $('#ingredient_type1').change(function(){
+				// var str = $(this).val();
+				// $('#ingredient_price1').val(str);
+				// });
+			// }
 
 		if($('#specialfoods').val()){
 			$("#specialfoodsquantity").on("keyup change click paste mousewheel", function(){

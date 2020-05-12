@@ -20,6 +20,7 @@ Route::redirect('/','/login');
 //Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
 Route::resource('order','OrderController');
 Route::resource('student_order','OrderStudentController');
+Route::resource('custom_meal','CustomMealController');
 Route::resource('home','HomeController');
 Route::resource('student_home','HomeStudentController');
 Route::resource('menu', 'MenuController');

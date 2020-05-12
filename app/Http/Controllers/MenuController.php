@@ -223,8 +223,7 @@ class MenuController extends Controller
         ->update(['Menu_Date' => $input["Menu_Date"]]); 
        
                        
-        
-        return back()->with('success', 'Menu Updated Successfully');
+        return redirect('menu');
     }
 
     /**
@@ -238,6 +237,6 @@ class MenuController extends Controller
         
         DB::table('menu')->where('Menu_ID', '=', $id)->delete();
 
-        return back()->with('success', 'Menu Deleted Successfully');
+        return redirect('menu');
     }
 }

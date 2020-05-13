@@ -65,7 +65,7 @@
               <a class="btn btn-info btn-flat" type="button" href="{{URL::to('mealsub_edit_details/'.$allmealsub->MealSubs_ID)}}">
                 <span class="fa fa-pencil">
                 </span>
-                  Show details
+                  Edit Subscription
               </a>
 					
                     </td>

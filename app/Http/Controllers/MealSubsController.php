@@ -147,13 +147,45 @@ class MealSubsController extends Controller
 		->where('MealSubs_ID','=',$id)
 		->first();
 		
-		
+		 $restaurants=DB::table('restaurant')        
+        ->get();
+        //
+        //Allow user to select food
+        //
+        $foods=DB::table('menu')
+		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
+        ->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+        //->where('menu.Menu_ID','=',$menuid)		
+		->where('menu_food_item.Quantity','>','0')
+        ->get();
+
+        $order_cutoff=DB::table('order_cutoff')
+		->select('Order_Cutoff_Time')
+		->first();
+
+        $locations=DB::table('location')
+		->get();
+        
+        $name = Auth()->user()->name;
+        $deduction=DB::table('patron')
+		->where('Patron_FName','=', $name)
+		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
+        ->first();
+
+        if(empty($orderid)){
+			$orderid=DB::table('cos_order')->max('Cos_Order_Num');
+			$orderid++;
+			if(empty($orderid)){
+				$orderid = 1;
+			}
+		}	
 		
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
-		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
-		//->where('menu.Menu_ID','=',$menuid)
-		->get();
+        ->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+        //->where('menu.Menu_ID','=',$menuid)		
+		->where('menu_food_item.Quantity','>','0')
+        ->get();
 		
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', Auth::user()->name)
@@ -167,12 +199,35 @@ class MealSubsController extends Controller
 		//->orderBy('Ordered_Food_Item_ID', 'DESC')
 		->get();
 		
-		return view('patron.patronmealsub_editdetails');
+		return view('patron.patronmealsub_editdetails')->with([ "meal_subs" => $meal_subs,'restaurants'=>$restaurants, 'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid]);;
 		
+    }
+	
+	public function update(Request $request, $id)
+    {
+        //
+		$employee_id = DB::table('patron')
+		->select('Employee_ID')
+		->where('User_ID','=',Auth::user()->id)
+        ->first(); 
+		//dd($id);
+		 $food_id = substr($request->input('food_item1'), 0, strspn($request->input('food_item1'), "0123456789"));
+		 DB::table('meal_subscription')
+			->where('MealSubs_ID','=',$id)
+			->update([
+                'Employee_ID' => $employee_id->Employee_ID, 'Menu_Food_Item_ID' => $food_id,
+                 'Food_Item_Qty' => $request->input('quantity1'), 'Total_Price' => $request->input('tcost'),
+                 'Meal_Type' => $request->input('mealtype1'), 'Day' => $request->input('day1'),
+                 'Meal_Time' => $request->input('mealtime1'), 'Meal_Status' => $request->input('mealstat'),
+        ]);	
+        
+		
+		//echo $food_id;
+        return redirect("/mealsub");
     }
 }
 
-
+	
 
 
 ?>

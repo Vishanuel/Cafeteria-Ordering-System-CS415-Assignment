@@ -29,6 +29,7 @@
               <form id="subscriptionform" role="form" method="POST" action="{{action('MealSubsController@store')}}" enctype="multipart/form-data">
 			   @csrf
                 <!-- text input -->
+				<div class="form-group col-md-12">
 				<div id="food_itemd1" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select class="food form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food">
@@ -50,7 +51,7 @@
 				</div>
            
 					
-					<div class="row">
+					
 					<div id="quantityd1" class="form-group col-md-2">
 					  <label>Quantity</label>
 					  <input type="number" class="form-control" id="quantity1" name="quantity1" max="" min="1" Required value="1">
@@ -69,7 +70,7 @@
 				  <label>Total Cost ($)</label>
 				  <input type="number" class="form-control " id="tcost" name="tcost" Required readonly value="">
 			   </div>
-			   
+			   </div>
 				
                 <div class="form-group col-md-12">
                     <div id=dayd1" class="form-group col-md-6">
@@ -85,9 +86,9 @@
                             <option  Required value="Sunday">Sunday</option>                                                                           
                         </select>
                     </div>
-              </div>
+              
 
-              <div class="form-group col-md-12">
+              <!--div class="form-group col-md-12"-->
                 <div id=dayd1" class="form-group col-md-6">
                     <label>Meal Type</label>
                     <select class="mealsub form-control select2" id="mealtype1" name="mealtype1" style="width: 100%;" Required placeholder="Select restaurant">
@@ -98,7 +99,7 @@
                                                                                                 
                     </select>
                 </div>
-
+				</div>
                 <div class="form-group col-md-12">
                     <div id=timed1" class="form-group col-md-6">
                         <label>Meal Time</label>
@@ -114,7 +115,7 @@
                         </select>
                     </div>
                 </div>
-          </div>
+          <!--/div-->
 			  
 			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>

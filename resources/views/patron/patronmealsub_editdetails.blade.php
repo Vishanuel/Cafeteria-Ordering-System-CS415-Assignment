@@ -25,67 +25,114 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-              <form id="orderform" role="form" method="POST" action="{{action('MealSubsController@store')}}" enctype="multipart/form-data">
+              <form id="orderform" role="form" method="POST" action="{{route('mealsub.update',$meal_subs->MealSubs_ID)}}" enctype="multipart/form-data">
 			   @csrf
-				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
+               @method('PUT')
                 <!-- text input -->
 				
-				
-				<div id="food_itemd" class="form-group col-md-6">
+				<div class="form-group col-md-12">
+				<div id="food_itemd1" class="form-group col-md-6">
 					<label>Food Item</label>
-					<select class="form-control select2" id="food_item" name="food_item" style="width: 100%;" Required placeholder="Select food">
-						<option  disabled>Select food</option> 
-						@foreach ($foods as $food )
-							<option  Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @endif >
-								{{ $food->Food_Name }}
-							</option>
+					<select class="food form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food">
+						<option disabled>Select food</option> 
+                        @foreach ($foods as $food )
+                        
+                        
+                        
+
+			 			<option  Required @if($meal_subs->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{$food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @endif>
+								{{ $food->Food_Name." - ".$food->Food_Desc }} 
+                            </option>
+                            
+                            
 							
 						@endforeach
+						
 					</select>
 				</div>
+           
 					
 					
-					
-					<div id="quantityd" class="form-group col-md-2">
+					<div id="quantityd1" class="form-group col-md-2">
 					  <label>Quantity</label>
-					  <input type="number" class="form-control" id="quantity" name="quantity" max="" min="1" Required value="{{$food_select->Quantity}}">
+					  <input type="number" class="form-control" id="quantity1" name="quantity1" max="" min="1" Required value="{{$meal_subs->Food_Item_Qty}}">
 					</div>
-					<div id="qavailabled" class="form-group col-md-2">
+					<div id="qavailabled1" class="form-group col-md-2">
 					  <label>Max Quantity Available</label>
-					  <input type="number" class="form-control" id="qavailable" name="qavailable" Required readonly value="">
+					  <input type="number" class="form-control" id="qavailable1" name="qavailable1" Required readonly value="">
 					</div>
-					<div id="priced" class="form-group col-md-2">
+					<div id="priced1" class="form-group col-md-2">
 					  <label>Price ($)</label>
-					  <input type="number" class="form-control" id="price}" name="price" Required readonly value="">
+					  <input type="number" class="form-control" id="price1" name="price1" Required readonly value="">
 					</div>
-					
-					
-			
-				
-				
-				<div id="tcostd" class="form-group col-md-2 col-xs-12">
+                
+												
+				<div id="tcostd" class="form-group col-md-2 col-xs-12 pull-right">
 				  <label>Total Cost ($)</label>
-				  <input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
+				  <input type="number" class="form-control " id="tcost" name="tcost" Required readonly value="">
 			   </div>
+			   </div>
+			   
+				
 				<!-- <div id="food" ></div>-->
+					
 				
-				
-				
-				<div class="has-error col-md-12" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div>
-				
-				
+                 <div class="form-group col-md-12">
+                    <div id=dayd1" class="form-group col-md-6">
+                        <label>Meal Days</label>
+                        <select class="mealsub form-control select2" id="day1" name="day1" style="width: 100%;" Required placeholder="Select restaurant">
+                            <option disabled>Select Meal Day</option>                             
+                            <option  @if($meal_subs->Day == "Monday") selected @endif Required value="Monday">Monday</option>   
+                            <option  @if($meal_subs->Day == "Tuesday") selected @endif Required value="Tuesday">Tuesday</option> 
+                            <option  @if($meal_subs->Day == "Wednesday") selected @endif Required value="Wednesday">Wednesday</option> 
+                            <option  @if($meal_subs->Day == "Thursday") selected @endif Required value="Thursday">Thursday</option> 
+                            <option  @if($meal_subs->Day == "Friday") selected @endif Required value="Friday">Friday</option> 
+                            <option  @if($meal_subs->Day == "Saturday") selected @endif Required value="Saturday">Saturday</option> 
+                            <option  @if($meal_subs->Day == "Sunday") selected @endif Required value="Sunday">Sunday</option>                                                                           
+                        </select>
+                    </div>
+              
+
+              <!--div class="form-group col-md-12"-->
+                <div id=dayd1" class="form-group col-md-6">
+                    <label>Meal Type</label>
+                    <select class="mealsub form-control select2" id="mealtype1" name="mealtype1" style="width: 100%;" Required placeholder="Select restaurant">
+                        <option disabled>Select Meal Type</option>                             
+                        <option @if($meal_subs->Meal_Type == "Breakfast") selected @endif Required value="Breakfast">Breakfast</option>
+                        <option @if($meal_subs->Meal_Type == "Lunch") selected @endif Required value="Lunch">Lunch</option>
+                        <option @if($meal_subs->Meal_Type == "Dinner") selected @endif Required value="Dinner">Dinner</option>   
+                                                                                                
+                    </select>
+                </div>
+				</div>
                 <div class="form-group col-md-12">
-                <label>Meal Date</label>
+                    <div id=timed1" class="form-group col-md-6">
+                        <label>Meal Time</label>
+                        <select class="mealsub form-control select2" id="mealtime1" name="mealtime1" style="width: 100%;" Required placeholder="Select restaurant">
+                            <option disabled>Select Meal Time</option>                             
+                            <option @if($meal_subs->Meal_Time == "8 am") selected @endif Required>8 am</option>
+                            <option @if($meal_subs->Meal_Time == "10 am") selected @endif Required>10 am</option>
+                            <option @if($meal_subs->Meal_Time == "1 pm") selected @endif Required>1 pm</option>
+                            <option @if($meal_subs->Meal_Time == "3 pm") selected @endif Required>3 pm</option>
+                            <option @if($meal_subs->Meal_Time == "5 pm") selected @endif Required>5 pm</option>
+                            <option @if($meal_subs->Meal_Time == "7 pm") selected @endif Required>7 pm</option>   
+                                                                                                    
+                        </select>
+                    </div>
+                </div>
 				
+				<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
+			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>
+			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+            <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}">
+            
 				
+				<input id="mealstat" name="mealstat" class="form-group col-md-12" style="display: none" value="Pending"> 
+				<!--input id="mealid" name="mealid" class="form-group col-md-12" style="display: none" value=""--> 
                 <!-- /.input group -->
               </div>
 			  
-			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
-			<div id="q" name="q" value="{{$food_count+1}}" class="form-group col-md-12" style="display: none">{{$food_count+1}}</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
-			<input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}"> 
-			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
+		
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">

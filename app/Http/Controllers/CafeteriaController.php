@@ -252,8 +252,11 @@ class CafeteriaController extends Controller
 		->where('Restaurant_ID','=',$restaurant_id->Restaurant_ID)
 		->first();
 		
+		$D_Instruction_ID = DB::table('delivery_instruction')->where('Cos_Order_Num','=',$id)->first();
+		
+		
 		DB::table('cos_order')->where('Cos_Order_Num','=',$id)->update(['Cos_Order_Meal_Status'=>'Pending Delivery']);
-		DB::table('delivery_request')->insert(['D_Instruction_ID' => $id, 'Meal_Deliverer_ID'=>$meal_deliverer_id->Meal_Deliverer_ID]);
+		DB::table('delivery_request')->insert(['D_Instruction_ID' => $D_Instruction_ID->D_Instruction_ID, 'Meal_Deliverer_ID'=>$meal_deliverer_id->Meal_Deliverer_ID]);
 		return redirect('/cafeteria')->with('success', 'Delivery request sent');
 	}
 	

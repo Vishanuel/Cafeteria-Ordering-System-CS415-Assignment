@@ -104,7 +104,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li ><a href="{{URL::to('cafeteria')}}">View Orders <span class="sr-only">(current)</span></a></li>
+			<li ><a href="{{URL::to('cafeteria')}}">View Orders <span class="sr-only">(current)</span></a></li>
+			<li ><a href="{{URL::to('cafe_subs')}}">View Subscriptions <span class="sr-only">(current)</span></a></li>
           <!--  <li><a href="{{URL::to('order')}}">View Orders</a></li> -->
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>

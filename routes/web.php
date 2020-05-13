@@ -27,6 +27,7 @@ Route::resource('category', 'CategoryController');
 Route::resource('specialmenu', 'SpecialsController');
 Route::resource('item', 'ItemController');
 Route::resource('ingredient', 'IngredientController');
+Route::resource('custom_meal','CustomMealController');
 Route::resource('cafeteria', 'CafeteriaController');
 Route::resource('deliverer', 'DelivererController');
 Route::resource('register','RegisterController');

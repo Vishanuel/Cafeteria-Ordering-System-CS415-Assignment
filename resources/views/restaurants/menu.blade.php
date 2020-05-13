@@ -68,7 +68,10 @@
 						@if(Auth::user()->usertype == "Patron")
 						<a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('order_create/'.$menuid )}}">
 							Place order
-					    </a>
+						</a>
+						<a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('custom_meal',$food->Restaurant_ID)}}">
+							Customize Meal
+						</a>
 						@elseif(Auth::user()->usertype == "Student")
 					    <a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('student_order_create/'.$menuid )}}">
 							Place order

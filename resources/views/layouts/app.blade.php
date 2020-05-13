@@ -960,6 +960,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	initjs();
 });
 
+$('#menus').change(function(){
+	var str = $(this).val();
+	$('.items').hide();
+	$('#item'+str).show();
+});
+
+
 
 </script>
 

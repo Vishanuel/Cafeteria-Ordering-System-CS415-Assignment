@@ -42,7 +42,7 @@
 						
 					</select>
 					
-					@for($i=0;$i<count($items);$i++)
+					{{-- @for($i=0;$i<count($items);$i++)
 				<div class="modal fade" tabindex="-1" role="dialog" id="hello{{$items[$i]->Menu_Food_Item_ID}}">
 					<div class="modal-dialog" role="document">
 					  <div class="modal-content">
@@ -66,7 +66,7 @@
 								<label>{{$ingredients[$i][$j]->Ingredient_Name}}</label></div>
 								@endif
 							@endfor
-							
+							 --}}
 						</div>
 						<div class="modal-footer">
 						  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -1,0 +1,34 @@
+--
+-- Table structure for table `meal_subscription`
+--
+
+DROP TABLE IF EXISTS `meal_subscription`;
+CREATE TABLE IF NOT EXISTS `meal_subscription` (
+  `MealSubs_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Employee_ID` int(11) NOT NULL,
+  `Menu_Food_Item_ID` int(11) NOT NULL,
+  `Food_Item_Qty` int(11) NOT NULL,
+  `Meal_Type` text NOT NULL,
+  `Day` text NOT NULL,
+  `Meal_Subscription_Status` text NOT NULL,
+  PRIMARY KEY (`MealSubs_ID`),
+  KEY `fk_meal_subs_employee_id` (`Employee_ID`),
+  KEY `meal_subs_menu_food_item_id` (`Menu_Food_Item_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `card_payment`
+--
+
+INSERT INTO `meal_subscription` (`MealSubs_ID`, `Employee_ID`, `Menu_Food_Item_ID`, `Food_Item_Qty`, `Meal_Type`, `Day`, `Meal_Subscription_Status`) VALUES
+(1, 1236, 1, 1, 'Lunch', 'Monday','Active'),
+(2, 1256, 2, 2, 'Lunch', 'Friday','Inactive');
+
+-- --------------------------------------------------------
+
+--
+-- Constraints for table `meal_subscription`
+--
+ALTER TABLE `meal_subscription`
+  ADD CONSTRAINT `fk_meal_subscription_employee_id` FOREIGN KEY (`Employee_ID`) REFERENCES `patron` (`Employee_ID`),
+  ADD CONSTRAINT `fk_meal_subscription_menu_food_item_id` FOREIGN KEY (`Menu_Food_Item_ID`) REFERENCES `menu_food_item` (`Menu_Food_Item_ID`);

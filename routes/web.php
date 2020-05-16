@@ -16,8 +16,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::redirect('/','/login');
+Route::redirect('/','/welcome');
 //Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
+Route::resource('welcome','WelcomeController');
 Route::resource('order','OrderController');
 Route::resource('student_order','OrderStudentController');
 Route::resource('home','HomeController');

@@ -33,7 +33,9 @@
   <!-- iCheck 1.0.1 -->
   <script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
   <!-- Select2 -->
-  <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+  <!--script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script-->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
   <!-- InputMask -->
   <script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
   <script src="{{asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
@@ -56,7 +58,7 @@
   <link rel="stylesheet" href="{{asset('glyphicon.css')}}"></link>
   <link rel="stylesheet" href="{{asset('plugins/pace/pace.min.css')}}">
   <!-- Select2 -->
-  <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
+  <!--link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}"-->
   
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
@@ -98,7 +100,6 @@
   <link href='https://fonts.googleapis.com/css?family=Actor' rel='stylesheet'>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 
-
 </head>
 
 <body class="hold-transition skin-blue layout-top-nav "  >
@@ -125,7 +126,7 @@
             <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
             <li><a href="{{URL::to('order')}}" >Order History</a></li>
 			<li class="divider"></li>			
-			<li class="dropdown">
+			<!--li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions</a>
 				<div class="dropdown-menu">
 					
@@ -134,7 +135,17 @@
 					<a href="{{URL::to('mealsub_add')}}" class="dropdown-item">New Subscription</a>					
 					
 				</div>
-			</li>
+			</li-->
+			
+			<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{URL::to('mealsub')}}">View Subscriptions</a></li>
+                
+                <li><a href="{{URL::to('mealsub_add')}}">New Subscription</a></li>
+              </ul>
+            </li>
+			
 			<li class="divider"></li>
 			<li><a href="{{URL::to('register')}}" >Payment Option Registration</a></li>
 		  @elseif(Auth::user()->usertype == "Student")
@@ -159,7 +170,7 @@
         <!-- /.navbar-collapse -->
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu" >
-          <ul class="nav navbar-nav" style="z-index:999;">
+          <ul class="nav navbar-nav" style="">
            
             <!-- User Account Menu -->
             <li class="dropdown user user-menu full" >
@@ -188,9 +199,7 @@
 					
 					<!-- Menu Footer-->
 					<li class="user-footer" >
-					  <div class="pull-left">
-						<a href="#" class="btn btn-default btn-flat">Profile</a>
-					  </div>
+					 
 					  <div class="pull-right">
 					  <form id="logout-form" action="{{ route('logout') }}" method="POST">
 							   @csrf
@@ -223,9 +232,9 @@
 	@if(session()->has('warning'))
 		<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
 	@endif
-	<div width="100%" class="backgroundimg" style="position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
-		<div width="100%" class="whiteoverlay" style="padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
-		<hr width="90%" style="margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
+	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
+		<hr width="90%" style="z-index:0;margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
 		</div>
 	</div>
 	@yield('content')
@@ -265,14 +274,15 @@ function backbutton(){
 		}
 	}
 
-document.addEventListener('DOMContentLoaded', () => {
+
 	
 	
 	
 	function initjs(){
 	
 	ScrollReveal().reveal('.box'); 
-	ScrollReveal({ reset: true });
+	//ScrollReveal().reveal('#card'); 
+	//ScrollReveal({ reset: true });
 
 	var url = window.location.href;
 	var n = url.search("home");
@@ -499,9 +509,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		
 		var hours, minutes, ampm;
 		var hour, minute, amp;
+		var test;
 		for(var i = 600; i <= finaltime; i += 15){
+			test = i % 10;
+			if(test != 0){i+=15;}
+			
 			hours = Math.floor(i / 60);
 			minutes = i % 60;
+			
 			if (minutes < 10){
 				minutes = '0' + minutes; // adding leading zero
 			}
@@ -512,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 			
 			if(i >= time){
-				if(i <= finaltime){
+				if(i < finaltime){
 					i += 15;
 					hour = Math.floor(i / 60);
 					minute = i % 60;
@@ -823,6 +838,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 			
 			$('#cardmethod').on('ifChanged', function(){
+				ScrollReveal().destroy();
 				
 				if(document.getElementById('cardmethod').checked) {
 				    document.getElementById('card').style.opacity = 100;
@@ -831,7 +847,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					document.querySelector('#cardnum').required = true;
 					document.querySelector('#cvv').required = true;
 					document.querySelector('#expdate').required = true;
-					
+					//document.getElementById('card').style.display = 'block';
 				    $("#card").animate({
 						height: 'show'
 					});
@@ -842,10 +858,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 				
 				else if(!document.getElementById('cardmethod').checked){
-				    $("#card").animate({
+				    
+					$("#card").animate({
 					    height: 'hide'
 					} );
-					
+					//document.getElementById('card').style.display = 'none';
 				    document.querySelector("#typecard").required = false;
 				    document.querySelector('#cardname').required = false;
 				    document.querySelector('#cardnum').required = false;
@@ -898,17 +915,201 @@ document.addEventListener('DOMContentLoaded', () => {
 		
 		
 		if(document.getElementById('optionsRadios1').checked) {
-		  document.getElementById('delivery').style.display = 'block';
+			document.getElementById('delivery').style.display = 'block';
+			
+			var count = $('#q').html();
+			$('#ite').val(count);
+			var k=1;
+			for(k;k<count;k++){
+				Array.from(document.querySelector("#food_item"+k).options).forEach(function(option_element) {
+					
+					let option_text = option_element.text;
+					let option_value = option_element.value;
+						
+					var food = option_value.split(/(\s+)/);
+						
+					if(food[6] == 0){
+						$('option[value="'+option_element.value+'"]').select2().prop("disabled", true);
+					}
+					
+					while($("#food_item"+k+" option[value='"+option_element.value+"']:selected").select2().prop("disabled")){
+							//$('#food_item1').val('').trigger("change");
+						var select = document.getElementById("food_item"+k);
+						var items = select.getElementsByTagName('option');
+						var index = Math.floor(Math.random() * items.length);
+						select.selectedIndex = index;
+							
+					}
+				});
+				
+				var str = $('#food_item'+k).val();
+						
+				var food = str.split(/(\s+)/);
+					 
+				$('#price'+k).val($('#quantity'+k).val()*food[4]);
+				$('#quantity'+k).attr({'max':food[2]});
+				$('#qavailable'+k).val(food[2]);
+			//	alert(food[4]);
+				$('#quantity'+k).on("keyup change click paste ", function(){
+					
+					
+					var id = $(this).attr('id');
+					var change = id.replace( /^\D+/g, '');
+					var str = $('#food_item'+change).val();
+					var food = str.split(/(\s+)/);
+					//alert(change);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+					tcost();
+				});
+					
+				$('#food_item'+k).change(function(){
+					//alert("helo");
+					var id = $(this).attr('id');
+					//alert(id);
+					var change = id.replace( /^\D+/g, '');
+					//alert( $(this).find("option:selected").attr('value') );
+					var str = $('#food_item'+change).val();
+					var food = str.split(/(\s+)/);
+					//alert(food[2]);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+				///	$('#Quantity').val();
+					$('#qavailable'+change).val(food[2]);		
+					$('#quantity'+change).attr({'max':food[2]});
+					$("#quantity"+change).on("keyup change click paste ", function(){
+						//alert(food[4]);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+						tcost();
+					})
+					tcost();
+				});
+			}
+			
 		}else if(document.getElementById('optionsRadios2').checked) {
-		  document.getElementById('delivery').style.display = 'none';
+			document.getElementById('delivery').style.display = 'none';
+			var count = $('#q').html();
+			$('#ite').val(count);
+			var k=1;
+			for(k;k<count;k++){
+				Array.from(document.querySelector("#food_item"+k).options).forEach(function(option_element) {	
+					let option_text = option_element.text;
+					let option_value = option_element.value;
+
+					var food = option_value.split(/(\s+)/);
+
+					$("option[value='"+option_element.value+"']").select2().prop("disabled", false);
+					if(food[6] == 0){
+						$('option[value="'+option_element.value+'"]').select2().prop("disabled", false);
+					}
+				});	
+			}
 		}
 		
+		
+
 		$('input:radio[name=mealmethod]').on('ifChanged', function(){
-			if (this.value == 'pick-up') {
+
+			if ($('input:radio[name=mealmethod]:checked').val() == "pick-up") {
+				//$("#delivery").animate({
+				//	height: 'hide'
+				//});
 				document.getElementById('delivery').style.display = 'none';
+				var count = $('#q').html();
+				$('#ite').val(count);
+				var k=1;
+				for(k;k<count;k++){
+					Array.from(document.querySelector("#food_item"+k).options).forEach(function(option_element) {	
+						let option_text = option_element.text;
+						let option_value = option_element.value;
+
+						var food = option_value.split(/(\s+)/);
+
+						$("option[value='"+option_element.value+"']").select2().prop("disabled", false);
+						
+						if(food[6] == 0){
+							$('option[value="'+option_element.value+'"]').select2().prop("disabled", false);
+						}
+						
+						
+		
+					});	
+					
+					
+				}
 			}
-			else if (this.value == 'delivery') {
-				document.getElementById('delivery').style.display = 'block';
+			else if ($('input:radio[name=mealmethod]:checked').val() == "delivery") {
+				document.getElementById('delivery').style.display = 'block';	
+				//$("#delivery").animate({
+				//	height: 'show'
+				//});
+				var count = $('#q').html();
+				$('#ite').val(count);
+				var k=1;
+				for(k;k<count;k++){
+					Array.from(document.querySelector("#food_item"+k).options).forEach(function(option_element) {
+					
+						let option_text = option_element.text;
+						let option_value = option_element.value;
+						
+						var foods = option_value.split(/(\s+)/);
+						
+						if(foods[6] == 0){
+							$('option[value="'+option_element.value+'"]').select2().prop("disabled", true);
+						}
+						
+						while($("#food_item"+k+" option[value='"+option_element.value+"']:selected").select2().prop("disabled")){
+							//$('#food_item1').val('').trigger("change");
+							var select = document.getElementById("food_item"+k);
+							var items = select.getElementsByTagName('option');
+							var index = Math.floor(Math.random() * items.length);
+							select.selectedIndex = index;
+							
+						}				
+					});
+					
+				//	var ids = $('#food_item'+k).attr('id');
+					//	var changes = ids.replace( /^\D+/g, '');
+						var str = $('#food_item'+k).val();
+						
+						var food = str.split(/(\s+)/);
+					 
+						$('#price'+k).val($('#quantity'+k).val()*food[4]);
+						$('#quantity'+k).attr({'max':food[2]});
+						$('#qavailable'+k).val(food[2]);
+					//	alert(food[4]);
+						$('#quantity'+k).on("keyup change click paste ", function(){
+							
+							
+							var id = $(this).attr('id');
+							var change = id.replace( /^\D+/g, '');
+							var str = $('#food_item'+change).val();
+							var food = str.split(/(\s+)/);
+							//alert(change);
+							$('#price'+change).val($('#quantity'+change).val()*food[4]);
+							tcost();
+						});
+					
+						$('#food_item'+k).change(function(){
+							//alert("helo");
+							var id = $(this).attr('id');
+							//alert(id);
+							var change = id.replace( /^\D+/g, '');
+							//alert( $(this).find("option:selected").attr('value') );
+							var str = $('#food_item'+change).val();
+							var food = str.split(/(\s+)/);
+							//alert(food[2]);
+							$('#price'+change).val($('#quantity'+change).val()*food[4]);
+						///	$('#Quantity').val();
+							$('#qavailable'+change).val(food[2]);		
+							$('#quantity'+change).attr({'max':food[2]});
+							$("#quantity"+change).on("keyup change click paste ", function(){
+								//alert(food[4]);
+							$('#price'+change).val($('#quantity'+change).val()*food[4]);
+									tcost();
+							})
+							tcost();
+						});
+				}
+				
 			}
 		});
 		/*
@@ -958,7 +1159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	//initjs();
 	}
 	initjs();
-});
+
 
 $('#menus').change(function(){
 	var str = $(this).val();

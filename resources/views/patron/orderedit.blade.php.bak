@@ -25,6 +25,11 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
+			  <div class="callout callout-warning">
+                <h4>Attention!</h4>
+
+                <p>Some meals will not be orderable when the "Get meal delivered" option is selected.<br> The selected food option may also change when a non-orderable food is already selected.</p>
+              </div>
               <form id="orderform" role="form" method="POST" action="{{action('OrderController@store')}}" enctype="multipart/form-data">
 			   @csrf
 				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
@@ -37,7 +42,7 @@
 					<select class="form-control select2" id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
 						<option  disabled>Select food</option> 
 						@foreach ($foods as $food )
-							<option  Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @endif >
+							<option  Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" @endif >
 								{{ $food->Food_Name }}
 							</option>
 							
@@ -56,7 +61,7 @@
 					  <input type="number" class="form-control" id="qavailable{{$i}}" name="qavailable{{$i}}" Required readonly value="">
 					</div>
 					<div id="priced{{$i}}" class="form-group col-md-2">
-					  <label>Price($)</label>
+					  <label>Price ($)</label>
 					  <input type="number" class="form-control" id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
 					@if($i > 1) <div class="col-md-12"><a type="button" id="removefood{{$i}}" class="btn bg-maroon btn-flat margin">Remove item</a></div> @endif

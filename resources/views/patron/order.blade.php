@@ -26,6 +26,11 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
+			  <div class="callout callout-warning">
+                <h4>Attention!</h4>
+
+                <p>Some meals will not be orderable when the "Get meal delivered" option is selected.<br> The selected food option may also change when a non-orderable food is already selected.</p>
+              </div>
               <form id="orderform" role="form" method="POST" action="{{action('OrderController@store')}}" enctype="multipart/form-data">
 			   @csrf
                 <!-- text input -->
@@ -35,9 +40,9 @@
 					<select class="food form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food" >
 						<option disabled>Select food</option> 
 						@foreach ($foods as $food )
-					<option  Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" >
-								{{ $food->Food_Name." - ".$food->Food_Desc }} 
-							</option>
+						<option name="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}"   Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" >
+							{{ $food->Food_Name." - ".$food->Food_Desc }} 
+						</option>
 						@endforeach
 						
 					</select>

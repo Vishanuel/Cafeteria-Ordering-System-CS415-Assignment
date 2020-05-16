@@ -23,8 +23,8 @@
 		<div class="col-md-12">
 			<div style="z-index:9;" class="callout callout-warning">
 				<h4>You have an pending order which was disrupted!</h4>
-				{{$pending_order_id}}
-				<a href="{{URL::to('order_edit/'.$pending_order_id)}}"><p>Go to pending order.</p></a>
+				<p>Placing new order will delete your pending order.</p>
+				<a href="{{URL::to('order_edit/'.$pending_order_id)}}">Go to pending order.</a>
 			</div>
 		</div>
 		@endif

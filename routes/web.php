@@ -24,6 +24,7 @@ Route::resource('student_order','OrderStudentController');
 Route::resource('home','HomeController');
 Route::resource('student_home','HomeStudentController');
 Route::resource('menu', 'MenuController');
+Route::resource('menu_manager', 'MenuManagerHomeController');
 Route::resource('category', 'CategoryController');
 Route::resource('specialmenu', 'SpecialsController');
 Route::resource('item', 'ItemController');

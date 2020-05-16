@@ -45,7 +45,7 @@ class LoginController extends Controller
         //If user role is menu manager
         else if(Auth::check() && auth()->user()->usertype === "Menu Manager")
         {
-            return Response::view('menu manager.home');
+            return redirect('/menu_manager');
         }   
 		
 		else if(Auth::check() && auth()->user()->usertype === 'Cafeteria Staff')

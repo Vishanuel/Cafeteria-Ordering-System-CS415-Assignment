@@ -109,7 +109,7 @@
       <div class="container" >
         <div class="navbar-header">
 		  
-          <a href="#" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
+          <a href="<?php echo e(URL::to('welcome')); ?>" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -125,7 +125,9 @@
         <!-- /.navbar-collapse -->
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu" >
-          
+			<ul class="nav navbar-nav" style="">
+				<li><a href="<?php echo e(URL::to('login')); ?>" >LOGIN</a></li>
+			</ul>	
         </div>
         <!-- /.navbar-custom-menu -->
       </div>
@@ -149,7 +151,7 @@
       <h1>
 		<small>Pick a </small>
         Restaurant
-        <small> to order from ....</small>
+        <small> to view its menu ....</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="http://localhost/home"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -161,34 +163,23 @@
     <section class="content">
       <div class="row">
         <!-- left column -->
-	<div class="col-lg-12 col-md-12 col-xs-12"  width="100%">
-          
-				
-	<div class="box loading box-widget widget-user item"  >
-            <!-- Add the bg color to the header using any of the bg-* classes --><a href="http://localhost/restaurant/1" class="small-box-footer">
-            <div class="widget-user-header bg-black" style="height: 200px; background: url('../dist/img/restaurant/restaurant1.jpg') center center;  background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
-              <h3 class="widget-user-username">Harry Kitchen</h3>
-              <h5 class="widget-user-desc">White Tables</h5>
-            </div>
-              
-			
-          </div>	
-		</div>
-			   
-				<div class="col-lg-12 col-md-12 col-xs-12"  width="100%">
+	
+		<?php $__currentLoopData = $restaurants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $restaurant): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+		<div class="col-lg-12 col-md-12 col-xs-12"  width="100%">
           
 				
 			<div class="box loading box-widget widget-user item"  >
-            <!-- Add the bg color to the header using any of the bg-* classes --><a href="http://localhost/restaurant/2" class="small-box-footer">
-            <div class="widget-user-header bg-black" style="height: 200px; background: url('../dist/img/restaurant/restaurant2.jpg') center center;  background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
-              <h3 class="widget-user-username">Garry Kitchens</h3>
-              <h5 class="widget-user-desc">Damodar City</h5>
+            <!-- Add the bg color to the header using any of the bg-* classes --><a href="<?php echo e(URL::to('welcome/'.$restaurant->Restaurant_ID)); ?>" class="small-box-footer">
+            <div class="widget-user-header bg-black" style="height: 200px; background: url('../<?php echo e($restaurant->Restaurant_Pic); ?>') center center;  background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+              <h3 class="widget-user-username"><?php echo e($restaurant->Restaurant_Name); ?></h3>
+              <h5 class="widget-user-desc"><?php echo e($restaurant->Restaurant_Location); ?></h5>
             </div>
               
 			
           </div>	
 		</div>
 			   
+		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>   
 		       
 			  
 			
@@ -198,9 +189,7 @@
     </section>
     <!-- /.content -->
   </div>
-  <script>
-	
-  </script>
+ 
     </div>
     <!-- /.container -->
   </div>
@@ -952,4 +941,4 @@ $('#menus').change(function(){
 </body>
 
 
-</html>
+</html><?php /**PATH C:\wamp64\www\COS\resources\views/welcome.blade.php ENDPATH**/ ?>

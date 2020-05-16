@@ -7,15 +7,15 @@
   <!-- REQUIRED JS SCRIPTS -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- jQuery 3 -->
-  <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=ljRc6jSiRUy6xQUbWo-U02mCTcAp8mzXQhiGM9kfY4JYhIqtZaWjNR9KQhd8iatv" charset="UTF-8"></script><script src="https://unpkg.com/scrollreveal@4.0.6/dist/scrollreveal.js"></script>
+  <script src="https://unpkg.com/scrollreveal@4.0.6/dist/scrollreveal.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- Bootstrap 3.3.7 -->
 
-  <script src="http://localhost/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="<?php echo e(asset('bower_components/bootstrap/dist/js/bootstrap.min.js')); ?>"></script>
   <!-- AdminLTE App -->
-  <!-- <script src="http://localhost/bower_components/PACE/pace.min.js"></script> -->
-  <script src="http://localhost/dist/js/adminlte.min.js"></script>
+  <!-- <script src="<?php echo e(asset('bower_components/PACE/pace.min.js')); ?>"></script> -->
+  <script src="<?php echo e(asset('dist/js/adminlte.min.js')); ?>"></script>
   
   <!-- DataTables -->
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -23,60 +23,62 @@
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
   <script src="https://unpkg.com/@barba/core"></script>
   <script src="https://unpkg.com/@barba/css"></script>
-  <script src="http://localhost/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <script src="<?php echo e(asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')); ?>"></script>
   <!-- SlimScroll -->
-  <script src="http://localhost/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="<?php echo e(asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')); ?>"></script>
   <!-- FastClick -->
-  <script src="http://localhost/bower_components/fastclick/lib/fastclick.js"></script>
+  <script src="<?php echo e(asset('bower_components/fastclick/lib/fastclick.js')); ?>"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../../dist/js/demo.js"></script>
   <!-- iCheck 1.0.1 -->
-  <script src="http://localhost/plugins/iCheck/icheck.min.js"></script>
+  <script src="<?php echo e(asset('plugins/iCheck/icheck.min.js')); ?>"></script>
   <!-- Select2 -->
-  <script src="http://localhost/bower_components/select2/dist/js/select2.full.min.js"></script>
+  <!--script src="<?php echo e(asset('bower_components/select2/dist/js/select2.full.min.js')); ?>"></script-->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
   <!-- InputMask -->
-  <script src="http://localhost/plugins/input-mask/jquery.inputmask.js"></script>
-  <script src="http://localhost/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-  <script src="http://localhost/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+  <script src="<?php echo e(asset('plugins/input-mask/jquery.inputmask.js')); ?>"></script>
+  <script src="<?php echo e(asset('plugins/input-mask/jquery.inputmask.date.extensions.js')); ?>"></script>
+  <script src="<?php echo e(asset('plugins/input-mask/jquery.inputmask.extensions.js')); ?>"></script>
   <!-- date-range-picker -->
-  <script src="http://localhost/bower_components/moment/min/moment.min.js"></script>
-  <script src="http://localhost/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script src="<?php echo e(asset('bower_components/moment/min/moment.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('bower_components/bootstrap-daterangepicker/daterangepicker.js')); ?>"></script>
   <!-- bootstrap datepicker -->
-  <script src="http://localhost/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="<?php echo e(asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')); ?>"></script>
   <!-- bootstrap color picker -->
-  <script src="http://localhost/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+  <script src="<?php echo e(asset('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')); ?>"></script>
   <!-- bootstrap time picker -->
-  <script src="http://localhost/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+  <script src="<?php echo e(asset('plugins/timepicker/bootstrap-timepicker.min.js')); ?>"></script>
   <!-- ChartJS -->
-  <script src="http://localhost/bower_components/chart.js/Chart.js"></script>
+  <script src="<?php echo e(asset('bower_components/chart.js/Chart.js')); ?>"></script>
   <!-- jvectormap  -->
  
   <!-- Tell the browser to be responsive to screen width -->
- <!-- <link rel="stylesheet" href="http://localhost/glyphicon.css"> -->
-  <link rel="stylesheet" href="http://localhost/glyphicon.css"></link>
-  <link rel="stylesheet" href="http://localhost/plugins/pace/pace.min.css">
+ <!-- <link rel="stylesheet" href="<?php echo e(asset('glyphicon.css')); ?>"> -->
+  <link rel="stylesheet" href="<?php echo e(asset('glyphicon.css')); ?>"></link>
+  <link rel="stylesheet" href="<?php echo e(asset('plugins/pace/pace.min.css')); ?>">
   <!-- Select2 -->
-  <link rel="stylesheet" href="http://localhost/bower_components/select2/dist/css/select2.css">
+  <!--link rel="stylesheet" href="<?php echo e(asset('bower_components/select2/dist/css/select2.css')); ?>"-->
   
-  <link rel="stylesheet" href="http://localhost/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo e(asset('bower_components/bootstrap/dist/css/bootstrap.min.css')); ?>">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="http://localhost/bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="<?php echo e(asset('bower_components/font-awesome/css/font-awesome.min.css')); ?>">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="http://localhost/bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="<?php echo e(asset('bower_components/Ionicons/css/ionicons.min.css')); ?>">
   <!-- DataTables -->
-  <link rel="stylesheet" href="http://localhost/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo e(asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')); ?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="http://localhost/dist/css/AdminLTE.css">
+  <link rel="stylesheet" href="<?php echo e(asset('dist/css/AdminLTE.css')); ?>">
   <!-- daterange picker -->
-  <link rel="stylesheet" href="http://localhost/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="<?php echo e(asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')); ?>">
   <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="http://localhost/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="<?php echo e(asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')); ?>">
   <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="http://localhost/plugins/iCheck/all.css">
+  <link rel="stylesheet" href="<?php echo e(asset('plugins/iCheck/all.css')); ?>">
   <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="http://localhost/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="<?php echo e(asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')); ?>">
   <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="http://localhost/plugins/timepicker/bootstrap-timepicker.min.css">
+  <link rel="stylesheet" href="<?php echo e(asset('plugins/timepicker/bootstrap-timepicker.min.css')); ?>">
   <!-- jvectormap -->
   
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -109,7 +111,7 @@
       <div class="container" >
         <div class="navbar-header">
 		  
-          <a href="#" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
+          <a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="<?php echo e(URL::to('/home')); ?>" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -119,15 +121,97 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left"  id="navbar-collapse"  >
 		  
-          
+          <ul class="nav navbar-nav"   >
+		  <?php if(Auth::user()->usertype == "Patron"): ?>
+            <li ><a href="<?php echo e(URL::to('restaurant')); ?>" >Place Order <span class="sr-only">(current)</span></a></li>
+            <li><a href="<?php echo e(URL::to('order')); ?>" >Order History</a></li>
+			<li class="divider"></li>			
+			<!--li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions</a>
+				<div class="dropdown-menu">
+					
+					<a href="<?php echo e(URL::to('mealsub')); ?>" class="dropdown-item">View Subscriptions</a>	
+					<div class="dropdown-divider"></div>			
+					<a href="<?php echo e(URL::to('mealsub_add')); ?>" class="dropdown-item">New Subscription</a>					
+					
+				</div>
+			</li-->
+			
+			<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="<?php echo e(URL::to('mealsub')); ?>">View Subscriptions</a></li>
+                
+                <li><a href="<?php echo e(URL::to('mealsub_add')); ?>">New Subscription</a></li>
+              </ul>
+            </li>
+			
+			<li class="divider"></li>
+			<li><a href="<?php echo e(URL::to('register')); ?>" >Payment Option Registration</a></li>
+		  <?php elseif(Auth::user()->usertype == "Student"): ?>
+		    <li ><a href="<?php echo e(URL::to('restaurant')); ?>" >Place Order <span class="sr-only">(current)</span></a></li>
+            <li><a href="<?php echo e(URL::to('student_order')); ?>" >View Previous Orders</a></li>
+		  <?php endif; ?>
+            <!-- <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">View Previous Orders</a></li>
+                <!--<li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>-->
+          </ul>
         </div>
 		
         <!-- /.navbar-collapse -->
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu" >
-			<ul class="nav navbar-nav" style="">
-				<li><a href="{{URL::to('login')}}" >LOGIN</a></li>
-			</ul>	
+          <ul class="nav navbar-nav" style="">
+           
+            <!-- User Account Menu -->
+            <li class="dropdown user user-menu full" >
+              <!-- Menu Toggle Button -->
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <!-- The user image in the navbar-->
+                <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                <span class="hidden-xs"><?php echo e(Auth::user()->name); ?></span>
+              </a>
+			
+				  <ul class="dropdown-menu " >
+					<!-- The user image in the menu -->
+					<li class="user-header" >
+					  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+					  <p>
+						<?php echo e(Auth::user()->name); ?> - <?php echo e(Auth::user()->usertype); ?>
+
+						<small><?php echo e(Auth::user()->created_at); ?></small>
+					  </p>
+					</li>
+					<!-- Menu Body -->
+					
+					
+					
+					
+					<!-- Menu Footer-->
+					<li class="user-footer" >
+					 
+					  <div class="pull-right">
+					  <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST">
+							   <?php echo csrf_field(); ?>
+						<button type="submit" class="btn btn-primary btn-flat">Sign out</button>
+					  </form>
+					  </div>
+					</li>
+				  </ul>
+		
+            </li>
+          </ul>
         </div>
         <!-- /.navbar-custom-menu -->
       </div>
@@ -136,105 +220,26 @@
   </header>
   <!-- Full Width Column -->
   
-
+<!--<div  width="90%" style="text-align: center;  height:1px; color: white; background: rgba(200, 200, 200, 1) center center;"></div>-->
   <div class="content-wrapper" >
     <div class="container" data-barba="container">
       <!-- Content Header (Page header) -->
-      			<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+      <?php if(session()->has('success')): ?>
+		<input type="hidden" value="<?php echo e(Session::get('success')); ?>" id="hiddensuccesswcs">
+	<?php endif; ?>
+	<?php if(session()->has('error')): ?>
+		<input type="hidden" value="<?php echo e(Session::get('error')); ?>" id="hiddenerrorwcs">
+	<?php endif; ?>
+	<?php if(session()->has('warning')): ?>
+		<input type="hidden" value="<?php echo e(Session::get('warning')); ?>" id="hiddenwarningwcs">
+	<?php endif; ?>
+	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
 		<hr width="90%" style="z-index:0;margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
 		</div>
 	</div>
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-	   <small>Your</small>
-        Menu
-        <small>information</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-       <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
-        <li class="active">Menu</li>
-      </ol>
-    </section>
-<!-- Main content -->
-    <section class="content">
-		
-		
-		
-		<?php $menuid = -1;?>
-						
-        <!-- left column --><div class="row">
-		
-        @foreach($categories as $category)
-
-		 <div class="row">
-			<div class="col-md-12 col-xs-12">
-			  <div class="box loading" style="background: rgba(255, 255, 255, 1); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);z-index:999;">
-				<div class="box-header with-border">
-					<h3 class="box-title">{{$category->Category_Name}} Menu</h3>
-				</div>
-			  
-				<div class="box-body">
-					
-				
-				   @foreach($foods as $food)
-						@if($category->Category_ID == $food->Category_ID )
-			
-					<div class="col-md-3 col-xs-12">
-						
-						<div class="box loading box-widget widget-user">
-						<!-- Add the bg color to the header using any of the bg-* classes -->
-						<div class="widget-user-header bg-black" style="height:175px; background: url('../{{$food->Food_Pic}}') center center;background-repeat: no-repeat;  background-size: cover;">
-						 <!-- <h3 class="widget-user-username">Elizabeth Pierce</h3>
-						  <h5 class="widget-user-desc">Web Designer</h5> -->
-						  
-						
-						</div>
-						<div class="box-footer" style="text-align: center;" ><h4>{{ $food->Food_Name }}</h4></div>
-						
-						</div>
-	
-						  <?php $menuid = $food->Menu_ID;?>
-					
-						
-					 
-					</div>
-					
-						@endif
-						
-					@endforeach
-					
-						 </div>
-					</div>
-				</div>
-					@if($menuid == -1 || !isset($menuid))
-					
-					<div class="box-header" style="background: rgba(255, 255, 255, 0); "> 
-						<div class="col-md-12 col-xs-12">
-							<div id="2" class="callout callout-danger" ><p>Unfortunately, there is no available {{$category->Category_Name}} menu for this date. Sorry for any inconvenience caused.</p></div>
-						</div>
-					</div>
-					
-						
-					@endif
-					
-			 
-				
-			</div>
-		@endforeach
-        <!--/.col (right) -->
-      
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
-  
- </div>
- 
- 
- </div>
+	<?php echo $__env->yieldContent('content'); ?>
+    </div>
     <!-- /.container -->
   </div>
   <!-- /.content-wrapper -->
@@ -505,9 +510,14 @@ function backbutton(){
 		
 		var hours, minutes, ampm;
 		var hour, minute, amp;
+		var test;
 		for(var i = 600; i <= finaltime; i += 15){
+			test = i % 10;
+			if(test != 0){i+=15;}
+			
 			hours = Math.floor(i / 60);
 			minutes = i % 60;
+			
 			if (minutes < 10){
 				minutes = '0' + minutes; // adding leading zero
 			}
@@ -518,7 +528,7 @@ function backbutton(){
 			}
 			
 			if(i >= time){
-				if(i <= finaltime){
+				if(i < finaltime){
 					i += 15;
 					hour = Math.floor(i / 60);
 					minute = i % 60;
@@ -906,17 +916,201 @@ function backbutton(){
 		
 		
 		if(document.getElementById('optionsRadios1').checked) {
-		  document.getElementById('delivery').style.display = 'block';
+			document.getElementById('delivery').style.display = 'block';
+			
+			var count = $('#q').html();
+			$('#ite').val(count);
+			var k=1;
+			for(k;k<count;k++){
+				Array.from(document.querySelector("#food_item"+k).options).forEach(function(option_element) {
+					
+					let option_text = option_element.text;
+					let option_value = option_element.value;
+						
+					var food = option_value.split(/(\s+)/);
+						
+					if(food[6] == 0){
+						$('option[value="'+option_element.value+'"]').select2().prop("disabled", true);
+					}
+					
+					while($("#food_item"+k+" option[value='"+option_element.value+"']:selected").select2().prop("disabled")){
+							//$('#food_item1').val('').trigger("change");
+						var select = document.getElementById("food_item"+k);
+						var items = select.getElementsByTagName('option');
+						var index = Math.floor(Math.random() * items.length);
+						select.selectedIndex = index;
+							
+					}
+				});
+				
+				var str = $('#food_item'+k).val();
+						
+				var food = str.split(/(\s+)/);
+					 
+				$('#price'+k).val($('#quantity'+k).val()*food[4]);
+				$('#quantity'+k).attr({'max':food[2]});
+				$('#qavailable'+k).val(food[2]);
+			//	alert(food[4]);
+				$('#quantity'+k).on("keyup change click paste ", function(){
+					
+					
+					var id = $(this).attr('id');
+					var change = id.replace( /^\D+/g, '');
+					var str = $('#food_item'+change).val();
+					var food = str.split(/(\s+)/);
+					//alert(change);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+					tcost();
+				});
+					
+				$('#food_item'+k).change(function(){
+					//alert("helo");
+					var id = $(this).attr('id');
+					//alert(id);
+					var change = id.replace( /^\D+/g, '');
+					//alert( $(this).find("option:selected").attr('value') );
+					var str = $('#food_item'+change).val();
+					var food = str.split(/(\s+)/);
+					//alert(food[2]);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+				///	$('#Quantity').val();
+					$('#qavailable'+change).val(food[2]);		
+					$('#quantity'+change).attr({'max':food[2]});
+					$("#quantity"+change).on("keyup change click paste ", function(){
+						//alert(food[4]);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+						tcost();
+					})
+					tcost();
+				});
+			}
+			
 		}else if(document.getElementById('optionsRadios2').checked) {
-		  document.getElementById('delivery').style.display = 'none';
+			document.getElementById('delivery').style.display = 'none';
+			var count = $('#q').html();
+			$('#ite').val(count);
+			var k=1;
+			for(k;k<count;k++){
+				Array.from(document.querySelector("#food_item"+k).options).forEach(function(option_element) {	
+					let option_text = option_element.text;
+					let option_value = option_element.value;
+
+					var food = option_value.split(/(\s+)/);
+
+					$("option[value='"+option_element.value+"']").select2().prop("disabled", false);
+					if(food[6] == 0){
+						$('option[value="'+option_element.value+'"]').select2().prop("disabled", false);
+					}
+				});	
+			}
 		}
 		
+		
+
 		$('input:radio[name=mealmethod]').on('ifChanged', function(){
-			if (this.value == 'pick-up') {
+
+			if ($('input:radio[name=mealmethod]:checked').val() == "pick-up") {
+				//$("#delivery").animate({
+				//	height: 'hide'
+				//});
 				document.getElementById('delivery').style.display = 'none';
+				var count = $('#q').html();
+				$('#ite').val(count);
+				var k=1;
+				for(k;k<count;k++){
+					Array.from(document.querySelector("#food_item"+k).options).forEach(function(option_element) {	
+						let option_text = option_element.text;
+						let option_value = option_element.value;
+
+						var food = option_value.split(/(\s+)/);
+
+						$("option[value='"+option_element.value+"']").select2().prop("disabled", false);
+						
+						if(food[6] == 0){
+							$('option[value="'+option_element.value+'"]').select2().prop("disabled", false);
+						}
+						
+						
+		
+					});	
+					
+					
+				}
 			}
-			else if (this.value == 'delivery') {
-				document.getElementById('delivery').style.display = 'block';
+			else if ($('input:radio[name=mealmethod]:checked').val() == "delivery") {
+				document.getElementById('delivery').style.display = 'block';	
+				//$("#delivery").animate({
+				//	height: 'show'
+				//});
+				var count = $('#q').html();
+				$('#ite').val(count);
+				var k=1;
+				for(k;k<count;k++){
+					Array.from(document.querySelector("#food_item"+k).options).forEach(function(option_element) {
+					
+						let option_text = option_element.text;
+						let option_value = option_element.value;
+						
+						var foods = option_value.split(/(\s+)/);
+						
+						if(foods[6] == 0){
+							$('option[value="'+option_element.value+'"]').select2().prop("disabled", true);
+						}
+						
+						while($("#food_item"+k+" option[value='"+option_element.value+"']:selected").select2().prop("disabled")){
+							//$('#food_item1').val('').trigger("change");
+							var select = document.getElementById("food_item"+k);
+							var items = select.getElementsByTagName('option');
+							var index = Math.floor(Math.random() * items.length);
+							select.selectedIndex = index;
+							
+						}				
+					});
+					
+				//	var ids = $('#food_item'+k).attr('id');
+					//	var changes = ids.replace( /^\D+/g, '');
+						var str = $('#food_item'+k).val();
+						
+						var food = str.split(/(\s+)/);
+					 
+						$('#price'+k).val($('#quantity'+k).val()*food[4]);
+						$('#quantity'+k).attr({'max':food[2]});
+						$('#qavailable'+k).val(food[2]);
+					//	alert(food[4]);
+						$('#quantity'+k).on("keyup change click paste ", function(){
+							
+							
+							var id = $(this).attr('id');
+							var change = id.replace( /^\D+/g, '');
+							var str = $('#food_item'+change).val();
+							var food = str.split(/(\s+)/);
+							//alert(change);
+							$('#price'+change).val($('#quantity'+change).val()*food[4]);
+							tcost();
+						});
+					
+						$('#food_item'+k).change(function(){
+							//alert("helo");
+							var id = $(this).attr('id');
+							//alert(id);
+							var change = id.replace( /^\D+/g, '');
+							//alert( $(this).find("option:selected").attr('value') );
+							var str = $('#food_item'+change).val();
+							var food = str.split(/(\s+)/);
+							//alert(food[2]);
+							$('#price'+change).val($('#quantity'+change).val()*food[4]);
+						///	$('#Quantity').val();
+							$('#qavailable'+change).val(food[2]);		
+							$('#quantity'+change).attr({'max':food[2]});
+							$("#quantity"+change).on("keyup change click paste ", function(){
+								//alert(food[4]);
+							$('#price'+change).val($('#quantity'+change).val()*food[4]);
+									tcost();
+							})
+							tcost();
+						});
+				}
+				
 			}
 		});
 		/*
@@ -985,4 +1179,4 @@ $('#menus').change(function(){
 </body>
 
 
-</html>
+</html><?php /**PATH C:\wamp64\www\COS\resources\views/layouts/app.blade.php ENDPATH**/ ?>

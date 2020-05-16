@@ -109,7 +109,7 @@
       <div class="container" >
         <div class="navbar-header">
 		  
-          <a href="#" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
+          <a href="<?php echo e(URL::to('welcome')); ?>" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -126,7 +126,7 @@
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu" >
 			<ul class="nav navbar-nav" style="">
-				<li><a href="{{URL::to('login')}}" >LOGIN</a></li>
+				<li><a href="<?php echo e(URL::to('login')); ?>" >LOGIN</a></li>
 			</ul>	
         </div>
         <!-- /.navbar-custom-menu -->
@@ -145,52 +145,96 @@
 		<hr width="90%" style="z-index:0;margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
 		</div>
 	</div>
-	<div class="content-wrapper" >
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-		<small>Pick a </small>
-        Restaurant
-        <small> to view its menu ....</small>
+	   <small>Your</small>
+        Menu
+        <small>information</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="http://localhost/home"><i class="fa fa-dashboard"></i> Home</a></li>
-       <!-- <li><a href="http://localhost/smpdevice">Device</a></li> -->
-        <li class="active">Restaurant Info</li>
+        <li><a href="<?php echo e(url('home')); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
+       <!-- <li><a href="<?php echo e(url('smpdevice')); ?>">Device</a></li> -->
+        <li class="active">Menu</li>
       </ol>
     </section>
 <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <!-- left column -->
-	
-		@foreach($restaurants as $restaurant)
-		<div class="col-lg-12 col-md-12 col-xs-12"  width="100%">
-          
-				
-			<div class="box loading box-widget widget-user item"  >
-            <!-- Add the bg color to the header using any of the bg-* classes --><a href="{{URL::to('welcome/'.$restaurant->Restaurant_ID)}}" class="small-box-footer">
-            <div class="widget-user-header bg-black" style="height: 200px; background: url('../{{$restaurant->Restaurant_Pic}}') center center;  background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
-              <h3 class="widget-user-username">{{ $restaurant->Restaurant_Name }}</h3>
-              <h5 class="widget-user-desc">{{ $restaurant->Restaurant_Location }}</h5>
-            </div>
-              
-			
-          </div>	
-		</div>
-			   
-		@endforeach   
-		       
+		
+		
+		
+		<?php $menuid = -1;?>
+						
+        <!-- left column --><div class="row">
+		
+        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+		 <div class="row">
+			<div class="col-md-12 col-xs-12">
+			  <div class="box loading" style="background: rgba(255, 255, 255, 1); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);z-index:999;">
+				<div class="box-header with-border">
+					<h3 class="box-title"><?php echo e($category->Category_Name); ?> Menu</h3>
+				</div>
 			  
+				<div class="box-body">
+					
+				
+				   <?php $__currentLoopData = $foods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $food): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						<?php if($category->Category_ID == $food->Category_ID ): ?>
 			
+					<div class="col-md-3 col-xs-12">
+						
+						<div class="box loading box-widget widget-user">
+						<!-- Add the bg color to the header using any of the bg-* classes -->
+						<div class="widget-user-header bg-black" style="height:175px; background: url('../<?php echo e($food->Food_Pic); ?>') center center;background-repeat: no-repeat;  background-size: cover;">
+						 <!-- <h3 class="widget-user-username">Elizabeth Pierce</h3>
+						  <h5 class="widget-user-desc">Web Designer</h5> -->
+						  
+						
+						</div>
+						<div class="box-footer" style="text-align: center;" ><h4><?php echo e($food->Food_Name); ?></h4></div>
+						
+						</div>
+	
+						  <?php $menuid = $food->Menu_ID;?>
+					
+						
+					 
+					</div>
+					
+						<?php endif; ?>
+						
+					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+					
+						 </div>
+					</div>
+				</div>
+					<?php if($menuid == -1 || !isset($menuid)): ?>
+					
+					<div class="box-header" style="background: rgba(255, 255, 255, 0); "> 
+						<div class="col-md-12 col-xs-12">
+							<div id="2" class="callout callout-danger" ><p>Unfortunately, there is no available <?php echo e($category->Category_Name); ?> menu for this date. Sorry for any inconvenience caused.</p></div>
+						</div>
+					</div>
+					
+						
+					<?php endif; ?>
+					
+			 
+				
+			</div>
+		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         <!--/.col (right) -->
-      </div>
+      
       <!-- /.row -->
     </section>
     <!-- /.content -->
-  </div>
+  
+ </div>
  
-    </div>
+ 
+ </div>
     <!-- /.container -->
   </div>
   <!-- /.content-wrapper -->
@@ -941,4 +985,4 @@ $('#menus').change(function(){
 </body>
 
 
-</html>
+</html><?php /**PATH C:\wamp64\www\COS\resources\views/menu.blade.php ENDPATH**/ ?>

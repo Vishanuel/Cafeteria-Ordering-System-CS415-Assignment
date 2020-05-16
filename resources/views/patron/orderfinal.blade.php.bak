@@ -26,6 +26,11 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
+			  <div class="callout callout-warning">
+                <h4>Attention!</h4>
+
+                <p>Some meals will not be orderable when the "Get meal delivered" option is selected.<br> The selected food option may also change when a non-orderable food is already selected.</p>
+              </div>
               <form id="orderform" role="form" method="POST" action="{{action('OrderController@store')}}" enctype="multipart/form-data">
 			   @csrf
 				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>

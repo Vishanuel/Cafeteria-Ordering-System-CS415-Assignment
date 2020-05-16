@@ -40,7 +40,7 @@
 				<div id="food_itemd{{$i}}" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select class="form-control select2" id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
-						<option  disabled>Select food</option> 
+						<!--option  disabled>Select food</option--> 
 						@foreach ($foods as $food )
 							<option  Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" @endif >
 								{{ $food->Food_Name }}

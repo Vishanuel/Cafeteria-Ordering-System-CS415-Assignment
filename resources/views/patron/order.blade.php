@@ -38,7 +38,7 @@
 				<div id="food_itemd1" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select class="food form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food" >
-						<option disabled>Select food</option> 
+						<!--option disabled>Select food</option--> 
 						@foreach ($foods as $food )
 						<option name="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}"   Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" >
 							{{ $food->Food_Name." - ".$food->Food_Desc }} 

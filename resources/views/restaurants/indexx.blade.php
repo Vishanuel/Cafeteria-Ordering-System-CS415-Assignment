@@ -19,8 +19,15 @@
     <section class="content">
       <div class="row">
         <!-- left column -->
-		
-		
+		@if(!empty($pending_order_id))
+		<div class="col-md-12">
+			<div style="z-index:9;" class="callout callout-warning">
+				<h4>You have an pending order which was disrupted!</h4>
+				
+				<a href="{{URL::to('order_edit/'.$pending_order_id)}}"><p>Go to pending order.</p></a>
+			</div>
+		</div>
+		@endif
 		@foreach($restaurants as $restaurant)
 		<div class="col-lg-12 col-md-12 col-xs-12"  width="100%">
           

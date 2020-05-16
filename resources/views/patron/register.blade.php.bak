@@ -103,7 +103,7 @@
        
 		  
 			<!-- left column -->
-			<div id="card" class="col-md-6" style="height:100%;display:none;">
+			<div id="card" class="col-md-6" style="height:100%;">
 			  <div class="box box-info loading">
 				<div class="box-header with-border">
 				  <h3 class="box-title">Credit/Debit Card Information</h3>
@@ -183,7 +183,7 @@
 			<div class="col-md-6 col-xs-12 pull-left" >
 				<div class="box box-default loading" >
 					<div class="box-header with-border">
-						<a href="{{URL::to('/home')}}" class="btn btn-default btn-flat">Cancel</a>
+						<a href="{{URL::to('/home')}}" class="btn btn-default btn-flat">Home</a>
 						<button type="submit"  value="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Submit</button>	
 						</form>
 					</div>	

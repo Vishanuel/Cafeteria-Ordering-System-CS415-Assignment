@@ -103,7 +103,7 @@
        
 		  
 			<!-- left column -->
-			<div id="card" class="col-md-6" style="height:100%;display:none;">
+			<div id="card" class="col-md-6" style="height:100%;display:none">
 			  <div class="box box-info loading">
 				<div class="box-header with-border">
 				  <h3 class="box-title">Credit/Debit Card Information</h3>

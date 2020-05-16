@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use DB;
+use Auth;
 use Illuminate\Database\Eloquent\Collection;
 
 class RestaurantController extends Controller
@@ -18,7 +19,22 @@ class RestaurantController extends Controller
     {
         //
        $restaurants = Restaurant::all();
-        return view('restaurants.indexx')->with(['restaurants' => $restaurants]);
+	   
+	   $employee_id = DB::table('patron')
+		->select('Employee_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first();
+	   
+	   $pending_order_id = DB::table('cos_order')
+		->where('Employee_ID','=',$employee_id->Employee_ID)
+		->where('Cos_Order_Meal_Status','=','orderingg')
+		->first();
+		
+		if(!empty($pending_order_id)){
+			$pending_order_id = $pending_order_id->Cos_Order_Num;
+		}
+				
+        return view('restaurants.indexx')->with(['restaurants' => $restaurants,'pending_order_id' => $pending_order_id]);
     }
 
     /**

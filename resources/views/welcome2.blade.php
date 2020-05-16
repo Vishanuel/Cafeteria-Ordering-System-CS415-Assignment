@@ -109,7 +109,7 @@
       <div class="container" >
         <div class="navbar-header">
 		  
-          <a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="{{URL::to('/home')}}" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
+          <b >Cafeteria </b>Ordering System</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -119,96 +119,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left"  id="navbar-collapse"  >
 		  
-          <ul class="nav navbar-nav"   >
-		  @if(Auth::user()->usertype == "Patron")
-            <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
-            <li><a href="{{URL::to('order')}}" >Order History</a></li>
-			<li class="divider"></li>			
-			<!--li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions</a>
-				<div class="dropdown-menu">
-					
-					<a href="{{URL::to('mealsub')}}" class="dropdown-item">View Subscriptions</a>	
-					<div class="dropdown-divider"></div>			
-					<a href="{{URL::to('mealsub_add')}}" class="dropdown-item">New Subscription</a>					
-					
-				</div>
-			</li-->
-			
-			<li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="{{URL::to('mealsub')}}">View Subscriptions</a></li>
-                <li class="divider"></li>
-                <li><a href="{{URL::to('mealsub_add')}}">New Subscription</a></li>
-              </ul>
-            </li>
-			
-			<li class="divider"></li>
-			<li><a href="{{URL::to('register')}}" >Payment Option Registration</a></li>
-		  @elseif(Auth::user()->usertype == "Student")
-		    <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
-            <li><a href="{{URL::to('student_order')}}" >View Previous Orders</a></li>
-		  @endif
-            <!-- <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">View Previous Orders</a></li>
-                <!--<li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>-->
-          </ul>
+          
         </div>
 		
         <!-- /.navbar-collapse -->
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu" >
-          <ul class="nav navbar-nav" style="">
-           
-            <!-- User Account Menu -->
-            <li class="dropdown user user-menu full" >
-              <!-- Menu Toggle Button -->
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- The user image in the navbar-->
-                <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <span class="hidden-xs">{{ Auth::user()->name }}</span>
-              </a>
-			
-				  <ul class="dropdown-menu " >
-					<!-- The user image in the menu -->
-					<li class="user-header" >
-					  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-					  <p>
-						{{ Auth::user()->name }} - {{ Auth::user()->usertype }}
-						<small>{{ Auth::user()->created_at}}</small>
-					  </p>
-					</li>
-					<!-- Menu Body -->
-					
-					
-					
-					
-					<!-- Menu Footer-->
-					<li class="user-footer" >
-					 
-					  <div class="pull-right">
-					  <form id="logout-form" action="{{ route('logout') }}" method="POST">
-							   @csrf
-						<button type="submit" class="btn btn-primary btn-flat">Sign out</button>
-					  </form>
-					  </div>
-					</li>
-				  </ul>
-		
-            </li>
-          </ul>
+          
         </div>
         <!-- /.navbar-custom-menu -->
       </div>
@@ -221,21 +138,22 @@
   <div class="content-wrapper" >
     <div class="container" data-barba="container">
       <!-- Content Header (Page header) -->
-      @if(session()->has('success'))
-		<input type="hidden" value="{{Session::get('success')}}" id="hiddensuccesswcs">
-	@endif
-	@if(session()->has('error'))
-		<input type="hidden" value="{{Session::get('error')}}" id="hiddenerrorwcs">
-	@endif
-	@if(session()->has('warning'))
-		<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
-	@endif
+    
 	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
 		<hr width="90%" style="z-index:0;margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
 		</div>
 	</div>
-	@yield('content')
+	
+	<section class="content">
+      <div class="row">
+  
+	
+	
+	  </div>
+      <!-- /.row -->
+    </section>
+	
     </div>
     <!-- /.container -->
   </div>
@@ -257,6 +175,11 @@
 </div>
 <!-- ./wrapper -->
 
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+	 
+</body>
 <script >
 function backbutton(){
 		
@@ -980,11 +903,6 @@ $('#menus').change(function(){
 
 </script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
-	 
-</body>
-
-
 </html>
+ 
+ 

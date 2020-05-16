@@ -25,8 +25,6 @@ class OrderController extends Controller
 		$orderall=DB::table('cos_order')
 			->where('Employee_ID','=',$employee_id->Employee_ID)
 			->where('Cos_Order_Meal_Status','!=','orderingg')
-			//->orderBy('Cos_Order_Num','desc')
-			//->groupBy('Cos_Order_Num')
 			->get();
 		
 		return view('patron.orderviewall')->with(['orderall' => $orderall]);
@@ -187,12 +185,29 @@ class OrderController extends Controller
 		if (empty($idofd)) {
 		  $idofd = 1;
 		}
+		/*
+		$id_pending=DB::table('cos_order')
+		->where('Employee_ID','=', $employee_id->Employee_ID)
+		->where('Cos_Order_Meal_Status','=','orderingg')
+		->where('Cos_Order_Num','=',$orderid)
+		->select('Cos_Order_Num')
+		->first();
 		
-		DB::table('cos_order')
-			->insert([
-				['Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN'],
-		]);	
-	
+		if(!empty($id_pending)){
+			$id = $id_pending->Cos_Order_Num;
+			
+			DB::table('cos_order')
+			->where('Cos_Order_Num','=',$id)
+		//	->update(
+		//		['Cos_Order_Num' => $id,'Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN']
+		//	);	
+		}*/
+		//else{
+			DB::table('cos_order')
+				->insert([
+					['Cos_Order_Num' => $id,'Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN'],
+		    ]);	
+		//}
 		$mealmethod = $request->input('mealmethod');
 		//dd($total_cost);
 		if($mealmethod == "delivery"){
@@ -514,7 +529,7 @@ class OrderController extends Controller
 				}
 				
 				DB::table('ordered_special')
-				->insert(['Special_ID'=>$special_id,'Cos_Order_Num'=>$orderid,'Quantity'=>$request->input('specialfoodsquantity')]);	
+				->updateOrInsert(['Special_ID'=>$special_id,'Cos_Order_Num'=>$orderid,'Quantity'=>$request->input('specialfoodsquantity')]);	
 
 			}	
 			$food_id = array_merge($food_id, $special_food_id);
@@ -1321,12 +1336,13 @@ class OrderController extends Controller
 			->where('Employee_ID','=',$employee_id->Employee_ID)
 			->first();
 			
-			$card_balance = DB::table('card_bank')
-			->select('Card_Balance')
-			->where('Card_Number','=',$card->Card_Number)
-			->first();
-			
-			$card_balance=$card_balance->Card_Balance;
+			if(!empty($card)){
+				$card_balance = DB::table('card_bank')
+				->select('Card_Balance')
+				->where('Card_Number','=',$card->Card_Number)
+				->first();
+				
+				$card_balance=$card_balance->Card_Balance;
 			
 			$cos_order=DB::table('cos_order')
 			->where('Employee_ID','=',$employee_id->Employee_ID)
@@ -1345,7 +1361,7 @@ class OrderController extends Controller
 			->where('Employee_ID','=',$employee_id->Employee_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
-			
+			}
 			
 		}
 		

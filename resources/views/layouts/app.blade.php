@@ -98,7 +98,6 @@
   <link href='https://fonts.googleapis.com/css?family=Actor' rel='stylesheet'>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 
-
 </head>
 
 <body class="hold-transition skin-blue layout-top-nav "  >
@@ -125,7 +124,7 @@
             <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
             <li><a href="{{URL::to('order')}}" >Order History</a></li>
 			<li class="divider"></li>			
-			<li class="dropdown">
+			<!--li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions</a>
 				<div class="dropdown-menu">
 					
@@ -134,7 +133,17 @@
 					<a href="{{URL::to('mealsub_add')}}" class="dropdown-item">New Subscription</a>					
 					
 				</div>
-			</li>
+			</li-->
+			
+			<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{URL::to('mealsub')}}">View Subscriptions</a></li>
+                
+                <li><a href="{{URL::to('mealsub_add')}}">New Subscription</a></li>
+              </ul>
+            </li>
+			
 			<li class="divider"></li>
 			<li><a href="{{URL::to('register')}}" >Payment Option Registration</a></li>
 		  @elseif(Auth::user()->usertype == "Student")
@@ -159,7 +168,7 @@
         <!-- /.navbar-collapse -->
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu" >
-          <ul class="nav navbar-nav" style="z-index:999;">
+          <ul class="nav navbar-nav" style="">
            
             <!-- User Account Menu -->
             <li class="dropdown user user-menu full" >
@@ -188,9 +197,7 @@
 					
 					<!-- Menu Footer-->
 					<li class="user-footer" >
-					  <div class="pull-left">
-						<a href="#" class="btn btn-default btn-flat">Profile</a>
-					  </div>
+					 
 					  <div class="pull-right">
 					  <form id="logout-form" action="{{ route('logout') }}" method="POST">
 							   @csrf
@@ -223,9 +230,9 @@
 	@if(session()->has('warning'))
 		<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
 	@endif
-	<div width="100%" class="backgroundimg" style="position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
-		<div width="100%" class="whiteoverlay" style="padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
-		<hr width="90%" style="margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
+	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
+		<hr width="90%" style="z-index:0;margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
 		</div>
 	</div>
 	@yield('content')
@@ -265,14 +272,15 @@ function backbutton(){
 		}
 	}
 
-document.addEventListener('DOMContentLoaded', () => {
+
 	
 	
 	
 	function initjs(){
 	
 	ScrollReveal().reveal('.box'); 
-	ScrollReveal({ reset: true });
+	//ScrollReveal().reveal('#card'); 
+	//ScrollReveal({ reset: true });
 
 	var url = window.location.href;
 	var n = url.search("home");
@@ -823,6 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 			
 			$('#cardmethod').on('ifChanged', function(){
+				ScrollReveal().destroy();
 				
 				if(document.getElementById('cardmethod').checked) {
 				    document.getElementById('card').style.opacity = 100;
@@ -831,7 +840,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					document.querySelector('#cardnum').required = true;
 					document.querySelector('#cvv').required = true;
 					document.querySelector('#expdate').required = true;
-					
+					//document.getElementById('card').style.display = 'block';
 				    $("#card").animate({
 						height: 'show'
 					});
@@ -842,10 +851,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 				
 				else if(!document.getElementById('cardmethod').checked){
-				    $("#card").animate({
+				    
+					$("#card").animate({
 					    height: 'hide'
 					} );
-					
+					//document.getElementById('card').style.display = 'none';
 				    document.querySelector("#typecard").required = false;
 				    document.querySelector('#cardname').required = false;
 				    document.querySelector('#cardnum').required = false;
@@ -958,7 +968,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	//initjs();
 	}
 	initjs();
-});
+
 
 $('#menus').change(function(){
 	var str = $(this).val();

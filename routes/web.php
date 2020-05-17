@@ -35,6 +35,7 @@ Route::resource('deliverer', 'DelivererController');
 Route::resource('register','RegisterController');
 Route::resource('mealsub','MealSubsController');
 Route::resource('cafe_subs','Cafe_MealSubsController');
+Route::resource('subs_deliv', 'SubscriptionDelivererController');
 
 Route::match(['get', 'post'],'student_order_create/{menuid}', [
     'uses' => 'OrderStudentController@create'
@@ -132,7 +133,13 @@ Route::match(['get', 'post'],'mealsub_edit_details/{id}', [
 //
 //Cafe Staff Meal Subs
 //
+Route::match(['get', 'post'],'subs_delivery_request/{id}', [
+    'uses' => 'Cafe_MealSubsController@delivery_request'
+]);
 
+//
+//Deliverer Meal Subs
+//
 
 Route::resource('restaurant','RestaurantController');
 

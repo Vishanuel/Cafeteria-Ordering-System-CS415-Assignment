@@ -22,6 +22,7 @@ class MealSubsController extends Controller
 		->first();
 		
 		$allmealsubs=DB::table('meal_subscription')
+			->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','meal_subscription.Menu_Food_Item_ID')
 			->where('Employee_ID','=',$employee_id->Employee_ID)
 			//->where('Meal_Subscription_Status','!=','Inactive')
 			//->orderBy('Cos_Order_Num','desc')
@@ -123,15 +124,30 @@ class MealSubsController extends Controller
           }
         
         $food_id = substr($request->input('food_item1'), 0, strspn($request->input('food_item1'), "0123456789"));
-
+        
         DB::table('meal_subscription')
 			->insert([
                 ['Employee_ID' => $employee_id->Employee_ID, 'Menu_Food_Item_ID' => $food_id,
                  'Food_Item_Qty' => $request->input('quantity1'), 'Total_Price' => $request->input('tcost'),
                  'Meal_Type' => $request->input('mealtype1'), 'Day' => $request->input('day1'),
-                 'Meal_Time' => $request->input('mealtime1'), 'Meal_Status' => $request->input('mealstat')],
+				 'Meal_Time' => $request->input('mealtime1'),  'Meal_Subscription_Start_Date' => $request->input('start_subs_date'),
+				 'Meal_Subscription_End_Date' => $request->input('end_subs_date'), 'Meal_Subscription_Frequency' => $request->input('mealfreq1'),
+				 'Meal_Status' => $request->input('mealstat'), 'Meal_Subscription_Status' => $request->input('mealsubstat'),
+				 'Meal_Subscription_Method' => $request->input('subsmealmeth1')
+				],
         ]);	
-        
+		
+		DB::statement("ALTER TABLE `subscription_delivery_instruction` AUTO_INCREMENT = 1;");
+
+		$mealsubsmethod = $request->input('subsmealmeth1');
+		//dd($total_cost);
+		if($mealsubsmethod == "Delivery"){
+			DB::table('subscription_delivery_instruction')
+				->insert([
+					['MealSubs_ID' => $id,'Location_ID' => $request->input('location_id') ],
+			]);	
+		}
+
         return redirect("/mealsub");
     }
 
@@ -198,8 +214,14 @@ class MealSubsController extends Controller
 		->where('MealSubs_ID','=',$meal_subs->MealSubs_ID)
 		//->orderBy('Ordered_Food_Item_ID', 'DESC')
 		->get();
+
+		//$delivery_info = DB::table('subscription_delivery_instruction')
+		//->where('MealSubs_ID','=',$meal_subs)
+		//->get();
 		
-		return view('patron.patronmealsub_editdetails')->with([ "meal_subs" => $meal_subs,'restaurants'=>$restaurants, 'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid]);;
+		return view('patron.patronmealsub_editdetails')->with([ "meal_subs" => $meal_subs,'restaurants'=>$restaurants, 'foods' => $foods,
+																'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff,
+																'orderid' => $orderid]);
 		
     }
 	
@@ -218,7 +240,10 @@ class MealSubsController extends Controller
                 'Employee_ID' => $employee_id->Employee_ID, 'Menu_Food_Item_ID' => $food_id,
                  'Food_Item_Qty' => $request->input('quantity1'), 'Total_Price' => $request->input('tcost'),
                  'Meal_Type' => $request->input('mealtype1'), 'Day' => $request->input('day1'),
-                 'Meal_Time' => $request->input('mealtime1'), 'Meal_Status' => $request->input('mealstat'),
+                 'Meal_Time' => $request->input('mealtime1'), 'Meal_Subscription_Start_Date' => $request->input('start_subs_date'),
+				 'Meal_Subscription_End_Date' => $request->input('end_subs_date'), 'Meal_Subscription_Frequency' => $request->input('mealfreq1'),
+				 'Meal_Status' => $request->input('mealstat'), 'Meal_Subscription_Status' => $request->input('mealsubstat'),
+				 'Meal_Subscription_Method' => $request->input('mealmethod1')
         ]);	
         
 		

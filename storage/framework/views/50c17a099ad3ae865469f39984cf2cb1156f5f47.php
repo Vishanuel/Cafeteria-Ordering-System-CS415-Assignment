@@ -62,6 +62,7 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 					<ul class="nav navbar-nav">
+						<li class="active"><a href="<?php echo e(URL::to('menu_manager')); ?>">Home<span class="sr-only">(current)</span></a></li>
 						<li class="active"><a href="<?php echo e(URL::to('menu')); ?>">Menus<span class="sr-only">(current)</span></a></li>
 						
 						<li class="active"><a href="<?php echo e(URL::to('specialmenu')); ?>">Special Menus<span class="sr-only">(current)</span></a></li>

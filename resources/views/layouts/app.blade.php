@@ -152,18 +152,7 @@
 		    <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
             <li><a href="{{URL::to('student_order')}}" >View Previous Orders</a></li>
 		  @endif
-            <!-- <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">View Previous Orders</a></li>
-                <!--<li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>-->
+           
           </ul>
         </div>
 		
@@ -173,7 +162,7 @@
           <ul class="nav navbar-nav" style="">
            
             <!-- User Account Menu -->
-            <li class="dropdown user user-menu full" >
+            <li class="dropdown user user-menu" >
               <!-- Menu Toggle Button -->
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
@@ -1066,8 +1055,6 @@ function backbutton(){
 						}				
 					});
 					
-				//	var ids = $('#food_item'+k).attr('id');
-					//	var changes = ids.replace( /^\D+/g, '');
 						var str = $('#food_item'+k).val();
 						
 						var food = str.split(/(\s+)/);

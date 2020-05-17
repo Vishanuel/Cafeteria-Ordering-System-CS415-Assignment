@@ -940,49 +940,47 @@ function backbutton(){
 						select.selectedIndex = index;
 							
 					}
-						
-					var ids = $('#food_item'+k).attr('id');
-					var changes = ids.replace( /^\D+/g, '');
-					var str = $('#food_item'+changes).val();
-					
-					var food = str.split(/(\s+)/);
-				 
-					$('#price'+changes).val($('#quantity'+changes).val()*food[4]);
-					$('#quantity'+changes).attr({'max':food[2]});
-					$('#qavailable'+changes).val(food[2]);
-				//	alert(food[4]);
-					$('#quantity'+changes).on("keyup change click paste ", function(){
-						
-						
-						var id = $(this).attr('id');
-						var change = id.replace( /^\D+/g, '');
-						var str = $('#food_item'+change).val();
-						var food = str.split(/(\s+)/);
-						//alert(change);
-						$('#price'+change).val($('#quantity'+change).val()*food[4]);
-						tcost();
-					});
+				});
 				
-					$('#food_item'+changes).change(function(){
-						//alert("helo");
-						var id = $(this).attr('id');
-						//alert(id);
-						var change = id.replace( /^\D+/g, '');
-						//alert( $(this).find("option:selected").attr('value') );
-						var str = $('#food_item'+change).val();
-						var food = str.split(/(\s+)/);
-						//alert(food[2]);
-						$('#price'+change).val($('#quantity'+change).val()*food[4]);
-					///	$('#Quantity').val();
-						$('#qavailable'+change).val(food[2]);		
-						$('#quantity'+change).attr({'max':food[2]});
-						$("#quantity"+change).on("keyup change click paste ", function(){
-							//alert(food[4]);
-						$('#price'+change).val($('#quantity'+change).val()*food[4]);
-								tcost();
-						})
+				var str = $('#food_item'+k).val();
+						
+				var food = str.split(/(\s+)/);
+					 
+				$('#price'+k).val($('#quantity'+k).val()*food[4]);
+				$('#quantity'+k).attr({'max':food[2]});
+				$('#qavailable'+k).val(food[2]);
+			//	alert(food[4]);
+				$('#quantity'+k).on("keyup change click paste ", function(){
+					
+					
+					var id = $(this).attr('id');
+					var change = id.replace( /^\D+/g, '');
+					var str = $('#food_item'+change).val();
+					var food = str.split(/(\s+)/);
+					//alert(change);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+					tcost();
+				});
+					
+				$('#food_item'+k).change(function(){
+					//alert("helo");
+					var id = $(this).attr('id');
+					//alert(id);
+					var change = id.replace( /^\D+/g, '');
+					//alert( $(this).find("option:selected").attr('value') );
+					var str = $('#food_item'+change).val();
+					var food = str.split(/(\s+)/);
+					//alert(food[2]);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+				///	$('#Quantity').val();
+					$('#qavailable'+change).val(food[2]);		
+					$('#quantity'+change).attr({'max':food[2]});
+					$("#quantity"+change).on("keyup change click paste ", function(){
+						//alert(food[4]);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]);
 						tcost();
-					});
+					})
+					tcost();
 				});
 			}
 			
@@ -1068,8 +1066,6 @@ function backbutton(){
 						}				
 					});
 					
-					var ids = $('#food_item'+k).attr('id');
-					//	var changes = ids.replace( /^\D+/g, '');
 						var str = $('#food_item'+k).val();
 						
 						var food = str.split(/(\s+)/);

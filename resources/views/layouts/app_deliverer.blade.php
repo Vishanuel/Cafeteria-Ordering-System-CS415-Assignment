@@ -106,6 +106,7 @@
           <ul class="nav navbar-nav">
             <li ><a href="{{URL::to('deliverer')}}">View Delivery Requests</a></li>
 			<li ><a href="{{URL::to('deliverer/create')}}">View Meal Delivered</a></li>
+			<li ><a href="{{URL::to('subs_deliv')}}">View Subscription Delivery Requests</a></li>
           <!--  <li><a href="{{URL::to('order')}}">View Orders</a></li> -->
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>

@@ -14,7 +14,33 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $usr = Auth::user()->id;    //Get the user identification
+
+        $cat = DB::table('category')
+        ->get()
+        ->toArray();
+
+        $current_date = date("Y-m-d"); 
+      
+        $date = DB::table('Menu_Manager')
+        ->where('Menu_Manager.User_ID',$usr)
+        ->leftJoin('menu', 'Menu_Manager.Restaurant_ID', '=', 'menu.Restaurant_ID')
+        ->where('menu.Menu_Date', '>=', $current_date)
+        ->get()
+        ->toArray();
+
+
+        for($i=0;$i<count($cat);$i++)
+        {   
+            $menu[$i] = DB::table('Menu_Manager')
+            ->where('Menu_Manager.User_ID',$usr)
+            ->leftJoin('menu', 'Menu_Manager.Restaurant_ID', '=', 'menu.Restaurant_ID')
+            ->where('menu.Category_ID','=',$cat[$i]->Category_ID)
+            ->get()
+            ->toArray();
+        }  
+
+        
     }
 
     /**

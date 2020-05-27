@@ -201,7 +201,7 @@ class OrderController extends Controller
 		//	->update(
 		//		['Cos_Order_Num' => $id,'Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN']
 		//	);	
-		*/}
+		}*/
 		//else{
 			DB::table('cos_order')
 				->insert([

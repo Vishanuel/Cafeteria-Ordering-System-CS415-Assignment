@@ -32,16 +32,19 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>MealSubs_ID</th>
-                  <th>Employee_ID</th>
-                  <th>Menu_Food_Item</th>
-                  <th>Food_Item_Qty</th>
+                  <th>Subscription ID</th>
+                  <th>Food Name</th>
+                  <th>Quantity</th>
                   <th>Total Price</th>
-                  <th>Meal_Type</th>
+                  <th>Meal Type</th>
                   <th>Day</th>
                   <th>Meal Time</th>
                   <th>Meal Status</th>
-                  <th>Meal_Subscription_Status</th>
+                  <th>Subscription Status</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Frequency</th>
+                  <th>Meal Method</th>                  
                   <th>Actions</th>
                 </tr>
                 </thead>
@@ -49,8 +52,7 @@
                <?php $__currentLoopData = $allmealsubs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $allmealsub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
                   <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->MealSubs_ID); ?></td>
-                  <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Employee_ID); ?></td>
-                  <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Menu_Food_Item_ID); ?></td>
+                  <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Food_Name); ?></td>                  
                   <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Food_Item_Qty); ?></td>
                   <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Total_Price); ?></td>
                   <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Meal_Type); ?></td>
@@ -58,6 +60,10 @@
                   <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Meal_Time); ?></td>
                   <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Meal_Status); ?></td>
                   <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Meal_Subscription_Status); ?></td>
+                  <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Meal_Subscription_Start_Date); ?></td>
+                  <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Meal_Subscription_End_Date); ?></td>
+                  <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Meal_Subscription_Frequency); ?></td>
+                  <td style="text-overflow: ellipsis;"><?php echo e($allmealsub->Meal_Subscription_Method); ?></td>
 				  <td style="text-overflow: ellipsis;" class="text-center">
                         
               <a class="btn btn-info btn-flat" type="button" href="<?php echo e(URL::to('mealsub_edit_details/'.$allmealsub->MealSubs_ID)); ?>">

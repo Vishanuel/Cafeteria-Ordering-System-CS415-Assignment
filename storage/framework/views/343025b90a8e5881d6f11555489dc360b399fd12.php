@@ -239,8 +239,8 @@
       <div class="pull-right hidden-xs">
         <b>Version</b> 2.4.13
       </div>
-      <strong>Copyright &copy; 2014-2019 AdminLTE.</strong> All rights
-      reserved.
+     <!-- <strong>Copyright &copy; 2014-2019 AdminLTE.</strong> All rights
+      reserved. -->
     </div>
 	
     <!-- /.container -->
@@ -348,6 +348,14 @@ function backbutton(){
     //Date picker
     $('#datepicker').datepicker({
       autoclose: true
+    })
+	$('#start_subs_date').datepicker({
+      autoclose: true,
+	  format: 'yyyy-mm-dd'
+    })
+	$('#end_subs_date').datepicker({
+      autoclose: true,
+	  format: 'yyyy-mm-dd'
     })
     //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({

@@ -87,7 +87,7 @@
               
 
               <!--div class="form-group col-md-12"-->
-                <div id=dayd1" class="form-group col-md-6">
+                <div id="dayd1" class="form-group col-md-6">
                     <label>Meal Type</label>
                     <select class="mealsub form-control select2" id="mealtype1" name="mealtype1" style="width: 100%;" Required placeholder="Select restaurant">
                         <option disabled>Select Meal Type</option>                             
@@ -99,7 +99,7 @@
                 </div>
 				</div>
                 <div class="form-group col-md-12">
-                    <div id=timed1" class="form-group col-md-6">
+                    <div id="timed1" class="form-group col-md-6">
                         <label>Meal Time</label>
                         <select class="mealsub form-control select2" id="mealtime1" name="mealtime1" style="width: 100%;" Required placeholder="Select restaurant">
                             <option disabled>Select Meal Time</option>                             
@@ -112,6 +112,60 @@
                                                                                                     
                         </select>
                     </div>
+
+                    <div id="freqd1" class="form-group col-md-6">
+                      <label>Meal Frequency</label>
+                      <select class="mealsub form-control select2" id="mealfreq1" name="mealfreq1" style="width: 100%;" Required placeholder="Select Frequency">
+                          <option disabled>Frequency of Meals</option>                             
+                          <option  Required value="Daily">Daily</option>
+                          <option  Required value="Weekly">Weekly</option>
+                          <option  Required value="Monthly">Monthly</option>                                                                                                                              
+                      </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <div id="startd1" class="form-group col-md-6">
+                    <div class="input-group-addon">
+                      <label>Subscription Start Date</label>
+                      <i class="fa fa-calendar"></i>
+                    </div>                    
+                    <input type="text" class="form-control" name="start_subs_date" id="start_subs_date" value="<?php echo e(date("Y-m-d")); ?>" required>
+                  </div>
+                  <div id="endd1" class="form-group col-md-6">
+                    <div class="input-group-addon">
+                      <label>Subscription End Date</label>
+                      <i class="fa fa-calendar"></i>
+                    </div>                    
+                    <input type="text" class="form-control" name="end_subs_date" id="end_subs_date" value="<?php echo e(date("Y-m-d")); ?>" required>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <div id="subsmethd1" class="form-group col-md-6">
+                    <label>Meal Method</label>
+                      <select class="mealsub form-control select2" id="subsmealmeth1" name="subsmealmeth1" style="width: 100%;" Required placeholder="Select Frequency">
+                          <option disabled>Method of Meal Collection</option>                             
+                          <option  Required value="Pickup">Pickup</option>
+                          <option  Required value="Delivery">Delivery</option>                                                                                                                                                       
+                      </select>
+                  </div>
+
+                  <div class="form-group col-md-6">					         
+                    <label>Delivery Location</label>
+                    <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
+                      <option id="location_id1" name="location_id1"  disabled>Select location</option> 
+                      <option id="location_id2" name="location_id2"  value="none">None</option> 
+                      <?php $__currentLoopData = $locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option id="location_id" name="location_id" Required value="<?php echo e($location->Location_ID); ?>">
+                          <?php echo e($location->Location_Name); ?>
+
+                        </option>
+                        
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                    
+                  </div>
                 </div>
           <!--/div-->
 			  
@@ -119,7 +173,7 @@
 			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>
 			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="<?php echo e($deduction->Patron_Deduction_Status); ?>"> 
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="<?php echo e($orderid); ?>">
-            
+            <input id="mealsubstat" name="mealsubstat" class="form-group col-md-12" style="display: none" value="Active"> 
             <input id="mealstat" name="mealstat" class="form-group col-md-12" style="display: none" value="Pending"> 
 			
 

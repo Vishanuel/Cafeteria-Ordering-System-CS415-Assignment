@@ -127,9 +127,9 @@
 					
 					  <label>Delivery Location</label>
 					  <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id1" name="location_id1"  disabled>Select location</option> 
+							<option id="location_id" name="location_id"  disabled>Select location</option> 
 							@foreach ($locations as $location )
-								<option id="location_id" name="location_id" Required value="{{ $location->Location_ID}}">
+								<option name="location_id" Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
 								</option>
 								

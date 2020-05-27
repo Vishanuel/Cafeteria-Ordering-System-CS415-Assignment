@@ -1292,6 +1292,7 @@ class OrderController extends Controller
 			->where('Employee_ID','=',$employee_id->Employee_ID)
 			->first();
 			
+			if(!empty($pay)){
 			$salary = $pay->Salary;
 			
 			$cos_order=DB::table('cos_order')
@@ -1311,6 +1312,7 @@ class OrderController extends Controller
 			->where('Employee_ID','=',$employee_id->Employee_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
+			}
 		}
 		
 		else if($cos_order->Cos_Order_Payment_Method != "card"){

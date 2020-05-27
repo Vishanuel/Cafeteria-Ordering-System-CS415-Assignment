@@ -25,6 +25,11 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
+			  <div class="callout callout-warning">
+                <h4>Attention!</h4>
+
+                <p>Some meals will not be orderable when the "Get meal delivered" option is selected.<br> The selected food option may also change when a non-orderable food is already selected.</p>
+              </div>
               <form id="orderform" role="form" method="POST" action="{{action('OrderStudentController@store')}}" enctype="multipart/form-data">
 			   @csrf
                 <!-- text input -->
@@ -32,9 +37,9 @@
 				<div id="food_itemd1" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select class="food form-control select2" id="food_item1" name="food_item1" style="width: 100%;" Required placeholder="Select food">
-						<option disabled>Select food</option> 
+						
 						@foreach ($foods as $food )
-			 			<option  Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}">
+			 			<option  Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}">
 								{{ $food->Food_Name." - ".$food->Food_Desc }} 
 							</option>
 							
@@ -98,13 +103,13 @@
 			   
 				<!-- <div id="food" ></div>-->
 				<div class="form-group col-md-10">
-				<!--<label >Pick meal collection method</label>-->
-					<!-- div class="radio">
+				
+					<div class="radio">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  disabled >
+						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery" @if($deduction->Student_CardRegister_Status == 0) disabled @endif>
 						  Get meal delivered 
 						</label>
-					  </div-->
+					  </div>
 				
 				
 					  <div class="radio">
@@ -115,22 +120,20 @@
 					 </div>
 				 
 				 </div>
-				<!--div class="has-error col-md-12" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div-->
-				<!--div id="delivery" name="delivery">
+				<div class="has-error col-md-12" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div>
+				<div id="delivery" name="delivery">
 				
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Location</label>
 					  <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id1" name="location_id1"  disabled>Select location</option> 
+							<option disabled>Select location</option> 
 							@foreach ($locations as $location )
-								<option id="location_id" name="location_id" Required value="{{ $location->Location_ID}}">
+								<option Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
-								</option>
-								
+								</option>								
 							@endforeach
 						</select>
-						
 					</div>
 					
 					<div class="form-group col-md-6">
@@ -142,7 +145,7 @@
 					</select>
 						
 					</div>
-                </div-->
+                </div>
 				
                 <div class="form-group col-md-12">
                 <label>Meal Date</label>

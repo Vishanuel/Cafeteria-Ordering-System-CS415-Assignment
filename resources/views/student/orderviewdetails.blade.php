@@ -136,7 +136,55 @@
           <!-- /.box -->
         </div>
 		
-  
+		@if($mealmethod == "delivery")
+
+		<div class="col-md-6">
+		  <div class="box loading box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Delivery Info</h3>
+            </div>
+            <!-- /.box-header -->
+            <div id="box" class="box-body">
+			
+				
+				<div id="delivery" name="delivery">
+				
+					<div class="form-group col-md-6">
+					
+					  <label>Delivery Location</label>
+					  <select disabled class="form-control " id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
+							<option id="location_id" name="location_id"  disabled>Select location</option> 
+							@foreach ($locations as $location )
+								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
+									{{ $location->Location_Name }}
+								</option>
+								
+							@endforeach
+						</select>
+						
+					</div>
+					
+					<div class="form-group col-md-6">
+					
+					  <label>Delivery Time</label>
+					  <select disabled class="form-control " id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
+							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
+							@if($mealmethod == "delivery")
+								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
+							@endif 
+						</select>
+						
+					</div>
+                </div>
+				
+				 
+			</div>
+			
+			</div>
+		  </div>
+		
+		@endif
+		
 		<div class="col-md-6">
 		  <div class="box loading box-success">
             <div class="box-header with-border">
@@ -154,6 +202,15 @@
 						</label>
 					 </div>
 				 </div>  
+				 
+				<div class="form-group">
+					<div class="radio col-md-6 ">
+						<label>
+						  <input type="radio" disabled class="minimal"  name="mealmethod3" id="optionsRadios3" value="card" @if($deduction->Student_CardRegister_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="card") checked @else disabled @endif>
+						  Card payment
+						</label>
+				    </div>
+				</div>
 				
 			</div>
 			
@@ -169,7 +226,7 @@
           
 			<div class="box-header">
 			<div class="btn-toolbar">
-			 	<a href="{{url('order')}}" class="btn btn-default btn-flat">Back</a>
+			 	<a href="{{url('student_order')}}" class="btn btn-default btn-flat">Back</a>
 
 				@if($approved == "Approved")
 			 		<a href="{{URL::to('student_order_remove/'. $cos_order->Cos_Order_Num)}}" class="btn btn-danger btn-flat"><li class="glyphicon glyphicon-remove"></li> Cancel</a>

@@ -92,6 +92,44 @@
           </div>
           <!-- /.box -->
         </div>
+		<div class="col-md-6">
+			<div class="box box-primary loading">
+				<div class="box-header with-border">
+				  <h3 class="box-title">Payment Method Registration</h3>
+				</div>
+				<!-- /.box-header -->
+				<div id="box" class="box-body">
+					
+					<!-- text input -->
+				
+					<div class="col-md-12 ">
+						<label class="col-md-12">
+							Credit/Debit card
+						</label>
+							
+						<div class="form-group col-md-6">
+							<div class="radio">	
+								<label for="cardmethod">
+								  <input type="radio" class="minimal" name="cardmethod" id="cardmethod" value="1"  @if($reg_student->Student_CardRegister_Status == 1) checked @else disabled @endif > Registered		
+								</label>
+							</div>					
+						</div>
+							
+							
+						<div class="form-group col-md-6 ">
+							<div class="radio">
+								<label for="cardmethod2">
+								  <input type="radio" class="minimal"  name="cardmethod" id="cardmethod2" value="0" required @if($reg_student->Student_CardRegister_Status == 0) checked @else disabled @endif > Not-registered						
+								</label>
+							</div>					
+						</div>
+					</div>
+				</div>			 
+			</div>
+		  <!-- /.box -->
+		  
+		  
+		</div>
         <!--/.col (right) -->
       </div>
       <!-- /.row -->

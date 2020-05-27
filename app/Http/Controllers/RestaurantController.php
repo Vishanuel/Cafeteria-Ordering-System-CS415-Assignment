@@ -18,23 +18,42 @@ class RestaurantController extends Controller
     public function index()
     {
         //
-       $restaurants = Restaurant::all();
+        $restaurants = Restaurant::all();
 	   
-	   $employee_id = DB::table('patron')
+	    $employee_id = DB::table('patron')
 		->select('Employee_ID')
 		->where('User_ID','=',Auth::user()->id)
 		->first();
 	   
-	   $pending_order_id = DB::table('cos_order')
-		->where('Employee_ID','=',$employee_id->Employee_ID)
-		->where('Cos_Order_Meal_Status','=','orderingg')
-		->first();
-		
+	    if(!empty($employee_id)){
+		   $pending_order_id = DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Meal_Status','=','orderingg')
+			->first();
+	    }
+	   
+	    else{
+		   $student_id = DB::table('student')
+			->select('Student_ID')
+			->where('User_ID','=',Auth::user()->id)
+			->first();
+		   
+		   $pending_order_id = DB::table('cos_order')
+			->where('Student_ID','=',$student_id->Student_ID)
+			->where('Cos_Order_Meal_Status','=','orderingg')
+			->first();
+	    }
+	   
 		if(!empty($pending_order_id)){
 			$pending_order_id = $pending_order_id->Cos_Order_Num;
 		}
-				
-        return view('restaurants.indexx')->with(['restaurants' => $restaurants,'pending_order_id' => $pending_order_id]);
+		
+		$student_id = DB::table('student')
+		->select('Student_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first(); 
+		
+        return view('restaurants.indexx')->with(['student_id' => $student_id,'restaurants' => $restaurants,'pending_order_id' => $pending_order_id]);
     }
 
     /**

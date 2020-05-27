@@ -24,7 +24,11 @@
 			<div style="z-index:9;" class="callout callout-warning">
 				<h4>You have an pending order which was disrupted!</h4>
 				<p>Placing new order will delete your pending order.</p>
+				@if(empty($student_id))
 				<a href="{{URL::to('order_edit/'.$pending_order_id)}}">Go to pending order.</a>
+				@else
+				<a href="{{URL::to('student_order_edit/'.$pending_order_id)}}">Go to pending order.</a>
+				@endif
 			</div>
 		</div>
 		@endif

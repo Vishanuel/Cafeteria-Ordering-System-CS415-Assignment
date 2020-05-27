@@ -33,12 +33,19 @@
 				<div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif checked>
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @else checked @endif >
 						  Cash Payment at pickup
 						</label>
 				    </div>
 				</div>
-
+				<div class="form-group">
+					<div class="radio col-md-6 ">
+						<label>
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios3" value="card" @if($deductions->Student_CardRegister_Status == 0) disabled @elseif($mealmethod=="delivery") checked @endif>
+						  Card payment
+						</label>
+				    </div>
+				</div>
 				 
 				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
 				<input id="tcost" name="tcost" class="form-group col-md-12" style="display: none" value="{{$total_cost}}"> 

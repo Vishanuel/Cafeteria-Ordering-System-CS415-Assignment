@@ -98,7 +98,7 @@
 		<div class="col-md-6">
 				<div class="box box-primary loading">
 					<div class="box-header with-border">
-					  <h3 class="box-title">Payment Method Registration Form</h3>
+					  <h3 class="box-title">Payment Method Registration</h3>
 					</div>
 					<!-- /.box-header -->
 					<div id="box" class="box-body">

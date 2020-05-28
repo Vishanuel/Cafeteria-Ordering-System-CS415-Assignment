@@ -185,29 +185,12 @@ class OrderController extends Controller
 		if (empty($idofd)) {
 		  $idofd = 1;
 		}
-		/*
-		$id_pending=DB::table('cos_order')
-		->where('Employee_ID','=', $employee_id->Employee_ID)
-		->where('Cos_Order_Meal_Status','=','orderingg')
-		->where('Cos_Order_Num','=',$orderid)
-		->select('Cos_Order_Num')
-		->first();
 		
-		if(!empty($id_pending)){
-			$id = $id_pending->Cos_Order_Num;
-			
-			DB::table('cos_order')
-			->where('Cos_Order_Num','=',$id)
-		//	->update(
-		//		['Cos_Order_Num' => $id,'Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN']
-		//	);	
-		}*/
-		//else{
 			DB::table('cos_order')
 				->insert([
 					['Cos_Order_Num' => $id,'Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN'],
 		    ]);	
-		//}
+		
 		$mealmethod = $request->input('mealmethod');
 		//dd($total_cost);
 		if($mealmethod == "delivery"){
@@ -1309,6 +1292,7 @@ class OrderController extends Controller
 			->where('Employee_ID','=',$employee_id->Employee_ID)
 			->first();
 			
+			if(!empty($pay)){
 			$salary = $pay->Salary;
 			
 			$cos_order=DB::table('cos_order')
@@ -1328,6 +1312,7 @@ class OrderController extends Controller
 			->where('Employee_ID','=',$employee_id->Employee_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
+			}
 		}
 		
 		else if($cos_order->Cos_Order_Payment_Method != "card"){

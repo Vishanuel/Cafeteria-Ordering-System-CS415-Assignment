@@ -106,7 +106,7 @@
 				<!--<label >Pick meal collection method</label>-->
 					<div class="radio">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  @if($deduction->Patron_Deduction_Status == 0 && $deduction->Patron_CardRegister_Status == 0) disabled @endif >
 						  Get meal delivered 
 						</label>
 					  </div>
@@ -127,9 +127,9 @@
 					
 					  <label>Delivery Location</label>
 					  <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id1" name="location_id1"  disabled>Select location</option> 
+							<option id="location_id" name="location_id"  disabled>Select location</option> 
 							@foreach ($locations as $location )
-								<option id="location_id" name="location_id" Required value="{{ $location->Location_ID}}">
+								<option name="location_id" Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
 								</option>
 								

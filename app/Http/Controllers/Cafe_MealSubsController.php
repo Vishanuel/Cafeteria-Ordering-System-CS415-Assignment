@@ -28,7 +28,7 @@ class Cafe_MealSubsController extends Controller
 		->select('*')
         //->where('menu.Restaurant_ID','=',$restaurant_id->Restaurant_ID)
         //->where('Day','==',$dayofweek)
-		->where('Meal_Status','!=','Prepared')
+		//->where('Meal_Status','!=','Prepared')
 		->where('Meal_Subscription_Status','!=','Inactive')
 		->get();
 		//->unique('MealSubs_ID');
@@ -83,8 +83,53 @@ class Cafe_MealSubsController extends Controller
 		return redirect('/cafe_subs')->with('success', 'Meal status updated');;
 
 
-    }
+	}
+	
+	public function delivery_request($id)
+	{
+		//
+		$restaurant_id = DB::table('cafeteria_staff')
+		->select('Restaurant_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first();
+		
+		$meal_deliverer_id = DB::table('meal_deliverer')
+		->select('Meal_Deliverer_ID')
+		->where('Restaurant_ID','=',$restaurant_id->Restaurant_ID)
+		->first();
+		
+		
+		
+		$SD_Instruction_ID = DB::table('subscription_delivery_instruction')->where('MealSubs_ID','=',$id)->first();
+		
 
+		
+
+		DB::table('meal_subscription')->where('MealSubs_ID','=',$id)->update(['Meal_Status'=>'Pending Delivery']);
+		DB::statement("ALTER TABLE `subscription_delivery_request` AUTO_INCREMENT = 1;");
+		DB::table('subscription_delivery_request')->insert(['Subscription_Delivery_ID' => $SD_Instruction_ID->Subscription_Delivery_ID]);
+		return redirect('/cafeteria')->with('success', 'Delivery request sent');
+	}
+	
+	public function deliv_request($id)
+	{
+		$restaurant_id = DB::table('cafeteria_staff')
+		->select('Restaurant_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first();
+		
+		$meal_deliverer_id = DB::table('meal_deliverer')
+		->select('Meal_Deliverer_ID')
+		->where('Restaurant_ID','=',$restaurant_id->Restaurant_ID)
+		->first();
+		
+		$D_Instruction_ID = DB::table('delivery_instruction')->where('Cos_Order_Num','=',$id)->first();
+		
+		
+		DB::table('cos_order')->where('Cos_Order_Num','=',$id)->update(['Cos_Order_Meal_Status'=>'Pending Delivery']);
+		DB::table('delivery_request')->insert(['D_Instruction_ID' => $D_Instruction_ID->D_Instruction_ID, 'Meal_Deliverer_ID'=>$meal_deliverer_id->Meal_Deliverer_ID]);
+		return redirect('/cafeteria')->with('success', 'Delivery request sent');
+	}
 }
 
 ?>

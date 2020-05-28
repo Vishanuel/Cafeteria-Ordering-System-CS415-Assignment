@@ -57,6 +57,8 @@
 					  <label>Price ($)</label>
 					  <input type="number" class="form-control" readonly id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
+
+					
 					
 					<?php $i= $i + 1; ?>
 					
@@ -92,7 +94,7 @@
 			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{URL::to('cafeteria_subs')}}" class="btn btn-default btn-flat">Back</a>
+                <a href="{{URL::to('cafe_subs')}}" class="btn btn-default btn-flat">Back</a>
 				
 				<button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> 
 				Save Subscription

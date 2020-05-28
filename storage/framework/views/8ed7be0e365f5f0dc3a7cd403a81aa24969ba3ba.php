@@ -22,7 +22,11 @@
 			<div style="z-index:9;" class="callout callout-warning">
 				<h4>You have an pending order which was disrupted!</h4>
 				<p>Placing new order will delete your pending order.</p>
+				<?php if(empty($student_id)): ?>
 				<a href="<?php echo e(URL::to('order_edit/'.$pending_order_id)); ?>">Go to pending order.</a>
+				<?php else: ?>
+				<a href="<?php echo e(URL::to('student_order_edit/'.$pending_order_id)); ?>">Go to pending order.</a>
+				<?php endif; ?>
 			</div>
 		</div>
 		<?php endif; ?>

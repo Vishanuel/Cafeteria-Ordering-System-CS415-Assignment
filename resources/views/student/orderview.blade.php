@@ -94,13 +94,22 @@
 			   </div>
 
 				<div class="form-group">
-					  <div class="radio col-md-6 ">
+					<div class="radio col-md-3">
+						<label id="del">
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" readonly value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Student_CardRegister_Status == 0) disabled @endif >
+						  Get meal delivered
+						</label>
+					</div>
+				
+				
+					<div class="radio col-md-6 ">
 						<label>
 						  <input type="radio" class="minimal" disabled name="mealmethod" readonly id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
 						  Pick-up meal from restaurant
 						</label>
-					 </div>
-				 </div>
+					</div>
+				</div>
+				
 				
                 <div class="form-group col-md-12">
                 <label>Meal Date</label>
@@ -145,7 +154,54 @@
 		
         <!--/.col (right) -->
     
-	
+		@if($mealmethod == "delivery")
+
+		<div class="col-md-6">
+		  <div class="box loading box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Delivery Info</h3>
+            </div>
+            <!-- /.box-header -->
+            <div id="box" class="box-body">
+			
+				
+				<div id="delivery" name="delivery">
+				
+					<div class="form-group col-md-6">
+					
+					  <label>Delivery Location</label>
+					  <select disabled class="form-control " id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
+							<option id="location_id" name="location_id"  disabled>Select location</option> 
+							@foreach ($locations as $location )
+								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
+									{{ $location->Location_Name }}
+								</option>
+								
+							@endforeach
+						</select>
+						
+					</div>
+					
+					<div class="form-group col-md-6">
+					
+					  <label>Delivery Time</label>
+					  <select disabled class="form-control " id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
+							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
+							@if($mealmethod == "delivery")
+								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
+							@endif 
+						</select>
+						
+					</div>
+                </div>
+				
+				 
+			</div>
+			
+			</div>
+		  </div>
+		
+		@endif
 	  
 		<div class="col-md-6">
 		  <div class="box loading box-success">
@@ -164,7 +220,14 @@
 						</label>
 					 </div>
 				</div>  
-				
+				<div class="form-group">
+					<div class="radio col-md-6 ">
+						<label>
+						  <input type="radio" class="minimal" disabled name="mealmethod3" id="optionsRadios3" value="card" @if($deduction->Student_CardRegister_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="card") checked @else disabled @endif>
+						  Card payment
+						</label>
+				    </div>
+				</div>
 				 
 			</div>
 			
@@ -173,7 +236,7 @@
 		  
 		  
 		  
-		<div class="col-md-6 pull-left">
+		<div class="col-md-6 col-xs-12 pull-left">
 			<div class="box loading box-info">
 				<div class="box-header with-border">
 					<div class="btn-toolbar">

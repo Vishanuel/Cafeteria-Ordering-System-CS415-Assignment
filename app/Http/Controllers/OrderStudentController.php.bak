@@ -91,12 +91,12 @@ class OrderStudentController extends Controller
 		->select('Order_Cutoff_Time')
 		->first();
 				
-		/*$deduction=DB::table('patron')
-		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
+		$deduction=DB::table('student')
+		->where('Student_Name','=', Auth::user()->name)
+		->select('Student_CardRegister_Status')
 		->first();
+		//dd($deduction);
 		
-		*/
 		$student_id = DB::table('student')
 		->select('Student_ID')
 		->where('User_ID','=',Auth::user()->id)
@@ -121,7 +121,7 @@ class OrderStudentController extends Controller
 			}
 		}	
 		
-		return view('student.order')->with(['specialfoods'=>$specialfoods, 'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
+		return view('student.order')->with(['deduction' => $deduction, 'specialfoods'=>$specialfoods, 'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
     
 	}
 
@@ -196,14 +196,14 @@ class OrderStudentController extends Controller
 		$mealmethod = $request->input('mealmethod');
 		//dd($total_cost);
 		
-		/*
+		
 		if($mealmethod == "delivery"){
 			DB::table('delivery_instruction')
 				->insert([
 					['Cos_Order_Num' => $id,'D_Location' => $request->input('location_id'), 'D_Time_Window' => $request->input('location_time')],
 			]);	
 		}
-		*/	
+			
 		
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
@@ -223,6 +223,10 @@ class OrderStudentController extends Controller
 		->where('Patron_FName','=', Auth::user()->name)
 		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();*/
+		$deduction=DB::table('student')
+		->where('Student_Name','=', Auth::user()->name)
+		->select('Student_CardRegister_Status')
+		->first();
 			
 		$cos_order=DB::table('cos_order')
 		->where('Student_ID','=',$student_id->Student_ID)
@@ -433,15 +437,15 @@ class OrderStudentController extends Controller
 				->where('Student_ID','=',$student_id->Student_ID)
 				->where('Cos_Order_Num','=',$id)
 				->first();
-				/*
+				
 				if($mealmethod == "delivery"){
 					$delivery_info=DB::table('delivery_instruction')
 					->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 					->first();
 						
-					return redirect('order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);
+					return redirect('student_order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);	
 					
-				}*/
+				}
 				return redirect('student_order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);	
 			}
 			
@@ -480,15 +484,15 @@ class OrderStudentController extends Controller
 				->where('Student_ID','=',$student_id->Student_ID)
 				->where('Cos_Order_Num','=',$id)
 				->first();
-				/*
+				
 				if($mealmethod == "delivery"){
 					$delivery_info=DB::table('delivery_instruction')
 					->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 					->first();
 						
-					return redirect('order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);
+					return redirect('student_order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);	
 				}
-				*/
+				
 				return redirect('student_order_edit/'.$cos_order->Cos_Order_Num)->with('error',$error);		
 			}
 			
@@ -664,8 +668,12 @@ class OrderStudentController extends Controller
 		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
 		//$deduction=$deductions->Patron_Deduction_Status;*/
+		$deductions=DB::table('student')
+		->where('Student_Name','=', Auth::user()->name)
+		->select('Student_CardRegister_Status')
+		->first();
 		
-		return view('student.payment')->with(['special_id'=>$special_id,'mealmethod' => $mealmethod, 'total_cost' => $total_cost, 'orderid' => $orderid, 'menuid' => $menuid]);
+		return view('student.payment')->with(['deductions' => $deductions,'special_id'=>$special_id,'mealmethod' => $mealmethod, 'total_cost' => $total_cost, 'orderid' => $orderid, 'menuid' => $menuid]);
     }
 	
 	 public function payment(Request $request)
@@ -747,10 +755,10 @@ class OrderStudentController extends Controller
 			->first();
 		}
 		
-		else if($mealmethodp != "card"){
+		if($mealmethodp != "card"){
 			$card = DB::table("card_payment")
 			->select('Card_Number')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->first();
 			
 			$card_balance = DB::table('card_bank')
@@ -761,7 +769,7 @@ class OrderStudentController extends Controller
 			$card_balance=$card->Card_Number;
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Meal_Status','=','Editing')
 			->first();
 				
@@ -774,7 +782,7 @@ class OrderStudentController extends Controller
 			}
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 			
@@ -820,12 +828,12 @@ class OrderStudentController extends Controller
 				$salary = $pay->Salary - $request->input("tcost");
 			}	
 		}
-		
+		*/
 		if($mealmethodp == "card"){
 
 			$card = DB::table("card_payment")
 			->select('Card_Number')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->first();
 			
 			$card_balance = DB::table('card_bank')
@@ -836,7 +844,7 @@ class OrderStudentController extends Controller
 			$card_balance=$card_balance->Card_Balance;
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Meal_Status','=','Editing')
 			->first();
 			
@@ -847,7 +855,7 @@ class OrderStudentController extends Controller
 			}
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 			
@@ -855,11 +863,11 @@ class OrderStudentController extends Controller
 			if($card_balance - $request->input("tcost") <= 0){
 				$total_cost=$request->input("tcost");
 				
-				return view('patron.payment')->with(['special_id'=>$special_id,'orderid'=>$orderid,'menuid'=>$menuid ,'mealmethod' => $mealmethod, 'deduction' => $deduction, 'total_cost' => $total_cost, 'error' => $error]);
+				return view('student.payment')->with(['special_id'=>$special_id,'orderid'=>$orderid,'menuid'=>$menuid ,'mealmethod' => $mealmethod, 'deduction' => $deduction, 'total_cost' => $total_cost, 'error' => $error]);
 			}
 			
 		}
-		*/
+		
 		$foods=DB::table('menu')
 		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
 		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
@@ -878,6 +886,11 @@ class OrderStudentController extends Controller
 		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
 		->first();
 		*/		
+		$deduction=DB::table('student')
+		->where('Student_Name','=', Auth::user()->name)
+		->select('Student_CardRegister_Status')
+		->first();
+		
 		$cos_order=DB::table('cos_order')
 		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Num','=',$orderid)
@@ -896,17 +909,17 @@ class OrderStudentController extends Controller
 		->first();
 		
 		//dd($mealmethod);
-		/*
+		
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('patron.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+			return view('student.orderview')->with(['deduction'=>$deduction,'specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		*/
-		return view('student.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		
+		return view('student.orderview')->with(['deduction'=>$deduction,'specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
 	
@@ -1312,11 +1325,11 @@ class OrderStudentController extends Controller
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 		}
-		
-		else if($$cos_order->Cos_Order_Payment_Method != "card"){
+		*/
+		if($$cos_order->Cos_Order_Payment_Method != "card"){
 			$card = DB::table("card_payment")
 			->select('Card_Number')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->first();
 			
 			$card_balance = DB::table('card_bank')
@@ -1327,7 +1340,7 @@ class OrderStudentController extends Controller
 			$card_balance=$card_balance->Card_Balance;
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Meal_Status','=','Editing')
 			->first();
 				
@@ -1340,7 +1353,7 @@ class OrderStudentController extends Controller
 			}
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 			
@@ -1348,6 +1361,7 @@ class OrderStudentController extends Controller
 		}
 		
 		//payroll deduction		
+		/*
 		if($cos_order->Cos_Order_Payment_Method == "payroll"){
 			$pay = DB::table('payroll')
 			->select('Salary')
@@ -1378,12 +1392,12 @@ class OrderStudentController extends Controller
 		
 				
 		}
-		
+		*/
 		if($mealmethodp == "card"){
 
 			$card = DB::table("card_payment")
 			->select('Card_Number')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->first();
 			
 			$card_balance = DB::table('card_bank')
@@ -1394,7 +1408,7 @@ class OrderStudentController extends Controller
 			$card_balance=$card_balance->Card_Balance;
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Meal_Status','=','Editing')
 			->first();
 			
@@ -1403,7 +1417,7 @@ class OrderStudentController extends Controller
 			}
 			
 			$cos_order=DB::table('cos_order')
-			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 			
@@ -1413,7 +1427,7 @@ class OrderStudentController extends Controller
 			if($card_balance - $request->input("tcost") <= 0){
 				$total_cost=$request->input("tcost");
 				
-				return view('patron.payment')->with(['special_id'=>$special_id,'orderid'=>$orderid,'menuid'=>$menuid ,'mealmethod' => $mealmethod, 'deduction' => $deduction, 'total_cost' => $total_cost, 'error' => $error]);
+				return view('student.payment')->with(['special_id'=>$special_id,'orderid'=>$orderid,'menuid'=>$menuid ,'mealmethod' => $mealmethod, 'deduction' => $deduction, 'total_cost' => $total_cost, 'error' => $error]);
 			}
 			
 			else{
@@ -1422,7 +1436,7 @@ class OrderStudentController extends Controller
 			}
 			
 		}
-		*/
+		
 		$cos_order=DB::table('cos_order')
 		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
@@ -1456,13 +1470,13 @@ class OrderStudentController extends Controller
 			$data['delivery_time'] = "Nan";
 			$data['delivery_location'] = "Nan";
 		}	
-		/*
+		
 		else{
 			$mealmethod = "delivery";
 			$data['delivery_time'] = $mealmethodcheck->D_Time_Window;
 			$data['delivery_location'] = $mealmethodcheck->D_Location;
 		}
-		*/
+		
 		
 		
 		$data['Cos_Order_Num'] = $cos_order->Cos_Order_Num;
@@ -1546,12 +1560,12 @@ class OrderStudentController extends Controller
 		$order_cutoff=DB::table('order_cutoff')
 		->select('Order_Cutoff_Time')
 		->first();
-		/*
-		$deduction=DB::table('patron')
-		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
+		
+		$deduction=DB::table('student')
+		->where('Student_Name','=', Auth::user()->name)
+		->select('Patron_CardRegister_Status')
 		->first();
-		*/	
+			
 
 		$approved  = $cos_order->Cos_Order_Meal_Status;
 		
@@ -1573,12 +1587,12 @@ class OrderStudentController extends Controller
 			$mealmethod = "pick-up";
 			
 		}	
-		/*
+		
 		else{
 			$mealmethod = "delivery";
 			
 		}
-		*/
+		
 		
 		$special_id=DB::table('ordered_special')
 		->where('Cos_Order_Num','=',$id)
@@ -1620,15 +1634,15 @@ class OrderStudentController extends Controller
 			
 		}
 		$specialfoods = json_decode(json_encode($specialfood));
-		/*
+		
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('patron.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+			return view('student.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
-		}*/
+		}
 		return view('student.orderview')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
@@ -1679,12 +1693,12 @@ class OrderStudentController extends Controller
 		$order_cutoff=DB::table('order_cutoff')
 		->select('Order_Cutoff_Time')
 		->first();
-		/*	
-		$deduction=DB::table('patron')
-		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
+			
+		$deduction=DB::table('student')
+		->where('Student_Name','=', Auth::user()->name)
+		->select('Student_CardRegister_Status')
 		->first();
-		*/	
+			
 		if($cos_order->Cos_Order_Meal_Status == "Editing" || $cos_order->Cos_Order_Meal_Status == "Approved"){
 			$permission = "edit";
 			
@@ -1845,26 +1859,26 @@ class OrderStudentController extends Controller
 			$mealmethod = "pick-up";
 			
 		}	
-		/*
+		
 		else{
 			$mealmethod = "delivery";
 			
 		}
-		*/
+		
 		if(empty($special_id)){
 			$special_id = null;
 		}	
-		/*
+		
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('patron.orderfinal')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'orderid' => $orderid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds, 'food_count' => $food_count]);
+			return view('student.orderfinal')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'orderid' => $orderid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds, 'food_count' => $food_count]);
 		
 		}
-		*/
-		return view('student.orderfinal')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'orderid' => $orderid, 'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds, 'food_count' => $food_count]);
+		
+		return view('student.orderfinal')->with(['deduction' => $deduction,'mealmethod' => $mealmethod,'specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'orderid' => $orderid, 'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds, 'food_count' => $food_count]);
 			
     }
 	
@@ -2066,12 +2080,12 @@ class OrderStudentController extends Controller
 		$order_cutoff=DB::table('order_cutoff')
 		->select('Order_Cutoff_Time')
 		->first();
-		/*
-		$deduction=DB::table('patron')
-		->where('Patron_FName','=', Auth::user()->name)
-		->select('Patron_Deduction_Status','Patron_CardRegister_Status')
+		
+		$deduction=DB::table('student')
+		->where('Student_Name','=', Auth::user()->name)
+		->select('Student_CardRegister_Status')
 		->first();	
-		*/
+		
 		$approved  = $cos_order->Cos_Order_Meal_Status;
 		
 		$food_count=DB::table('ordered_food_item')
@@ -2133,20 +2147,20 @@ class OrderStudentController extends Controller
 			
 		}	
 		
-		//else{
-		//	$mealmethod = "delivery";
+		else{
+			$mealmethod = "delivery";
 			
-		//}
-		/*
+		}
+		
 		if($mealmethod == "delivery"){
 			$delivery_info=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('patron.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+			return view('student.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		*/
+		
 		return view('student.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }

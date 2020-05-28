@@ -104,7 +104,7 @@
 				<!--<label >Pick meal collection method</label>-->
 					<div class="radio">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  <?php if($deduction->Patron_Deduction_Status == 0): ?> disabled <?php endif; ?> >
+						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  <?php if($deduction->Patron_Deduction_Status == 0 && $deduction->Patron_CardRegister_Status == 0): ?> disabled <?php endif; ?> >
 						  Get meal delivered 
 						</label>
 					  </div>
@@ -125,9 +125,9 @@
 					
 					  <label>Delivery Location</label>
 					  <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id1" name="location_id1"  disabled>Select location</option> 
+							<option id="location_id" name="location_id"  disabled>Select location</option> 
 							<?php $__currentLoopData = $locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<option id="location_id" name="location_id" Required value="<?php echo e($location->Location_ID); ?>">
+								<option name="location_id" Required value="<?php echo e($location->Location_ID); ?>">
 									<?php echo e($location->Location_Name); ?>
 
 								</option>

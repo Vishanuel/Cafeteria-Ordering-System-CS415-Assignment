@@ -43,7 +43,7 @@
 						<!--option  disabled>Select food</option--> 
 						@foreach ($foods as $food )
 							<option  Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" @endif >
-								{{ $food->Food_Name }}
+								{{ $food->Food_Name." - ".$food->Food_Desc }} 
 							</option>
 							
 						@endforeach
@@ -81,7 +81,7 @@
 				<div class="form-group">
 					<div class="radio col-md-3">
 						<label id="del">
-						  <input type="radio" name="mealmethod" id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0 && $deduction->Patron_CardRegister_Status == 0) disabled @endif  >
 						  Get meal delivered
 						</label>
 					  </div>
@@ -89,7 +89,7 @@
 				<div class="form-group">
 					  <div class="radio col-md-9 ">
 						<label>
-						  <input type="radio" name="mealmethod" id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
 						  Pick-up meal from restaurant
 						</label>
 					 </div>

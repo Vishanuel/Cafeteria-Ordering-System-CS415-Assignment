@@ -111,7 +111,7 @@
       <div class="container" >
         <div class="navbar-header">
 		  
-          <a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="<?php echo e(URL::to('/home')); ?>" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
+          <a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -123,7 +123,8 @@
 		  
           <ul class="nav navbar-nav"   >
 		  <?php if(Auth::user()->usertype == "Patron"): ?>
-            <li ><a href="<?php echo e(URL::to('restaurant')); ?>" >Place Order <span class="sr-only">(current)</span></a></li>
+			 <li><a href="<?php echo e(URL::to('home')); ?>" >Home</a></li>
+            <li ><a href="<?php echo e(URL::to('restaurant')); ?>" >Place Order</a></li>
             <li><a href="<?php echo e(URL::to('order')); ?>" >Order History</a></li>
 			<li class="divider"></li>			
 			<!--li class="dropdown">
@@ -149,8 +150,10 @@
 			<li class="divider"></li>
 			<li><a href="<?php echo e(URL::to('register')); ?>" >Payment Option Registration</a></li>
 		  <?php elseif(Auth::user()->usertype == "Student"): ?>
+		    <li><a href="<?php echo e(URL::to('student_home')); ?>" >Home</a></li>
 		    <li ><a href="<?php echo e(URL::to('restaurant')); ?>" >Place Order <span class="sr-only">(current)</span></a></li>
             <li><a href="<?php echo e(URL::to('student_order')); ?>" >View Previous Orders</a></li>
+			<li><a href="<?php echo e(URL::to('studentregister')); ?>" >Payment Option Registration</a></li>
 		  <?php endif; ?>
            
           </ul>
@@ -239,8 +242,8 @@
       <div class="pull-right hidden-xs">
         <b>Version</b> 2.4.13
       </div>
-      <strong>Copyright &copy; 2014-2019 AdminLTE.</strong> All rights
-      reserved.
+     <!-- <strong>Copyright &copy; 2014-2019 AdminLTE.</strong> All rights
+      reserved. -->
     </div>
 	
     <!-- /.container -->
@@ -348,6 +351,14 @@ function backbutton(){
     //Date picker
     $('#datepicker').datepicker({
       autoclose: true
+    })
+	$('#start_subs_date').datepicker({
+      autoclose: true,
+	  format: 'yyyy-mm-dd'
+    })
+	$('#end_subs_date').datepicker({
+      autoclose: true,
+	  format: 'yyyy-mm-dd'
     })
     //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -674,9 +685,9 @@ function backbutton(){
 	
 	function delivery_time(){
 		var deduction = $('#deduction').val();
-
-		if(deduction == 0){
-			document.getElementById('optionsRadios1').disabled = true;
+		
+		if(document.getElementById('optionsRadios1').disabled == true){
+			$('#optionsRadios1').iCheck('disable');
 			document.getElementById('dwarn').style.display = 'none';
 		}
 		else{
@@ -684,15 +695,23 @@ function backbutton(){
 			//alert(len);
 			if(len <= 1){
 				//alert(len);
+				//$("#optionsRadios2").prop("checked", true);
+				//$("#optionsRadios1").prop("checked", false);
+				$('#optionsRadios2').iCheck('check');
+			
+				
 				document.getElementById('dwarn').style.display = 'block';
 				document.getElementById('optionsRadios1').disabled = true;
-				$("#optionsRadios2").prop("checked", true);
+				$('#optionsRadios1').iCheck('disable');
+				//document.getElementById('optionsRadios2').checked = true;
+				//document.getElementById('optionsRadios1').checked = false;
 				document.getElementById('delivery').style.display = 'none';
 					
 			}
 			else{
 				document.getElementById('dwarn').style.display = 'none';
-				document.getElementById('optionsRadios1').disabled = false;
+				//document.getElementById('optionsRadios1').disabled = false;
+				$('#optionsRadios1').iCheck('enable');
 			}
 		}
 	}
@@ -795,7 +814,7 @@ function backbutton(){
 	$( document ).ready(function() {		
 	
 		
-		if($('#cardmethod').val() && $('#payrollmethod').val()){
+		if($('#cardmethod').val() ){
 			
 			$('#expdate').datepicker({
 			  autoclose: true,
@@ -826,6 +845,8 @@ function backbutton(){
 				$('#typecard3').val(radioValue);
 				//alert(radioValue);
 			});
+			
+			
 			
 			$('#cardmethod').on('ifChanged', function(){
 				ScrollReveal().destroy();

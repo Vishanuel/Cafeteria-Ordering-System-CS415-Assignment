@@ -207,7 +207,7 @@
 				<div class="form-group col-md-6">
 					<div class="radio">
 						<label>
-						  <input type="radio" disabled class="minimal"  name="mealmethod3" id="optionsRadios1" value="payroll"   @if($cos_order->Cos_Order_Payment_Method=="payroll") checked @endif @if($cos_order->Cos_Order_Payment_Method=="card") disabled @endif @if($cos_order->Cos_Order_Payment_Method=="cash") disabled @endif>
+						  <input type="radio"  class="minimal"  name="mealmethod3" id="optionsRadios1" value="payroll"   @if($cos_order->Cos_Order_Payment_Method=="payroll") checked @endif @if($cos_order->Cos_Order_Payment_Method=="card") disabled @endif @if($cos_order->Cos_Order_Payment_Method=="cash") disabled @endif>
 						  Payroll deduction payment
 						</label>
 					  </div>
@@ -215,7 +215,7 @@
 				<div class="form-group col-md-6">
 					  <div class="radio">
 						<label>
-						  <input type="radio" disabled class="minimal" name="mealmethod3" id="optionsRadios2" value="cash"  @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif @if($cos_order->Cos_Order_Payment_Method=="card") disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") disabled @endif>
+						  <input type="radio"  class="minimal" name="mealmethod3" id="optionsRadios2" value="cash"  @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif @if($cos_order->Cos_Order_Payment_Method=="card") disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") disabled @endif>
 						  Cash Payment at pickup
 						</label>
 					 </div>
@@ -223,7 +223,7 @@
 				 <div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio" class="minimal" disabled name="mealmethod" id="optionsRadios3" value="card"  @if($cos_order->Cos_Order_Payment_Method=="card") checked @endif @if($cos_order->Cos_Order_Payment_Method=="cash") disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") disabled @endif>
+						  <input type="radio" class="minimal"  name="mealmethod" id="optionsRadios3" value="card"  @if($cos_order->Cos_Order_Payment_Method=="card") checked @endif @if($cos_order->Cos_Order_Payment_Method=="cash") disabled @endif @if($cos_order->Cos_Order_Payment_Method=="payroll") disabled @endif>
 						  Credit/Debit card payment
 						</label>
 				    </div>

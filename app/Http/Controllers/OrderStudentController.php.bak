@@ -935,7 +935,7 @@ class OrderStudentController extends Controller
 		try{
 		$menuid= $request->input('menuid');
 		$orderid = $request->input('orderid');
-		
+		$mealmethodp = $request->input('mealmethod');
 		$special_id = $request->input('special_id');
 		
 		$student_id = DB::table('student')
@@ -1326,12 +1326,13 @@ class OrderStudentController extends Controller
 			->first();
 		}
 		*/
-		if($$cos_order->Cos_Order_Payment_Method != "card"){
+		if($cos_order->Cos_Order_Payment_Method != "card"){
 			$card = DB::table("card_payment")
 			->select('Card_Number')
 			->where('Student_ID','=',$student_id->Student_ID)
 			->first();
 			
+			if(!empty($card)){
 			$card_balance = DB::table('card_bank')
 			->select('Card_Balance')
 			->where('Card_Number','=',$card->Card_Number)
@@ -1356,7 +1357,7 @@ class OrderStudentController extends Controller
 			->where('Student_ID','=',$student_id->Student_ID)
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
-			
+			}
 			
 		}
 		

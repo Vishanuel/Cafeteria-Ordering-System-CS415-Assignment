@@ -1447,10 +1447,10 @@ class OrderController extends Controller
 		
 		//change meal status to Approved
 		DB::table('cos_order')->where('Cos_Order_Num', '=',$orderid)->update(['Cos_Order_Meal_Status' => 'Approved']);
-		/*	
+			
 		$restaurant_id = DB::table("menu")->select('Restaurant_ID')->where('Menu_ID','=',$menuid)->first();
-		$restaurant_email = DB::table("restaurant")->select('Restaurant_Email')->where('Restaurant_ID','=',$restaurant_id->Restaurant_ID)->first(); 
-		*/
+		$restaurant_info = DB::table("restaurant")->where('Restaurant_ID','=',$restaurant_id->Restaurant_ID)->first(); 
+		
 		$data = array();
 		$mealmethodcheck=DB::table('delivery_instruction')
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
@@ -1458,8 +1458,8 @@ class OrderController extends Controller
 			
 		if(empty($mealmethodcheck)){
 			$mealmethod = "pick-up";
-			$data['delivery_time'] = "Nan";
-			$data['delivery_location'] = "Nan";
+			$data['delivery_time'] = "None";
+			$data['delivery_location'] = "None";
 		}	
 		
 		else{
@@ -1469,7 +1469,7 @@ class OrderController extends Controller
 		}
 		
 		
-		
+		$data['restaurant'] = $restaurant_info->Restaurant_Name;
 		$data['Cos_Order_Num'] = $cos_order->Cos_Order_Num;
 		$data['Cos_Order_Date_Time'] = $cos_order->Cos_Order_Date_Time;
 		$data['Cos_Meal_Date_Time'] = $cos_order->Cos_Meal_Date_Time;
@@ -1486,13 +1486,14 @@ class OrderController extends Controller
 			->first();
 			
 			$data['Food_Name'][$i] = $quantity->Food_Name;
+			$data['Food_Desc'][$i] = $quantity->Food_Desc;
 			$data['Quantity'][$i] = $food_select->Quantity;
 			$data['Price'][$i] = $food_select->Quantity * $quantity->Price;
 			$i++;
 		}
 		
 		$data['count'] = $i;
-		
+		$data['username'] = Auth::user()->name;
         Mail::send('patron.orderemail', $data, function($message) {
  
             $message->to(Auth::user()->email, 'LCNotif')
@@ -1500,7 +1501,7 @@ class OrderController extends Controller
                     ->subject('Order Info');
         });
 		
-		$data['username'] = Auth::user()->name;
+	
 		Mail::send('patron.restaurantemail', $data, function($message) {
  
             $message->to(Auth::user()->email, 'LCNotif')

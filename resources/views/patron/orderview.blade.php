@@ -39,7 +39,7 @@
 						<option  disabled>Select food</option> 
 						@foreach ($foods as $food )
 							<option Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @endif >
-								{{ $food->Food_Name }}
+								{{ $food->Food_Name." - ".$food->Food_Desc }}
 							</option>
 							
 						@endforeach
@@ -177,9 +177,9 @@
 					
 					  <label>Delivery Location</label>
 					  <select disabled class="form-control " id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id" name="location_id"  disabled>Select location</option> 
+							<option disabled>Select location</option> 
 							@foreach ($locations as $location )
-								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
+								<option @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
 								</option>
 								

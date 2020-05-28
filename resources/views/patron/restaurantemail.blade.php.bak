@@ -44,126 +44,175 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
+<body class="skin-blue sidebar-mini" data-gr-c-s-loaded="true" style="height: auto; min-height: 100%;">
+<div class="wrapper" style="height: auto; min-height: 100%;">
 
-
-<div class="content-wrapper">
+  <header class="main-header">
+   
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Order
-        <small>information</small>
+        Invoice
+        <small>#{{$Cos_Order_Num}}</small>
       </h1>
-     
     </section>
-<!-- Main content -->
-    <section class="content">
+
+    <div class="pad margin no-print">
+      
+    </div>
+
+    <!-- Main content -->
+    <section class="invoice">
+      <!-- title row -->
       <div class="row">
-        <!-- left column -->
-        <div class="col-md-12">
-		  <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Order Patron</h3>
-            </div>
-            <!-- /.box-header -->
-            <div id="box" class="box-body">
-             
-                <!-- text input -->
-				<div id="tcos" class="form-group col-md-2">
-				  <label>Patron Name</label>
-				  <input type="text" class="form-control" id="tco" name="tco" Required readonly value="{{$Cos_Order_Cost}}">
-			   </div>
-				
-				
-				@for($i = 0; $i < $count; $i++)
-				
-				<div id="food_ite{{$i}}" class="form-group col-md-6">
-					<label>Food Item</label>
-					<input type="text" class="form-control" readonly id="food_it{{$i}}" name="food_it{{$i}}" Required value="{{$Food_Name[$i]}}">
-				</div>
-					
-					
-					
-					<div id="quantit{{$i}}" class="form-group col-md-2">
-					  <label>Quantity</label>
-					  <input type="number" class="form-control" readonly id="quanti{{$i}}" name="quanti{{$i}}" max="" min="1" Required value="{{$Quantity[$i]}}">
-					</div>
-			
-					<div id="pric{{$i}}" class="form-group col-md-2">
-					  <label>Price ($)</label>
-					  <input type="number" class="form-control" readonly id="pri{{$i}}" name="pri{{$i}}" Required readonly value="{{$Price[$i]}}">
-					</div>
-					
-					
-					
-				@endfor
-				
-				<div id="tcos" class="form-group col-md-2">
-				  <label>Total Cost ($)</label>
-				  <input type="number" class="form-control" id="tco" name="tco" Required readonly value="{{$Cos_Order_Cost}}">
-			   </div>
-				<!-- <div id="food" ></div>-->
-				
-				<div id="drp" class="form-group col-md-2">
-				  <label>Deliver/Restuarant pickup </label>
-				  <input type="text" class="form-control" id="dr" name="dr" Required readonly value="{{$delivery_pickup}}">
-			   </div>
-			   
-			   <div id="pcp" class="form-group col-md-2">
-				  <label>Payroll Deduction/Cash Payment</label>
-				  <input type="text" class="form-control" id="pc" name="pc" Required readonly value="{{$Cos_Order_Payment_Method}}">
-			   </div>
-				
-				@if($delivery_pickup == "delivery")
-				<div id="locati_id" class="form-group col-md-6">
-				  <label>Delivery Location</label>
-				  <input type="text" class="form-control" id="locatio_id" name="locati_id" Required readonly value="{{$delivery_time}}">
-			   </div>
-			   
-			   <div id="locati_time" class="form-group col-md-6">
-				  <label>Delivery Time</label>
-				  <input type="text" class="form-control" id="locatio_time" name="locati_time" Required readonly value="{{$delivery_location}}">
-			   </div>
-			   
-			   @endif
-			   
-				<div id="meal_dat" class="form-group col-md-6">
-				  <label>Meal Date</label>
-				  <input type="text" class="form-control" id="meal_da" name="meal_da" Required readonly value="{{$Cos_Meal_Date_Time}}">
-			   </div>
-			   
-			   <div id="order_dat" class="form-group col-md-6">
-				  <label>Order Date</label>
-				  <input type="text" class="form-control" id="order_da" name="order_da" Required readonly value="{{$Cos_Order_Date_Time}}">
-			   </div>
-			   
-			   <div id="order_status" class="form-group col-md-6">
-				  <label>Order Status</label>
-				  <input type="text" class="form-control" id="order_statu" name="order_statu" Required readonly value="{{$Cos_Order_Meal_Status}}">
-			   </div>
-			   
-                
-				
-                <!-- /.input group -->
-              </div>
-			  
-			
-			</div>
-            <!-- /.box-body -->
-			 
-          </div>
-          <!-- /.box -->
+        <div class="col-xs-12">
+          <h2 class="page-header">
+            <i class="fa fa-globe"></i> Cafeteria Ordering System
+            <small class="pull-right">{{date("Y-m-d")}}</small>
+          </h2>
         </div>
-        <!--/.col (right) -->
+        <!-- /.col -->
+      </div>
+      <!-- info row -->
+      <div class="row invoice-info">
+        <div class="col-sm-4 invoice-col">
+          From
+          <address>
+            <strong>Cafeteria Ordering System</strong><!--br>
+            795 Folsom Ave, Suite 600<br>
+            San Francisco, CA 94107<br>
+            Phone: (804) 123-5432<br>
+            Email: info@almasaeedstudio.com-->
+          </address>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+          To
+          <address>
+            <strong>{{$username}}</strong><!--br>
+            795 Folsom Ave, Suite 600<br>
+            San Francisco, CA 94107<br>
+            Phone: (555) 539-1037<br>
+            Email: john.doe@example.com-->
+          </address>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+          <b>Invoice #{{$Cos_Order_Num}}</b><br>
+          <br>
+          <b>Order ID:</b> {{$Cos_Order_Num}}<br>
+		  <b>Order Delivery/Pickup:</b> {{$delivery_pickup}}<br>
+          <b>Payment Due:</b> ${{$Cos_Order_Cost}}<br>
+          <b>Payment Method:</b> {{$Cos_Order_Payment_Method}}<br></br>
+        </div>
+		
+		@if($delivery_time != "None")
+		<div class="col-sm-4 invoice-col">
+          <b>Delivery Info.</b><br>
+          <br>
+          <b>Delivery Location:</b> {{$delivery_location}}<br>
+          <b>Delivery Time:</b> {{$delivery_time}}<br></br>
+        </div>
+		@endif
+        <!-- /.col -->
       </div>
       <!-- /.row -->
+
+      <!-- Table row -->
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Qty</th>
+              <th>Product</th>
+              <!--th>Serial #</th-->
+              <th>Description</th>
+              <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+			@for($i = 0; $i < $count; $i++)
+            <tr>
+              <td>{{$Quantity[$i]}}</td>
+              <td>{{$Food_Name[$i]}}</td>
+              <!--td>455-981-221</td-->
+              <td>{{$Food_Desc[$i]}}</td>
+              <td>${{$Price[$i]}}</td>
+            </tr>
+			@endfor
+            
+            </tbody>
+          </table>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <div class="row">
+        <!-- accepted payments column -->
+       
+        <!-- /.col -->
+        <div class="col-xs-6">
+          <!--p class="lead">Amount Due 2/22/2014</p-->
+
+          <div class="table-responsive">
+            <table class="table">
+              <tbody><tr>
+                <th style="width:50%">Subtotal:</th>
+                <td>${{$Cos_Order_Cost}}</td>
+              </tr>
+              <tr>
+                <th>Tax</th>
+                <td>$0</td>
+              </tr>
+              <tr>
+                <th>Total:</th>
+                <td>${{$Cos_Order_Cost}}</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <!-- this row will not appear when printing -->
+      <div class="row no-print">
+        <div class="col-xs-12">
+          
+        </div>
+      </div>
     </section>
     <!-- /.content -->
+    
   </div>
- </div>
- </body>
+  <!-- /.content-wrapper -->
+  
+  <!-- Control Sidebar -->
 
-  <script>
-	
-  </script>
+    <!-- Create the tabs -->
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="../../bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+
+
+
+</body>

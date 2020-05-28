@@ -1326,7 +1326,7 @@ class OrderStudentController extends Controller
 			->first();
 		}
 		*/
-		if($$cos_order->Cos_Order_Payment_Method != "card"){
+		if($cos_order->Cos_Order_Payment_Method != "card"){
 			$card = DB::table("card_payment")
 			->select('Card_Number')
 			->where('Student_ID','=',$student_id->Student_ID)
@@ -1394,7 +1394,7 @@ class OrderStudentController extends Controller
 				
 		}
 		*/
-		if($mealmethodp == "card"){
+		if($cos_order->Cos_Order_Payment_Method == "card"){
 
 			$card = DB::table("card_payment")
 			->select('Card_Number')

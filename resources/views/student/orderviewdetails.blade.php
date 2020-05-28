@@ -93,15 +93,24 @@
 				
 				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>
-	
+				
 				<div class="form-group">
-					  <div class="radio col-md-6 ">
+					<div class="radio col-md-6">
+						<label id="del">
+						  <input type="radio" class="minimal" name="mealmethod" readonly id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($mealmethod == "pick-up") disabled @endif >
+						  Get meal delivered
+						</label>
+					  </div>
+				</div>
+				
+				<div class="form-group">
+					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio"  disabled class="minimal" name="mealmethod" readonly id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
+						  <input type="radio"  class="minimal" name="mealmethod" readonly id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
 						  Pick-up meal from restaurant
 						</label>
-					 </div>
-				 </div>
+					</div>
+				</div>
 				
                 <div class="form-group col-md-12">
                 <label>Meal Date</label>
@@ -153,9 +162,9 @@
 					
 					  <label>Delivery Location</label>
 					  <select disabled class="form-control " id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id" name="location_id"  disabled>Select location</option> 
+							<option disabled>Select location</option> 
 							@foreach ($locations as $location )
-								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
+								<option @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
 								</option>
 								
@@ -197,7 +206,7 @@
 				<div class="form-group col-md-6">
 					  <div class="radio">
 						<label>
-						  <input type="radio" disabled class="minimal" name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif  @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
+						  <input type="radio"  class="minimal" name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif  @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
 						  Cash Payment at pickup
 						</label>
 					 </div>
@@ -206,7 +215,7 @@
 				<div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio" disabled class="minimal"  name="mealmethod3" id="optionsRadios3" value="card" @if($deduction->Student_CardRegister_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="card") checked @else disabled @endif>
+						  <input type="radio"  class="minimal"  name="mealmethod3" id="optionsRadios3" value="card" @if($cos_order->Cos_Order_Payment_Method=="card") checked @else disabled @endif>
 						  Card payment
 						</label>
 				    </div>

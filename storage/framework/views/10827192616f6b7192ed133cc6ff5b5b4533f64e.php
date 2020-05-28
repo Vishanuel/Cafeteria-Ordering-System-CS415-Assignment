@@ -163,9 +163,9 @@
 					
 					  <label>Delivery Location</label>
 					  <select disabled class="form-control " id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id" name="location_id"  disabled>Select location</option> 
+							<option disabled>Select location</option> 
 							<?php $__currentLoopData = $locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<option id="location_id" name="location_id" <?php if($mealmethod == "delivery"): ?>  <?php if($delivery_info->D_Location == $location->Location_ID): ?> selected="selected" <?php endif; ?>  <?php endif; ?> Required value="<?php echo e($location->Location_ID); ?>">
+								<option <?php if($mealmethod == "delivery"): ?>  <?php if($delivery_info->D_Location == $location->Location_ID): ?> selected="selected" <?php endif; ?>  <?php endif; ?> Required value="<?php echo e($location->Location_ID); ?>">
 									<?php echo e($location->Location_Name); ?>
 
 								</option>

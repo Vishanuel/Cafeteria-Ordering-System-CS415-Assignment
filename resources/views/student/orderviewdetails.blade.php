@@ -97,7 +97,7 @@
 				<div class="form-group">
 					<div class="radio col-md-6">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" readonly id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($mealmethod == "pick-up") disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod"  id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($mealmethod == "pick-up") disabled @endif  @if($deduction->Student_CardRegister_Status == 0) disabled @endif >
 						  Get meal delivered
 						</label>
 					  </div>
@@ -106,7 +106,7 @@
 				<div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio"  class="minimal" name="mealmethod" readonly id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
+						  <input type="radio"  class="minimal" name="mealmethod"  id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
 						  Pick-up meal from restaurant
 						</label>
 					</div>

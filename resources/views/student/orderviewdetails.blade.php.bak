@@ -97,7 +97,7 @@
 				<div class="form-group">
 					<div class="radio col-md-6">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" readonly id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($mealmethod == "pick-up") disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod"  id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($mealmethod == "pick-up") disabled @endif >
 						  Get meal delivered
 						</label>
 					  </div>
@@ -106,7 +106,7 @@
 				<div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio"  class="minimal" name="mealmethod" readonly id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
+						  <input type="radio"  class="minimal" name="mealmethod"  id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
 						  Pick-up meal from restaurant
 						</label>
 					</div>
@@ -206,7 +206,7 @@
 				<div class="form-group col-md-6">
 					  <div class="radio">
 						<label>
-						  <input type="radio" disabled class="minimal" name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif  @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
+						  <input type="radio"  class="minimal" name="mealmethod3" id="optionsRadios2" value="cash" @if($mealmethod=="delivery") disabled @endif  @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
 						  Cash Payment at pickup
 						</label>
 					 </div>
@@ -215,7 +215,7 @@
 				<div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio" disabled class="minimal"  name="mealmethod3" id="optionsRadios3" value="card" @if($cos_order->Cos_Order_Payment_Method=="card") checked @else disabled @endif>
+						  <input type="radio"  class="minimal"  name="mealmethod3" id="optionsRadios3" value="card" @if($cos_order->Cos_Order_Payment_Method=="card") checked @else disabled @endif>
 						  Card payment
 						</label>
 				    </div>

@@ -72,7 +72,7 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <i class="fa fa-globe"></i> Cafeteria Ordering System
-            <small class="pull-right">{{Cos_Order_Date_Time}}</small>
+            <small class="pull-right">{{$Cos_Order_Date_Time}}</small>
           </h2>
         </div>
         <!-- /.col -->
@@ -108,21 +108,23 @@
 		  <b>Order Delivery/Pickup:</b> {{$delivery_pickup}}<br>
 		  <b>Meal Date:</b> {{$Cos_Meal_Date_Time}}<br>
           <b>Payment Due:</b> ${{$Cos_Order_Cost}}<br>
-          <b>Payment Method:</b> {{$Cos_Order_Payment_Method}}<br></br></br>
+          <b>Payment Method:</b> {{$Cos_Order_Payment_Method}}<br>
+		  <br>
         </div>
 		
 		@if($delivery_time != "None")
 		<div class="col-sm-4 invoice-col">
           <b>Delivery Info.</b>
           <b>Delivery Location:</b> {{$delivery_location}}<br>
-          <b>Delivery Time:</b> {{$delivery_time}}<br></br>
+          <b>Delivery Time:</b> {{$delivery_time}}<br>
+		  <br>
         </div>
 		@endif
         <!-- /.col -->
       </div>
       <!-- /.row -->
 
-      <!-- Table row --></br></br>
+      <!-- Table row -->
       <div class="row">
         <div class="col-xs-12 table-responsive">
           <table class="table table-striped">
@@ -150,7 +152,7 @@
           </table>
         </div>
         <!-- /.col -->
-      </div></br></br>
+      </div>
       <!-- /.row -->
 
       <div class="row">

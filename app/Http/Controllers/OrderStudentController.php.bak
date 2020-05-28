@@ -935,7 +935,7 @@ class OrderStudentController extends Controller
 		try{
 		$menuid= $request->input('menuid');
 		$orderid = $request->input('orderid');
-		$mealmethodp = $request->input('mealmethod');
+		
 		$special_id = $request->input('special_id');
 		
 		$student_id = DB::table('student')
@@ -1394,7 +1394,7 @@ class OrderStudentController extends Controller
 				
 		}
 		*/
-		if($mealmethodp == "card"){
+		if($cos_order->Cos_Order_Payment_Method == "card"){
 
 			$card = DB::table("card_payment")
 			->select('Card_Number')
@@ -1459,7 +1459,9 @@ class OrderStudentController extends Controller
 		
 		//change meal status to Approved
 		DB::table('cos_order')->where('Cos_Order_Num', '=',$orderid)->update(['Cos_Order_Meal_Status' => 'Approved']);
-			
+		
+		$restaurant_id = DB::table("menu")->select('Restaurant_ID')->where('Menu_ID','=',$menuid)->first();
+		$restaurant_info = DB::table("restaurant")->where('Restaurant_ID','=',$restaurant_id->Restaurant_ID)->first(); 
 		
 		$data = array();
 		$mealmethodcheck=DB::table('delivery_instruction')
@@ -1479,7 +1481,7 @@ class OrderStudentController extends Controller
 		}
 		
 		
-		
+		$data['restaurant'] = $restaurant_info->Restaurant_Name;
 		$data['Cos_Order_Num'] = $cos_order->Cos_Order_Num;
 		$data['Cos_Order_Date_Time'] = $cos_order->Cos_Order_Date_Time;
 		$data['Cos_Meal_Date_Time'] = $cos_order->Cos_Meal_Date_Time;
@@ -1496,13 +1498,14 @@ class OrderStudentController extends Controller
 			->first();
 			
 			$data['Food_Name'][$i] = $quantity->Food_Name;
+			$data['Food_Desc'][$i] = $quantity->Food_Desc;
 			$data['Quantity'][$i] = $food_select->Quantity;
 			$data['Price'][$i] = $food_select->Quantity * $quantity->Price;
 			$i++;
 		}
 		
 		$data['count'] = $i;
-		
+		$data['username'] = Auth::user()->name;
         Mail::send('student.orderemail', $data, function($message) {
  
             $message->to(Auth::user()->email, 'LCNotif')
@@ -1510,7 +1513,7 @@ class OrderStudentController extends Controller
                     ->subject('Order Info');
         });
 		
-		$data['username'] = Auth::user()->name;
+		
 		Mail::send('student.restaurantemail', $data, function($message) {
  
             $message->to("cs324assignment@gmail.com", 'LCNotif')

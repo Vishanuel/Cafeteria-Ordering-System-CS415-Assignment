@@ -215,7 +215,7 @@
 				<div class="form-group col-md-6">
 					  <div class="radio">
 						<label>
-						  <input type="radio" class="minimal" disabled name="mealmethod3" id="optionsRadios2" value="cash" @if($cos_order->Cos_Order_Payment_Method=="cash") checked @endif>
+						  <input type="radio" class="minimal" name="mealmethod3" id="optionsRadios2" value="cash" @if($cos_order->Cos_Order_Payment_Method=="cash") checked @else disabled @endif>
 						  Cash Payment at pickup
 						</label>
 					 </div>
@@ -223,7 +223,7 @@
 				<div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio" class="minimal" disabled name="mealmethod3" id="optionsRadios3" value="card" @if($deduction->Student_CardRegister_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="card") checked @else disabled @endif>
+						  <input type="radio" class="minimal" name="mealmethod3" id="optionsRadios3" value="card" @if($deduction->Student_CardRegister_Status == 0) disabled @endif @if($cos_order->Cos_Order_Payment_Method=="card") checked @else disabled @endif>
 						  Card payment
 						</label>
 				    </div>

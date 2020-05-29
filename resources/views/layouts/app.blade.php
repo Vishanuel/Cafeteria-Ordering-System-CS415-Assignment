@@ -438,6 +438,8 @@ function backbutton(){
 			var str = $('#food_item'+change).val();
 			var food = str.split(/(\s+)/);
 			//alert(food[2]);
+			$('.check'+change).hide();
+			$('#'+change+'choice'+food[0]).show();
 			$('#price'+change).val($('#quantity'+change).val()*food[4]);
 		///	$('#Quantity').val();
 			$('#qavailable'+change).val(food[2]);		
@@ -585,6 +587,10 @@ function backbutton(){
 	 // use selector for your select
 	
 	tcost();
+
+	// $('#customize').click(function(){ 
+	// 	$('#1choice').show();
+	// }
 	//alert(count);
 	$('#addfood').click(function(){
 		$('<div class="col-md-12"><a type="button" id="removefood'+count+'" class="btn bg-maroon btn-flat margin">Remove item</a></div>').prependTo('#orderform');
@@ -594,7 +600,14 @@ function backbutton(){
 		$('<div id="food_itemd'+count+'" class="form-group col-md-6"><label>Food Item</label><select class="food form-control select2" id="food_item'+count+'" name="food_item'+count+'" style="width: 100%;" Required placeholder="Select food"></select>').prependTo('#orderform');
 		
 		$('#food_item'+(count-1)).find('option').clone().appendTo('#food_item'+count);
-		
+		$('#items'+(count-1)).clone().prop('id','items'+count).appendTo('#food_itemd'+count);
+
+		var tot = $('#items'+count).find('#item_total').val();
+		for(i=0;i<tot;i++){
+			var num = $('#items'+count).find('#item_number'+i).val();
+			$('#items'+count).find('#'+(count-1)+'choice'+num).prop('id',count+'choice'+num).attr("class","checkbox check"+count).hide();
+			$('#'+count+'choice'+num).find('.real').prop({'name':'ingredient'+count+'[]'});
+		}
 		
 		var str = $('#food_item'+count).val();
 		var food = str.split(/(\s+)/);
@@ -618,6 +631,8 @@ function backbutton(){
 					var change = id.replace( /^\D+/g, '');
 					var str = $('#food_item'+change).val();
 					var food = str.split(/(\s+)/);
+					$('.check'+change).hide();
+					$('#'+change+'choice'+food[0]).show();
 					$('#price'+change).val($('#quantity'+change).val()*food[4]);
 					$('#qavailable'+change).val(food[2]);
 					$('#quantity'+change).attr({'max':food[2]});				

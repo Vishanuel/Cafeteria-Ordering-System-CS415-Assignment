@@ -45,7 +45,22 @@
 						@endforeach
 					</select>
 				</div>
+				
+				<div class="checkbox form-group ">
+					@for($j=0;$j<count($items);$j++)
+						@if($items[$j]->Menu_Food_Item_ID==$ordered_item[$i-1]->Menu_Food_Item_ID)
+							@for($k=0;$k<count($cus_ingredients[$j]);$k++)
+							<div><label><input class="real" name="ingredient{{$i}}[]" type="checkbox" value="{{$cus_ingredients[$j][$k]->Ingredient_ID}}"
+								@for($m=0;$m<count($ordered_ingredient[$i-1]);$m++)
+								@if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ordered_ingredient[$i-1][$m]->Ingredient_ID))  ? checked : 
+								@endif @endfor disabled>
+								{{$cus_ingredients[$j][$k]->Ingredient_Name}}</label>
+							</div>
+							@endfor
+						@endif
 
+					@endfor
+				</div>
 				
 					
 					

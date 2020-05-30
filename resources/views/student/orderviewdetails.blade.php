@@ -33,7 +33,7 @@
                 <!-- text input -->
 				<?php $i = 1;?>
 				@foreach($food_selecteds as $food_select)
-				
+				<div class="row">
 				<div id="food_itemd{{$i}}" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select disabled class="form-control select2" id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
@@ -45,6 +45,18 @@
 							
 						@endforeach
 					</select>
+					<div class="checkbox">
+						@if($ordered_item[$i-1]->Menu_Food_Item_ID==$food_select->Menu_Food_Item_ID)
+							@for($k=0;$k<count($cus_ingredients[$i-1]);$k++)
+							<div><label><input class="real" name="ingredient{{$i}}[]" type="checkbox" value="{{$cus_ingredients[$i-1][$k]->Ingredient_ID}}"
+								@for($m=0;$m<count($ordered_ingredient[$i-1]);$m++)
+								@if(($cus_ingredients[$i-1][$k]->Ingredient_ID)==($ordered_ingredient[$i-1][$m]->Ingredient_ID))  ? checked : 
+								@endif @endfor disabled>
+								{{$cus_ingredients[$i-1][$k]->Ingredient_Name}}</label>
+							</div>
+							@endfor
+						@endif
+				</div>
 				</div>
 					
 					
@@ -60,7 +72,7 @@
 					</div>
 					
 					<?php $i= $i + 1; ?>
-					
+				</div>
 				@endforeach
 				
 				

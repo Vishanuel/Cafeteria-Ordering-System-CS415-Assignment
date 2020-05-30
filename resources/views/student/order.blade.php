@@ -46,6 +46,24 @@
 						@endforeach
 						
 					</select>
+					<div id="items1">
+						<input id="item_total" value="{{count($items)}}"  type="hidden">
+						@for($i=0;$i<count($items);$i++)
+						<div class="check1 checkbox" id="1choice{{$items[$i]->Menu_Food_Item_ID}}" style="display:none;">
+								<input id="item_number{{$i}}" value="{{$items[$i]->Menu_Food_Item_ID}}"  type="hidden">
+							@if(count($cus_ingredients[$i])>0)
+							<label><b>Ingredients</b></label>
+							@endif
+							@for($j=0;$j<count($cus_ingredients[$i]);$j++)
+							<div><label><input class="real" name="ingredient1[]" type="checkbox" value="{{$cus_ingredients[$i][$j]->Ingredient_ID}}"
+								@for($k=0;$k<count($ingredients[$i]);$k++)
+								@if(($cus_ingredients[$i][$j]->Ingredient_ID)==($ingredients[$i][$k]->Ingredient_ID))  ? checked : 
+								@endif @endfor >
+								{{$cus_ingredients[$i][$j]->Ingredient_Name}}</label></div>
+							@endfor
+						</div>
+						@endfor
+					</div>
 				</div>
 					
 					
@@ -110,7 +128,7 @@
 						  Get meal delivered 
 						</label>
 					  </div>
-				
+					  deduction 
 				
 					  <div class="radio">
 						<label>

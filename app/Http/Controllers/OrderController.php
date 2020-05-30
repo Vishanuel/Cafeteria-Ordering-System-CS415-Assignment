@@ -283,7 +283,7 @@ class OrderController extends Controller
 		$ingredient = "ingredient".$i;
 		$ingredient_ids = $request->input($ingredient);
 		$input=$request->all();
-//dd($input);
+
 		for($j=0;$j<count($ingredient_ids);$j++)
 		{
 		DB::table('ordered_ingredient')

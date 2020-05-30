@@ -423,7 +423,7 @@ function backbutton(){
 		var changes = ids.replace( /^\D+/g, '');
 		var str = $('#food_item'+changes).val();
 		
-		var food = str.split(/(\s+)/);
+		var food = str.split(/(\s+)/); 
 		$('.check'+changes).hide();
 		$('#'+changes+'choice'+food[0]).show()
 		$('#price'+changes).val($('#quantity'+changes).val()*food[4]);

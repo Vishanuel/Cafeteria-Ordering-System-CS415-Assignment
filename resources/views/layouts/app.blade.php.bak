@@ -423,8 +423,8 @@ function backbutton(){
 		var str = $('#food_item'+changes).val();
 		
 		var food = str.split(/(\s+)/);
-		$('.check'+change).hide();
-		$('#'+change+'choice'+food[0]).show()
+		$('.check'+changes).hide();
+		$('#'+changes+'choice'+food[0]).show()
 		$('#price'+changes).val($('#quantity'+changes).val()*food[4]);
 		$('#quantity'+changes).attr({'max':food[2]});
 		$('#qavailable'+changes).val(food[2]);

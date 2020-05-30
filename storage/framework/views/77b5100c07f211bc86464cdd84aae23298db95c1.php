@@ -63,9 +63,8 @@
 						</div>
 						<?php endfor; ?>
 					</div>
-
 				
-					
+				
 				</div>
 
 					<div id="quantityd1" class="form-group col-md-2">

@@ -50,17 +50,30 @@
 					<div id="items1">
 						<input id="item_total" value="{{count($items)}}"  type="hidden">
 						@for($i=0;$i<count($items);$i++)
-						<div class="check1 checkbox" id="1choice{{$items[$i]->Menu_Food_Item_ID}}" style="display:none;">
+						<div class="check1 checkbox " id="1choice{{$items[$i]->Menu_Food_Item_ID}}" style="display:none;">
 								<input id="item_number{{$i}}" value="{{$items[$i]->Menu_Food_Item_ID}}"  type="hidden">
 							@if(count($cus_ingredients[$i])>0)
-							<label><b>Ingredients</b></label>
+							<label>Ingredients</label>
 							@endif
 							@for($j=0;$j<count($cus_ingredients[$i]);$j++)
-							<div><label><input class="real" name="ingredient1[]" type="checkbox" value="{{$cus_ingredients[$i][$j]->Ingredient_ID}}"
-								@for($k=0;$k<count($ingredients[$i]);$k++)
-								@if(($cus_ingredients[$i][$j]->Ingredient_ID)==($ingredients[$i][$k]->Ingredient_ID))  ? checked : 
-								@endif @endfor>
-								{{$cus_ingredients[$i][$j]->Ingredient_Name}}</label></div>
+							<div class="row">
+							<div class="form-group col-md-4">
+									<input class="real" name="ingredient1[]" type="checkbox" value="{{$cus_ingredients[$i][$j]->Ingredient_ID}}"
+									@for($k=0;$k<count($ingredients[$i]);$k++)
+									@if(($cus_ingredients[$i][$j]->Ingredient_ID)==($ingredients[$i][$k]->Ingredient_ID))  ? checked : 
+									@endif @endfor>
+								<label>{{$cus_ingredients[$i][$j]->Ingredient_Name}}</label>
+							</div>
+						<div id="ingre_quantityd1" class="form-group col-md-2">
+								<label>Quantity</label>
+								<input type="number" class="form-control" id="" name="" max="{{$cus_ingredients[$i][$j]->Ingredient_Quantity}}" min="1" Required value="1">
+							</div>
+							<div id="ingre_priced1" class="form-group col-md-3">
+									<label>Price ($)</label>
+									<input type="number" class="form-control" id="ingre_priced1" name="ingre_priced1" Required readonly value="{{$cus_ingredients[$i][$j]->Ingredient_Price}}">
+								</div>
+							</div>
+						
 							@endfor
 						</div>
 						@endfor

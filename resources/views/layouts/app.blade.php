@@ -633,6 +633,13 @@ function backbutton(){
 				$('#price'+change).val($('#quantity'+change).val()*food[4]);
 				tcost();
 			})
+
+			$("#quantity"+count).on("keyup change click paste mousewheel", function(){
+				var id = $(this).attr('id');
+				var change = id.replace( /^\D+/g, '');
+				$('#price'+change).val($('#quantity'+change).val()*food[4]);
+				tcost();
+			})
 			
 			
 				$('#food_item'+count).change(function(){

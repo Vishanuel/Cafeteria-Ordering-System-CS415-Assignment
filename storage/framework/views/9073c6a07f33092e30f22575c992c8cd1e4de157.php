@@ -72,7 +72,7 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <i class="fa fa-globe"></i> Cafeteria Ordering System
-            <small class="pull-right"><?php echo e(date("Y-m-d")); ?></small>
+            <small class="pull-right"><?php echo e($Cos_Order_Date_Time); ?></small>
           </h2>
         </div>
         <!-- /.col -->
@@ -83,7 +83,7 @@
           From
           <address>
             <strong>Cafeteria Ordering System</strong><br>
-            <?php echo e($restaurant); ?><!--br>
+            Restaurant: <?php echo e($restaurant); ?><!--br>
             San Francisco, CA 94107<br>
             Phone: (804) 123-5432<br>
             Email: info@almasaeedstudio.com-->
@@ -93,7 +93,7 @@
         <div class="col-sm-4 invoice-col">
           To
           <address>
-            <strong><?php echo e($username); ?></strong><!--br>
+            <strong><?php echo e($username); ?></strong></br></br><!--br>
             795 Folsom Ave, Suite 600<br>
             San Francisco, CA 94107<br>
             Phone: (555) 539-1037<br>
@@ -106,15 +106,18 @@
           <br>
           <b>Order ID:</b> <?php echo e($Cos_Order_Num); ?><br>
 		  <b>Order Delivery/Pickup:</b> <?php echo e($delivery_pickup); ?><br>
+		  <b>Meal Date:</b> <?php echo e($Cos_Meal_Date_Time); ?><br>
           <b>Payment Due:</b> $<?php echo e($Cos_Order_Cost); ?><br>
-          <b>Payment Method:</b> <?php echo e($Cos_Order_Payment_Method); ?><br></br>
+          <b>Payment Method:</b> <?php echo e($Cos_Order_Payment_Method); ?><br>
+		  <br>
         </div>
 		
 		<?php if($delivery_time != "None"): ?>
 		<div class="col-sm-4 invoice-col">
           <b>Delivery Info.</b>
           <b>Delivery Location:</b> <?php echo e($delivery_location); ?><br>
-          <b>Delivery Time:</b> <?php echo e($delivery_time); ?><br></br>
+          <b>Delivery Time:</b> <?php echo e($delivery_time); ?><br>
+		  <br>
         </div>
 		<?php endif; ?>
         <!-- /.col -->

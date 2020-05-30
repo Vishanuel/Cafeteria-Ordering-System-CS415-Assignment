@@ -1,0 +1,2 @@
+Ma'am, I have created the student interface for ordering from COS, which is quite similiar to the Patron interface. I just wanted to confirm, if the students would also be able to pay from their credit/debit card and would they be able to request for delivery?
+Ma'am, you have mentioned in the project 1 feedback, that we would need to improve the User Interface for our web application, i just wanted to know if there are any specific thing that needs to be changed? 

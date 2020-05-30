@@ -44,7 +44,22 @@
 						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 					</select>
 				</div>
+				
+				<div class="checkbox form-group ">
+					<?php for($j=0;$j<count($items);$j++): ?>
+						<?php if($items[$j]->Menu_Food_Item_ID==$ordered_item[$i-1]->Menu_Food_Item_ID): ?>
+							<?php for($k=0;$k<count($cus_ingredients[$j]);$k++): ?>
+							<div><label><input class="real" name="ingredient<?php echo e($i); ?>[]" type="checkbox" value="<?php echo e($cus_ingredients[$j][$k]->Ingredient_ID); ?>"
+								<?php for($m=0;$m<count($ordered_ingredient[$i-1]);$m++): ?>
+								<?php if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ordered_ingredient[$i-1][$m]->Ingredient_ID)): ?>  ? checked : 
+								<?php endif; ?> <?php endfor; ?> disabled>
+								<?php echo e($cus_ingredients[$j][$k]->Ingredient_Name); ?></label>
+							</div>
+							<?php endfor; ?>
+						<?php endif; ?>
 
+					<?php endfor; ?>
+				</div>
 				
 					
 					

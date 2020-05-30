@@ -47,6 +47,27 @@
 							
 						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 					</select>
+
+					<div id="items<?php echo e($i); ?>">
+						<input id="item_total" value="<?php echo e(count($items)); ?>"  type="hidden">
+						<?php for($n=0;$n<count($items);$n++): ?>
+						<?php if($items[$n]->Menu_Food_Item_ID==$ordered_item[$i-1]->Menu_Food_Item_ID): ?>
+						<div class="check<?php echo e($i); ?> checkbox form-group" id="<?php echo e($i); ?>choice<?php echo e($items[$n]->Menu_Food_Item_ID); ?>"  style="display:none;">
+								<input id="item_number<?php echo e($i); ?>" value="<?php echo e($items[$n]->Menu_Food_Item_ID); ?>"  type="hidden">
+							<?php if(count($cus_ingredients[$n])>0): ?>
+							<label><b>Ingredients</b></label>
+							<?php endif; ?>
+							<?php for($j=0;$j<count($cus_ingredients[$n]);$j++): ?>
+							<div><label><input class="real" name="ingredient<?php echo e($i); ?>[]" type="checkbox" value="<?php echo e($cus_ingredients[$n][$j]->Ingredient_ID); ?>"
+								<?php for($k=0;$k<count($ordered_ingredient[$i-1]);$k++): ?>
+								<?php if(($cus_ingredients[$n][$j]->Ingredient_ID)==($ordered_ingredient[$i-1][$k]->Ingredient_ID)): ?>  ? checked : 
+								<?php endif; ?> <?php endfor; ?>>
+								<?php echo e($cus_ingredients[$n][$j]->Ingredient_Name); ?></label></div>
+							<?php endfor; ?>
+						</div>
+						<?php endif; ?>
+						<?php endfor; ?>
+					</div>
 					
 				</div>
 					

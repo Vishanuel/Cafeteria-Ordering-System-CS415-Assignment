@@ -422,8 +422,9 @@ function backbutton(){
 		var changes = ids.replace( /^\D+/g, '');
 		var str = $('#food_item'+changes).val();
 		
-		var food = str.split(/(\s+)/);
-	 
+		var food = str.split(/(\s+)/); 
+		$('.check'+changes).hide();
+		$('#'+changes+'choice'+food[0]).show()
 		$('#price'+changes).val($('#quantity'+changes).val()*food[4]);
 		$('#quantity'+changes).attr({'max':food[2]});
 		$('#qavailable'+changes).val(food[2]);
@@ -619,7 +620,8 @@ function backbutton(){
 		
 		var str = $('#food_item'+count).val();
 		var food = str.split(/(\s+)/);
-		
+		$('.check'+count).hide();
+		$('#'+count+'choice'+food[0]).show();
 		$('#price'+count).val($('#quantity'+count).val()*food[4]);
 		$('#qavailable'+count).val(food[2]);
 		$('#quantity'+count).attr({'max':food[2]});
@@ -967,7 +969,8 @@ function backbutton(){
 				var str = $('#food_item'+k).val();
 						
 				var food = str.split(/(\s+)/);
-					 
+				$('.check'+k).hide();
+				$('#'+k+'choice'+food[0]).show()	 
 				$('#price'+k).val($('#quantity'+k).val()*food[4]);
 				$('#quantity'+k).attr({'max':food[2]});
 				$('#qavailable'+k).val(food[2]);
@@ -980,6 +983,7 @@ function backbutton(){
 					var str = $('#food_item'+change).val();
 					var food = str.split(/(\s+)/);
 					//alert(change);
+					
 					$('#price'+change).val($('#quantity'+change).val()*food[4]);
 					tcost();
 				});
@@ -993,6 +997,8 @@ function backbutton(){
 					var str = $('#food_item'+change).val();
 					var food = str.split(/(\s+)/);
 					//alert(food[2]);
+					$('.check'+change).hide();
+					$('#'+change+'choice'+food[0]).show();
 					$('#price'+change).val($('#quantity'+change).val()*food[4]);
 				///	$('#Quantity').val();
 					$('#qavailable'+change).val(food[2]);		
@@ -1091,7 +1097,8 @@ function backbutton(){
 						var str = $('#food_item'+k).val();
 						
 						var food = str.split(/(\s+)/);
-					 
+						$('.check'+k).hide();
+						$('#'+k+'choice'+food[0]).show()
 						$('#price'+k).val($('#quantity'+k).val()*food[4]);
 						$('#quantity'+k).attr({'max':food[2]});
 						$('#qavailable'+k).val(food[2]);
@@ -1116,6 +1123,8 @@ function backbutton(){
 							//alert( $(this).find("option:selected").attr('value') );
 							var str = $('#food_item'+change).val();
 							var food = str.split(/(\s+)/);
+							$('.check'+change).hide();
+							$('#'+change+'choice'+food[0]).show();
 							//alert(food[2]);
 							$('#price'+change).val($('#quantity'+change).val()*food[4]);
 						///	$('#Quantity').val();

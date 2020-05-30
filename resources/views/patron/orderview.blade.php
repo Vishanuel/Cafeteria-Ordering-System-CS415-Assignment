@@ -32,7 +32,7 @@
                 <!-- text input -->
 				<?php $i = 1;?>
 				@foreach($food_selecteds as $food_select)
-				
+				<div class="row">
 				<div id="food_itemd{{$i}}" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select disabled class="form-control select2" id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
@@ -75,7 +75,7 @@
 					</div>
 					
 					<?php $i= $i + 1; ?>
-					
+				</div>
 				@endforeach
 				
 				

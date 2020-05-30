@@ -2206,6 +2206,28 @@ class OrderController extends Controller
 		$special_id=DB::table('ordered_special')
 		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 		->first();
+
+		$ordered_item = DB::table('ordered_food_item') //get all the ordered items of the item
+		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
+		->orderBy('Ordered_Food_Item_ID', 'DESC')
+		->get()
+		->toArray();
+
+		for($j=0;$j<count($ordered_item);$j++)	//get the corresponding ordered ingredients of ordered item
+		{
+			$ordered_ingredient[$j] = DB::table('ordered_ingredient') //get all the ordered items of the item
+			->where('Ordered_Food_Item_ID','=',$ordered_item[$j]->Ordered_Food_Item_ID)
+			->orderBy('Ordered_Food_Item_ID', 'DESC')
+			->get()
+			->toArray();
+
+			$cus_ingredients[$j] =DB::table('custom_ingredient')
+			->where('custom_ingredient.Item_ID','=',$ordered_item[$j]->Menu_Food_Item_ID)
+			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->get()
+			->toArray();
+		}
+
 		
 		if(empty($special_id)){
 			$special_id = null;
@@ -2259,10 +2281,10 @@ class OrderController extends Controller
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('patron.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+			return view('patron.orderviewdetails',compact('cus_ingredients','ordered_item','ordered_ingredient'))->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		return view('patron.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		return view('patron.orderviewdetails',compact('cus_ingredients','ordered_item','ordered_ingredient'))->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
 }

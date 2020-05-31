@@ -7,7 +7,7 @@
   <!-- REQUIRED JS SCRIPTS -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- jQuery 3 -->
-  <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=ljRc6jSiRUy6xQUbWo-U02mCTcAp8mzXQhiGM9kfY4JYhIqtZaWjNR9KQhd8iatv" charset="UTF-8"></script><script src="https://unpkg.com/scrollreveal@4.0.6/dist/scrollreveal.js"></script>
+  <script src="https://unpkg.com/scrollreveal@4.0.6/dist/scrollreveal.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- Bootstrap 3.3.7 -->

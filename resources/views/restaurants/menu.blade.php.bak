@@ -25,29 +25,7 @@
         <!-- left column --><div class="row">
 		
         @foreach($categories as $category)
-		<select id="change">
-  <option value="">Select One</option>
-  <option value="this">This</option>
-  <option value="that">That</option>
-</select>
 
-<div class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 		 <div class="row">
 			<div class="col-md-12 col-xs-12">
 			  <div class="box loading" style="background: rgba(255, 255, 255, 1); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);z-index:999;">
@@ -90,7 +68,10 @@
 						@if(Auth::user()->usertype == "Patron")
 						<a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('order_create/'.$menuid )}}">
 							Place order
-					    </a>
+						</a>
+						<a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('custom_meal',$food->Restaurant_ID)}}">
+							Customize Meal
+						</a>
 						@elseif(Auth::user()->usertype == "Student")
 					    <a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('student_order_create/'.$menuid )}}">
 							Place order

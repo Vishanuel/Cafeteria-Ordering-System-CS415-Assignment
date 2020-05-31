@@ -26,6 +26,11 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
+			   <div class="callout callout-warning">
+                <h4>Attention!</h4>
+
+                <p>Some meals will not be orderable when the "Get meal delivered" option is selected.<br> The selected food option may also change when a non-orderable food is already selected.</p>
+              </div>
               <form id="orderform" role="form" method="POST" action="{{action('OrderStudentController@store')}}" enctype="multipart/form-data">
 			   @csrf
 				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
@@ -102,7 +107,7 @@
 				
 					<div class="radio">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Student_CardRegister_Status == 0) disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1"  @if($mealmethod == "delivery") checked @endif @if($deduction->Student_CardRegister_Status == 0) value="disabled" @else value="delivery" @endif >
 						  Get meal delivered
 						</label>
 					</div>

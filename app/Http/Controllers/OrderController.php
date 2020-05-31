@@ -289,7 +289,7 @@ class OrderController extends Controller
 		DB::table('ordered_ingredient')
 		->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
 		}
-						
+	
 		}
 		
 		$cos_order=DB::table('cos_order')

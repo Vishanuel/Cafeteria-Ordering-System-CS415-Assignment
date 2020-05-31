@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head data-barba="wrapper">
+<head >
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>COS</title>
@@ -481,6 +481,7 @@ function backbutton(){
 	//$('#meal_date').val(todaydate);
 	
 	function populate(selector,value) {
+		
 		var select = $(selector);
 		
 		var today = new Date();
@@ -700,11 +701,11 @@ function backbutton(){
 	function delivery_time(){
 		var deduction = $('#deduction').val();
 		
-		if(document.getElementById('optionsRadios1').disabled == true){
+		if($('#optionsRadios1').val() == true){
 			$('#optionsRadios1').iCheck('disable');
 			document.getElementById('dwarn').style.display = 'none';
 		}
-		else{
+		//else{
 			var len = document.getElementById("location_time").length;
 			//alert(len);
 			if(len <= 1){
@@ -725,9 +726,10 @@ function backbutton(){
 			else{
 				document.getElementById('dwarn').style.display = 'none';
 				//document.getElementById('optionsRadios1').disabled = false;
+				
 				$('#optionsRadios1').iCheck('enable');
 			}
-		}
+		//}
 	}
 	
 	
@@ -829,7 +831,7 @@ function backbutton(){
 	
 		
 		if($('#cardmethod').val() ){
-			
+			ScrollReveal().destroy();
 			$('#expdate').datepicker({
 			  autoclose: true,
 			  format: 'mm/yy',

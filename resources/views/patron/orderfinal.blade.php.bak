@@ -44,11 +44,32 @@
 						<!--option  disabled>Select food</option--> 
 						@foreach ($foods as $food )
 							<option  Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" @endif >
-								{{ $food->Food_Name }}
+									{{ $food->Food_Name." - ".$food->Food_Desc }} 
 							</option>
 							
 						@endforeach
 					</select>
+
+					<div id="items{{$i}}">
+						<input id="item_total" value="{{count($items)}}"  type="hidden">
+						@for($n=0;$n<count($items);$n++)
+						@if($items[$n]->Menu_Food_Item_ID==$ordered_item[$i-1]->Menu_Food_Item_ID)
+						<div class="check{{$i}} checkbox form-group" id="{{$i}}choice{{$items[$n]->Menu_Food_Item_ID}}"  style="display:none;">
+								<input id="item_number{{$i}}" value="{{$items[$n]->Menu_Food_Item_ID}}"  type="hidden">
+							@if(count($cus_ingredients[$n])>0)
+							<label><b>Ingredients</b></label>
+							@endif
+							@for($j=0;$j<count($cus_ingredients[$n]);$j++)
+							<div><label><input class="real" name="ingredient{{$i}}[]" type="checkbox" value="{{$cus_ingredients[$n][$j]->Ingredient_ID}}"
+								@for($k=0;$k<count($ordered_ingredient[$i-1]);$k++)
+								@if(($cus_ingredients[$n][$j]->Ingredient_ID)==($ordered_ingredient[$i-1][$k]->Ingredient_ID))  ? checked : 
+								@endif @endfor>
+								{{$cus_ingredients[$n][$j]->Ingredient_Name}}</label></div>
+							@endfor
+						</div>
+						@endif
+						@endfor
+					</div>
 					
 				</div>
 					
@@ -106,7 +127,7 @@
 				
 					<div class="radio">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0) disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" @if($mealmethod == "delivery") checked @endif @if($deduction->Patron_Deduction_Status == 0 && $deduction->Patron_CardRegister_Status == 0) value="disabled" @else value="delivery" @endif >
 						  Get meal delivered
 						</label>
 					  </div>

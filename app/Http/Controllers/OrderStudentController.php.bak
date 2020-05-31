@@ -1470,8 +1470,8 @@ class OrderStudentController extends Controller
 			
 		if(empty($mealmethodcheck)){
 			$mealmethod = "pick-up";
-			$data['delivery_time'] = "Nan";
-			$data['delivery_location'] = "Nan";
+			$data['delivery_time'] = "None";
+			$data['delivery_location'] = "None";
 		}	
 		
 		else{

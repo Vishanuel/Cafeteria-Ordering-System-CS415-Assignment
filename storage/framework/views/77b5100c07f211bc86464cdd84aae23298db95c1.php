@@ -11,6 +11,7 @@
         <li><a href="<?php echo e(url('home')); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="<?php echo e(url('smpdevice')); ?>">Device</a></li> -->
         <li class="active">Place Order</li>
+		<li><a target="_blank" href="<?php echo e(url('help/PlacingOrder.html')); ?>">Help</a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -123,7 +124,7 @@
 				<!--<label >Pick meal collection method</label>-->
 					<div class="radio">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery"  <?php if($deduction->Patron_Deduction_Status == 0 && $deduction->Patron_CardRegister_Status == 0): ?> disabled <?php endif; ?> >
+						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" <?php if($deduction->Patron_Deduction_Status == 0 && $deduction->Patron_CardRegister_Status == 0): ?> value="disabled" <?php else: ?> value="delivery" <?php endif; ?> >
 						  Get meal delivered 
 						</label>
 					  </div>

@@ -31,7 +31,7 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-              <form role="form" method="POST" action="{{action('RegisterController@store')}}" enctype="multipart/form-data">
+              <form role="form" method="POST" action="{{action('RegisterStudentController@store')}}" enctype="multipart/form-data">
 			    @csrf
                 <!-- text input -->
 				<div class="col-md-12 callout callout-info">

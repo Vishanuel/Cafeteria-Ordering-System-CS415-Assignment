@@ -110,7 +110,7 @@
 						<div class="form-group col-md-6">
 							<div class="radio">	
 								<label for="cardmethod">
-								  <input type="radio" class="minimal" name="cardmethod" id="cardmethod" value="1"  @if($reg_patron->Patron_CardRegister_Status == 1) checked @else disabled @endif > Registered		
+								  <input type="radio" class="minimal" name="cardmethod" id="cardmethod" value="1"  @if($reg_student->Student_CardRegister_Status == 1) checked @else disabled @endif > Registered		
 								</label>
 							</div>					
 						</div>
@@ -119,7 +119,7 @@
 						<div class="form-group col-md-6 ">
 							<div class="radio">
 								<label for="cardmethod2">
-								  <input type="radio" class="minimal"  name="cardmethod" id="cardmethod2" value="0" required @if($reg_patron->Patron_CardRegister_Status == 0) checked @else disabled @endif > Not-registered						
+								  <input type="radio" class="minimal"  name="cardmethod" id="cardmethod2" value="0" required @if($reg_student->Student_CardRegister_Status == 0) checked @else disabled @endif > Not-registered						
 								</label>
 							</div>					
 						</div>

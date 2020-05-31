@@ -12,6 +12,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Place Order</li>
+		<li><a target="_blank" href="{{url('help/TheOrderingProcess.html')}}">Help</a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -49,7 +50,7 @@
 				</div>
 					
 					
-					
+					 
 					<div id="quantityd1" class="form-group col-md-2">
 					  <label>Quantity</label>
 					  <input type="number" class="form-control" id="quantity1" name="quantity1" max="" min="1" Required value="1">
@@ -106,7 +107,7 @@
 				
 					<div class="radio">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery" @if($deduction->Student_CardRegister_Status == 0) disabled @endif>
+						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1"  @if($deduction->Student_CardRegister_Status == 0) value="disabled" @else value="delivery" @endif >
 						  Get meal delivered 
 						</label>
 					  </div>

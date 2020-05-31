@@ -13,6 +13,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Order Info</li>
+		<li><a target="_blank" href="{{url('help/ViewingDetailedOrderInformation.html')}}">Help</a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -131,7 +132,7 @@
 			<div id="cwarning" name="cwarning" class="form-group col-md-12" style="display: none" value=""> </div>
 			<input id="dwarn" name="dwarn" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="{{$i}}" class="form-group col-md-12" style="display: none">{{$i}}</div>
-			<!--input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value=""--> 
+			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value=""> 
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$cos_order->Cos_Order_Num}}">
 			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}"> 
 			<div id="delivery" name="delivery" class="form-group col-md-12" style="display: none" value=""></div>

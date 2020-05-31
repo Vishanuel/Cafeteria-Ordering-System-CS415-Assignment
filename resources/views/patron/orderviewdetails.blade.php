@@ -13,6 +13,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Order Info</li>
+		<li><a target="_blank" href="{{url('help/ViewingDetailedOrderInformation.html')}}">Help</a></li>
       </ol>
     </section>
 <!-- Main content -->

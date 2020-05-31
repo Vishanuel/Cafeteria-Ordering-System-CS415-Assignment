@@ -12,6 +12,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Place Order</li>
+		<li><a target="_blank" href="{{url('help/EditingYourOrder.html')}}">Help</a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -81,7 +82,7 @@
 				<div class="form-group">
 					<div class="radio col-md-3">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1" value="delivery" @if($mealmethod == "delivery") checked @endif @if($deduction->Student_CardRegister_Status == 0) disabled @endif >
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios1"  @if($mealmethod == "delivery") checked @endif @if($deduction->Student_CardRegister_Status == 0) value="disabled" @else value="delivery" @endif >
 						  Get meal delivered
 						</label>
 					  </div>

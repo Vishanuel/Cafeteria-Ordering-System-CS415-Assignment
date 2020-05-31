@@ -13,6 +13,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Restaurant Info</li>
+		<li><a target="_blank" href="{{url('help/RegistrationProcess.html')}}">Help</a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -24,12 +25,11 @@
 			<div style="z-index:9;" class="callout callout-warning">
 				<h4>You have an pending order which was disrupted!</h4>
 				<p>Placing new order will delete your pending order.</p>
-				if(empty($student_id)){
+				@if(empty($student_id))
 				<a href="{{URL::to('order_edit/'.$pending_order_id)}}">Go to pending order.</a>
-				}
-				else{
+				@else
 				<a href="{{URL::to('student_order_edit/'.$pending_order_id)}}">Go to pending order.</a>
-				}
+				@endif
 			</div>
 		</div>
 		@endif

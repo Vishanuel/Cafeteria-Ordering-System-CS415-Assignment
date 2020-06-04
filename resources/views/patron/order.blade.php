@@ -42,7 +42,7 @@
 						<!--option disabled>Select food</option--> 
 						@foreach ($foods as $food )
 						<option name="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}"   Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}" >
-							{{ $food->Food_Name." - ".$food->Food_Desc }} 
+							{{ $food->Food_Name." - ".$food->Food_Desc." - $".$food->Price }} 
 						</option>
 						@endforeach
 						

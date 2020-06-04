@@ -397,35 +397,47 @@
        swal("Access Denied", hiddenwarning, "error");
     });
 	
-	
-	
-	function tcost(){
-		var e;
-		$('#tcost').val(0);
-		for(e = 1; e < $('#q').html(); e++){
-			//alert($('#tcost').val());
-			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));
-			//alert($('#tcost').val());
-			var str = $('#food_item'+e).val();
-			//alert($('#food_item'+e).val());
-			var food = str.split(/(\s+)/); //get the id f the menu item
-
-			var total_ingredient = $('#all_ingredient'+food[0]).val(); 	//get the number of ingredients if that item
+	function ingredientcost(food,value){
+		
+		var foodid = food;
+		var food_item_number = value;
+		var total_ingredient = $('div#items'+food_item_number).find('#all_ingredient'+foodid).val(); 	//get the number of ingredients if that item
 			var d;
 			var ingredient_price = 0;
 				for(d=0;d<total_ingredient;d++){	//iterate through all the ingredients to check if they are selected
 					//alert($('#'+food[0]+'check'+d).val());
-					if($('#'+food[0]+'check'+d).is(":checked")){	//if they are selected then add the ingredients price to that totol price
-						var ing_price = $('#'+food[0]+'check'+d).val(); 	// this gets the id for the ingredient
-						var price = $('#'+food[0]+'ingredient_price'+ing_price).val();	//this gets the price for the ingredient
+					if($('div#items'+food_item_number).find('#'+foodid+'check'+d).is(":checked")){	//if they are selected then add the ingredients price to that totol price
+						var ing_price = $('div#items'+food_item_number).find('#'+foodid+'check'+d).val(); 	// this gets the id for the ingredient
+						var price = $('div#items'+food_item_number).find('#'+foodid+'ingredient_price'+ing_price).val();	//this gets the price for the ingredient
 						ingredient_price = parseInt(ingredient_price) + parseInt(price);
 					}
 				}
 				//alert($('#tcost').val());
 
-				$('#tcost').val(parseInt($('#tcost').val())+parseInt(ingredient_price));
-
-			
+		//$('#tcost').val(parseInt($('#tcost').val())+parseInt(ingredient_price));
+		return parseInt(ingredient_price);
+		//$('#price'+changes).val($('#quantity'+changes).val()*food[4]+parseInt(ingredient_price));
+	}
+	
+	function ingredientcheckupdate(food,value,unitprice){
+		$('div#items'+value).find('.real').change(function()
+		{
+			var id = $(this).parent().parent().parent().parent().attr('id');
+			id = id.charAt(0);
+			alert(id + " change");
+			//alert(food[4]);
+			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
+			tcost();
+		})
+		
+		tcost();
+	}		
+	
+	function tcost(){
+		var e;
+		$('#tcost').val(0);
+		for(e = 1; e < $('#q').html(); e++){
+			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));		
 		}
 		if($('#specialfoodsprice').val()){
 			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#specialfoodsprice').val()));
@@ -446,7 +458,10 @@
 		var food = str.split(/(\s+)/); 
 		$('.check'+changes).hide();
 		$('#'+changes+'choice'+food[0]).show()
-		$('#price'+changes).val($('#quantity'+changes).val()*food[4]);
+		
+		//alert(ingredientcost(food[0],changes));
+		
+		$('#price'+changes).val($('#quantity'+changes).val()*food[4]+ingredientcost(food[0],changes));
 		$('#quantity'+changes).attr({'max':food[2]});
 		$('#qavailable'+changes).val(food[2]);
 	  //	alert(food[4]);
@@ -458,7 +473,7 @@
 			var str = $('#food_item'+change).val();
 			var food = str.split(/(\s+)/);
 			//alert(change);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
+			$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 			tcost();
 		});
 	
@@ -475,42 +490,21 @@
 			$('#'+change+'choice'+food[0]).show();
 
 			//alert(food[2]);
-			$('#price'+change).val($('#quantity'+change).val()*food[4]);
+			$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 		  ///	$('#Quantity').val();
 			$('#qavailable'+change).val(food[2]);		
 			$('#quantity'+change).attr({'max':food[2]});
 			$("#quantity"+change).on("keyup change click paste ", function(){
 				//alert(food[4]);
-				$('#price'+change).val($('#quantity'+change).val()*food[4]);
+				$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				tcost();
 			})
-			var ingredient_count = $('#all_ingredient'+food[0]).val();
-			var i;
-			for(i=0;i<ingredient_count;i++){
-	
-				$('#'+food[0]+'check'+i).change(function()
-				{
-					tcost();
-						
-				});
-	
-			}  
+
+			ingredientcheckupdate(food[0],change,food[4]);
 			tcost();
 		});
+		ingredientcheckupdate(food[0],changes,food[4]);
 
-		var ingredient_count = $('#all_ingredient'+food[0]).val();
-		var i;
-			for(i=0;i<ingredient_count;i++){
-	
-				$('#'+food[0]+'check'+i).change(function()
-				{
-					tcost();
-						
-				});
-	
-			}  
-		
-		
 	}
 	
 	
@@ -647,6 +641,8 @@
 	
 	tcost();
 	//alert(count);
+	
+	//on clicking add food button fire this function to clone the food item row above add food button 
 	$('#addfood').click(function(){
 		$('<div class="col-md-12"><a type="button" id="removefood'+count+'" class="btn bg-maroon btn-flat margin">Remove item</a></div>').prependTo('#orderform');
 		$('<div id="priced'+count+'" class="form-group col-md-2"><label>Price ($)</label><input type="number" class="form-control" id="price'+count+'" name="price'+count+'" Required readonly value=""></div>').prependTo('#orderform');
@@ -667,7 +663,8 @@
 		var food = str.split(/(\s+)/);
 		$('.check'+count).hide();
 		$('#'+count+'choice'+food[0]).show();
-		$('#price'+count).val($('#quantity'+count).val()*food[4]);
+		//$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
+		$('#price'+count).val($('#quantity'+count).val()*food[4]+ingredientcost(food[0],count));
 		$('#qavailable'+count).val(food[2]);
 		$('#quantity'+count).attr({'max':food[2]});
 
@@ -676,7 +673,8 @@
 			$("#quantity"+count).on("keyup change click paste mousewheel", function(){
 				var id = $(this).attr('id');
 				var change = id.replace( /^\D+/g, '');
-				$('#price'+change).val($('#quantity'+change).val()*food[4]);
+				
+				$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				tcost();
 			})
 
@@ -687,6 +685,7 @@
 									
 							})
 			
+			ingredientcheckupdate(food[0],count,food[4]);
 			
 				$('#food_item'+count).change(function(){
 					//alert( $(this).find("option:selected").attr('value') );
@@ -696,28 +695,16 @@
 					var food = str.split(/(\s+)/);
 					$('.check'+change).hide();
 					$('#'+change+'choice'+food[0]).show();
-					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+					//$('#price'+change).val($('#quantity'+change).val()*food[4]);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 					$('#qavailable'+change).val(food[2]);
 					$('#quantity'+change).attr({'max':food[2]});				
 					$("#quantity"+change).on("keyup change click paste mousewheel", function(){
-						$('#price'+change).val($('#quantity'+change).val()*food[4]);
+						//$('#price'+change).val($('#quantity'+change).val()*food[4]);
+						$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 						tcost();
 					})
-
-					tcost();
-
-					var ingredient_count = $('#all_ingredient'+food[0]).val();
-					var i;
-						for(i=0;i<ingredient_count;i++){
-				
-							$('.real').change(function()
-							{
-								alert('changed');
-								tcost();
-									
-							});
-				
-						}  
+					ingredientcheckupdate(food[0],change,food[4]);
 					
 				});
 
@@ -1041,7 +1028,8 @@
 				var food = str.split(/(\s+)/);
 				$('.check'+k).hide();
 				$('#'+k+'choice'+food[0]).show()	 
-				$('#price'+k).val($('#quantity'+k).val()*food[4]);
+				//$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
+				$('#price'+k).val($('#quantity'+k).val()*food[4]+ingredientcost(food[0],k));
 				$('#quantity'+k).attr({'max':food[2]});
 				$('#qavailable'+k).val(food[2]);
 			//	alert(food[4]);
@@ -1053,11 +1041,13 @@
 					var str = $('#food_item'+change).val();
 					var food = str.split(/(\s+)/);
 					//alert(change);
-					
-					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
+					//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 					tcost();
 				});
-					
+				
+				ingredientcheckupdate(food[0],k,food[4]);
+				
 				$('#food_item'+k).change(function(){
 					//alert("helo");
 					var id = $(this).attr('id');
@@ -1069,15 +1059,18 @@
 					//alert(food[2]);
 					$('.check'+change).hide();
 					$('#'+change+'choice'+food[0]).show();
-					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+					//$('#price'+change).val($('#quantity'+change).val()*food[4]);
+					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				///	$('#Quantity').val();
 					$('#qavailable'+change).val(food[2]);		
 					$('#quantity'+change).attr({'max':food[2]});
 					$("#quantity"+change).on("keyup change click paste ", function(){
 						//alert(food[4]);
-					$('#price'+change).val($('#quantity'+change).val()*food[4]);
+						$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
+					//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 						tcost();
 					})
+					ingredientcheckupdate(food[0],change,food[4]);
 					tcost();
 				});
 			}
@@ -1169,7 +1162,8 @@
 						var food = str.split(/(\s+)/);
 						$('.check'+k).hide();
 						$('#'+k+'choice'+food[0]).show()
-						$('#price'+k).val($('#quantity'+k).val()*food[4]);
+						//$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
+						$('#price'+k).val($('#quantity'+k).val()*food[4]+ingredientcost(food[0],k));
 						$('#quantity'+k).attr({'max':food[2]});
 						$('#qavailable'+k).val(food[2]);
 					//	alert(food[4]);
@@ -1181,10 +1175,11 @@
 							var str = $('#food_item'+change).val();
 							var food = str.split(/(\s+)/);
 							//alert(change);
-							$('#price'+change).val($('#quantity'+change).val()*food[4]);
+							$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
+							//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 							tcost();
 						});
-					
+						ingredientcheckupdate(food[0],k,food[4]);
 						$('#food_item'+k).change(function(){
 							//alert("helo");
 							var id = $(this).attr('id');
@@ -1196,15 +1191,18 @@
 							$('.check'+change).hide();
 							$('#'+change+'choice'+food[0]).show();
 							//alert(food[2]);
-							$('#price'+change).val($('#quantity'+change).val()*food[4]);
+							//$('#price'+change).val($('#quantity'+change).val()*food[4]);
+							$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 						///	$('#Quantity').val();
 							$('#qavailable'+change).val(food[2]);		
 							$('#quantity'+change).attr({'max':food[2]});
 							$("#quantity"+change).on("keyup change click paste ", function(){
 								//alert(food[4]);
-							$('#price'+change).val($('#quantity'+change).val()*food[4]);
+								$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
+							//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 									tcost();
 							})
+							ingredientcheckupdate(food[0],change,food[4]);
 							tcost();
 						});
 				}

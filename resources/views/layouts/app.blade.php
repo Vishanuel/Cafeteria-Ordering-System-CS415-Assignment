@@ -403,7 +403,28 @@
 		var e;
 		$('#tcost').val(0);
 		for(e = 1; e < $('#q').html(); e++){
+			//alert($('#tcost').val());
 			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));
+			//alert($('#tcost').val());
+			var str = $('#food_item'+e).val();
+			//alert($('#food_item'+e).val());
+			var food = str.split(/(\s+)/); //get the id f the menu item
+
+			var total_ingredient = $('#all_ingredient'+food[0]).val(); 	//get the number of ingredients if that item
+			var d;
+			var ingredient_price = 0;
+				for(d=0;d<total_ingredient;d++){	//iterate through all the ingredients to check if they are selected
+					//alert($('#'+food[0]+'check'+d).val());
+					if($('#'+food[0]+'check'+d).is(":checked")){	//if they are selected then add the ingredients price to that totol price
+						var ing_price = $('#'+food[0]+'check'+d).val(); 	// this gets the id for the ingredient
+						var price = $('#'+food[0]+'ingredient_price'+ing_price).val();	//this gets the price for the ingredient
+						ingredient_price = parseInt(ingredient_price) + parseInt(price);
+					}
+				}
+				//alert($('#tcost').val());
+
+				$('#tcost').val(parseInt($('#tcost').val())+parseInt(ingredient_price));
+
 			
 		}
 		if($('#specialfoodsprice').val()){
@@ -428,7 +449,7 @@
 		$('#price'+changes).val($('#quantity'+changes).val()*food[4]);
 		$('#quantity'+changes).attr({'max':food[2]});
 		$('#qavailable'+changes).val(food[2]);
-	//	alert(food[4]);
+	  //	alert(food[4]);
 		$('#quantity'+changes).on("keyup change click paste ", function(){
 			
 			
@@ -455,7 +476,7 @@
 
 			//alert(food[2]);
 			$('#price'+change).val($('#quantity'+change).val()*food[4]);
-		///	$('#Quantity').val();
+		  ///	$('#Quantity').val();
 			$('#qavailable'+change).val(food[2]);		
 			$('#quantity'+change).attr({'max':food[2]});
 			$("#quantity"+change).on("keyup change click paste ", function(){
@@ -463,8 +484,31 @@
 				$('#price'+change).val($('#quantity'+change).val()*food[4]);
 				tcost();
 			})
+			var ingredient_count = $('#all_ingredient'+food[0]).val();
+			var i;
+			for(i=0;i<ingredient_count;i++){
+	
+				$('#'+food[0]+'check'+i).change(function()
+				{
+					tcost();
+						
+				});
+	
+			}  
 			tcost();
 		});
+
+		var ingredient_count = $('#all_ingredient'+food[0]).val();
+		var i;
+			for(i=0;i<ingredient_count;i++){
+	
+				$('#'+food[0]+'check'+i).change(function()
+				{
+					tcost();
+						
+				});
+	
+			}  
 		
 		
 	}
@@ -626,6 +670,7 @@
 		$('#price'+count).val($('#quantity'+count).val()*food[4]);
 		$('#qavailable'+count).val(food[2]);
 		$('#quantity'+count).attr({'max':food[2]});
+
 		
 		
 			$("#quantity"+count).on("keyup change click paste mousewheel", function(){
@@ -634,6 +679,13 @@
 				$('#price'+change).val($('#quantity'+change).val()*food[4]);
 				tcost();
 			})
+
+			$('.real').change(function()
+							{
+								alert('changed');
+								tcost();
+									
+							})
 			
 			
 				$('#food_item'+count).change(function(){
@@ -651,9 +703,25 @@
 						$('#price'+change).val($('#quantity'+change).val()*food[4]);
 						tcost();
 					})
+
 					tcost();
+
+					var ingredient_count = $('#all_ingredient'+food[0]).val();
+					var i;
+						for(i=0;i<ingredient_count;i++){
+				
+							$('.real').change(function()
+							{
+								alert('changed');
+								tcost();
+									
+							});
+				
+						}  
+					
 				});
-		    
+
+				
 		
 		$('#removefood'+count).click(function(){
 			var id = $(this).attr('id');

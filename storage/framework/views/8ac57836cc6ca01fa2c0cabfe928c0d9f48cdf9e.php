@@ -8,11 +8,11 @@
         Home
         <small style="color:rgba(230,230,230,1);"> screen ....</small>
       </h1> 
-     <!-- <ol class="breadcrumb">
-        <li><a href="<?php echo e(url('home')); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
-       <!-- <li><a href="<?php echo e(url('smpdevice')); ?>">Device</a></li> 
+     <ol class="breadcrumb">
+        <li><a target="_blank" href="<?php echo e(url('help/COS.html')); ?>">Help</a></li>
       
-      </ol> -->
+      
+      </ol>
     </section>
 	
 <!-- Main content -->

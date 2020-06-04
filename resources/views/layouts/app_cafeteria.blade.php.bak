@@ -70,8 +70,8 @@
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
   <!-- Bootstrap time Picker -->
   <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
-  <!-- jvectormap -->
-  <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+
+ 
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
@@ -104,7 +104,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li ><a href="{{URL::to('cafeteria')}}">View Orders <span class="sr-only">(current)</span></a></li>
+			<li ><a href="{{URL::to('cafeteria')}}">View Orders <span class="sr-only">(current)</span></a></li>
+			<li ><a href="{{URL::to('cafe_subs')}}">View Subscriptions <span class="sr-only">(current)</span></a></li>
           <!--  <li><a href="{{URL::to('order')}}">View Orders</a></li> -->
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -204,6 +205,26 @@
 <!-- ./wrapper -->
 
 <script>
+	function backbutton(){
+		
+		var url = window.location.href;
+		var n = url.search("home");
+		//alert(n);
+		if(n == -1){
+			history.back(-1);
+		}
+		else{
+			document.getElementById('backbutton').style.display = 'none';
+			//history.back(0);
+		}
+	}
+	
+	var url = window.location.href;
+	var n = url.search("home");
+	if(n != -1){
+		document.getElementById('backbutton').style.display = 'none';
+	}
+	
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({

@@ -252,7 +252,8 @@
 <!-- ./wrapper -->
 
 <script >
-function backbutton(){
+
+	function backbutton(){
 		
 		var url = window.location.href;
 		var n = url.search("home");
@@ -265,9 +266,6 @@ function backbutton(){
 			//history.back(0);
 		}
 	}
-
-
-	
 	
 	
 	function initjs(){
@@ -283,6 +281,7 @@ function backbutton(){
 	}
 	
 	$(function () {
+	/*
 	 function backbutton(){
 		
 		var url = window.location.href;
@@ -296,6 +295,7 @@ function backbutton(){
 			//history.back(0);
 		}
 	}
+	*/
 	
     $('#example1').DataTable({
 		

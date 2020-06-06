@@ -157,8 +157,8 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-		$input = $request->all();
-		dd($input);
+		//$input = $request->all();
+		//dd($input);
 		
 		$orderid = $request->input('orderid');
 		
@@ -281,15 +281,25 @@ class OrderController extends Controller
 			->insert([
 				['Cos_Order_Num' => $id, 'Menu_Food_Item_ID' => substr($request->input($food_item), 0, strspn($request->input($food_item), "0123456789")), 'Quantity' => $request->input('quantity'.$i)],
 			]);	
-		$item_ids = DB::table('ordered_food_item')->orderBy('Ordered_Food_Item_ID', 'desc')->first();	
-		$ingredient = "ingredient".$i;
-		$ingredient_ids = $request->input($ingredient);
-		$input=$request->all();
-//dd($input);
-		for($j=0;$j<count($ingredient_ids);$j++)
-		{
-		DB::table('ordered_ingredient')
-		->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
+			$item_ids = DB::table('ordered_food_item')->orderBy('Ordered_Food_Item_ID', 'desc')->first();	
+			$ingredient = "ingredient".$i;
+			$ingredient_quantity = "ingredient".$i;
+			if($request->input($ingredient)){
+				$ingredient_ids = $request->input($ingredient);
+				$ingredient_quant = $request->input($ingredient_quantity);
+				//$input=$request->all();
+				//dd($input);
+			for($j=0;$j<count($ingredient_ids);$j++)
+			{
+				DB::table('ordered_ingredient')
+				->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
+
+
+				DB::table('ingredient')
+				->where('Ingredient_ID', $ingredient_ids[$j])
+				->decrement('Ingredient_Quantity',$ingredient_ids[$j]);
+			}
+
 		}
 	
 		}
@@ -2076,6 +2086,12 @@ class OrderController extends Controller
 				->where('Cos_Order_Num','=',$id)
 				->orderBy('Ordered_Food_Item_ID', 'DESC')
 				->get();
+				
+				foreach($food_selecteds as $selected_id){
+					$selected_ingredient = DB::table('ordered_ingredient')
+					->where('Ordered_Food_Item_ID','=',$selected_id->Ordered_Food_Item_ID)
+					->get();
+				}
 				
 				foreach($food_selecteds as $food_select){
 					$quantity = DB::table('menu_food_item')

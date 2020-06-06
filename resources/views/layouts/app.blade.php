@@ -424,7 +424,7 @@
 		{
 			var id = $(this).parent().parent().parent().parent().attr('id');
 			id = id.charAt(0);
-			alert(id + " change");
+			//alert(id + " change");
 			//alert(food[4]);
 			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
 			tcost();
@@ -680,7 +680,7 @@
 
 			$('.real').change(function()
 							{
-								alert('changed');
+								//alert('changed');
 								tcost();
 									
 							})

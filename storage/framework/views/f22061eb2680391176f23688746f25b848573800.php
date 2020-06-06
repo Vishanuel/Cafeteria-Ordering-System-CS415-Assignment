@@ -13,6 +13,7 @@
         <li><a href="<?php echo e(url('home')); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="<?php echo e(url('smpdevice')); ?>">Device</a></li> -->
         <li class="active">Register</li>
+		<li><a target="_blank" href="<?php echo e(url('help/RegistrationProcess.html')); ?>">Help</a></li>
       </ol>
     </section>
 <!-- Main content -->

@@ -49,11 +49,11 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Cos_Order_Num</th>
-                  <th>Cos_Order_Date_Time</th>
-                  <th>Cos_Meal_Date_Time</th>
-                  <th>Cos_Order_Meal_Status</th>
-                  <th>Cos_Order_Cost</th>
+                  <th>Order Number</th>
+                  <th>Date Order Placed</th>
+                  <th>Meal Date</th>
+                  <th>Meal Status</th>
+                  <th>Cost</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -64,13 +64,12 @@
                   <td style="text-overflow: ellipsis;">{{ $order->Cos_Order_Date_Time}}</td>
                   <td style="text-overflow: ellipsis;">{{ $order->Cos_Meal_Date_Time}}</td>
                   <td style="text-overflow: ellipsis;">{{ $order->Cos_Order_Meal_Status}}</td>
-                  <td style="text-overflow: ellipsis;">{{ $order->Cos_Order_Cost}}</td>
+                  <td style="text-overflow: ellipsis;">${{ $order->Cos_Order_Cost}}.00</td>
 				  <td style="text-overflow: ellipsis;" class="text-center">
                         
 						 
 					<a class="btn btn-info btn-flat" type="button" href="{{URL::to('order_edit_details/'.$order->Cos_Order_Num)}}">
-                              <span class="fa fa-pencil">
-                              </span>
+                              
                         Show details
 					</a>
 							

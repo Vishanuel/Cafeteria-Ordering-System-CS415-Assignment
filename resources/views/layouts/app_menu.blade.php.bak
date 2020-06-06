@@ -45,121 +45,130 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+</head>
 <body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
+	<div class="wrapper">
 
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="#" class="navbar-brand"><b>Cafeteria </b>Ordering System</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+		<header class="main-header" style="background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+			<nav class="navbar navbar-static-top" style="background: rgba(200, 200, 200, 0.6);">
+				<div class="container">
+					<div class="navbar-header">
+					<a href="#" class="navbar-brand"><b>Cafeteria </b>Ordering System</a>
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+						<i class="fa fa-bars"></i>
+					</button>
+					</div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-			<li class="active"><a href="{{URL::to('menu')}}">Display Menu<span class="sr-only">(current)</span></a></li>
-			<li class="active"><a href="{{URL::to('menu/create')}}">Create Menu <span class="sr-only">(current)</span></a></li>
-			<li class="active"><a href="{{URL::to('specialmenu')}}">Display Special Menu<span class="sr-only">(current)</span></a></li>
-            {{-- <li><a href="#">Link</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li> --}}
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-           
-            <!-- User Account Menu -->
-            <li class="dropdown user user-menu">
-              <!-- Menu Toggle Button -->
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- The user image in the navbar-->
-                <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <span class="hidden-xs">{{ Auth::user()->name }}</span>
-              </a>
-              <ul class="dropdown-menu">
-                <!-- The user image in the menu -->
-                <li class="user-header">
-                  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="{{URL::to('menu_manager')}}">Home<span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="{{URL::to('menu')}}">Menus<span class="sr-only">(current)</span></a></li>
+						{{-- <li class="active"><a href="{{URL::to('menu/create')}}">Create Menu <span class="sr-only">(current)</span></a></li> --}}
+						<li class="active"><a href="{{URL::to('specialmenu')}}">Special Menus<span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="{{URL::to('item')}}"> Menu Items<span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="{{URL::to('ingredient')}}">Item Ingredients<span class="sr-only">(current)</span></a></li>
+						{{-- <li><a href="#">Link</a></li>
+						<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+							<li class="divider"></li>
+							<li><a href="#">One more separated link</a></li>
+						</ul>
+						</li> --}}
+					</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+					<!-- Navbar Right Menu -->
+					<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+					
+						<!-- User Account Menu -->
+						<li class="dropdown user user-menu">
+						<!-- Menu Toggle Button -->
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<!-- The user image in the navbar-->
+							<img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+							<!-- hidden-xs hides the username on small devices so only the image appears. -->
+							<span class="hidden-xs">{{ Auth::user()->name }}</span>
+						</a>
+						<ul class="dropdown-menu">
+							<!-- The user image in the menu -->
+							<li class="user-header">
+							<img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
-                  <p>
-                    {{ Auth::user()->name }} - {{ Auth::user()->usertype }}
-                    <small>{{ Auth::user()->created_at}}</small>
-                  </p>
-                </li>
-                <!-- Menu Body -->
-                
-				
-				
-				
-                <!-- Menu Footer-->
-                <li class="user-footer">
-                  <div class="pull-left">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  </div>
-                  <div class="pull-right">
-				  <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                           @csrf
-					<button type="submit" class="btn btn-primary btn-flat">Sign out</button>
-                  </form>
-                  </div>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-custom-menu -->
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Full Width Column -->
-  
+							<p>
+								{{ Auth::user()->name }} - {{ Auth::user()->usertype }}
+								<small>{{ Auth::user()->created_at}}</small>
+							</p>
+							</li>
+							<!-- Menu Body -->
+							
+							
+							
+							
+							<!-- Menu Footer-->
+							<li class="user-footer">
+							<div class="pull-left">
+								<a href="#" class="btn btn-default btn-flat">Profile</a>
+							</div>
+							<div class="pull-right">
+							<form id="logout-form" action="{{ route('logout') }}" method="POST">
+									@csrf
+								<button type="submit" class="btn btn-primary btn-flat">Sign out</button>
+							</form>
+							</div>
+							</li>
+						</ul>
+						</li>
+					</ul>
+					</div>
+					<!-- /.navbar-custom-menu -->
+				</div>
+				<!-- /.container-fluid -->
+			</nav>
+		</header>
+	<!-- Full Width Column -->
 	
-  <div class="content-wrapper">
-    <div class="container">
-      <!-- Content Header (Page header) -->
-      @if(session()->has('success'))
-		<input type="hidden" value="{{Session::get('success')}}" id="hiddensuccesswcs">
-	@endif
-	@if(session()->has('error'))
-		<input type="hidden" value="{{Session::get('error')}}" id="hiddenerrorwcs">
-	@endif
-	@if(session()->has('warning'))
-		<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
-	@endif
-	@yield('content')
-    </div>
-    <!-- /.container -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="container">
-      <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.13
-      </div>
-      <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
-      reserved.
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
+		
+	<div class="content-wrapper">
+		<div class="container">
+		<!-- Content Header (Page header) -->
+		@if(session()->has('success'))
+			<input type="hidden" value="{{Session::get('success')}}" id="hiddensuccesswcs">
+		@endif
+		@if(session()->has('error'))
+			<input type="hidden" value="{{Session::get('error')}}" id="hiddenerrorwcs">
+		@endif
+		@if(session()->has('warning'))
+			<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
+		@endif
+		{{-- <div width="100%" class="backgroundimg" style="position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+			<div width="100%" class="whiteoverlay" style="padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
+			<hr width="90%" style="margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
+			</div>
+		</div> --}}
+		@yield('content')
+		</div>
+		<!-- /.container -->
+	</div>
+	<!-- /.content-wrapper -->
+	<footer class="main-footer">
+		<div class="container">
+		<div class="pull-right hidden-xs">
+			<b>Version</b> 2.4.13
+		</div>
+		<strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
+		reserved.
+		</div>
+		<!-- /.container -->
+	</footer>
+	</div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->

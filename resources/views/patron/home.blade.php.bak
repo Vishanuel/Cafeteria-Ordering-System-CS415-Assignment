@@ -10,11 +10,11 @@
         Home
         <small style="color:rgba(230,230,230,1);"> screen ....</small>
       </h1> 
-     <!-- <ol class="breadcrumb">
-        <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-       <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> 
+     <ol class="breadcrumb">
+        <li><a target="_blank" href="{{url('help/COS.html')}}">Help</a></li>
       
-      </ol> -->
+      
+      </ol>
     </section>
 	
 <!-- Main content -->

@@ -18,6 +18,9 @@
   <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
   
   <!-- DataTables -->
+  @if(session('cordova') == 'yes')
+  {{ "hello" }}
+  @endif
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
@@ -239,7 +242,7 @@
    
 	<div class="container" >
       <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.13
+        <b>Version</b> 3
       </div>
      <!-- <strong>Copyright &copy; 2014-2019 AdminLTE.</strong> All rights
       reserved. -->
@@ -424,7 +427,7 @@ function backbutton(){
 		{
 			var id = $(this).parent().parent().parent().parent().attr('id');
 			id = id.charAt(0);
-			alert(id + " change");
+		//	alert(id + " change");
 			//alert(food[4]);
 			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
 			tcost();
@@ -698,22 +701,6 @@ function backbutton(){
 						tcost();
 					})
 					ingredientcheckupdate(food[0],change,food[4]);
-					//tcost();
-					/*
-					var ingredient_count = $('#all_ingredient'+food[0]).val();
-					var i;
-						for(i=0;i<ingredient_count;i++){
-				
-							$('.real').change(function()
-							{
-								//alert('changed');
-								$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
-								tcost();
-									
-							});
-				
-						}  
-					*/
 					
 				});
 

@@ -13,6 +13,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Order History</li>
+		<li><a target="_blank" href="{{url('help/ViewingSummaryofOrderHistory.html')}}">Help</a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -34,11 +35,11 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Cos_Order_Num</th>
-                  <th>Cos_Order_Date_Time</th>
-                  <th>Cos_Meal_Date_Time</th>
-                  <th>Cos_Order_Meal_Status</th>
-                  <th>Cos_Order_Cost</th>
+                  <th>Order Number</th>
+                  <th>Date Order Placed</th>
+                  <th>Meal Date</th>
+                  <th>Meal Status</th>
+                  <th>Cost</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -54,8 +55,7 @@
                         
 						 
 					<a class="btn btn-info btn-flat" type="button" href="{{URL::to('order_edit_details/'.$order->Cos_Order_Num)}}">
-                              <span class="fa fa-pencil">
-                              </span>
+                              
                         Show details
 					</a>
 							

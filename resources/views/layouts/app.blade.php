@@ -18,6 +18,10 @@
   <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
   
   <!-- DataTables -->
+  @if(session('cordova') == 'yes')
+  <script src="{{asset('android/cordova.js')}}"></script>
+  <script src="{{asset('android/app.js')}}"></script>
+  @endif
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
@@ -239,7 +243,7 @@
    
 	<div class="container" >
       <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.13
+        <b>Version</b> 3
       </div>
      <!-- <strong>Copyright &copy; 2014-2019 AdminLTE.</strong> All rights
       reserved. -->
@@ -424,7 +428,7 @@ function backbutton(){
 		{
 			var id = $(this).parent().parent().parent().parent().attr('id');
 			id = id.charAt(0);
-			alert(id + " change");
+		//	alert(id + " change");
 			//alert(food[4]);
 			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
 			tcost();

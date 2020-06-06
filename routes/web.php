@@ -19,6 +19,7 @@ Auth::routes();
 Route::redirect('/','/welcome');
 //Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
 Route::resource('welcome','WelcomeController');
+Route::resource('cordova','CordovaController');
 Route::resource('order','OrderController');
 Route::resource('student_order','OrderStudentController');
 Route::resource('home','HomeController');

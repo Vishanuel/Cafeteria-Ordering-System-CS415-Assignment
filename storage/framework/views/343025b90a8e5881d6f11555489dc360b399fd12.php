@@ -18,6 +18,10 @@
   <script src="<?php echo e(asset('dist/js/adminlte.min.js')); ?>"></script>
   
   <!-- DataTables -->
+  <?php if(session('cordova') == 'yes'): ?>
+  <script src="<?php echo e(asset('android/cordova.js')); ?>"></script>
+  <script src="<?php echo e(asset('android/app.js')); ?>"></script>
+  <?php endif; ?>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
@@ -240,7 +244,7 @@
    
 	<div class="container" >
       <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.13
+        <b>Version</b> 3
       </div>
      <!-- <strong>Copyright &copy; 2014-2019 AdminLTE.</strong> All rights
       reserved. -->
@@ -421,58 +425,24 @@ function backbutton(){
 	}
 	
 	function ingredientcheckupdate(food,value,unitprice){
-		//var ingredient_count = $('div#items'+value).find('#all_ingredient'+food).val();
-		//var i;
-		//for(i=0;i<ingredient_count;i++){
-	
-		//	$('#'+food+'check'+i).change(function()
-		//	{
-		//		$('#price'+value).val($('#quantity'+value).val()*food[4]+ingredientcost(food,value));
-		//		tcost();
-		//	});
-
-		//}
-		
 		$('div#items'+value).find('.real').change(function()
 		{
 			var id = $(this).parent().parent().parent().parent().attr('id');
 			id = id.charAt(0);
-			alert(id + " change");
+		//	alert(id + " change");
 			//alert(food[4]);
 			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
 			tcost();
 		})
 		
-		//tcost();
+		tcost();
 	}		
 	
 	function tcost(){
 		var e;
 		$('#tcost').val(0);
 		for(e = 1; e < $('#q').html(); e++){
-			//alert($('#tcost').val());
-			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));
-			//alert($('#tcost').val());
-			var str = $('#food_item'+e).val();
-			//alert($('#food_item'+e).val());
-			var food = str.split(/(\s+)/); //get the id f the menu item
-/*
-			var total_ingredient = $('#all_ingredient'+food[0]).val(); 	//get the number of ingredients if that item
-			var d;
-			var ingredient_price = 0;
-				for(d=0;d<total_ingredient;d++){	//iterate through all the ingredients to check if they are selected
-					//alert($('#'+food[0]+'check'+d).val());
-					if($('#'+food[0]+'check'+d).is(":checked")){	//if they are selected then add the ingredients price to that totol price
-						var ing_price = $('#'+food[0]+'check'+d).val(); 	// this gets the id for the ingredient
-						var price = $('#'+food[0]+'ingredient_price'+ing_price).val();	//this gets the price for the ingredient
-						ingredient_price = parseInt(ingredient_price) + parseInt(price);
-					}
-				}
-				//alert($('#tcost').val());
-
-				$('#tcost').val(parseInt($('#tcost').val())+parseInt(ingredient_price));
-*/
-			
+			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));		
 		}
 		if($('#specialfoodsprice').val()){
 			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#specialfoodsprice').val()));
@@ -534,37 +504,12 @@ function backbutton(){
 				$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				tcost();
 			})
-			/*var ingredient_count = $('#all_ingredient'+food[0]).val();
-			var i;
-			for(i=0;i<ingredient_count;i++){
-	
-				$('#'+food[0]+'check'+i).change(function()
-				{
-					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
-					tcost();
-						
-				});
-	
-			}  */
+
 			ingredientcheckupdate(food[0],change,food[4]);
 			tcost();
 		});
 		ingredientcheckupdate(food[0],changes,food[4]);
-		/*
-		var ingredient_count = $('#all_ingredient'+food[0]).val();
-		var i;
-			for(i=0;i<ingredient_count;i++){
-	
-				$('#'+food[0]+'check'+i).change(function()
-				{
-					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
-					tcost();
-						
-				});
-	
-			}  
-		
-		*/
+
 	}
 	
 	
@@ -758,22 +703,6 @@ function backbutton(){
 						tcost();
 					})
 					ingredientcheckupdate(food[0],change,food[4]);
-					//tcost();
-					/*
-					var ingredient_count = $('#all_ingredient'+food[0]).val();
-					var i;
-						for(i=0;i<ingredient_count;i++){
-				
-							$('.real').change(function()
-							{
-								//alert('changed');
-								$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
-								tcost();
-									
-							});
-				
-						}  
-					*/
 					
 				});
 

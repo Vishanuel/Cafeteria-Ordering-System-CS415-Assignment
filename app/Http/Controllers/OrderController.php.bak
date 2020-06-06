@@ -157,7 +157,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$input = $request->all();
+		dd($input);
+		
 		$orderid = $request->input('orderid');
 		
 		$menuid = $request->input('menuid');
@@ -289,7 +291,7 @@ class OrderController extends Controller
 		DB::table('ordered_ingredient')
 		->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
 		}
-						
+	
 		}
 		
 		$cos_order=DB::table('cos_order')

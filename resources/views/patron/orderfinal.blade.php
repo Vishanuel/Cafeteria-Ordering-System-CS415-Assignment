@@ -38,7 +38,7 @@
                 <!-- text input -->
 				<?php $i = $food_count;?>
 				@foreach($food_selecteds as $food_select)
-				
+				<div class="row">
 				<div id="food_itemd{{$i}}" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select class="food form-control select2" id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
@@ -88,7 +88,7 @@
 					</div>
 					@if($i > 1) <div class="col-md-12"><a type="button" id="removefood{{$i}}" class="btn bg-maroon btn-flat margin">Remove item</a></div> @endif
 					<?php $i= $i - 1; ?>
-					
+				</div>
 				@endforeach
 				
 				<div class="col-md-10">

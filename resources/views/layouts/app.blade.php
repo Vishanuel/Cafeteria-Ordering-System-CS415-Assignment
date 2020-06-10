@@ -246,7 +246,8 @@
 <!-- ./wrapper -->
 
 <script >
-function backbutton(){
+
+	function backbutton(){
 		
 		var url = window.location.href;
 		var n = url.search("home");
@@ -259,9 +260,6 @@ function backbutton(){
 			//history.back(0);
 		}
 	}
-
-
-	
 	
 	
 //	function initjs(){
@@ -277,6 +275,7 @@ function backbutton(){
 	}
 	
 	$(function () {
+	/*
 	 function backbutton(){
 		
 		var url = window.location.href;
@@ -290,6 +289,7 @@ function backbutton(){
 			//history.back(0);
 		}
 	}
+	*/
 	
     $('#example1').DataTable({
 		
@@ -418,7 +418,11 @@ function backbutton(){
 		{
 			var id = $(this).parent().parent().parent().parent().attr('id');
 			id = id.charAt(0);
+<<<<<<< HEAD
 		//	alert(id + " change");
+=======
+			//alert(id + " change");
+>>>>>>> 6fe564939404f4bcdda9207937844cd23d8ae12d
 			//alert(food[4]);
 			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
 			tcost();
@@ -671,6 +675,13 @@ function backbutton(){
 				$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				tcost();
 			})
+
+			$('.real').change(function()
+							{
+								//alert('changed');
+								tcost();
+									
+							})
 			
 			ingredientcheckupdate(food[0],count,food[4]);
 			

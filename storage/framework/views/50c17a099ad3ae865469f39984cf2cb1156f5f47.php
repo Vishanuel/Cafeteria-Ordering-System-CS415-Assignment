@@ -202,7 +202,27 @@
      Both of these plugins are recommended to enhance the
      user experience. -->
 	 <script>
-  $(function () {
+	 function backbutton(){
+		
+		var url = window.location.href;
+		var n = url.search("home");
+		//alert(n);
+		if(n == -1){
+			history.back(-1);
+		}
+		else{
+			document.getElementById('backbutton').style.display = 'none';
+			//history.back(0);
+		}
+	}
+	
+	var url = window.location.href;
+	var n = url.search("home");
+	if(n != -1){
+		document.getElementById('backbutton').style.display = 'none';
+	}
+	 
+    $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({
       'paging'      : true,

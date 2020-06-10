@@ -130,18 +130,7 @@
 			 <li><a href="{{URL::to('home')}}" >Home</a></li>
             <li ><a href="{{URL::to('restaurant')}}" >Place Order</a></li>
             <li><a href="{{URL::to('order')}}" >Order History</a></li>
-			<li class="divider"></li>			
-			<!--li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions</a>
-				<div class="dropdown-menu">
-					
-					<a href="{{URL::to('mealsub')}}" class="dropdown-item">View Subscriptions</a>	
-					<div class="dropdown-divider"></div>			
-					<a href="{{URL::to('mealsub_add')}}" class="dropdown-item">New Subscription</a>					
-					
-				</div>
-			</li-->
-			
+			<li class="divider"></li>				
 			<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -211,6 +200,7 @@
         <!-- /.navbar-custom-menu -->
       </div>
       <!-- /.container-fluid -->
+	  <hr class="customdivider" width="90%" style="">
     </nav>
   </header>
   <!-- Full Width Column -->
@@ -230,7 +220,7 @@
 	@endif
 	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
-		<hr width="90%" style="z-index:0;margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
+		
 		</div>
 	</div>
 	@yield('content')
@@ -274,7 +264,7 @@ function backbutton(){
 	
 	
 	
-	function initjs(){
+//	function initjs(){
 	
 	ScrollReveal().reveal('.box'); 
 	//ScrollReveal().reveal('#card'); 
@@ -1251,8 +1241,8 @@ function backbutton(){
 		}
 	});
 	//initjs();
-	}
-	initjs();
+	//}
+	//initjs();
 
 
 $('#menus').change(function(){

@@ -214,7 +214,7 @@ class OrderController extends Controller
 		
 			DB::table('cos_order')
 				->insert([
-					['Cos_Order_Num' => $id,'Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN'],
+					['Cos_Order_Num' => $id,'Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN', 'Menu_ID' => $menuid],
 		    ]);	
 		
 		$mealmethod = $request->input('mealmethod');
@@ -1733,20 +1733,19 @@ class OrderController extends Controller
      */
     public function edit($orderid)
     {
+		$employee_id = DB::table('patron')
+		->select('Employee_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first();
 		
-		$menuid=DB::table('ordered_food_item')	
-		->join('menu_food','menu_food.Menu_Food_Item_ID','=','ordered_food_item.Menu_Food_Item_ID')
-		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
-		->where('Cos_Order_Num','=',$orderid)
+		$menuid=DB::table('cos_order')	
+		->where('Employee_ID','=',$employee_id->Employee_ID)
+        ->where('Cos_Order_Num', '=', $orderid)
 		->first();
 		
 		$menuid=$menuid->Menu_ID;
 
 		
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
-		->where('User_ID','=',Auth::user()->id)
-		->first();
 		
 		$cos_order=DB::table('cos_order')
 		->where('Employee_ID','=',$employee_id->Employee_ID)

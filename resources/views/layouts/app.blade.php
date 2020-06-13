@@ -664,10 +664,15 @@
 		$('#food_item'+(count-1)).find('option').clone().appendTo('#food_item'+count);
 		$('#items'+(count-1)).clone().prop('id','items'+count).appendTo('#food_itemd'+count);
 		var tot = $('#items'+count).find('#item_total').val();
+		//alert(tot);
 		for(i=0;i<tot;i++){
 			var num = $('#items'+count).find('#item_number'+i).val();
+			//alert(num);
+		//	alert("id before="+$('#items'+count).find('#'+(count-1)+'choice'+num).attr('id'));
 			$('#items'+count).find('#'+(count-1)+'choice'+num).prop('id',count+'choice'+num).attr("class","checkbox check"+count).hide();
+			//alert("id after="+$('#items'+count).find('#'+(count)+'choice'+num).attr('id'));
 			$('#'+count+'choice'+num).find('.real').prop({'name':'ingredient'+count+'[]'});
+			//alert($('#'+count+'choice'+num).find('.real').attr('class'));
 		}
 		
 		var str = $('#food_item'+count).val();

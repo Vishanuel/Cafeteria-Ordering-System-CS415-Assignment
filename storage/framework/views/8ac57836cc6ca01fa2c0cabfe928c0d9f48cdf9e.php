@@ -62,7 +62,7 @@
                   <td style="text-overflow: ellipsis;"><?php echo e($order->Cos_Order_Date_Time); ?></td>
                   <td style="text-overflow: ellipsis;"><?php echo e($order->Cos_Meal_Date_Time); ?></td>
                   <td style="text-overflow: ellipsis;"><?php echo e($order->Cos_Order_Meal_Status); ?></td>
-                  <td style="text-overflow: ellipsis;">$<?php echo e($order->Cos_Order_Cost); ?>.00</td>
+                  <td style="text-overflow: ellipsis;">$<?php echo e(number_format((float)$order->Cos_Order_Cost, 2, '.', '')); ?></td>
 				  <td style="text-overflow: ellipsis;" class="text-center">
                         
 						 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_tutorial')
 
 @section('content')
 <div class="content-wrapper" >
@@ -13,7 +13,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Place Order</li>
-		<li><a target="_blank" href="{{url('help/TheOrderingProcess.html')}}">Help</a></li>
+		<!--li><a target="_blank" href="{{url('help/TheOrderingProcess.html')}}">Help</a></li-->
       </ol>
     </section>
 <!-- Main content -->
@@ -32,7 +32,7 @@
 
                 <p>Some meals will not be orderable when the "Get meal delivered" option is selected.<br> The selected food option may also change when a non-orderable food is already selected.</p>
               </div>
-              <form id="orderform" role="form" method="POST" action="{{action('OrderController@store')}}" enctype="multipart/form-data">
+              <form id="orderform" role="form" method="POST" action="{{action('TutorialController@store')}}" enctype="multipart/form-data">
 			   @csrf
                 <!-- text input -->
 				
@@ -47,9 +47,7 @@
 						@endforeach
 						
 					</select>
-					<div class="col-md-12">
-						<label></br>Ingredient Selection</label>
-					</div>
+					
 					<div id="items1">
 						<input id="item_total" value="{{count($items)}}"  type="hidden">
 						@for($i=0;$i<count($items);$i++)
@@ -59,16 +57,14 @@
 							@for($j=0;$j<count($cus_ingredients[$i]);$j++)
 							<div class="row">
 								<input id="all_ingredient{{$items[$i]->Menu_Food_Item_ID}}" value="{{count($cus_ingredients[$i])}}"  type="hidden">
-								<div class="form-group col-md-4 col-xs-6">
-								<label></br><input class="real checkbox" name="ingredient1[]" id ="{{$items[$i]->Menu_Food_Item_ID}}check{{$j}}" type="checkbox" value="{{$cus_ingredients[$i][$j]->Ingredient_ID}}"
+								<div class="form-group col-md-4">
+								<label><input class="real checkbox" name="ingredient1[]" id ="{{$items[$i]->Menu_Food_Item_ID}}check{{$j}}" type="checkbox" value="{{$cus_ingredients[$i][$j]->Ingredient_ID}}"
 								@for($k=0;$k<count($ingredients[$i]);$k++)
 								@if(($cus_ingredients[$i][$j]->Ingredient_ID)==($ingredients[$i][$k]->Ingredient_ID))  ? checked : 
 								@endif @endfor>
 								{{$cus_ingredients[$i][$j]->Ingredient_Name}}</label></div>
-								<div class="form-group col-md-3 col-xs-6 price">
-								<label>Price($)
-										<input type="number" class="form-control" id="{{$items[$i]->Menu_Food_Item_ID}}ingredient_price{{$cus_ingredients[$i][$j]->Ingredient_ID}}" Required readonly value="{{$cus_ingredients[$i][$j]->Ingredient_Price}}" min="{{$cus_ingredients[$i][$j]->Ingredient_Price}}">
-									</label>
+								<div class="form-group col-md-3  price">
+										<label><input type="number" class="form-control" id="{{$items[$i]->Menu_Food_Item_ID}}ingredient_price{{$cus_ingredients[$i][$j]->Ingredient_ID}}" Required readonly value="{{$cus_ingredients[$i][$j]->Ingredient_Price}}" min="{{$cus_ingredients[$i][$j]->Ingredient_Price}}"><b>Prices($)</b></label>
 									</div>
 								</div>
 							@endfor
@@ -92,9 +88,9 @@
 					  <input type="number" class="form-control" id="price1" name="price1" Required readonly value="">
 					</div>
 				
-				<div id="hr{{$i}}" class="col-md-12">
-						<hr class=""  width="95%" style="color:grey;background:grey;">
-					</div>
+				<div id="hr1" class="col-md-12">
+					<hr class=""  width="95%" style="color:grey;background:grey;">
+				</div>
 				
 				<div class="col-md-10">
 					<a type="button" id="addfood" class="btn bg-olive btn-flat margin">Add more food item</a>

@@ -21,6 +21,7 @@ Route::redirect('/','/welcome');
 Route::resource('welcome','WelcomeController');
 Route::resource('cordova','CordovaController');
 Route::resource('order','OrderController');
+Route::resource('tutorial','TutorialController');
 Route::resource('student_order','OrderStudentController');
 Route::resource('home','HomeController');
 Route::resource('student_home','HomeStudentController');
@@ -38,6 +39,18 @@ Route::resource('studentregister','RegisterStudentController');
 Route::resource('mealsub','MealSubsController');
 Route::resource('cafe_subs','Cafe_MealSubsController');
 Route::resource('subs_deliv', 'SubscriptionDelivererController');
+
+Route::match(['get', 'post'],'tutorial_order_create/{menuid}', [
+    'uses' => 'TutorialController@create'
+]);
+
+Route::match(['get', 'post'],'tutorial_order_payment', [
+    'uses' => 'TutorialController@payment'
+]);
+
+Route::match(['get', 'post'],'tutorial_order_payment_confirm', [
+    'uses' => 'TutorialController@confirm'
+]);
 
 Route::match(['get', 'post'],'student_order_create/{menuid}', [
     'uses' => 'OrderStudentController@create'

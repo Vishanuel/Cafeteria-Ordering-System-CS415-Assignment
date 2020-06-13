@@ -397,11 +397,15 @@
 		var foodid = food;
 		var food_item_number = value;
 		var total_ingredient = $('div#items'+food_item_number).find('#all_ingredient'+foodid).val(); 	//get the number of ingredients if that item
+		//alert(foodid);
+		//alert("total_ingredient="+total_ingredient);
 			var d;
 			var ingredient_price = 0;
 				for(d=0;d<total_ingredient;d++){	//iterate through all the ingredients to check if they are selected
 					//alert($('#'+food[0]+'check'+d).val());
+					//alert("startfid");
 					if($('div#items'+food_item_number).find('#'+foodid+'check'+d).is(":checked")){	//if they are selected then add the ingredients price to that totol price
+						//alert("found");
 						var ing_price = $('div#items'+food_item_number).find('#'+foodid+'check'+d).val(); 	// this gets the id for the ingredient
 						var price = $('div#items'+food_item_number).find('#'+foodid+'ingredient_price'+ing_price).val();	//this gets the price for the ingredient
 						ingredient_price = parseInt(ingredient_price) + parseInt(price);
@@ -415,12 +419,19 @@
 	}
 	
 	function ingredientcheckupdate(food,value,unitprice){
+		//alert("value="+value);
+		var id = $('div#items'+value).find('.real').parent().parent().parent().parent().attr('id');
+		//alert('id='+id);
+		id = id.charAt(0);
+		//alert('idchar='+id)
+		$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
 		$('div#items'+value).find('.real').change(function()
 		{
 			var id = $(this).parent().parent().parent().parent().attr('id');
+			//alert(id);
 			id = id.charAt(0);
-		//	alert(id + " change");
-			//alert(food[4]);
+
+			
 			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
 			tcost();
 		})
@@ -446,6 +457,7 @@
 	//alert(count);
 	var k=1;
 	for(k;k<count;k++){
+		
 		var ids = $('#food_item'+k).attr('id');
 		var changes = ids.replace( /^\D+/g, '');
 		var str = $('#food_item'+changes).val();
@@ -460,6 +472,8 @@
 		$('#quantity'+changes).attr({'max':food[2]});
 		$('#qavailable'+changes).val(food[2]);
 	  //	alert(food[4]);
+		//alert(1);
+		ingredientcheckupdate(food[0],changes,food[4]);
 		$('#quantity'+changes).on("keyup change click paste ", function(){
 			
 			
@@ -496,9 +510,10 @@
 			})
 
 			ingredientcheckupdate(food[0],change,food[4]);
+			
 			tcost();
 		});
-		ingredientcheckupdate(food[0],changes,food[4]);
+		
 
 	}
 	
@@ -607,6 +622,7 @@
 			$('#quantityd'+change).remove();
 			$('#food_itemd'+change).remove();
 			$('#removefood'+change).remove();
+			$('#hr'+change).remove();
 			var k = $('#q').html();
 			
 			for(k;k >= (count-1); k-- ){
@@ -623,7 +639,7 @@
 				$('#quantity'+k).attr('id','quantity'+(k-1));
 				$('#food_item'+k).attr('id','food_item'+(k-1));
 				$('#removefood'+k).attr('id','removefood'+(k-1));
-				
+				$('#hr'+k).attr('id','hr'+(k-1));
 			}
 			count--;
 			$('#q').html(count);
@@ -639,6 +655,7 @@
 	
 	//on clicking add food button fire this function to clone the food item row above add food button 
 	$('#addfood').click(function(){
+		$('<div class="col-md-12"><hr id="hr'+count+'" class=""  width="95%" style="color:grey;background:grey;"></div>').prependTo('#orderform');
 		$('<div class="col-md-12"><a type="button" id="removefood'+count+'" class="btn bg-maroon btn-flat margin">Remove item</a></div>').prependTo('#orderform');
 		$('<div id="priced'+count+'" class="form-group col-md-2"><label>Price ($)</label><input type="number" class="form-control" id="price'+count+'" name="price'+count+'" Required readonly value=""></div>').prependTo('#orderform');
 		$('<div id="qavailabled'+count+'" class="form-group col-md-2"><label>Max Quantity Available</label><input type="number" class="form-control" id="qavailable'+count+'" name="qavailable'+count+'" Required readonly value=""></div>').prependTo('#orderform');
@@ -672,6 +689,13 @@
 				$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				tcost();
 			})
+
+			$('.real').change(function()
+							{
+								//alert('changed');
+								tcost();
+									
+							})
 			
 			ingredientcheckupdate(food[0],count,food[4]);
 			
@@ -706,6 +730,7 @@
 			$('#quantityd'+change).remove();
 			$('#food_itemd'+change).remove();
 			$('#removefood'+change).remove();
+			$('#hr'+change).remove();
 			var k = $('#q').html();
 			
 			for(k;k >= (count-1); k-- ){
@@ -722,7 +747,7 @@
 				$('#quantity'+k).attr('id','quantity'+(k-1));
 				$('#food_item'+k).attr('id','food_item'+(k-1));
 				$('#removefood'+k).attr('id','removefood'+(k-1));
-				
+				$('#hr'+k).attr('id','hr'+(k-1));
 			}
 			count--;
 			$('#q').html(count);

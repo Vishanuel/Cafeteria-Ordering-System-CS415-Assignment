@@ -27,43 +27,30 @@
             <div id="box" class="box-body">
               <form id="orderform" role="form" method="POST" action="<?php echo e(action('OrderController@confirm')); ?>" enctype="multipart/form-data">
 			   <?php echo csrf_field(); ?>
+			   <?php echo method_field('PATCH'); ?>
 				<div id="2" class="col-md-12" ><p class="text-red"><?php echo e($error ?? ''); ?></p></div>
                 <!-- text input -->
 				<?php $i = 1;?>
 				<?php $__currentLoopData = $food_selecteds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $food_select): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				
-				<div id="food_itemd<?php echo e($i); ?>" class="form-group col-md-6">
+				<div id="food_itemd<?php echo e($i); ?>" class="form-group col-md-8">
 					<label>Food Item</label>
 					<select disabled class="form-control select2" id="food_item<?php echo e($i); ?>" name="food_item<?php echo e($i); ?>" style="width: 100%;" Required placeholder="Select food">
 						<option  disabled>Select food</option> 
 						<?php $__currentLoopData = $foods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $food): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 							<option Required <?php if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID): ?> selected value="<?php echo e($food->Menu_Food_Item_ID); ?> <?php echo e($food->Quantity); ?> <?php echo e($food->Price); ?>" <?php else: ?> value="<?php echo e($food->Menu_Food_Item_ID); ?> <?php echo e($food->Quantity); ?> <?php echo e($food->Price); ?>" <?php endif; ?> >
-								<?php echo e($food->Food_Name." - ".$food->Food_Desc); ?>
+								<?php echo e($food->Food_Name." - $". $food->Price ." - ".$food->Food_Desc); ?>
 
 							</option>
 							
 						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 					</select>
-				</div>
 				
-				<div class="checkbox form-group ">
-					<?php for($j=0;$j<count($items);$j++): ?>
-						<?php if($items[$j]->Menu_Food_Item_ID==$ordered_item[$i-1]->Menu_Food_Item_ID): ?>
-							<?php for($k=0;$k<count($cus_ingredients[$j]);$k++): ?>
-							<div><label><input class="real" name="ingredient<?php echo e($i); ?>[]" type="checkbox" value="<?php echo e($cus_ingredients[$j][$k]->Ingredient_ID); ?>"
-								<?php for($m=0;$m<count($ordered_ingredient[$i-1]);$m++): ?>
-								<?php if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ordered_ingredient[$i-1][$m]->Ingredient_ID)): ?>  ? checked : 
-								<?php endif; ?> <?php endfor; ?> disabled>
-								<?php echo e($cus_ingredients[$j][$k]->Ingredient_Name); ?></label>
-							</div>
-							<?php endfor; ?>
-						<?php endif; ?>
+					
 
-					<?php endfor; ?>
+				
 				</div>
 				
-					
-					
 					<div id="quantityd<?php echo e($i); ?>" class="form-group col-md-2 ">
 					  <label>Quantity</label>
 					  <input type="number" class="form-control" readonly id="quantity<?php echo e($i); ?>" name="quantity<?php echo e($i); ?>" max="" min="1" Required value="<?php echo e($food_select->Quantity); ?>">
@@ -73,10 +60,41 @@
 					  <label>Price($)</label>
 					  <input type="number" class="form-control" readonly id="price<?php echo e($i); ?>" name="price<?php echo e($i); ?>" Required readonly value="">
 					</div>
-					
+					<div class="col-md-12">
+						<label>Ingredient Selection</label>
+					</div>
+					<div id="items<?php echo e($i); ?>" class="col-md-12">
+						<?php for($j=0;$j<count($items);$j++): ?>
+							<div class="check<?php echo e($j); ?> checkbox" id="<?php echo e($i); ?>choice<?php echo e($items[$j]->Menu_Food_Item_ID); ?>" style="display:none;">
+								<input id="item_number<?php echo e($i); ?>" value="<?php echo e($items[$i]->Menu_Food_Item_ID); ?>"  type="hidden">
+							<?php if($items[$j]->Menu_Food_Item_ID==$ordered_item[$i-1]->Menu_Food_Item_ID): ?>
+								<?php for($k=0;$k<count($cus_ingredients[$j]);$k++): ?>
+									
+								<div class="row" id="idrow<?php echo e($k); ?>"><input id="all_ingredient<?php echo e($items[$j]->Menu_Food_Item_ID); ?>" value="<?php echo e(count($cus_ingredients[$j])); ?>"  type="hidden">
+								<div class=" form-group col-md-4 col-xs-6" id="idformgroup<?php echo e($k); ?>"><label></br><input class="real" name="ingredient<?php echo e($i); ?>[]" id ="<?php echo e($items[$j]->Menu_Food_Item_ID); ?>check<?php echo e($k); ?>" type="checkbox" value="<?php echo e($cus_ingredients[$j][$k]->Ingredient_ID); ?>"
+									<?php for($m=0;$m<count($ordered_ingredient[$i-1]);$m++): ?>
+									<?php if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ordered_ingredient[$i-1][$m]->Ingredient_ID)): ?>  ? checked : 
+									 <?php endif; ?> <?php endfor; ?> disabled>
+									<?php echo e($cus_ingredients[$j][$k]->Ingredient_Name); ?></label></div>
+									<div class="form-group col-md-3 col-xs-6 price">
+									<label>Price($)
+									<input type="number" class="form-control" id="<?php echo e($items[$j]->Menu_Food_Item_ID); ?>ingredient_price<?php echo e($cus_ingredients[$j][$k]->Ingredient_ID); ?>" Required readonly value="<?php echo e($cus_ingredients[$j][$k]->Ingredient_Price); ?>" >
+								</label>
+								</div>
+								  
+							</div>
+								<?php endfor; ?>
+							<?php endif; ?>
+						</div>
+						<?php endfor; ?>
+					</div>
+					<div id="hr<?php echo e($i); ?>" class="col-md-12">
+						<hr class=""  width="95%" style="color:grey;background:grey;">
+					</div>
 					<?php $i= $i + 1; ?>
-					
+				
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				
 				
 				
 				<?php if($special_id != null && !empty($specialfoods)): ?>

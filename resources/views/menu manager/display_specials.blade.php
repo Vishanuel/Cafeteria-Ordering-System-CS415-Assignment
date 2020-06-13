@@ -9,7 +9,6 @@
             </div>
 
             <div class="box-body">
-            <div class="table-responsive">
                 <table class="table table-bordered table-striped" id ="example1">
                 <tr>
                     <th>Menu Date</th>
@@ -82,14 +81,14 @@
                                                     <input type="text" class="form-control" name="menu_price" value="{{ $data[$i]->Special_Price}}">
                                               </div>
                                              
-                                              <label>Select Menu Items for Special Menu </label>
+                                              <label> Menu Items </label>
                                               @for($k=0;$k<count($items);$k++)
-                                              <div>
-                                              <input type="checkbox" name="items[]" value="{{$items[$k]->Menu_Food_Item_ID}}" 
+                                              <div class="checkbox">
+                                            <label><input type="checkbox" name="items[]" value="{{$items[$k]->Menu_Food_Item_ID}}" 
                                               @for($n=0;$n<count($val[$i]);$n++)
                                                       @if(($val[$i][$n]->Menu_Food_Item_ID)==($items[$k]->Menu_Food_Item_ID))  ? checked : 
                                                       @endif @endfor>
-                                              <label for="type">{{$items[$k]->Food_Name}}</label>
+                                             {{$items[$k]->Food_Name}}</label>
                                               </div>
                                               @endfor    
                                              
@@ -133,7 +132,7 @@
                  @endfor
                 </table>
                 <a data-toggle="modal" data-target="#add">
-                        <span class="glyphicon glyphicon-plus pull-right">Add Special Menu</span>
+                        <span class="glyphicon glyphicon-plus pull-right" title="click to add or create new special menus"></span>
                     </a>
 
                     <div class="modal fade" id="add" data-backdrop="static" data-keyboard="false">
@@ -171,11 +170,11 @@
                                                     <input type="text" class="form-control" name="menu_price">
                                               </div>
                                              
-                                              <label>Select Menu Items for Special Menu </label>
+                                              <label> Menu Items </label>
                                               @for($k=0;$k<count($items);$k++)
-                                              <div>
-                                              <input type="checkbox" name="items[]" value="{{$items[$k]->Menu_Food_Item_ID}}">
-                                              <label for="type">{{$items[$k]->Food_Name}}</label>
+                                              <div class="checkbox">
+                                                <label><input type="checkbox" name="items[]" value="{{$items[$k]->Menu_Food_Item_ID}}">
+                                              {{$items[$k]->Food_Name}}</label>
                                               </div>
                                               @endfor    
                                              
@@ -187,7 +186,7 @@
                                     </form>
                              </div>
                            </div>
-                        </div>
+                    
                         
             </div>
     

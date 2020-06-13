@@ -11,36 +11,41 @@
                     <div class="box-body ">
                     <table class="table table-bordered table-striped text-center" id ="example1">
                     <tr>
-                        <th>Menu Item</th>
                         <th>Ingredient Name</th>
+                        <th>Ingredient Price</th>
+                        <th>Ingredient Quantity</th>
                         <th>Ingredient Type</th>
                         <th>Action</th>
                     </tr>
                         @for($i=0;$i<count($ingredients);$i++)
                         <tr>
-                            <td >
-                                {{$ingredients[$i]->Food_Name}}
-                            </td>
+                           
                             <td >
                                 {{$ingredients[$i]->Ingredient_Name}}
+                            </td>
+                            <td >
+                                {{$ingredients[$i]->Ingredient_Price}}
+                            </td>
+                            <td >
+                                {{$ingredients[$i]->Ingredient_Quantity}}
                             </td>
                             <td >
                                 {{$ingredients[$i]->Ingredient_Type_Name}}
                             </td>
                            
                             <td >
-                                <a data-toggle="modal" data-target="#{{$ingredients[$i]->Item_Ingredient_ID}}">
+                                <a data-toggle="modal" data-target="#{{$ingredients[$i]->Ingredient_ID}}">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a> 
-                                <a data-toggle="modal" data-target="#delete{{$ingredients[$i]->Item_Ingredient_ID}}">
+                                <a data-toggle="modal" data-target="#delete{{$ingredients[$i]->Ingredient_ID}}">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </td>
 
-                                <div class="modal fade" id="{{$ingredients[$i]->Item_Ingredient_ID}}" data-backdrop="static" data-keyboard="false">
+                                <div class="modal fade" id="{{$ingredients[$i]->Ingredient_ID}}" data-backdrop="static" data-keyboard="false">
                                     <div class="modal-dialog">
                                       <div class="modal-content">
-                                            <form method="post" action="{{ route('ingredient.update', $ingredients[$i]->Item_Ingredient_ID) }}" enctype="multipart/form-data">
+                                            <form method="post" action="{{ route('ingredient.update', $ingredients[$i]->Ingredient_ID) }}" enctype="multipart/form-data">
                                                 @method('PATCH') 
                                                  @csrf
                                                 <div class="modal-header">
@@ -49,19 +54,19 @@
                                                     <h4 class="modal-title">Edit Ingredient</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label for="menus">Menu Item Name</label>
-                                                        {{-- <input type="text" class="form-control" name="item_name" value="{{$ingredients[$i]->Food_Name}}"> --}}
-                                                        <select id="menus" name="menu_item" class="form-control">
-                                                            @for($j=0;$j<count($menu);$j++)
-                                                            <option value={{$menu[$j]->Menu_Food_Item_ID}} @if($menu[$j]->Menu_Food_Item_ID == $ingredients[$i]->Item_ID) selected="selected"@endif>{{$menu[$j]->Food_Name}}</option>
-                                                            @endfor
-                                                          </select>
-                                                    </div>
+                                                   
                                                     <div class="form-group">
                                                         <label>Ingredient Name</label>
-                                                        <input type="text" class="form-control" name="ingredient_name"value="{{$ingredients[$i]->Ingredient_Name}}" required>
+                                                        <input type="text" class="form-control" name="ingredient_name" value="{{$ingredients[$i]->Ingredient_Name}}" required>
                                                   </div>
+                                                  <div class="form-group">
+                                                    <label>Ingredient Price</label>
+                                                    <input type="number" class="form-control" name="ingredient_price" min="0" value="{{$ingredients[$i]->Ingredient_Price}}" placeholder="0.00" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Ingredient Quantity</label>
+                                                    <input type="number" class="form-control" name="ingredient_quantity" min="0" value="{{$ingredients[$i]->Ingredient_Quantity}}" required>
+                                               </div>
                                                  
                                                         @for($k=0;$k<count($type);$k++)
                                                         <div>
@@ -82,10 +87,10 @@
                                    </div>
                                 </div>
                                 
-                                <div class="modal fade" id="delete{{$ingredients[$i]->Item_Ingredient_ID}}" >
+                                <div class="modal fade" id="delete{{$ingredients[$i]->Ingredient_ID}}" >
                                         <div class="modal-dialog">
                                           <div class="modal-content">
-                                                <form method="post" action="{{ route('ingredient.destroy',$ingredients[$i]->Item_Ingredient_ID) }}" enctype="multipart/form-data">
+                                                <form method="post" action="{{ route('ingredient.destroy',$ingredients[$i]->Ingredient_ID) }}" enctype="multipart/form-data">
                                                      @csrf
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -126,20 +131,19 @@
                                                 <h4 class="modal-title">Create New Ingredient</h4>
                                             </div>
                                             <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label for="menus">Menu Item </label>
-                                                        {{-- <input type="text" class="form-control" name="item_name" value="{{$ingredients[$i]->Food_Name}}"> --}}
-                                                        <select id="menus" name="menu_item" class="form-control">
-                                                            <option value=""></option>
-                                                            @for($j=0;$j<count($menu);$j++)
-                                                            <option value="{{$menu[$j]->Menu_Food_Item_ID}}">{{$menu[$j]->Food_Name}}</option>
-                                                            @endfor
-                                                          </select>
-                                                    </div>
+                                                   
                                                     <div class="form-group">
                                                         <label>Ingredient Name</label>
                                                         <input type="text" class="form-control" name="ingredient_name" required>
                                                   </div>
+                                                  <div class="form-group">
+                                                    <label>Ingredient Price</label>
+                                                    <input type="number" class="form-control" name="ingredient_price" min="0" placeholder="0.00" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Ingredient Quantity</label>
+                                                    <input type="number" class="form-control" name="ingredient_quantity" min="0" required>
+                                               </div>
                                                  
                                                         @for($k=0;$k<count($type);$k++)
                                                         <div>

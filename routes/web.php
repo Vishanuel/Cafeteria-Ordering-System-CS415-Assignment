@@ -38,6 +38,10 @@ Route::resource('mealsub','MealSubsController');
 Route::resource('cafe_subs','Cafe_MealSubsController');
 Route::resource('subs_deliv', 'SubscriptionDelivererController');
 
+Route::match(['get', 'post'],'filter_menu', [
+    'uses' => 'MenuController@filter'
+]);
+
 Route::match(['get', 'post'],'student_order_create/{menuid}', [
     'uses' => 'OrderStudentController@create'
 ]);

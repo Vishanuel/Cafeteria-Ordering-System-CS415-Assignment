@@ -2,7 +2,31 @@
 
 @section('content')
 
-    <section class="content-header text-center"><h1 >Menu</h1></section>
+<section class="content-header text-center"><h3>MENUS</h3></section>
+    <section class="content-header">
+    <div>
+      <form method="post" action="filter_menu" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group">
+          <label for="Menu_Date">Menu Date: </label>
+                <div class="input-group date col-md-4">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date" class="form-control pull-right" id="datepicker" name="Menu_Date" required>
+                  </div>
+              
+
+          </div>
+          <div>
+         
+          <button type="submit" class="btn btn-default">Filter</button>
+          </div>
+          
+           </form>
+           <button type="button" class="btn btn-default " ><a href="{{URL::to('menu')}}">Reset</a></button>
+    </div>
+    </section>
     <section class="content">
         @for($i=0;$i<count($cat);$i++)
         <div class="box">
@@ -21,6 +45,7 @@
                         <td> Dishes </td>
                         <td> Dish Description </td>
                         <td> Price </td>
+                        <td> Deliverability </td>
                         <td> Action </td>
                     </tr> 
                     
@@ -41,6 +66,10 @@
                              @for($k=0;$k<count($val[$i][$j]);$k++)
                              <div>{{$val[$i][$j][$k]->Price}}</div>
                              @endfor
+                         </td>
+                         <td>
+                           @if($menu[$i][$j]->Deliverable==0)
+                              Not Deliverable @else Deliverable @endif
                          </td>
                         <td>
                                 <a data-toggle="modal" data-target="#{{$menu[$i][$j]->Menu_ID}}">
@@ -83,22 +112,28 @@
 
                                             </div>
                                             
-                                            <h2>Menu Items</h2>
-                                            {{-- @for($k=0;$k<count($val[$i][$j]);$k++) --}}
+                                            <label>Menu Items</label>
                                             @for($n=0;$n<count($rest);$n++)
-                                            {{-- @for($k=0;$k<count($val[$i][$j]);$k++) --}}
-                                                <div class="form-check " >
-                                                  
-                                                      <input  
+                                                <div class="checkbox" >
+                                                  <label><input  
                                                        type="checkbox"  value="{{$rest[$n]->Menu_Food_Item_ID}}"  name="Food[]" 
                                                        @for($k=0;$k<count($val[$i][$j]);$k++)
                                                       @if(($val[$i][$j][$k]->Menu_Food_Item_ID)==($rest[$n]->Menu_Food_Item_ID))  ? checked : 
-                                                      @endif @endfor>
-                                                    {{-- <input type="checkbox" value="{{$rest[$n]->Menu_Food_Item_ID}}"  name="Food[{{$n}}]" @if(($val[$i][$j][$k]->Menu_Food_Item_ID)==($rest[$n]->Menu_Food_Item_ID))  ? checked :  @endif> --}}
-                                                      <label>{{$rest[$n]->Food_Name}}</label>
+                                                      @endif @endfor>{{$rest[$n]->Food_Name}}</label>
                                                 </div> 
                                             {{-- @endfor   --}}
-                                            @endfor     
+                                            @endfor 
+                                            <label>Is this Menu Deliverable? </label>
+                                            <div class="radio">
+                                              <label><input type="radio" id="deliverable" name="deliverable" value="1" 
+                                                @if(($menu[$i][$j]->Deliverable)==1)  ? checked : 
+                                                @endif>Deliverable</label>
+                                              <label><input type="radio" id="mon-deliverable" name="deliverable" value="0" 
+                                                @if(($menu[$i][$j]->Deliverable)==0)  ? checked : 
+                                                @endif>Non-Deliverable</label>
+                                           
+                                            </div>
+
                                           </div>
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -164,18 +199,23 @@
                                  <div class="input-group-addon">
                                      <i class="fa fa-calendar"></i>
                                   </div>
-                                    <input type="date" class="form-control pull-right" id="datepicker" name="Menu_Date" required >
+                                    <input type="date" min="{{ date('mm-dd-yyyy') }}" class="form-control pull-right" id="datepicker" name="Menu_Date" required >
                                 </div>
-                              <h4>Menu Items</h4>
+                              <label>Menu Items</label>
                              @for($j=0;$j<count($rest);$j++)
-                                  <div class="form-check" name="Food Item">
-                                  <label for="Food[{{$j}}]">
+                                  <div class="checkbox">
+                                  <label>
                                     <input type="checkbox" value="{{$rest[$j]->Menu_Food_Item_ID}}"  name="Food[]">
                                     {{$rest[$j]->Food_Name}}
                                   </label>
                                   </div>
                             @endfor 
-                             
+                            <label>Is this Menu Deliverable? </label>
+                            <div class="radio">
+                              <label><input type="radio" id="deliverable" name="deliverable" value="1">Deliverable</label>
+                              <label><input type="radio" id="mon-deliverable" name="deliverable" value="0">Non-Deliverable</label>
+                                           
+                            </div>
                             </div>
                           <div class="modal-footer">
                           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>

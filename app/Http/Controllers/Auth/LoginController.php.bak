@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Closure;
+use Response;
 
 class LoginController extends Controller
 {
@@ -29,9 +32,17 @@ class LoginController extends Controller
     //protected $redirectTo = RouteServiceProvider::HOME;
 	protected function authenticated() {
 		 //If user role is patron
+		 auth()->user()->increment('login_times');
+		 //auth()->user()->login_times;
+		 
         if(Auth::check() && auth()->user()->usertype === 'Patron')
-        {
-            return redirect('/home');
+        {	
+			if(auth()->user()->login_times == 1){
+				return redirect('/tutorial_restaurant');
+			}
+			else{
+				return redirect('/home');
+			}
         }
 		
 		else if(Auth::check() && auth()->user()->usertype === 'Student')
@@ -42,7 +53,7 @@ class LoginController extends Controller
         //If user role is menu manager
         else if(Auth::check() && auth()->user()->usertype === "Menu Manager")
         {
-            return Response::view('menu manager.home');
+            return redirect('/menu_manager');
         }   
 		
 		else if(Auth::check() && auth()->user()->usertype === 'Cafeteria Staff')

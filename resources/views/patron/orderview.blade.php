@@ -29,7 +29,7 @@
             <div id="box" class="box-body">
               <form id="orderform" role="form" method="POST" action="{{action('OrderController@confirm')}}" enctype="multipart/form-data">
 			   @csrf
-			   @method('PATCH')
+			   
 				<div id="2" class="col-md-12" ><p class="text-red">{{$error ?? ''}}</p></div>
                 <!-- text input -->
 				<?php $i = 1;?>
@@ -121,7 +121,7 @@
 				</div>
 				@endif
 				
-				<div id="tcostd" class="form-group col-md-2">
+				<div id="tcostd" class="form-group col-md-4">
 				  <label>Total($)</label>
 				
 				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">

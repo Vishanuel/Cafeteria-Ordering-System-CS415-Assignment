@@ -27,7 +27,7 @@
             <div id="box" class="box-body">
               <form id="orderform" role="form" method="POST" action="<?php echo e(action('OrderController@confirm')); ?>" enctype="multipart/form-data">
 			   <?php echo csrf_field(); ?>
-			   <?php echo method_field('PATCH'); ?>
+			   
 				<div id="2" class="col-md-12" ><p class="text-red"><?php echo e($error ?? ''); ?></p></div>
                 <!-- text input -->
 				<?php $i = 1;?>

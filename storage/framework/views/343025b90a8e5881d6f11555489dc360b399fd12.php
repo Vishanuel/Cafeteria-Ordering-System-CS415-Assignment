@@ -156,7 +156,15 @@
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu" >
           <ul class="nav navbar-nav" style="">
+			  <li class="dropdown tasks-menu">
+              <a href="<?php echo e(URL::to('tutorial_restaurant')); ?>" >
+                <!--i class="fa fa-hand-pointer-o"></i-->
+                Tutorial
+              </a>
            
+           
+          </li>
+		 
             <!-- User Account Menu -->
             <li class="dropdown user user-menu" >
               <!-- Menu Toggle Button -->
@@ -419,24 +427,25 @@
 	}
 	
 	function ingredientcheckupdate(food,value,unitprice){
-		//alert("value="+value);
-		var id = $('div#items'+value).find('.real').parent().parent().parent().parent().attr('id');
-		//alert('id='+id);
-		id = id.charAt(0);
-		//alert('idchar='+id)
-		$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
-		$('div#items'+value).find('.real').change(function()
-		{
-			var id = $(this).parent().parent().parent().parent().attr('id');
-			//alert(id);
-			id = id.charAt(0);
-
+		if($('div#items'+value).find('.real').val()){
+			var id = $('div#items'+value).find('.real').parent().parent().parent().parent().attr('id');
 			
-			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
-			tcost();
-		})
+			id = id.charAt(0);
 		
-		tcost();
+			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
+			$('div#items'+value).find('.real').change(function()
+			{
+				var id = $(this).parent().parent().parent().parent().attr('id');
+				
+				id = id.charAt(0);
+
+				
+				$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
+				tcost();
+			})
+			
+			tcost();
+		}
 	}		
 	
 	function tcost(){
@@ -668,12 +677,8 @@
 		//alert(tot);
 		for(i=0;i<tot;i++){
 			var num = $('#items'+count).find('#item_number'+i).val();
-			//alert(num);
-		//	alert("id before="+$('#items'+count).find('#'+(count-1)+'choice'+num).attr('id'));
 			$('#items'+count).find('#'+(count-1)+'choice'+num).prop('id',count+'choice'+num).attr("class","checkbox check"+count).hide();
-			//alert("id after="+$('#items'+count).find('#'+(count)+'choice'+num).attr('id'));
 			$('#'+count+'choice'+num).find('.real').prop({'name':'ingredient'+count+'[]'});
-			//alert($('#'+count+'choice'+num).find('.real').attr('class'));
 		}
 		
 		var str = $('#food_item'+count).val();

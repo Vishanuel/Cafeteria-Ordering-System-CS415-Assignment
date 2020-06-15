@@ -13,7 +13,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Place Order</li>
-		<!--li><a target="_blank" href="{{url('help/TheOrderingProcess.html')}}">Help</a></li-->
+		<li><a target="_blank" href="{{url('help/TheOrderingProcess.html')}}">Help</a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -52,24 +52,25 @@
 						<input id="item_total" value="{{count($items)}}"  type="hidden">
 						@for($i=0;$i<count($items);$i++)
 						<div class="check1 checkbox" id="1choice{{$items[$i]->Menu_Food_Item_ID}}" style="display:none;">
-								<input id="item_number{{$i}}" value="{{$items[$i]->Menu_Food_Item_ID}}"  type="hidden">
-							@if(count($cus_ingredients[$i])>0)
-							<div class="row">
-									<!--label class="col-md-4"><b>Ingredients</b></label>
-									<label class="col-md-3"><b>Prices($)</b></label-->
-							</div>
-							@endif
+						
+						
+					
+					
+							<input id="item_number{{$i}}" value="{{$items[$i]->Menu_Food_Item_ID}}"  type="hidden">
+							</br>
 							@for($j=0;$j<count($cus_ingredients[$i]);$j++)
 							<div class="row">
 								<input id="all_ingredient{{$items[$i]->Menu_Food_Item_ID}}" value="{{count($cus_ingredients[$i])}}"  type="hidden">
-								<div class="form-group col-md-4">
-								<label><input class="real checkbox" name="ingredient1[]" id ="{{$items[$i]->Menu_Food_Item_ID}}check{{$j}}" type="checkbox" value="{{$cus_ingredients[$i][$j]->Ingredient_ID}}"
+								<div class="form-group col-md-4 col-xs-6">
+								<label><label class="pull-left" style="font-weight:bold;">Ingredient</label></br><input class="real checkbox" name="ingredient1[]" id ="{{$items[$i]->Menu_Food_Item_ID}}check{{$j}}" type="checkbox" value="{{$cus_ingredients[$i][$j]->Ingredient_ID}}"
 								@for($k=0;$k<count($ingredients[$i]);$k++)
 								@if(($cus_ingredients[$i][$j]->Ingredient_ID)==($ingredients[$i][$k]->Ingredient_ID))  ? checked : 
 								@endif @endfor>
 								{{$cus_ingredients[$i][$j]->Ingredient_Name}}</label></div>
-								<div class="form-group col-md-3  price">
-										<label><input type="number" class="form-control" id="{{$items[$i]->Menu_Food_Item_ID}}ingredient_price{{$cus_ingredients[$i][$j]->Ingredient_ID}}" Required readonly value="{{$cus_ingredients[$i][$j]->Ingredient_Price}}" min="{{$cus_ingredients[$i][$j]->Ingredient_Price}}"><b>Prices($)</b></label>
+								<div class="form-group col-md-3 col-xs-6 price">
+								<label style="font-weight:bold;">Price($)
+										<input type="number" class="form-control" id="{{$items[$i]->Menu_Food_Item_ID}}ingredient_price{{$cus_ingredients[$i][$j]->Ingredient_ID}}" Required readonly value="{{$cus_ingredients[$i][$j]->Ingredient_Price}}" min="{{$cus_ingredients[$i][$j]->Ingredient_Price}}">
+									</label>
 									</div>
 								</div>
 							@endfor
@@ -93,9 +94,9 @@
 					  <input type="number" class="form-control" id="price1" name="price1" Required readonly value="">
 					</div>
 				
-				<div id="hr1" class="col-md-12">
-					<hr class=""  width="95%" style="color:grey;background:grey;">
-				</div>
+				<div id="hr{{$i}}" class="col-md-12">
+						<hr class=""  width="95%" style="background:grey;">
+					</div>
 				
 				<div class="col-md-10">
 					<a type="button" id="addfood" class="btn bg-olive btn-flat margin">Add more food item</a>
@@ -134,11 +135,11 @@
 			   </div>
 			   
 				<!-- <div id="food" ></div>-->
-				<div class="form-group col-md-10">
+				<div id="mealmethodradio" class="form-group col-md-10 col-xs-12">
 				<!--<label >Pick meal collection method</label>-->
 					<div class="radio">
 						<label id="del">
-						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" @if($deduction->Patron_Deduction_Status == 0 && $deduction->Patron_CardRegister_Status == 0) value="disabled" @else value="delivery" @endif >
+						  <input type="radio" class="minimal" name="mealmethod" style="clear: none; width: auto;" id="optionsRadios1" value="delivery" >
 						  Get meal delivered 
 						</label>
 					  </div>
@@ -152,14 +153,14 @@
 					 </div>
 				 
 				 </div>
-				<div class="has-error col-md-12" id="dwarn" name="dwarn" ><span class="help-block">No delivery time available. Either pick-up order from restaurant or change meal date.</span></div>
-				<div id="delivery" name="delivery">
+				<div id="debox">
+				<div id="delivery" style="z-index: 999;width: 100%;">
 				
-					<div class="form-group col-md-6">
+					<div id="locationid" class="form-group col-md-6">
 					
-					  <label>Delivery Location</label>
-					  <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id" name="location_id"  disabled>Select location</option> 
+					  <label style="z-index: 999;">Delivery Location</label>
+					  <select class="form-control select2" id="location_id" name="location_id" style="z-index: 999;width: 100%;" Required placeholder="Select location">
+							<option  disabled>Select location</option> 
 							@foreach ($locations as $location )
 								<option name="location_id" Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
@@ -170,18 +171,24 @@
 						
 					</div>
 					
-					<div class="form-group col-md-6">
 					
-					  <label>Delivery Time</label>
-					  <select class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
-							<option id="location_time1" name="location_time1"  disabled>Select delivery time </option> 
+					<div id="locationtime" class="form-group col-md-6">
+					
+					  <label style="z-index: 999;">Delivery Time</label>
+					  <select class="form-control select2" id="location_time" name="location_time" style="z-index: 999;width: 100%;"  placeholder="Select location">
+							<option name="location_time1"  disabled>Select delivery time </option>
+							<option name="location_time1"  >8:30 - 9:00 </option> 							
+							<option name="location_time1" >9:00 - 9:30 </option> 
+							<option name="location_time1" >9:30 - 10:00 </option> 
+							
 							
 					</select>
 						
 					</div>
-                </div>
-				
-                <div class="form-group col-md-12">
+              
+				</div>
+				</div>
+                <div id="mealdate" class="form-group col-md-12">
                 <label>Meal Date</label>
 				
 				<input id="cutoff" name="cutoff" type="hidden" value="{{$order_cutoff->Order_Cutoff_Time }}">
@@ -191,7 +198,7 @@
                   </div>
                   <input type="text" class="form-control" name="meal_date" id="meal_date" value="{{date("Y-m-d")}}" required>
                 </div>
-				<div class="has-error" id="cwarning" name="cwarning"><span class="help-block">The current order time has exceeded the order cutoff time set for today, therefore you cannot order your meal(s) today. Sorry for the inconvience caused.</span></div>
+				
                 <!-- /.input group -->
               </div>
 			  
@@ -200,12 +207,12 @@
 			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}"> 
 			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}">
-
+			<div class="has-error col-md-1" id="dwarn" name="dwarn" ></div>
 			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('order_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
-                <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Order</button>
+                <a id="cancel" class="btn btn-default btn-flat">Cancel</a>
+                <button  type="submit" id="order" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Order</button>
               </div>
               <!-- /.box-footer -->
 			 </form>
@@ -219,6 +226,430 @@
     <!-- /.content -->
   </div>
   <script>
+  $('#optionsRadios1').iCheck('disable');
+  var today = new Date();
+		var time = today.getHours();
+		var cutoff = $('#cutoff').val();
+
+		var two_weeks = new Date();
+		two_weeks.setDate(two_weeks.getDate() + 14);	
+		
+		var dd1 = String(today.getDate()).padStart(2, '0');
+		var mm1 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy1 = today.getFullYear();
+
+		var	todaydate = yyyy1 + '-' + mm1 + '-' + dd1;
+		  
+	const tour = new Shepherd.Tour({
+	  defaultStepOptions: {
+		classes: 'class-1 class-2',
+		scrollTo: true
+	  },
+	 
 	
+	 steps: [
+        {
+          id: 'pageoverview',
+		  //title: 'Order',
+		  text: 'This page is used for ordering food items.',
+		  scrollTo: {
+			  behavior: 'smooth',
+			  block: 'center'
+		   },
+          buttons: [
+			{
+			  text: 'Next',
+			  action: function() {
+                return this.next();
+              }
+			}
+		  ]	  
+        }
+      ],
+	  
+	  modalOverlayOpeningRadius:'100',
+      useModalOverlay:true
+	 
+    });
+	
+	tour.addStep({
+          id: 'fooditem',
+		 // title: 'Order',
+		  text: 'This is the food drop-drop list from which you can click and then again click on the food that you would like to order. Try clicking on the dropdown menu to proceed.',
+		  attachTo: {
+			element: '#food_itemd1',
+			on: 'top'
+		  },
+		  scrollTo: {
+			  behavior: 'smooth',
+			  block: 'center'
+		   },
+          when:{
+			  show: function(){
+				  $("#food_item1").on("select2:open", function () { tour.next(); });
+			  }
+		  }	  
+        });
+			   
+	tour.addStep({
+      text: 'You could choose the food item here. Try selecting french fries.',
+	  scrollTo: {
+			  behavior: 'smooth',
+			  block: 'center'
+		  },
+      attachTo: {
+        element: '.select2-results',
+        on: 'top'
+      },
+      id: 'food_select',
+	  
+		when:{
+		  show: function(){
+			 $("#food_item1").on("select2:close", function () { 
+				if($('#food_item1').select2('data')[0].id == "4 8 10.00 1"){
+					tour.next(); 
+				}
+				else{
+					tour.show('quantity');
+				}
+			 });
+		  },
+		}	  
+    });
+	tour.addStep({
+	  id: 'ingredient',
+	  text: 'You will be able to select ingredients for food items that have custom ingredient selection over here.',
+	  attachTo: {
+		element: '#items1',
+		on: 'top'
+	  },
+	  scrollTo: {
+          behavior: 'smooth',
+          block: 'center'
+       },
+	  buttons: [
+		{
+		  text: 'Next',
+		  action: tour.next
+		}
+	  ]
+
+	});
+	tour.addStep({
+	  id: 'quantity',
+	  text: 'Here, you could type in or use your mouse to choose the quantity of your food.',
+	  attachTo: {
+		element: '#quantityd1',
+		on: 'top'
+	  },
+	  scrollTo: {
+          behavior: 'smooth',
+          block: 'center'
+       },
+	  buttons: [
+		{
+		  text: 'Next',
+		  action: tour.next
+		}
+	  ]
+
+	});
+	tour.addStep({
+	  id: 'maxquantity',
+	  text: 'You will be able to see the maximum amount of the food item choosen you could order.',
+	  attachTo: {
+		element: '#qavailabled1',
+		on: 'top'
+	  },
+	  scrollTo: {
+          behavior: 'smooth',
+          block: 'center'
+       },
+	  buttons: [
+		{
+		  text: 'Next',
+		  action: tour.next
+		}
+	  ]
+
+	});
+	tour.addStep({
+	  id: 'price',
+	  text: 'This box will show you the price of the selected item. The price will be adjusted by the food quantity and food ingredients chosen.',
+	  attachTo: {
+		element: '#priced1',
+		on: 'top'
+	  },
+	  scrollTo: {
+          behavior: 'smooth',
+          block: 'center'
+       },
+	  buttons: [
+		{
+		  text: 'Next',
+		  action: tour.next
+		}
+	  ]
+
+	});
+	tour.addStep({
+	  id: 'totalcost',
+	  text: 'This box will show you the total cost of your order.',
+	  attachTo: {
+		element: '#tcostd',
+		on: 'top'
+	  },
+	  scrollTo: {
+          behavior: 'smooth',
+          block: 'center'
+       },
+	  buttons: [
+		{
+		  text: 'Next',
+		  action: tour.next
+		}
+	  ]
+
+	});
+	tour.addStep({
+	  id: 'addfood',
+	  text: 'If you want to order different food items in the same order, you can click on this button to add extra food option. Try it yourself.',
+	  attachTo: {
+		element: '#addfood',
+		on: 'top'
+	  },
+	  scrollTo: {
+          behavior: 'smooth',
+          block: 'center'
+       },
+	  when: {
+		  show: function(){
+			$("#addfood").click(function(){
+				tour.next();
+			}); 
+		  }
+	  }
+		
+	});
+	tour.addStep({
+	  id: 'removefood',
+	  text: 'If you wish to this food item, you can click on this button to remove the extra food option. Try it yourself.',
+	  attachTo: {
+		element: '#removefood2',
+		on: 'top'
+	  },
+	  scrollTo: {
+          behavior: 'smooth',
+          block: 'center'
+       },
+	  when: {
+		  show: function(){
+			$("#removefood2").click(function(){
+				tour.next();
+			}); 
+		  }
+	  }
+		
+	});
+	tour.addStep({
+	  id: 'removedfoodafter',
+	  text: 'The food item has now been removed. You can still add it back by clicking on the "addfood" button',
+	  
+	  scrollTo: {
+          behavior: 'smooth',
+          block: 'center'
+       },
+		 buttons: [
+		{
+		  text: 'Next',
+		  action: tour.next
+		}
+	  ]
+		
+	});
+	
+	tour.addStep({
+     
+      text: 'You can select, if you would want your food delivered or you would want to pickup the food yourself.',
+      attachTo: {
+        element: '#mealmethodradio',
+        on: 'top'
+      },
+      buttons: [
+        {
+          action: function() {
+            return this.next();
+          },
+          text: 'next'
+        }
+      ],
+      id: 'mealmethodradio',
+	 
+     
+    });
+	
+	tour.addStep({
+      text: 'Select this option to continue.',
+      attachTo: {
+        element: '#del',
+        on: 'top'
+      },
+     
+      id: 'optionmealmethod',
+	  when: {
+		  show: function(){
+			  $('#optionsRadios1').iCheck('enable');
+				$("input[name='mealmethod']").on('ifChanged', function(){
+					//alert(1);
+					tour.show('delivery');
+				});
+		 }
+	  },
+     
+    });
+	tour.addStep({
+      text: 'If you have chosen to get your food delivered, you can set your delivery options in the new delivery options.',
+      buttons: [
+        {
+          action: tour.next,
+          text: 'Next'
+        }
+      ],
+      id: 'delivery',
+		
+     
+    });
+	
+	tour.addStep({
+      text: 'You can select the delivery location of your order in this dropdown list.',
+      attachTo: {
+        element: '#locationid',
+        on: 'top'
+      },
+      when:{
+		show: function(){
+		  $("#location_id").on("select2:open", function () { tour.next(); });
+		}
+	  },	
+      id: 'loc_id',
+	 
+    });
+	
+	tour.addStep({
+      text: 'Pick a delivery location from the dropdown list to continue.',
+      attachTo: {
+        element: '.select2-results',
+        on: 'top'
+	  },
+      when:{
+		show: function(){
+		  $("#location_id").on("select2:close", function () { tour.next(); });
+		}
+	  },
+      id: 'loc_dropdownid',
+    });
+	
+	tour.addStep({
+      text: 'You can select the delivery time of your order in this dropdown list.',
+      attachTo: {
+        element: '#locationtime',
+        on: 'top'
+      },
+      when:{
+		show: function(){
+		  $("#location_time").on("select2:open", function () { tour.next(); });
+		}
+	  },	
+      id: 'del_id',
+    });
+	
+	tour.addStep({
+      text: 'Pick a delivery time from the dropdown list to continue.',
+      attachTo: {
+        element: '.select2-results',
+        on: 'top'
+	  },
+      when:{
+		show: function(){
+		  $("#location_time").on("select2:close", function () { tour.next(); });
+		}
+	  },
+      id: 'del_dropdownid',
+    });
+	
+	tour.addStep({
+      text: 'You can also choose a meal date for your order.',
+      attachTo: {
+        element: '#mealdate',
+        on: 'top'
+	  },
+      when:{
+		show: function(){
+			$('#meal_date').click(function(){
+				tour.next();
+			});
+		}
+	  },
+      id: 'mealdate',
+    });
+	tour.addStep({
+      text: 'Pick a meal date to continue.',
+      attachTo: {
+        element: '.datepicker-days',
+        on: 'top'
+	  },
+      when:{
+		show: function(){
+		  $('#meal_date').datepicker(
+		  {
+			  autoclose: true,
+			  startDate: today,
+			  endDate: two_weeks,
+			  format: 'yyyy-mm-dd'
+			}
+		  ).on('hide', function(e) {
+					// `e` here contains the extra attributes
+			tour.next();
+		  });
+		}
+	  },
+      id: 'datepicker',
+    });
+	tour.addStep({
+     
+      text: 'You can cancel the order by pressing this button.',
+      attachTo: {
+        element: '#cancel',
+        on: 'top'
+      },
+      buttons: [
+        {
+          action: function() {
+            return this.next();
+          },
+          text: 'next'
+        }
+      ],
+      id: 'cancel'
+	 
+    });
+	tour.addStep({
+     
+      text: 'You can confirm your order by clicking on this button. Press continue to continue your tour.',
+      attachTo: {
+        element: '#order',
+        on: 'top'
+      },
+      when: {
+		  show: function (){
+			  $("#order").click(function(){
+				tour.complete();
+			}); 
+		  }
+	  },
+      id: 'order'
+    });
+
+	tour.start();
   </script>
 @endsection

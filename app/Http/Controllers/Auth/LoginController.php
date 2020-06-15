@@ -32,14 +32,28 @@ class LoginController extends Controller
     //protected $redirectTo = RouteServiceProvider::HOME;
 	protected function authenticated() {
 		 //If user role is patron
+		 auth()->user()->increment('login_times');
+		 //auth()->user()->login_times;
+		 
         if(Auth::check() && auth()->user()->usertype === 'Patron')
-        {
-            return redirect('/home');
+        {	
+			if(auth()->user()->login_times == 1){
+				return redirect('/tutorial_restaurant');
+			}
+			else{
+				return redirect('/home');
+			}
         }
 		
 		else if(Auth::check() && auth()->user()->usertype === 'Student')
         {
-            return redirect('/student_home');
+			if(auth()->user()->login_times == 1){
+				return redirect('/tutorial_restaurant');
+			}
+			else{
+				return redirect('/student_home');
+			}
+            
         }
 
         //If user role is menu manager

@@ -61,16 +61,18 @@ class OrderController extends Controller
 		for($i=0;$i<count($items);$i++)
 		{
 			$ingredients[$i] =DB::table('item_ingredient')
-			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
 		for($i=0;$i<count($items);$i++)
 		{
 			$cus_ingredients[$i] =DB::table('custom_ingredient')
-			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -294,10 +296,11 @@ class OrderController extends Controller
 				DB::table('ordered_ingredient')
 				->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
 
-
+				/*
 				DB::table('ingredient')
 				->where('Ingredient_ID', $ingredient_ids[$j])
 				->decrement('Ingredient_Quantity',$ingredient_ids[$j]);
+				*/
 			}
 
 		}
@@ -954,6 +957,7 @@ class OrderController extends Controller
 			$ingredients[$i] =DB::table('item_ingredient')
 			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -962,6 +966,7 @@ class OrderController extends Controller
 			$cus_ingredients[$i] =DB::table('custom_ingredient')
 			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -1514,6 +1519,19 @@ class OrderController extends Controller
 			
 		}
 		
+		
+		$ingredients_ordered = DB::table('ordered_ingredient')
+		->join('ordered_food_item','ordered_ingredient.Ordered_Food_Item_ID','=','ordered_food_item.Ordered_Food_Item_ID')
+		->where('ordered_food_item.Cos_Order_Num','=',$orderid)
+		->get();
+		//->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
+
+		foreach($ingredients_ordered as $ingredient_ordered){
+			DB::table('ingredient')
+			->where('Ingredient_ID', $ingredient_ordered->Ordered_Ingredient_ID)
+			->decrement('Ingredient_Quantity',$ingredient_ordered->Ordered_Ingredient_ID);
+		}
+		
 		$cos_order=DB::table('cos_order')
 		->where('Employee_ID','=',$employee_id->Employee_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
@@ -1733,6 +1751,10 @@ class OrderController extends Controller
      */
     public function edit($orderid)
     {
+		$employee_id = DB::table('patron')
+		->select('Employee_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first();
 		
 		$menuid=DB::table('cos_order')	
 		->where('Employee_ID','=',$employee_id->Employee_ID)
@@ -1742,10 +1764,6 @@ class OrderController extends Controller
 		$menuid=$menuid->Menu_ID;
 
 		
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
-		->where('User_ID','=',Auth::user()->id)
-		->first();
 		
 		$cos_order=DB::table('cos_order')
 		->where('Employee_ID','=',$employee_id->Employee_ID)
@@ -1956,6 +1974,7 @@ class OrderController extends Controller
 			$ingredients[$i] =DB::table('item_ingredient')
 			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -1964,6 +1983,7 @@ class OrderController extends Controller
 			$cus_ingredients[$i] =DB::table('custom_ingredient')
 			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -2227,7 +2247,48 @@ class OrderController extends Controller
 		if(empty($special_id)){
 			$special_id = null;
 		}	
-			
+		
+		$items=DB::table('menu')
+		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->where('menu.Menu_ID','=',$menuid)
+		->get()
+		->toArray();
+		
+		for($i=0;$i<count($items);$i++)
+		{
+			$ingredients[$i] =DB::table('item_ingredient')
+			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->join('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
+			->get()
+			->toArray();
+		}
+		for($i=0;$i<count($items);$i++)
+		{
+			$cus_ingredients[$i] =DB::table('custom_ingredient')
+			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
+			->get()
+			->toArray();
+		}
+
+
+		$ordered_item = DB::table('ordered_food_item') //get all the ordered items of the patron
+		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
+		->orderBy('Ordered_Food_Item_ID', 'DESC')
+		->get()
+		->toArray();
+
+		for($j=0;$j<count($ordered_item);$j++)	//get the corresponding ordered ingredients of ordered item
+		{
+			$ordered_ingredient[$j] = DB::table('ordered_ingredient') //get all the ordered ingredients of the item
+			->where('Ordered_Food_Item_ID','=',$ordered_item[$j]->Ordered_Food_Item_ID)
+			->orderBy('Ordered_Food_Item_ID', 'DESC')
+			->get()
+			->toArray();
+		}
 			
 		$specialfoods=DB::table('specials')
 		->join('menu','menu.Menu_ID','=','specials.Menu_ID')
@@ -2276,10 +2337,10 @@ class OrderController extends Controller
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('patron.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+			return view('patron.orderviewdetails',compact('items','ingredients','cus_ingredients','ordered_item','ordered_ingredient'))->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		return view('patron.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		return view('patron.orderviewdetails',compact('items','ingredients','cus_ingredients','ordered_item','ordered_ingredient'))->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
 }

@@ -97,7 +97,10 @@
           id: 'paymentpage',
 		 // title: 'Order',
 		  text: 'You can select your meal payment method in this page.',
-		  
+		  attachTo: {
+			element: '#box',
+			on: 'top'
+		  },
 		  scrollTo: {
 			  behavior: 'smooth',
 			  block: 'center'

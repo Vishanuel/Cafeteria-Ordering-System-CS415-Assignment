@@ -17,6 +17,13 @@
   <!-- <script src="{{asset('bower_components/PACE/pace.min.js')}}"></script> -->
   <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
   
+  <script src="https://cdn.jsdelivr.net/npm/shepherd.js@5.0.1/dist/js/shepherd.js"></script>
+   <script src="{{asset('dist/js/prism.js')}}"></script>
+   <link rel="stylesheet" href="{{asset('dist/css/welcome.css')}}"/>
+   <link rel="stylesheet" href="{{asset('dist/css/prism.css')}}"/>
+  <!--link rel="stylesheet" href="{{asset('dist/css/shepherd.css')}}"/-->
+  
+ 
   <!-- DataTables -->
   @if(session('cordova') == 'yes')
   <script src="{{asset('android/cordova.js')}}"></script>
@@ -396,7 +403,7 @@
 		var foodid = food;
 		var food_item_number = value;
 		var total_ingredient = $('div#items'+food_item_number).find('#all_ingredient'+foodid).val(); 	//get the number of ingredients if that item
-		alert(foodid);
+		//alert(foodid);
 			var d;
 			var ingredient_price = 0;
 				for(d=0;d<total_ingredient;d++){	//iterate through all the ingredients to check if they are selected
@@ -420,7 +427,7 @@
 			var id = $(this).parent().parent().parent().parent().attr('id');
 			id = id.charAt(0);
 
-			alert(id);
+			//alert(id);
 			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
 			tcost();
 		})
@@ -821,7 +828,7 @@
 			  endDate: tmoro_two_weeks,
 			  format: 'yyyy-mm-dd'
 			})
-			document.getElementById('cwarning').style.display = 'block';
+			//document.getElementById('cwarning').style.display = 'block';
 			if(dateselect == todaydate){
 				$('#meal_date').val(tomorrowdate);
 			}
@@ -837,7 +844,7 @@
 			  endDate: two_weeks,
 			  format: 'yyyy-mm-dd'
 			})
-			document.getElementById('cwarning').style.display = 'none';
+			//document.getElementById('cwarning').style.display = 'none';
 			if(dateselect == todaydate){
 				$('#meal_date').val(todaydate);
 			}
@@ -963,10 +970,11 @@
 		
 		
 		$valuetime=$('#location_time').val();
+		/*
 		var reload = function() {
-			$('#location_time').find('option').remove().end();
+			$('#location_time').find('option').remove().end();*/
 			meal_date();
-			
+			/*
 			populate('#location_time', $valuetime);
 			delivery_time();
 			
@@ -978,7 +986,7 @@
 		  
 		};
 		reload();
-		
+		*/
 		
 		$('#meal_date').datepicker().on('changeDate', function (ev) {
 			//alert(1);

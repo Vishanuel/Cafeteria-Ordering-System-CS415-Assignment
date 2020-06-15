@@ -11,7 +11,7 @@
         <small style="color:rgba(230,230,230,1);"> screen ....</small>
       </h1> 
      <ol class="breadcrumb">
-        <li><a target="_blank" href="{{url('help/COS.html')}}">Help</a></li>
+        <li><a target="_blank" href="{{url('help/COS.html')}}"><span class="glyphicon glyphicon-question-sign" style="font-size: 20px;"></span></a></li>
       
       
       </ol>
@@ -64,7 +64,7 @@
                   <td style="text-overflow: ellipsis;">{{ $order->Cos_Order_Date_Time}}</td>
                   <td style="text-overflow: ellipsis;">{{ $order->Cos_Meal_Date_Time}}</td>
                   <td style="text-overflow: ellipsis;">{{ $order->Cos_Order_Meal_Status}}</td>
-                  <td style="text-overflow: ellipsis;">${{ $order->Cos_Order_Cost}}.00</td>
+                  <td style="text-overflow: ellipsis;">${{number_format((float)$order->Cos_Order_Cost, 2, '.', '')}}</td>
 				  <td style="text-overflow: ellipsis;" class="text-center">
                         
 						 

@@ -11,7 +11,7 @@
         <small style="color:rgba(230,230,230,1);"> screen ....</small>
       </h1> 
      <ol class="breadcrumb">
-        <li><a target="_blank" href="{{url('help/COS.html')}}">Help</a></li>
+        <li><a target="_blank" href="{{url('help/COS.html')}}"><span class="glyphicon glyphicon-question-sign" style="font-size: 15px;"></span></a></li>
       
       
       </ol>

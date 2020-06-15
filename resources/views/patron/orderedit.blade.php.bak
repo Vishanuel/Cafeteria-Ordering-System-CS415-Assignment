@@ -154,9 +154,9 @@
 					
 					  <label>Delivery Location</label>
 					  <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">
-							<option id="location_id" name="location_id"  disabled>Select location</option> 
+							<option  disabled>Select location</option> 
 							@foreach ($locations as $location )
-								<option id="location_id" name="location_id" @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
+								<option  @if($mealmethod == "delivery")  @if($delivery_info->D_Location == $location->Location_ID) selected="selected" @endif  @endif Required value="{{ $location->Location_ID}}">
 									{{ $location->Location_Name }}
 								</option>
 								
@@ -169,9 +169,9 @@
 					
 					  <label>Delivery Time</label>
 					  <select class="form-control select2" id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
-							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
+							<option disabled>Select delivery time </option> 
 							@if($mealmethod == "delivery")
-								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
+								<option value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
 							@endif 
 						</select>
 						

@@ -41,7 +41,7 @@
 						<option  disabled>Select food</option> 
 						@foreach ($foods as $food )
 							<option Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @endif >
-								{{ $food->Food_Name." - $". $food->Price ." - ". $food->Desc}}
+								{{ $food->Food_Name." - $". $food->Price ." - ". $food->Food_Desc}}
 							</option>
 							
 						@endforeach

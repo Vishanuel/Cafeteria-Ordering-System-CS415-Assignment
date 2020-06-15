@@ -112,7 +112,7 @@ body {
   padding-top: 25px;
   /*padding-top:50px;*/
 }
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   .fixed .content-wrapper,
   .fixed .right-side {
     /*padding-top: 100px;*/

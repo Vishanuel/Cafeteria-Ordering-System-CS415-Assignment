@@ -7,8 +7,9 @@ use App\Models\Restaurant;
 use DB;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class RestaurantController extends Controller
+class TutorialRestaurantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -53,7 +54,9 @@ class RestaurantController extends Controller
 		->where('User_ID','=',Auth::user()->id)
 		->first(); 
 		
-        return view('restaurants.indexx')->with(['student_id' => $student_id,'restaurants' => $restaurants,'pending_order_id' => $pending_order_id]);
+		$user = 
+		
+        return view('restaurants.tutorial.indexx')->with(['student_id' => $student_id,'restaurants' => $restaurants,'pending_order_id' => $pending_order_id]);
     }
 
     /**
@@ -98,7 +101,7 @@ class RestaurantController extends Controller
 		
 		$categories=DB::table('category')->get();
 		
-		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
+		return view('restaurants.tutorial.menu')->with(['foods' => $foods, 'categories' => $categories]);
 		
 		
     }

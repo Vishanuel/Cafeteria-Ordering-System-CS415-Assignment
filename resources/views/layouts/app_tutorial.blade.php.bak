@@ -134,6 +134,7 @@
 		  
           <ul class="nav navbar-nav"   >
 		  @if(Auth::user()->usertype == "Patron")
+			  <input id="usertype" value="home" style="display:none;">
 			 <li><a href="{{URL::to('home')}}" >Home</a></li>
             <li ><a href="{{URL::to('restaurant')}}" >Place Order</a></li>
             <!--li><a href="{{URL::to('order')}}" >Order History</a></li-->
@@ -150,6 +151,7 @@
 			<li class="divider"></li>
 			<li><a href="{{URL::to('register')}}" >Payment Option Registration</a></li-->
 		  @elseif(Auth::user()->usertype == "Student")
+		  <input id="usertype" value="student_home" style="display:none;">
 		    <li><a href="{{URL::to('student_home')}}" >Home</a></li>
 		    <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
             <!--li><a href="{{URL::to('student_order')}}" >View Previous Orders</a></li>
@@ -185,9 +187,11 @@
 					  </p>
 					</li>
 					<!-- Menu Body -->
-					
-					
-					
+					@if(Auth::user()->usertype == "Patron")
+						
+					@elseif
+						
+					@endif
 					
 					<!-- Menu Footer-->
 					<li class="user-footer" >

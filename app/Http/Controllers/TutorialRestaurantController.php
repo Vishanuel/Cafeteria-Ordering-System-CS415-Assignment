@@ -8,6 +8,7 @@ use DB;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
 
+
 class TutorialRestaurantController extends Controller
 {
     /**
@@ -52,6 +53,8 @@ class TutorialRestaurantController extends Controller
 		->select('Student_ID')
 		->where('User_ID','=',Auth::user()->id)
 		->first(); 
+		
+		
 		
         return view('restaurants.tutorial.indexx')->with(['student_id' => $student_id,'restaurants' => $restaurants,'pending_order_id' => $pending_order_id]);
     }

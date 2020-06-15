@@ -69,7 +69,7 @@
         {
           id: 'start',
 		 // title: 'Order',
-		  text: 'Hi!..it seems like you have logged into this app for the first time. We have created a special tutorial for you to guide you through our ordering process. If you wish to take this tutorial click on next button, otherwise click on exit button. You won\'t be able to skip the tutorial after clicking on nexr. ',
+		  text: 'Hi!..it seems like you have logged into this app for the first time. We have created a special tutorial for you to guide you through our ordering process. If you wish to take this tutorial click on next button, otherwise click on exit button. You won\'t be able to skip the tutorial after clicking on next. ',
 		  
 		  scrollTo: {
 			  behavior: 'smooth',
@@ -79,7 +79,7 @@
 			{
 			  text: 'Exit',
 			  action: function() {
-                window.location = "login";
+                window.location = "/login";
               }
 			},
 			{

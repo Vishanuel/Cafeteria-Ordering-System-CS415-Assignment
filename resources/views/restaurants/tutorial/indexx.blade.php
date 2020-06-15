@@ -79,7 +79,8 @@
 			{
 			  text: 'Exit',
 			  action: function() {
-                window.location = "login";
+				  
+                window.location = $('#usertype').val();
               }
 			},
 			{

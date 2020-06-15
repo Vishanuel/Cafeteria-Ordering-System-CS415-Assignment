@@ -34,7 +34,7 @@
                 <!-- text input -->
 				<?php $i = 1;?>
 				@foreach($food_selecteds as $food_select)
-				
+				<div class="row">
 				<div id="food_itemd{{$i}}" class="form-group col-md-6">
 					<label>Food Item</label>
 					<select disabled class="form-control select2" id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
@@ -46,6 +46,26 @@
 							
 						@endforeach
 					</select>
+					<div class="checkbox ">
+							@for($j=0;$j<count($items);$j++)
+								@if($items[$j]->Menu_Food_Item_ID==$ordered_item[$i-1]->Menu_Food_Item_ID)
+									@for($k=0;$k<count($cus_ingredients[$j]);$k++)
+									<div class="row">
+									<div class=" form-group col-md-5"><label><input class="real" name="ingredient{{$i}}[]" type="checkbox" value="{{$cus_ingredients[$j][$k]->Ingredient_ID}}"
+										@for($m=0;$m<count($ordered_ingredient[$i-1]);$m++)
+										@if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ordered_ingredient[$i-1][$m]->Ingredient_ID))  ? checked : 
+										@endif @endfor disabled>
+										{{$cus_ingredients[$j][$k]->Ingredient_Name}}</label>
+									</div>
+									{{-- <div class="form-group col-md-3  price">
+										<input type="number" class="form-control" id="{{$items[$j]->Menu_Food_Item_ID}}ingredient_price{{$cus_ingredients[$j][$k]->Ingredient_ID}}" Required readonly value="{{$cus_ingredients[$j][$k]->Ingredient_Price}}" >
+									</div> --}}
+								</div>
+									@endfor
+								@endif
+		
+							@endfor
+						</div>
 				</div>
 					
 					
@@ -59,7 +79,7 @@
 					  <label>Price ($)</label>
 					  <input type="number" class="form-control" disabled id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
-					
+				</div>
 					<?php $i= $i + 1; ?>
 					
 				@endforeach

@@ -50,7 +50,6 @@
                         <td> Dishes </td>
                         <td> Dish Description </td>
                         <td> Price </td>
-                        <td> Deliverability </td>
                         <td> Action </td>
                     </tr> 
                     
@@ -72,10 +71,10 @@
                              <div>{{$val[$i][$j][$k]->Price}}</div>
                              @endfor
                          </td>
-                         <td>
+                         {{-- <td>
                            @if($menu[$i][$j]->Deliverable==0)
                               Not Deliverable @else Deliverable @endif
-                         </td>
+                         </td> --}}
                         <td>
                                 <a data-toggle="modal" data-target="#{{$menu[$i][$j]->Menu_ID}}">
                                         <span class="glyphicon glyphicon-edit"></span>
@@ -128,7 +127,7 @@
                                                 </div> 
                                             {{-- @endfor   --}}
                                             @endfor 
-                                            <label>Is this Menu Deliverable? </label>
+                                            {{-- <label>Is this Menu Deliverable? </label>
                                             <div class="radio">
                                               <label><input type="radio" id="deliverable" name="deliverable" value="1" 
                                                 @if(($menu[$i][$j]->Deliverable)==1)  ? checked : 
@@ -137,7 +136,7 @@
                                                 @if(($menu[$i][$j]->Deliverable)==0)  ? checked : 
                                                 @endif>Non-Deliverable</label>
                                            
-                                            </div>
+                                            </div> --}}
 
                                           </div>
                                         <div class="modal-footer">
@@ -215,12 +214,12 @@
                                   </label>
                                   </div>
                             @endfor 
-                            <label>Is this Menu Deliverable? </label>
+                            {{-- <label>Is this Menu Deliverable? </label>
                             <div class="radio">
                               <label><input type="radio" id="deliverable" name="deliverable" value="1">Deliverable</label>
                               <label><input type="radio" id="mon-deliverable" name="deliverable" value="0">Non-Deliverable</label>
                                            
-                            </div>
+                            </div> --}}
                             </div>
                           <div class="modal-footer">
                           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>

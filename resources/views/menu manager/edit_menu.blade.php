@@ -39,7 +39,7 @@
                         <td> Dishes </td>
                         <td> Dish Description </td>
                         <td> Price </td>
-                         <td> Deliverability </td> 
+                         {{-- <td> Deliverability </td>  --}}
                     </tr> 
                     
                   @for($j=0;$j<count($menu);$j++) 
@@ -61,11 +61,11 @@
                              <div>{{$item[$i][$j][$k]->Price}}</div>
                              @endfor
                         </td>
-                        <td>
+                        {{-- <td>
                             @if($menu[$j]->Deliverable==0)
                                Not Deliverable @else Deliverable @endif
                           </td>
-                       
+                        --}}
                         </td>  
                         </tr>
                         @endif

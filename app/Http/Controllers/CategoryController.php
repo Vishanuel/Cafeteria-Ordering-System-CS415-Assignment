@@ -41,18 +41,13 @@ class CategoryController extends Controller
         $validate_food= Validator::make($request->all(), [
             'Food' => 'required'
         ]); 
-        $validate_deliver= Validator::make($request->all(), [
-            'deliverable' => 'required'
-        ]);
+       
 
         if ($validate_food->fails()) {
             return redirect('menu')
                         ->with('error','Food Item were not selected');
         }
-        if ($validate_deliver->fails()) {
-            return redirect('menu')
-                        ->with('error','If menu is deliverable or not was not selected');
-        }
+       
             
         $input = $request->all();
         //dd($input);
@@ -77,9 +72,9 @@ class CategoryController extends Controller
                 ['Menu_Food_Item_ID' => $input["Food"][$i],
                 'Menu_ID' => $check[0]->Menu_ID]);  
             }
-            DB::table('menu')
-            ->where('Menu_ID','=',$check[0]->Menu_ID)
-            ->update(['Deliverable' => $input["deliverable"]]); 
+            // DB::table('menu')
+            // ->where('Menu_ID','=',$check[0]->Menu_ID)
+            // ->update(['Deliverable' => $input["deliverable"]]); 
            
             return back()->with('success', 'Existing Menu on that day was updated');
         }
@@ -89,7 +84,6 @@ class CategoryController extends Controller
             $id =DB::table('menu')->insertGetId(
             ['Menu_Date' => $input["Menu_Date"],
             'Category_ID' => $input["Category"],
-            'Deliverable' => $input["deliverable"],
             'Restaurant_ID' => $user->Restaurant_ID]); 
 
             for($i=0;$i<count($input["Food"]);$i++)

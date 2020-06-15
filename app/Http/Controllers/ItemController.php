@@ -102,6 +102,14 @@ class ItemController extends Controller
             $filename =time().'.'.$extension;
             $file->move('dist/img/restaurant/', $filename);
         }
+        $validate_deliver= Validator::make($request->all(), [
+            'deliverable'  => 'required'
+           ]);
+
+        if ($validate_deliver->fails()) {
+        return back()
+                ->with('error','If Menu Item is deliverable or not was not selected');
+        }
        
         
 
@@ -120,7 +128,7 @@ class ItemController extends Controller
         //insert the item in the menu food item table and get the id
         $item = DB::table('menu_food_item')
         ->insertGetId(['Food_Name' => $input["item_name"],
-            'Food_Desc' => $input["item_desc"],'Price' => $input["item_price"],'Quantity'=>$input["item_quantity"],'Restaurant_ID' => $data->Restaurant_ID,'Food_Pic' => 'dist/img/restaurant/'. $filename]); 
+            'Food_Desc' => $input["item_desc"],'Price' => $input["item_price"],'Quantity'=>$input["item_quantity"],'Restaurant_ID' => $data->Restaurant_ID,'Food_Pic' => 'dist/img/restaurant/'. $filename,'Deliverable'=>$input["deliverable"]]); 
            // dd($item);
 
         //if ingredient selected then insert them in item ingredients and custom ingredients table 
@@ -197,10 +205,19 @@ class ItemController extends Controller
             $file->move('dist/img/restaurant/', $filename);
         }
 
+        $validate_deliver= Validator::make($request->all(), [
+            'deliverable'  => 'required'
+           ]);
+
+        if ($validate_deliver->fails()) {
+        return back()
+                ->with('error','If Menu Item is deliverable or not was not selected');
+        }
+
         //update the menu food item table
         DB::table('menu_food_item')
         ->where('Menu_Food_Item_ID','=',$id)
-        ->update(['Food_Name' => $input["item_name"],'Food_Desc'=>$input["item_desc"],'Price'=>$input["item_price"],'Quantity'=>$input["item_quantity"],'Food_Pic' => 'dist/img/restaurant/'. $filename]);
+        ->update(['Food_Name' => $input["item_name"],'Food_Desc'=>$input["item_desc"],'Price'=>$input["item_price"],'Quantity'=>$input["item_quantity"],'Food_Pic' => 'dist/img/restaurant/'. $filename,'Deliverable'=>$input["deliverable"]]);
 
         //delete all entrires of the menu item in custom and item ingredients table
         DB::table('item_ingredient')->where('Item_ID', '=', $id)->delete();

@@ -23,6 +23,7 @@
                         <th>Description</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th>Deliverability</th>
                         <th>Action</th>
                     </tr>
                         @for($i=0;$i<count($dish);$i++)
@@ -53,6 +54,10 @@
                             <td title=" Quantity of the Item">
                                 {{$dish[$i]->Quantity}}
                             </td>
+                             <td>
+                           @if($dish[$i]->Deliverable==0)
+                              Not Deliverable @else Deliverable @endif
+                         </td>
                            
                             <td >
                                 <a data-toggle="modal" data-target="#{{$dish[$i]->Menu_Food_Item_ID}}">
@@ -91,6 +96,16 @@
                                                     <label>Item Quantity</label>
                                                     <input type="number" class="form-control" name="item_quantity" title="Quantity of the Item" value="{{$dish[$i]->Quantity}}" min="0"  placeholder="0" required>
                                                  </div>
+                                                  <label>Is this Menu Deliverable? </label>
+                                            <div class="radio">
+                                              <label><input type="radio" id="deliverable" name="deliverable" value="1" 
+                                                @if(($dish[$i]->Deliverable)==1)  ? checked : 
+                                                @endif>Deliverable</label>
+                                              <label><input type="radio" id="mon-deliverable" name="deliverable" value="0" 
+                                                @if(($dish[$i]->Deliverable)==0)  ? checked : 
+                                                @endif>Non-Deliverable</label>
+                                           
+                                            </div>
                                                   <div class="row form-group checkbox">
                                                         <div class="col-md-6">
                                                                 <label title="Ingredient that default with the Item"><b>Default Ingredients</b></label>
@@ -201,6 +216,12 @@
                                                     <label>Item Quantity</label>
                                                     <input type="number" class="form-control" name="item_quantity" title="Quantity of the Item" min="0"  placeholder="0" required>
                                                  </div>
+                                                 <label>Is this Menu Deliverable? </label>
+                                                    <div class="radio">
+                                                    <label><input type="radio" id="deliverable" name="deliverable" value="1">Deliverable</label>
+                                                    <label><input type="radio" id="mon-deliverable" name="deliverable" value="0">Non-Deliverable</label>
+                                                                
+                                                    </div>
                                                 <div class="row form-group checkbox">
                                                     <div class="col-md-6">
                                                             <label title="Ingredient that default with the Item"><b>Default Ingredients</b></label>

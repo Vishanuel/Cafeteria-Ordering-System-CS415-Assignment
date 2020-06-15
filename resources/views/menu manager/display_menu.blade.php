@@ -2,7 +2,9 @@
 
 @section('content')
 
-<section class="content-header text-center"><h3>MENUS</h3></section>
+<section class="content-header text-center"><h3>MENUS</h3>
+ 
+</section>
     <section class="content-header">
     <div>
       <form method="post" action="filter_menu" enctype="multipart/form-data">
@@ -26,6 +28,9 @@
            </form>
            <button type="button" class="btn btn-default " ><a href="{{URL::to('menu')}}">Reset</a></button>
     </div>
+    <a  target="_blank" href="{{url('Mhelp/ViewingMenus.html')}}" class="pull-right" title="Get Help">
+      <span class="glyphicon glyphicon-question-sign"></span>
+  </a> 
     </section>
     <section class="content">
         @for($i=0;$i<count($cat);$i++)

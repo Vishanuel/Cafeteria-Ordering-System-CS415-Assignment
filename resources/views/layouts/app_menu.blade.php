@@ -114,9 +114,9 @@
 							
 							<!-- Menu Footer-->
 							<li class="user-footer">
-							<div class="pull-left">
+							{{-- <div class="pull-left">
 								<a href="#" class="btn btn-default btn-flat">Profile</a>
-							</div>
+							</div> --}}
 							<div class="pull-right">
 							<form id="logout-form" action="{{ route('logout') }}" method="POST">
 									@csrf
@@ -148,11 +148,11 @@
 		@if(session()->has('warning'))
 			<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
 		@endif
-		{{-- <div width="100%" class="backgroundimg" style="position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+		<div width="100%" class="backgroundimg" style="position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 			<div width="100%" class="whiteoverlay" style="padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
 			<hr width="90%" style="margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
 			</div>
-		</div> --}}
+		</div>
 		@yield('content')
 		</div>
 		<!-- /.container -->

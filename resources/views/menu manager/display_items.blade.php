@@ -1,11 +1,16 @@
 @extends('layouts.app_menu')
 
 @section('content')
-<section class="content-header text-center"></section>
+<section class="content-header text-center">
+    
+</section>
     <section class="content">
             <div class="box">
                     <div class="box-header with-border text-center">
                         <h3 class="box-title">Menu Items</h3>
+                        <a  target="_blank" href="{{url('Mhelp/ViewingMenuItems.html')}}" class="pull-right" title="Get Help">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
                     </div>
 
                     <div class="box-body ">
@@ -113,6 +118,14 @@
                                                                     </label></div>
                                                                 @endfor
                                                         </div>
+                                                    </div>
+                                                    <div> 
+                                                        <label for="exampleInputFile">File input</label>
+                                                        <input type="file" id="exampleInputFile" name="image">
+                                                        <div class="widget-user-header bg-black"
+                                                            style="height:90px; background: url('../{{$dish[$i]->Food_Pic}}') center center;background-repeat: no-repeat;  background-size: cover;">
+                                                        </div>
+                                                        <p class="help-block">Select Image of your Menu Item</p>
                                                     </div>
                                                     
                                                 </div>

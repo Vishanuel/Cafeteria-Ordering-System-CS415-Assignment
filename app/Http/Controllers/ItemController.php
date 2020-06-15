@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\File;
 
 use DB;
@@ -82,24 +83,32 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        //dd($input);
-        $extension = $request->file('image')->getClientOriginalName();
 
-  
+        
+        //get the file uploaded
+        if($request->hasfile('image')) 
+        { 
+            $validate_file= Validator::make($request->all(), [
+                'image'  => 'image|mimes:jpg,png,gif|max:2048'
+               ]);
 
-//dd($extension);
-        //$imageName = time().'.'.$extension;  
-        //dd($imageName);
+            if ($validate_file->fails()) {
+            return back()
+                    ->with('error','Image file uploaded should be of type .jpg .png .gif');
+            }
 
-        $request->file('image')->move(public_path('dist/img/restaurant'));
-     $name = "dist/img/restaurant/";
-   
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $file->move('dist/img/restaurant/', $filename);
+        }
+       
         
 
         //get the user ID
         $usr = Auth::user()->id; 
         
-        //get the restaurant IDD
+        //get the restaurant ID
         $dish = DB::table('Menu_Manager')
         ->where('Menu_Manager.User_ID',$usr)
         ->leftJoin('menu_food_item', 'Menu_Manager.Restaurant_ID', '=', 'menu_food_item.Restaurant_ID')
@@ -111,7 +120,7 @@ class ItemController extends Controller
         //insert the item in the menu food item table and get the id
         $item = DB::table('menu_food_item')
         ->insertGetId(['Food_Name' => $input["item_name"],
-            'Food_Desc' => $input["item_desc"],'Price' => $input["item_price"],'Quantity'=>$input["item_quantity"],'Restaurant_ID' => $data->Restaurant_ID,'Food_Pic' => $name.''.$extension]); 
+            'Food_Desc' => $input["item_desc"],'Price' => $input["item_price"],'Quantity'=>$input["item_quantity"],'Restaurant_ID' => $data->Restaurant_ID,'Food_Pic' => 'dist/img/restaurant/'. $filename]); 
            // dd($item);
 
         //if ingredient selected then insert them in item ingredients and custom ingredients table 
@@ -133,7 +142,7 @@ class ItemController extends Controller
             }
         }
             
-        return redirect('item');
+        return back()->with('success', 'New Menu Item is created successfully');
             
 
     }
@@ -172,10 +181,26 @@ class ItemController extends Controller
         //get all the request in a input variable
         $input = $request->all();
 
+        if($request->hasfile('image')) 
+        { 
+            $validate_file= Validator::make($request->all(), [
+                'image'  => 'image|mimes:jpg,png,gif|max:2048'
+               ]);
+
+            if ($validate_file->fails()) {
+            return back()
+                    ->with('error','Image file uploaded should be of type .jpg .png .gif');
+            }
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $file->move('dist/img/restaurant/', $filename);
+        }
+
         //update the menu food item table
         DB::table('menu_food_item')
         ->where('Menu_Food_Item_ID','=',$id)
-        ->update(['Food_Name' => $input["item_name"],'Food_Desc'=>$input["item_desc"],'Price'=>$input["item_price"],'Quantity'=>$input["item_quantity"]]);
+        ->update(['Food_Name' => $input["item_name"],'Food_Desc'=>$input["item_desc"],'Price'=>$input["item_price"],'Quantity'=>$input["item_quantity"],'Food_Pic' => 'dist/img/restaurant/'. $filename]);
 
         //delete all entrires of the menu item in custom and item ingredients table
         DB::table('item_ingredient')->where('Item_ID', '=', $id)->delete();
@@ -202,7 +227,7 @@ class ItemController extends Controller
          
 
 
-        return redirect('item');
+        return back()->with('success', 'Menu Item is Updated successfully');
 
     }
 

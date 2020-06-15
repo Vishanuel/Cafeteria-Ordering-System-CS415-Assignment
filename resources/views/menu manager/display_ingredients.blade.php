@@ -1,11 +1,16 @@
 @extends('layouts.app_menu')
 
 @section('content')
-<section class="content-header text-center"></section>
+<section class="content-header text-center">
+    
+</section>
     <section class="content">
             <div class="box">
                     <div class="box-header with-border text-center">
                         <h3 class="box-title">Menu Ingredients</h3>
+                        <a  target="_blank" href="{{url('Mhelp/ViewingIngredients.html')}}" class="pull-right" title="Get Help">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
                     </div>
 
                     <div class="box-body ">

@@ -156,7 +156,7 @@
 				<div id="debox">
 				<div id="delivery" style="z-index: 999;width: 100%;">
 				
-					<div id="locationid" class="form-group col-md-6">
+					<div id="locationid" class="form-group col-md-6 col-xs-12">
 					
 					  <label style="z-index: 999;">Delivery Location</label>
 					  <select class="form-control select2" id="location_id" name="location_id" style="z-index: 999;width: 100%;" Required placeholder="Select location">
@@ -172,7 +172,7 @@
 					</div>
 					
 					
-					<div id="locationtime" class="form-group col-md-6">
+					<div id="locationtime" class="form-group col-md-6 col-xs-12">
 					
 					  <label style="z-index: 999;">Delivery Time</label>
 					  <select class="form-control select2" id="location_time" name="location_time" style="z-index: 999;width: 100%;"  placeholder="Select location">
@@ -188,7 +188,7 @@
               
 				</div>
 				</div>
-                <div id="mealdate" class="form-group col-md-12">
+                <div id="mealdate" class="form-group col-md-12 col-xs-12">
                 <label>Meal Date</label>
 				
 				<input id="cutoff" name="cutoff" type="hidden" value="{{$order_cutoff->Order_Cutoff_Time }}">

@@ -156,7 +156,7 @@
 				<div id="debox">
 				<div id="delivery" style="z-index: 999;width: 100%;">
 				
-					<div id="locationid" class="form-group col-md-6">
+					<div id="locationid" class="form-group col-md-6 col-xs-12">
 					
 					  <label style="z-index: 999;">Delivery Location</label>
 					  <select class="form-control select2" id="location_id" name="location_id" style="z-index: 999;width: 100%;" Required placeholder="Select location">
@@ -172,7 +172,7 @@
 					</div>
 					
 					
-					<div id="locationtime" class="form-group col-md-6">
+					<div id="locationtime" class="form-group col-md-6 col-xs-12">
 					
 					  <label style="z-index: 999;">Delivery Time</label>
 					  <select class="form-control select2" id="location_time" name="location_time" style="z-index: 999;width: 100%;"  placeholder="Select location">
@@ -204,7 +204,7 @@
 			  
 			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value=""> 
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}"> 
 			<input id="menuid" name="menuid" class="form-group col-md-12" style="display: none" value="{{$menuid}}">
 			<div class="has-error col-md-1" id="dwarn" name="dwarn" ></div>

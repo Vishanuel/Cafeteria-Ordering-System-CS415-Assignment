@@ -68,9 +68,6 @@
 						<a class=" btn btn-info btn-flat pull-right" type="button" href="<?php echo e(URL::to('order_create/'.$menuid )); ?>">
 							Place order
 						</a>
-						<a class=" btn btn-info btn-flat pull-right" type="button" href="<?php echo e(URL::to('custom_meal',$food->Restaurant_ID)); ?>">
-							Customize Meal
-						</a>
 						<?php elseif(Auth::user()->usertype == "Student"): ?>
 					    <a class=" btn btn-info btn-flat pull-right" type="button" href="<?php echo e(URL::to('student_order_create/'.$menuid )); ?>">
 							Place order

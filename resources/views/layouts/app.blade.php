@@ -115,7 +115,7 @@
       <div class="container" >
         <div class="navbar-header">
 		  
-          <a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
+          <a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" id="bignav" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a><a href="#" id="smallnav" class="navbar-brand"><b >Cafeteria </b>OS</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -141,12 +141,12 @@
             </li>
 			
 			<li class="divider"></li>
-			<li><a href="{{URL::to('register')}}" >Payment Option Registration</a></li>
+			<li><a href="{{URL::to('register')}}" >Payment Registration</a></li>
 		  @elseif(Auth::user()->usertype == "Student")
 		    <li><a href="{{URL::to('student_home')}}" >Home</a></li>
 		    <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
             <li><a href="{{URL::to('student_order')}}" >View Previous Orders</a></li>
-			<li><a href="{{URL::to('studentregister')}}" >Payment Option Registration</a></li>
+			<li><a href="{{URL::to('studentregister')}}" >Payment Registration</a></li>
 		  @endif
            
           </ul>
@@ -254,7 +254,30 @@
 <!-- ./wrapper -->
 
 <script >
+	if($(window).width() < 991) {
+		document.getElementById('bignav').style.display = 'none';
+		document.getElementById('smallnav').style.display = 'block';
+		$('.layout-top-nav').addClass('fixed');
+	}
+	else{
+		document.getElementById('bignav').style.display = 'block';
+		document.getElementById('smallnav').style.display = 'none';
+		$('.layout-top-nav').removeClass('fixed');
+	}
 
+	$(window).on('resize', function() {
+		if($(window).width() < 991) {
+			document.getElementById('bignav').style.display = 'none';
+			document.getElementById('smallnav').style.display = 'block';
+			$('.layout-top-nav').addClass('fixed');
+		}
+		else{
+			document.getElementById('bignav').style.display = 'block';
+			document.getElementById('smallnav').style.display = 'none';
+			$('.layout-top-nav').removeClass('fixed');
+		}
+	});
+	
 	function backbutton(){
 		
 		var url = window.location.href;

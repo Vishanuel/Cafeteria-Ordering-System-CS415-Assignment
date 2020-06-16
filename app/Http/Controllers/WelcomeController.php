@@ -31,7 +31,7 @@ class WelcomeController extends Controller
 		->get();
 		
 		$categories=DB::table('category')->get();
-		
+				
 		//return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
         return view('welcome')->with(['restaurants' => $restaurants, 'foods' => $foods, 'categories' => $categories]);
     }

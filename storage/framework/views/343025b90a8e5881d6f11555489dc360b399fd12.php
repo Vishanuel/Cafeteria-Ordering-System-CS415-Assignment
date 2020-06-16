@@ -11,13 +11,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- Bootstrap 3.3.7 -->
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
   <script src="<?php echo e(asset('bower_components/bootstrap/dist/js/bootstrap.min.js')); ?>"></script>
   <!-- AdminLTE App -->
   <!-- <script src="<?php echo e(asset('bower_components/PACE/pace.min.js')); ?>"></script> -->
   <script src="<?php echo e(asset('dist/js/adminlte.min.js')); ?>"></script>
   
   <!-- DataTables -->
+  <?php if(session('cordova') == 'yes'): ?>
+  <script src="<?php echo e(asset('android/cordova.js')); ?>"></script>
+  <script src="<?php echo e(asset('android/app.js')); ?>"></script>
+  <?php endif; ?>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
@@ -111,7 +115,7 @@
       <div class="container" >
         <div class="navbar-header">
 		  
-          <a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a>
+          <a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" id="bignav" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a><a href="#" id="smallnav" class="navbar-brand"><b >Cafeteria </b>OS</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -126,18 +130,7 @@
 			 <li><a href="<?php echo e(URL::to('home')); ?>" >Home</a></li>
             <li ><a href="<?php echo e(URL::to('restaurant')); ?>" >Place Order</a></li>
             <li><a href="<?php echo e(URL::to('order')); ?>" >Order History</a></li>
-			<li class="divider"></li>			
-			<!--li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions</a>
-				<div class="dropdown-menu">
-					
-					<a href="<?php echo e(URL::to('mealsub')); ?>" class="dropdown-item">View Subscriptions</a>	
-					<div class="dropdown-divider"></div>			
-					<a href="<?php echo e(URL::to('mealsub_add')); ?>" class="dropdown-item">New Subscription</a>					
-					
-				</div>
-			</li-->
-			
+			<li class="divider"></li>				
 			<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -148,12 +141,12 @@
             </li>
 			
 			<li class="divider"></li>
-			<li><a href="<?php echo e(URL::to('register')); ?>" >Payment Option Registration</a></li>
+			<li><a href="<?php echo e(URL::to('register')); ?>" >Payment Registration</a></li>
 		  <?php elseif(Auth::user()->usertype == "Student"): ?>
 		    <li><a href="<?php echo e(URL::to('student_home')); ?>" >Home</a></li>
 		    <li ><a href="<?php echo e(URL::to('restaurant')); ?>" >Place Order <span class="sr-only">(current)</span></a></li>
             <li><a href="<?php echo e(URL::to('student_order')); ?>" >View Previous Orders</a></li>
-			<li><a href="<?php echo e(URL::to('studentregister')); ?>" >Payment Option Registration</a></li>
+			<li><a href="<?php echo e(URL::to('studentregister')); ?>" >Payment Registration</a></li>
 		  <?php endif; ?>
            
           </ul>
@@ -163,7 +156,15 @@
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu" >
           <ul class="nav navbar-nav" style="">
+			  <li class="dropdown tasks-menu">
+              <a href="<?php echo e(URL::to('tutorial_restaurant')); ?>" >
+                <!--i class="fa fa-hand-pointer-o"></i-->
+                Tutorial
+              </a>
            
+           
+          </li>
+		 
             <!-- User Account Menu -->
             <li class="dropdown user user-menu" >
               <!-- Menu Toggle Button -->
@@ -208,6 +209,7 @@
         <!-- /.navbar-custom-menu -->
       </div>
       <!-- /.container-fluid -->
+	  <hr class="customdivider" width="90%" style="">
     </nav>
   </header>
   <!-- Full Width Column -->
@@ -227,7 +229,7 @@
 	<?php endif; ?>
 	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
-		<hr width="90%" style="z-index:0;margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
+		
 		</div>
 	</div>
 	<?php echo $__env->yieldContent('content'); ?>
@@ -240,7 +242,7 @@
    
 	<div class="container" >
       <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.13
+        <b>Version</b> 3
       </div>
      <!-- <strong>Copyright &copy; 2014-2019 AdminLTE.</strong> All rights
       reserved. -->
@@ -253,7 +255,30 @@
 <!-- ./wrapper -->
 
 <script >
+	if($(window).width() < 991) {
+		document.getElementById('bignav').style.display = 'none';
+		document.getElementById('smallnav').style.display = 'block';
+		$('.layout-top-nav').addClass('fixed');
+	}
+	else{
+		document.getElementById('bignav').style.display = 'block';
+		document.getElementById('smallnav').style.display = 'none';
+		$('.layout-top-nav').removeClass('fixed');
+	}
 
+	$(window).on('resize', function() {
+		if($(window).width() < 991) {
+			document.getElementById('bignav').style.display = 'none';
+			document.getElementById('smallnav').style.display = 'block';
+			$('.layout-top-nav').addClass('fixed');
+		}
+		else{
+			document.getElementById('bignav').style.display = 'block';
+			document.getElementById('smallnav').style.display = 'none';
+			$('.layout-top-nav').removeClass('fixed');
+		}
+	});
+	
 	function backbutton(){
 		
 		var url = window.location.href;
@@ -269,7 +294,7 @@
 	}
 	
 	
-	function initjs(){
+//	function initjs(){
 	
 	ScrollReveal().reveal('.box'); 
 	//ScrollReveal().reveal('#card'); 
@@ -403,11 +428,15 @@
 		var foodid = food;
 		var food_item_number = value;
 		var total_ingredient = $('div#items'+food_item_number).find('#all_ingredient'+foodid).val(); 	//get the number of ingredients if that item
+		//alert(foodid);
+		//alert("total_ingredient="+total_ingredient);
 			var d;
 			var ingredient_price = 0;
 				for(d=0;d<total_ingredient;d++){	//iterate through all the ingredients to check if they are selected
 					//alert($('#'+food[0]+'check'+d).val());
+					//alert("startfid");
 					if($('div#items'+food_item_number).find('#'+foodid+'check'+d).is(":checked")){	//if they are selected then add the ingredients price to that totol price
+						//alert("found");
 						var ing_price = $('div#items'+food_item_number).find('#'+foodid+'check'+d).val(); 	// this gets the id for the ingredient
 						var price = $('div#items'+food_item_number).find('#'+foodid+'ingredient_price'+ing_price).val();	//this gets the price for the ingredient
 						ingredient_price = parseInt(ingredient_price) + parseInt(price);
@@ -421,58 +450,32 @@
 	}
 	
 	function ingredientcheckupdate(food,value,unitprice){
-		//var ingredient_count = $('div#items'+value).find('#all_ingredient'+food).val();
-		//var i;
-		//for(i=0;i<ingredient_count;i++){
-	
-		//	$('#'+food+'check'+i).change(function()
-		//	{
-		//		$('#price'+value).val($('#quantity'+value).val()*food[4]+ingredientcost(food,value));
-		//		tcost();
-		//	});
-
-		//}
-		
-		$('div#items'+value).find('.real').change(function()
-		{
-			var id = $(this).parent().parent().parent().parent().attr('id');
+		if($('div#items'+value).find('.real').val()){
+			var id = $('div#items'+value).find('.real').parent().parent().parent().parent().attr('id');
+			
 			id = id.charAt(0);
-			alert(id + " change");
-			//alert(food[4]);
-			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
-			tcost();
-		})
 		
-		//tcost();
+			$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
+			$('div#items'+value).find('.real').change(function()
+			{
+				var id = $(this).parent().parent().parent().parent().attr('id');
+				
+				id = id.charAt(0);
+
+				
+				$('#price'+id).val($('#quantity'+id).val()*unitprice+ingredientcost(food,id));
+				tcost();
+			})
+			
+			tcost();
+		}
 	}		
 	
 	function tcost(){
 		var e;
 		$('#tcost').val(0);
 		for(e = 1; e < $('#q').html(); e++){
-			//alert($('#tcost').val());
-			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));
-			//alert($('#tcost').val());
-			var str = $('#food_item'+e).val();
-			//alert($('#food_item'+e).val());
-			var food = str.split(/(\s+)/); //get the id f the menu item
-/*
-			var total_ingredient = $('#all_ingredient'+food[0]).val(); 	//get the number of ingredients if that item
-			var d;
-			var ingredient_price = 0;
-				for(d=0;d<total_ingredient;d++){	//iterate through all the ingredients to check if they are selected
-					//alert($('#'+food[0]+'check'+d).val());
-					if($('#'+food[0]+'check'+d).is(":checked")){	//if they are selected then add the ingredients price to that totol price
-						var ing_price = $('#'+food[0]+'check'+d).val(); 	// this gets the id for the ingredient
-						var price = $('#'+food[0]+'ingredient_price'+ing_price).val();	//this gets the price for the ingredient
-						ingredient_price = parseInt(ingredient_price) + parseInt(price);
-					}
-				}
-				//alert($('#tcost').val());
-
-				$('#tcost').val(parseInt($('#tcost').val())+parseInt(ingredient_price));
-*/
-			
+			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#price'+e).val()));		
 		}
 		if($('#specialfoodsprice').val()){
 			$('#tcost').val(parseInt($('#tcost').val())+parseInt($('#specialfoodsprice').val()));
@@ -486,13 +489,16 @@
 	//alert(count);
 	var k=1;
 	for(k;k<count;k++){
+		
 		var ids = $('#food_item'+k).attr('id');
 		var changes = ids.replace( /^\D+/g, '');
 		var str = $('#food_item'+changes).val();
 		
 		var food = str.split(/(\s+)/); 
 		$('.check'+changes).hide();
-		$('#'+changes+'choice'+food[0]).show()
+		$('#'+changes+'choice'+food[0]).show();
+		$('.recipe'+changes).hide();
+		$('#'+changes+'recipe'+food[0]).show();
 		
 		//alert(ingredientcost(food[0],changes));
 		
@@ -500,6 +506,8 @@
 		$('#quantity'+changes).attr({'max':food[2]});
 		$('#qavailable'+changes).val(food[2]);
 	  //	alert(food[4]);
+		//alert(1);
+		ingredientcheckupdate(food[0],changes,food[4]);
 		$('#quantity'+changes).on("keyup change click paste ", function(){
 			
 			
@@ -523,6 +531,8 @@
 
 			$('.check'+change).hide();
 			$('#'+change+'choice'+food[0]).show();
+			$('.recipe'+change).hide();
+		$('#'+change+'recipe'+food[0]).show();
 
 			//alert(food[2]);
 			$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
@@ -534,37 +544,13 @@
 				$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				tcost();
 			})
-			/*var ingredient_count = $('#all_ingredient'+food[0]).val();
-			var i;
-			for(i=0;i<ingredient_count;i++){
-	
-				$('#'+food[0]+'check'+i).change(function()
-				{
-					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
-					tcost();
-						
-				});
-	
-			}  */
+
 			ingredientcheckupdate(food[0],change,food[4]);
+			
 			tcost();
 		});
-		ingredientcheckupdate(food[0],changes,food[4]);
-		/*
-		var ingredient_count = $('#all_ingredient'+food[0]).val();
-		var i;
-			for(i=0;i<ingredient_count;i++){
-	
-				$('#'+food[0]+'check'+i).change(function()
-				{
-					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
-					tcost();
-						
-				});
-	
-			}  
 		
-		*/
+
 	}
 	
 	
@@ -672,6 +658,7 @@
 			$('#quantityd'+change).remove();
 			$('#food_itemd'+change).remove();
 			$('#removefood'+change).remove();
+			$('#hr'+change).remove();
 			var k = $('#q').html();
 			
 			for(k;k >= (count-1); k-- ){
@@ -688,7 +675,7 @@
 				$('#quantity'+k).attr('id','quantity'+(k-1));
 				$('#food_item'+k).attr('id','food_item'+(k-1));
 				$('#removefood'+k).attr('id','removefood'+(k-1));
-				
+				$('#hr'+k).attr('id','hr'+(k-1));
 			}
 			count--;
 			$('#q').html(count);
@@ -704,6 +691,7 @@
 	
 	//on clicking add food button fire this function to clone the food item row above add food button 
 	$('#addfood').click(function(){
+		$('<div class="col-md-12"><hr id="hr'+count+'" class=""  width="95%" style="color:grey;background:grey;"></div>').prependTo('#orderform');
 		$('<div class="col-md-12"><a type="button" id="removefood'+count+'" class="btn bg-maroon btn-flat margin">Remove item</a></div>').prependTo('#orderform');
 		$('<div id="priced'+count+'" class="form-group col-md-2"><label>Price ($)</label><input type="number" class="form-control" id="price'+count+'" name="price'+count+'" Required readonly value=""></div>').prependTo('#orderform');
 		$('<div id="qavailabled'+count+'" class="form-group col-md-2"><label>Max Quantity Available</label><input type="number" class="form-control" id="qavailable'+count+'" name="qavailable'+count+'" Required readonly value=""></div>').prependTo('#orderform');
@@ -713,9 +701,11 @@
 		$('#food_item'+(count-1)).find('option').clone().appendTo('#food_item'+count);
 		$('#items'+(count-1)).clone().prop('id','items'+count).appendTo('#food_itemd'+count);
 		var tot = $('#items'+count).find('#item_total').val();
+		//alert(tot);
 		for(i=0;i<tot;i++){
 			var num = $('#items'+count).find('#item_number'+i).val();
 			$('#items'+count).find('#'+(count-1)+'choice'+num).prop('id',count+'choice'+num).attr("class","checkbox check"+count).hide();
+			$('#items'+count).find('#'+(count-1)+'recipe'+num).prop('id',count+'recipe'+num).attr("class","recipe"+count).hide();
 			$('#'+count+'choice'+num).find('.real').prop({'name':'ingredient'+count+'[]'});
 		}
 		
@@ -723,6 +713,8 @@
 		var food = str.split(/(\s+)/);
 		$('.check'+count).hide();
 		$('#'+count+'choice'+food[0]).show();
+		$('.recipe'+count).hide();
+		$('#'+count+'recipe'+food[0]).show();
 		//$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 		$('#price'+count).val($('#quantity'+count).val()*food[4]+ingredientcost(food[0],count));
 		$('#qavailable'+count).val(food[2]);
@@ -737,6 +729,13 @@
 				$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				tcost();
 			})
+
+			$('.real').change(function()
+							{
+								//alert('changed');
+								tcost();
+									
+							})
 			
 			ingredientcheckupdate(food[0],count,food[4]);
 			
@@ -748,6 +747,8 @@
 					var food = str.split(/(\s+)/);
 					$('.check'+change).hide();
 					$('#'+change+'choice'+food[0]).show();
+					$('.recipe'+change).hide();
+							$('#'+change+'recipe'+food[0]).show();
 					//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 					$('#qavailable'+change).val(food[2]);
@@ -758,22 +759,6 @@
 						tcost();
 					})
 					ingredientcheckupdate(food[0],change,food[4]);
-					//tcost();
-					/*
-					var ingredient_count = $('#all_ingredient'+food[0]).val();
-					var i;
-						for(i=0;i<ingredient_count;i++){
-				
-							$('.real').change(function()
-							{
-								//alert('changed');
-								$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
-								tcost();
-									
-							});
-				
-						}  
-					*/
 					
 				});
 
@@ -787,6 +772,7 @@
 			$('#quantityd'+change).remove();
 			$('#food_itemd'+change).remove();
 			$('#removefood'+change).remove();
+			$('#hr'+change).remove();
 			var k = $('#q').html();
 			
 			for(k;k >= (count-1); k-- ){
@@ -803,7 +789,7 @@
 				$('#quantity'+k).attr('id','quantity'+(k-1));
 				$('#food_item'+k).attr('id','food_item'+(k-1));
 				$('#removefood'+k).attr('id','removefood'+(k-1));
-				
+				$('#hr'+k).attr('id','hr'+(k-1));
 			}
 			count--;
 			$('#q').html(count);
@@ -1096,7 +1082,9 @@
 						
 				var food = str.split(/(\s+)/);
 				$('.check'+k).hide();
-				$('#'+k+'choice'+food[0]).show()	 
+				$('#'+k+'choice'+food[0]).show()	
+				$('.recipe'+k).hide();
+				$('#'+k+'recipe'+food[0]).show(); 
 				//$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				$('#price'+k).val($('#quantity'+k).val()*food[4]+ingredientcost(food[0],k));
 				$('#quantity'+k).attr({'max':food[2]});
@@ -1128,6 +1116,8 @@
 					//alert(food[2]);
 					$('.check'+change).hide();
 					$('#'+change+'choice'+food[0]).show();
+					$('.recipe'+change).hide();
+					$('#'+change+'recipe'+food[0]).show();
 					//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				///	$('#Quantity').val();
@@ -1231,6 +1221,8 @@
 						var food = str.split(/(\s+)/);
 						$('.check'+k).hide();
 						$('#'+k+'choice'+food[0]).show()
+						$('.recipe'+k).hide();
+							$('#'+k+'recipe'+food[0]).show();
 						//$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 						$('#price'+k).val($('#quantity'+k).val()*food[4]+ingredientcost(food[0],k));
 						$('#quantity'+k).attr({'max':food[2]});
@@ -1259,6 +1251,8 @@
 							var food = str.split(/(\s+)/);
 							$('.check'+change).hide();
 							$('#'+change+'choice'+food[0]).show();
+							$('.recipe'+change).hide();
+							$('#'+change+'recipe'+food[0]).show();
 							//alert(food[2]);
 							//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 							$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
@@ -1323,8 +1317,8 @@
 		}
 	});
 	//initjs();
-	}
-	initjs();
+	//}
+	//initjs();
 
 
 $('#menus').change(function(){

@@ -1,0 +1,204 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Restaurant;
+use DB;
+use Auth;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
+class TutorialRestaurantController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $restaurants = Restaurant::all();
+	   
+	    $employee_id = DB::table('patron')
+		->select('Employee_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first();
+	   
+	    if(!empty($employee_id)){
+		   $pending_order_id = DB::table('cos_order')
+			->where('Employee_ID','=',$employee_id->Employee_ID)
+			->where('Cos_Order_Meal_Status','=','orderingg')
+			->first();
+	    }
+	   
+	    else{
+		   $student_id = DB::table('student')
+			->select('Student_ID')
+			->where('User_ID','=',Auth::user()->id)
+			->first();
+		   
+		   $pending_order_id = DB::table('cos_order')
+			->where('Student_ID','=',$student_id->Student_ID)
+			->where('Cos_Order_Meal_Status','=','orderingg')
+			->first();
+	    }
+	   
+		if(!empty($pending_order_id)){
+			$pending_order_id = $pending_order_id->Cos_Order_Num;
+		}
+		
+		$student_id = DB::table('student')
+		->select('Student_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first(); 
+		
+		$user = 
+		
+        return view('restaurants.tutorial.indexx')->with(['student_id' => $student_id,'restaurants' => $restaurants,'pending_order_id' => $pending_order_id]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+
+		$foods=DB::table('menu_food_item')
+		->join('menu_food','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('category','menu.Category_ID','=','category.Category_ID')
+		->where('menu_food_item.Quantity','>','0')
+		->where('menu.Menu_Date','=',date("Y-m-d"))
+		->where('menu.Restaurant_ID','=',$id)
+		->orderby('category.Category_ID')
+		->get();
+		
+		$categories=DB::table('category')->get();
+		
+		return view('restaurants.tutorial.menu')->with(['foods' => $foods, 'categories' => $categories]);
+		
+		
+    }
+	
+	public function showbreakfast($id)
+    {
+
+		$foods=DB::table('menu_food_item')
+		->join('menu_food','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('category','menu.Category_ID','=','category.Category_ID')
+		->where('menu_food_item.Quantity','>','0')
+		->where('menu.Menu_Date','=',date("Y-m-d"))
+		->where('menu.Restaurant_ID','=',$id)
+		->where('category.Category_Name','=','Dinner')
+		->orderby('category.Category_ID')
+		->get();
+		
+		$categories=DB::table('category')->get();
+		
+		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
+		
+		
+    }
+	
+	public function showlunch($id)
+    {
+
+		$foods=DB::table('menu_food_item')
+		->join('menu_food','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('category','menu.Category_ID','=','category.Category_ID')
+		->where('menu_food_item.Quantity','>','0')
+		->where('menu.Menu_Date','=',date("Y-m-d"))
+		->where('menu.Restaurant_ID','=',$id)
+		->where('category.Category_Name','=','Dinner')
+		->orderby('category.Category_ID')
+		->get();
+		
+		$categories=DB::table('category')->get();
+		
+		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
+		
+		
+    }
+	
+	public function showdinner($id)
+    {
+
+		$foods=DB::table('menu_food_item')
+		->join('menu_food','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('category','menu.Category_ID','=','category.Category_ID')
+		->where('menu_food_item.Quantity','>','0')
+		->where('menu.Menu_Date','=',date("Y-m-d"))
+		->where('menu.Restaurant_ID','=',$id)
+		->where('category.Category_Name','=','Dinner')
+		->orderby('category.Category_ID')
+		->get();
+		
+		$categories=DB::table('category')->get();
+		
+		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
+		
+		
+    }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}

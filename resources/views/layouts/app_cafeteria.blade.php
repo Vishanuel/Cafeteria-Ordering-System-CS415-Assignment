@@ -9,7 +9,7 @@
   <!-- jQuery 3 -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
 <!--script src="{{asset('bower_components/PACE/pace.min.js')}}"></script-->
 <!-- Bootstrap 3.3.7 -->
 
@@ -45,7 +45,10 @@
 <!-- ChartJS -->
 <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
 <!-- jvectormap  -->
-  
+  @if(session('cordova') == 'yes')
+  <script src="{{asset('android/cordova.js')}}"></script>
+  <script src="{{asset('android/app.js')}}"></script>
+  @endif
   <!-- Tell the browser to be responsive to screen width -->
   
   <!-- Select2 -->
@@ -59,7 +62,7 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
+  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.css')}}">
   <!-- daterange picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- bootstrap datepicker -->
@@ -74,7 +77,7 @@
  
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="../../dist/css/skins/skin-transparent.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -91,11 +94,11 @@
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
+  <header class="main-header" style="background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+    <nav class="navbar navbar-static-top" style="background: rgba(200, 200, 200, 0.6);">
       <div class="container">
         <div class="navbar-header">
-          <a href="#" class="navbar-brand"><b>Cafeteria </b>Ordering System</a>
+         <a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" id="bignav" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a><a href="#" id="smallnav" class="navbar-brand"><b >Cafeteria </b>OS</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -153,7 +156,7 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    
                   </div>
                   <div class="pull-right">
 				  <form id="logout-form" action="{{ route('logout') }}" method="POST">
@@ -169,6 +172,7 @@
         <!-- /.navbar-custom-menu -->
       </div>
       <!-- /.container-fluid -->
+	  <hr class="customdivider" width="90%" style="">
     </nav>
   </header>
   <!-- Full Width Column -->
@@ -186,6 +190,11 @@
 	@if(session()->has('warning'))
 		<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
 	@endif
+	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
+	
+	</div>
+	</div>
 	@yield('content')
     </div>
     <!-- /.container -->
@@ -194,7 +203,7 @@
   <footer class="main-footer">
     <div class="container">
       <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.13
+        <b>Version</b> 3
       </div>
     </div>
     <!-- /.container -->
@@ -203,10 +212,34 @@
 <!-- ./wrapper -->
 
 <script>
+	if($(window).width() < 991) {
+		document.getElementById('bignav').style.display = 'none';
+		document.getElementById('smallnav').style.display = 'block';
+		$('.layout-top-nav').addClass('fixed');
+	}
+	else{
+		document.getElementById('bignav').style.display = 'block';
+		document.getElementById('smallnav').style.display = 'none';
+		$('.layout-top-nav').removeClass('fixed');
+	}
+
+	$(window).on('resize', function() {
+		if($(window).width() < 991) {
+			document.getElementById('bignav').style.display = 'none';
+			document.getElementById('smallnav').style.display = 'block';
+			$('.layout-top-nav').addClass('fixed');
+		}
+		else{
+			document.getElementById('bignav').style.display = 'block';
+			document.getElementById('smallnav').style.display = 'none';
+			$('.layout-top-nav').removeClass('fixed');
+		}
+	});
+
 	function backbutton(){
 		
 		var url = window.location.href;
-		var n = url.search("home");
+		var n = url.search("cafeteria");
 		//alert(n);
 		if(n == -1){
 			history.back(-1);
@@ -218,7 +251,7 @@
 	}
 	
 	var url = window.location.href;
-	var n = url.search("home");
+	var n = url.search("cafeteria");
 	if(n != -1){
 		document.getElementById('backbutton').style.display = 'none';
 	}

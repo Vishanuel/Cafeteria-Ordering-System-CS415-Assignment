@@ -37,6 +37,9 @@ Route::resource('studentregister','RegisterStudentController');
 Route::resource('mealsub','MealSubsController');
 Route::resource('cafe_subs','Cafe_MealSubsController');
 Route::resource('subs_deliv', 'SubscriptionDelivererController');
+Route::resource('student_subs_deliv', 'StudentSubscriptionDelivererController');
+Route::resource('student_mealsub','StudentMealSubsController');
+Route::resource('student_cafe_subs','Cafe_MealSubs_StudentController');
 
 Route::match(['get', 'post'],'student_order_create/{menuid}', [
     'uses' => 'OrderStudentController@create'
@@ -131,6 +134,14 @@ Route::match(['get', 'post'],'mealsub_edit_details/{id}', [
     'uses' => 'MealSubsController@detailshow'
 ]); 
 
+Route::match(['get', 'post'],'mealsub_remove/{id}', [
+    'uses' => 'MealSubsController@remove'
+]);
+
+Route::match(['get', 'post'],'mealsub_payment', [
+    'uses' => 'MealSubsController@payment'
+]);
+
 //
 //Cafe Staff Meal Subs
 //
@@ -138,11 +149,43 @@ Route::match(['get', 'post'],'subs_delivery_request/{id}', [
     'uses' => 'Cafe_MealSubsController@delivery_request'
 ]);
 
+Route::match(['get', 'post'],'subs_process_payment/{id}', [
+    'uses' => 'Cafe_MealSubsController@process_payment'
+]);
+
+
 //
 //Deliverer Meal Subs
 //
+Route::match(['get', 'post'],'student_subs_delivery_request/{id}', [
+    'uses' => 'Cafe_MealSubs_StudentController@delivery_request'
+]);
 
 Route::resource('restaurant','RestaurantController');
+
+//
+//Student Meal Subs
+//
+Route::match(['get', 'post'],'student_mealsub_add', [
+    'uses' => 'StudentMealSubsController@create'
+])->name('student_mealsub_add');
+
+Route::match(['get', 'post'],'student_mealsub_cancel', [
+    'uses' => 'StudentMealSubsController@cancel'
+]);
+
+Route::match(['get', 'post'],'student_mealsub_edit_details/{id}', [
+    'uses' => 'StudentMealSubsController@detailshow'
+]); 
+
+Route::match(['get', 'post'],'student_mealsub_remove/{id}', [
+    'uses' => 'StudentMealSubsController@remove'
+]);
+
+Route::match(['get', 'post'],'student_mealsub_payment', [
+    'uses' => 'StudentMealSubsController@payment'
+]);
+
 
 //Route::redirect('/home', '/restaurant');
   

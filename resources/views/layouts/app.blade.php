@@ -495,7 +495,9 @@
 		
 		var food = str.split(/(\s+)/); 
 		$('.check'+changes).hide();
-		$('#'+changes+'choice'+food[0]).show()
+		$('#'+changes+'choice'+food[0]).show();
+		$('.recipe'+changes).hide();
+		$('#'+changes+'recipe'+food[0]).show();
 		
 		//alert(ingredientcost(food[0],changes));
 		
@@ -528,6 +530,8 @@
 
 			$('.check'+change).hide();
 			$('#'+change+'choice'+food[0]).show();
+			$('.recipe'+change).hide();
+		$('#'+change+'recipe'+food[0]).show();
 
 			//alert(food[2]);
 			$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
@@ -700,6 +704,7 @@
 		for(i=0;i<tot;i++){
 			var num = $('#items'+count).find('#item_number'+i).val();
 			$('#items'+count).find('#'+(count-1)+'choice'+num).prop('id',count+'choice'+num).attr("class","checkbox check"+count).hide();
+			$('#items'+count).find('#'+(count-1)+'recipe'+num).prop('id',count+'recipe'+num).attr("class","recipe"+count).hide();
 			$('#'+count+'choice'+num).find('.real').prop({'name':'ingredient'+count+'[]'});
 		}
 		
@@ -707,6 +712,8 @@
 		var food = str.split(/(\s+)/);
 		$('.check'+count).hide();
 		$('#'+count+'choice'+food[0]).show();
+		$('.recipe'+count).hide();
+		$('#'+count+'recipe'+food[0]).show();
 		//$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 		$('#price'+count).val($('#quantity'+count).val()*food[4]+ingredientcost(food[0],count));
 		$('#qavailable'+count).val(food[2]);
@@ -739,6 +746,8 @@
 					var food = str.split(/(\s+)/);
 					$('.check'+change).hide();
 					$('#'+change+'choice'+food[0]).show();
+					$('.recipe'+change).hide();
+							$('#'+change+'recipe'+food[0]).show();
 					//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 					$('#qavailable'+change).val(food[2]);
@@ -1072,7 +1081,9 @@
 						
 				var food = str.split(/(\s+)/);
 				$('.check'+k).hide();
-				$('#'+k+'choice'+food[0]).show()	 
+				$('#'+k+'choice'+food[0]).show()	
+				$('.recipe'+k).hide();
+				$('#'+k+'recipe'+food[0]).show(); 
 				//$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				$('#price'+k).val($('#quantity'+k).val()*food[4]+ingredientcost(food[0],k));
 				$('#quantity'+k).attr({'max':food[2]});
@@ -1104,6 +1115,8 @@
 					//alert(food[2]);
 					$('.check'+change).hide();
 					$('#'+change+'choice'+food[0]).show();
+					$('.recipe'+change).hide();
+					$('#'+change+'recipe'+food[0]).show();
 					//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 					$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 				///	$('#Quantity').val();
@@ -1207,6 +1220,8 @@
 						var food = str.split(/(\s+)/);
 						$('.check'+k).hide();
 						$('#'+k+'choice'+food[0]).show()
+						$('.recipe'+k).hide();
+							$('#'+k+'recipe'+food[0]).show();
 						//$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));
 						$('#price'+k).val($('#quantity'+k).val()*food[4]+ingredientcost(food[0],k));
 						$('#quantity'+k).attr({'max':food[2]});
@@ -1235,6 +1250,8 @@
 							var food = str.split(/(\s+)/);
 							$('.check'+change).hide();
 							$('#'+change+'choice'+food[0]).show();
+							$('.recipe'+change).hide();
+							$('#'+change+'recipe'+food[0]).show();
 							//alert(food[2]);
 							//$('#price'+change).val($('#quantity'+change).val()*food[4]);
 							$('#price'+change).val($('#quantity'+change).val()*food[4]+ingredientcost(food[0],change));

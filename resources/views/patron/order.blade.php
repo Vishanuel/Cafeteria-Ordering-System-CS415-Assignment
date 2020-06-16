@@ -52,7 +52,6 @@
 						<input id="item_total" value="{{count($items)}}"  type="hidden">
 						@for($i=0;$i<count($items);$i++)
 						<div class="check1 checkbox" id="1choice{{$items[$i]->Menu_Food_Item_ID}}" style="display:none;">
-
 							<input id="item_number{{$i}}" value="{{$items[$i]->Menu_Food_Item_ID}}"  type="hidden">
 							</br>
 							@for($j=0;$j<count($cus_ingredients[$i]);$j++)
@@ -70,11 +69,15 @@
 									</label>
 									</div>
 								</div>
+
 							@endfor
+							<div >
+								<b>{{$items[$i]->Food_Name}} Recipe </b></br>
+										{{$items[$i]->Menu_Food_Item_Recipe}}
 						</div>
+					</div>
 						@endfor
 					</div>
-				
 				
 				</div>
 

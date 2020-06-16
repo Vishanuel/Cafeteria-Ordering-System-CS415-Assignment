@@ -47,8 +47,13 @@ class RestaurantController extends Controller
 		if(!empty($pending_order_id)){
 			$pending_order_id = $pending_order_id->Cos_Order_Num;
 		}
-				
-        return view('restaurants.indexx')->with(['restaurants' => $restaurants,'pending_order_id' => $pending_order_id]);
+		
+		$student_id = DB::table('student')
+		->select('Student_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first(); 
+		
+        return view('restaurants.indexx')->with(['student_id' => $student_id,'restaurants' => $restaurants,'pending_order_id' => $pending_order_id]);
     }
 
     /**
@@ -91,7 +96,9 @@ class RestaurantController extends Controller
 		->orderby('category.Category_ID')
 		->get();
 		
-		$categories=DB::table('category')->get();
+		$categories=DB::table('category')
+		->join('order_cutoff','category.Order_Cutoff_ID','=','order_cutodd.Order_Cutoff_ID')
+		->get();
 		
 		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
 		

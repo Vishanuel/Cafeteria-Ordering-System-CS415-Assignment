@@ -243,7 +243,7 @@
 	 function backbutton(){
 		
 		var url = window.location.href;
-		var n = url.search("home");
+		var n = url.search("menu_manager");
 		//alert(n);
 		if(n == -1){
 			history.back(-1);
@@ -255,7 +255,7 @@
 	}
 	
 	var url = window.location.href;
-	var n = url.search("home");
+	var n = url.search("menu_manager");
 	if(n != -1){
 		document.getElementById('backbutton').style.display = 'none';
 	}

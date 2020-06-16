@@ -13,7 +13,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Place Order</li>
-		<li><a target="_blank" href="{{url('help/TheOrderingProcess.html')}}">Help</a></li>
+		<li><a target="_blank" href="{{url('help/TheOrderingProcess.html')}}"><span class="glyphicon glyphicon-question-sign" style="font-size: 15px;"></span></a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -42,7 +42,7 @@
 						<!--option disabled>Select food</option--> 
 						@foreach ($foods as $food )
 						<option name="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}} {{$food->Deliverable}}"   Required value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{number_format((float)$food->Price, 2, '.', '')}} {{$food->Deliverable}}" >
-							{{ $food->Food_Name." - ".$food->Food_Desc." - $".number_format((float)$food->Price, 2, '.', '') }} 
+							{{ $food->Food_Name }}</br>{{" - ".$food->Food_Desc." - $".number_format((float)$food->Price, 2, '.', '') }} 
 						</option>
 						@endforeach
 						
@@ -52,10 +52,7 @@
 						<input id="item_total" value="{{count($items)}}"  type="hidden">
 						@for($i=0;$i<count($items);$i++)
 						<div class="check1 checkbox" id="1choice{{$items[$i]->Menu_Food_Item_ID}}" style="display:none;">
-						
-						
-					
-					
+
 							<input id="item_number{{$i}}" value="{{$items[$i]->Menu_Food_Item_ID}}"  type="hidden">
 							</br>
 							@for($j=0;$j<count($cus_ingredients[$i]);$j++)

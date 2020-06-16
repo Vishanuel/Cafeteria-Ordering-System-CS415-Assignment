@@ -45,7 +45,10 @@
 <!-- ChartJS -->
 <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
 <!-- jvectormap  -->
-  
+  @if(session('cordova') == 'yes')
+  <script src="{{asset('android/cordova.js')}}"></script>
+  <script src="{{asset('android/app.js')}}"></script>
+  @endif
   <!-- Tell the browser to be responsive to screen width -->
   
   <!-- Select2 -->

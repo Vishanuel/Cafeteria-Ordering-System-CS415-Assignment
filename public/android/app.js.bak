@@ -21,11 +21,6 @@ function onDeviceReady() {
 	if(n != -1){
 		document.getElementById('backbutton').style.display = 'none';document.addEventListener("backbutton", onBackKeyDown, false); //Listen to the User clicking on the back button
 	}
-	
-	var n = url.search("menu_manager");
-	if(n != -1){
-		document.getElementById('backbutton').style.display = 'none';document.addEventListener("backbutton", onBackKeyDown, false); //Listen to the User clicking on the back button
-	}
   }  
 
 function onBackKeyDown(e) {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Mail;
+use App\Mail\SendEmailStudent;
 
 class OrderStudentController extends Controller
 {
@@ -113,6 +114,9 @@ class OrderStudentController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 				
@@ -1588,7 +1592,7 @@ class OrderStudentController extends Controller
 		
 		$data['count'] = $i;
 		$data['username'] = Auth::user()->name;
-        Mail::send('student.orderemail', $data, function($message) {
+      /*  Mail::send('student.orderemail', $data, function($message) {
  
             $message->to(Auth::user()->email, 'LCNotif')
  
@@ -1602,7 +1606,9 @@ class OrderStudentController extends Controller
  
                     ->subject('Restaurant Order Info');
         });
-		
+		*/
+		Mail::to(Auth::user()->email)->queue(new SendEmailStudent($data));
+		Mail::to(Auth::user()->email)->queue(new SendEmailStudent($data));
 		return redirect('student_order')->with('success','Order successful');
 		}
 		
@@ -1775,6 +1781,9 @@ class OrderStudentController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 			
@@ -2204,6 +2213,9 @@ class OrderStudentController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 		

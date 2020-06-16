@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Mail;
+use App\Mail\SendEmail;
 
 class OrderController extends Controller
 {
@@ -114,6 +115,9 @@ class OrderController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 				
@@ -1016,7 +1020,7 @@ class OrderController extends Controller
 		try{
 		$menuid= $request->input('menuid');
 		$orderid = $request->input('orderid');
-		
+		$error="";
 		$special_id = $request->input('special_id');
 		
 		$employee_id = DB::table('patron')
@@ -1193,7 +1197,7 @@ class OrderController extends Controller
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 			
-			$error="";
+			
 			if($specialquan <= 0){
 				$error = $error."Not enough food item in inventory to cater for your special meal order. Either edit your order or cancel it.\n";
 					
@@ -1601,21 +1605,21 @@ class OrderController extends Controller
 		
 		$data['count'] = $i;
 		$data['username'] = Auth::user()->name;
-        Mail::send('patron.orderemail', $data, function($message) {
+       /* Mail::send('patron.orderemail', $data, function($message) {
  
             $message->to(Auth::user()->email, 'LCNotif')
  
                     ->subject('Order Info');
-        });
-		
-	
-		Mail::send('patron.restaurantemail', $data, function($message) {
+        });*/
+		Mail::to(Auth::user()->email)->queue(new SendEmail($data));
+		Mail::to(Auth::user()->email)->queue(new SendEmail($data));
+		/*Mail::send('patron.restaurantemail', $data, function($message) {
  
             $message->to(Auth::user()->email, 'LCNotif')
  
                     ->subject('Restaurant Order Info');
         });
-		
+		*/
 		return redirect('order')->with('success','Order successful');
 		}
 		
@@ -1787,6 +1791,9 @@ class OrderController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 					
@@ -2218,6 +2225,9 @@ class OrderController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 		

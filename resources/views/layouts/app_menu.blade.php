@@ -209,7 +209,10 @@
 <script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
-
+@if(session('cordova') == 'yes')
+  <script src="{{asset('android/cordova.js')}}"></script>
+  <script src="{{asset('android/app.js')}}"></script>
+  @endif
 <!-- jvectormap  -->
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

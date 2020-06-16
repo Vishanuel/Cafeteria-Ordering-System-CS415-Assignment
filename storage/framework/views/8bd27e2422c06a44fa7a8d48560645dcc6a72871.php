@@ -19,12 +19,19 @@
 		
 		
 		
-		<?php $menuid = -1;?>
+		<?php $menuid = -1;
+		function time_to_decimal($time) {
+			$timeArr = explode(':', $time);
+			$decTime = ($timeArr[0]*3600) + ($timeArr[1]*60) + ($timeArr[2]);
+		 
+			return $decTime;
+		}
+		?>
 						
         <!-- left column --><div class="row">
 		
         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
+		<?php if(time_to_decimal(date("H:i:s")) <= time_to_decimal($category->Order_Cutoff_Time)): ?>
 		 <div class="row">
 			<div class="col-md-12 col-xs-12">
 			  <div class="box loading" style="background: rgba(255, 255, 255, 1); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);z-index:999;">
@@ -92,6 +99,16 @@
 			 
 				
 			</div>
+			<?php else: ?>
+			<div class="box-header" style="background: rgba(255, 255, 255, 0); "> 
+				
+				<div class="col-md-12 col-xs-12">
+					<div id="2" class="callout callout-danger" ><h3 class="box-title"><?php echo e($category->Category_Name); ?> Menu</h3><p>Unfortunately, there is no available <?php echo e($category->Category_Name); ?> menu for this date. Sorry for any inconvenience caused.</p></div>
+				</div>
+			</div>
+			
+			<?php endif; ?>
+			
 		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         <!--/.col (right) -->
       

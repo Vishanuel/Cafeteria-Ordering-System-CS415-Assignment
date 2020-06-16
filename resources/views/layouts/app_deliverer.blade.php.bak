@@ -236,7 +236,7 @@
 	function backbutton(){
 		
 		var url = window.location.href;
-		var n = url.search("delivery");
+		var n = url.search("deliverer");
 		//alert(n);
 		if(n == -1){
 			history.back(-1);
@@ -248,7 +248,7 @@
 	}
 	
 	var url = window.location.href;
-	var n = url.search("delivery");
+	var n = url.search("deliverer");
 	if(n != -1){
 		document.getElementById('backbutton').style.display = 'none';
 	}

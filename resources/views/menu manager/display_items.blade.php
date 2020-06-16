@@ -1,32 +1,63 @@
 @extends('layouts.app_menu')
 
 @section('content')
-<section class="content-header text-center"></section>
+<section class="content-header text-center">
+    
+</section>
     <section class="content">
             <div class="box">
                     <div class="box-header with-border text-center">
                         <h3 class="box-title">Menu Items</h3>
+                        <a  target="_blank" href="{{url('Mhelp/ViewingMenuItems.html')}}" class="pull-right" title="Get Help">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
                     </div>
 
                     <div class="box-body ">
                     <table class="table table-bordered table-striped text-center" id ="example1">
                     <tr>
-                        <th>Item Name</th>
-                        <th>Item Description</th>
-                        <th>Item Price</th>
+                        <th>Name</th>
+                        <th>Picture</th>
+                        <th>Default Ingredients</th>
+                        <th>Other Ingredients</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Deliverability</th>
                         <th>Action</th>
                     </tr>
                         @for($i=0;$i<count($dish);$i++)
                         <tr>
-                            <td >
+                            <td title=" Name of the Item">
                                 {{$dish[$i]->Food_Name}}
                             </td>
-                            <td >
+                            <td><div class="widget-user-header bg-black"
+                                style="height:90px; background: url('../{{$dish[$i]->Food_Pic}}') center center;background-repeat: no-repeat;  background-size: cover;">
+                            </div>
+                                </td>
+                            <td title=" default ingredients that goes with the item">
+                                @for($j=0;$j<count($ingredient[$i]);$j++)
+                                <div>{{$ingredient[$i][$j]->Ingredient_Name}}</div>
+                                @endfor
+                            </td>
+                            <td title="ingredients that is used for customization">
+                                @for($j=0;$j<count($other_ingredient[$i]);$j++)
+                                <div>{{$other_ingredient[$i][$j]->Ingredient_Name}}</div>
+                                @endfor
+                            </td>
+                            <td title=" Description of the Item">
                                 {{$dish[$i]->Food_Desc}}
                             </td>
-                            <td >
+                            <td title=" Price of the Item">
                                 {{$dish[$i]->Price}}
                             </td>
+                            <td title=" Quantity of the Item">
+                                {{$dish[$i]->Quantity}}
+                            </td>
+                             <td>
+                           @if($dish[$i]->Deliverable==0)
+                              Not Deliverable @else Deliverable @endif
+                         </td>
                            
                             <td >
                                 <a data-toggle="modal" data-target="#{{$dish[$i]->Menu_Food_Item_ID}}">
@@ -36,7 +67,7 @@
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </td>
-
+                                {{-- below modal is for updating the information of the item --}}
                                 <div class="modal fade" id="{{$dish[$i]->Menu_Food_Item_ID}}" data-backdrop="static" data-keyboard="false">
                                     <div class="modal-dialog">
                                       <div class="modal-content">
@@ -51,16 +82,66 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label>Item Name</label>
-                                                        <input type="text" class="form-control" name="item_name" value="{{$dish[$i]->Food_Name}}" required>
+                                                        <input type="text" class="form-control" name="item_name" title="Name of the Item" value="{{$dish[$i]->Food_Name}}" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Item Description</label>
-                                                        <input type="text" class="form-control" name="item_desc"value="{{$dish[$i]->Food_Desc}}" required>
+                                                        <input type="text" class="form-control" name="item_desc" title="Description of the Item" value="{{$dish[$i]->Food_Desc}}" required>
                                                   </div>
                                                   <div class="form-group">
                                                           <label>Item Price</label>
-                                                          <input type="text" class="form-control" name="item_price" value="{{$dish[$i]->Price}}" required>
+                                                          <input type="number" class="form-control" name="item_price" title="Price of the Item" value="{{$dish[$i]->Price}}" min="0" placeholder="0.00" required>
                                                   </div>
+                                                  <div class="form-group">
+                                                    <label>Item Quantity</label>
+                                                    <input type="number" class="form-control" name="item_quantity" title="Quantity of the Item" value="{{$dish[$i]->Quantity}}" min="0"  placeholder="0" required>
+                                                 </div>
+                                                  <label>Is this Menu Deliverable? </label>
+                                            <div class="radio">
+                                              <label><input type="radio" id="deliverable" name="deliverable" value="1" 
+                                                @if(($dish[$i]->Deliverable)==1)  ? checked : 
+                                                @endif>Deliverable</label>
+                                              <label><input type="radio" id="mon-deliverable" name="deliverable" value="0" 
+                                                @if(($dish[$i]->Deliverable)==0)  ? checked : 
+                                                @endif>Non-Deliverable</label>
+                                           
+                                            </div>
+                                                  <div class="row form-group checkbox">
+                                                        <div class="col-md-6">
+                                                                <label title="Ingredient that default with the Item"><b>Default Ingredients</b></label>
+                                                                @for($k=0;$k<count($all_ingredient);$k++)
+                                                                <div> <label>
+                                                                        <input type="checkbox"  name="default[]" value="{{$all_ingredient[$k]->Ingredient_ID}}" @for($j=0;$j<count($ingredient[$i]);$j++)
+                                                                        @if ($all_ingredient[$k]->Ingredient_ID==$ingredient[$i][$j]->Ingredient_ID)
+                                                                        ? checked : 
+                                                                        @endif
+                                                                        @endfor>
+                                                                        {{$all_ingredient[$k]->Ingredient_Name}}
+                                                                    </label></div>
+                                                                @endfor
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                                <label title="other Ingredients of Item used for meal customization "><b>Other Ingredients</b></label>
+                                                                @for($k=0;$k<count($all_ingredient);$k++)
+                                                                <div> <label>
+                                                                        <input type="checkbox"  name="other[]" value="{{$all_ingredient[$k]->Ingredient_ID}}" @for($j=0;$j<count($other_ingredient[$i]);$j++)
+                                                                        @if ($all_ingredient[$k]->Ingredient_ID==$other_ingredient[$i][$j]->Ingredient_ID)
+                                                                        ? checked : 
+                                                                        @endif
+                                                                        @endfor>
+                                                                        {{$all_ingredient[$k]->Ingredient_Name}}
+                                                                    </label></div>
+                                                                @endfor
+                                                        </div>
+                                                    </div>
+                                                    <div> 
+                                                        <label for="exampleInputFile">File input</label>
+                                                        <input type="file" id="exampleInputFile" name="image">
+                                                        <div class="widget-user-header bg-black"
+                                                            style="height:90px; background: url('../{{$dish[$i]->Food_Pic}}') center center;background-repeat: no-repeat;  background-size: cover;">
+                                                        </div>
+                                                        <p class="help-block">Select Image of your Menu Item</p>
+                                                    </div>
                                                     
                                                 </div>
                                                 <div class="modal-footer">
@@ -73,6 +154,7 @@
                                    </div>
                                 </div>
 
+                                {{-- below modal is for deleting for the restaurant --}}
                                 <div class="modal fade" id="delete{{$dish[$i]->Menu_Food_Item_ID}}" >
                                         <div class="modal-dialog">
                                           <div class="modal-content">
@@ -106,6 +188,7 @@
                             <span class="glyphicon glyphicon-plus pull-right"></span>
                         </a>
 
+                         {{-- below modal is for creating and adding new item for the restaurant --}}
                         <div class="modal fade" id="add" data-backdrop="static" data-keyboard="false">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
@@ -119,15 +202,50 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label>Item Name</label>
-                                                    <input type="text" class="form-control" name="item_name" required>
+                                                    <input type="text" class="form-control" name="item_name" title="Name of the Item" required>
                                                 </div>
                                                 <div class="form-group">
                                                         <label>Item Description</label>
-                                                        <input type="text" class="form-control" name="item_desc" required>
+                                                        <input type="text" class="form-control" name="item_desc" title="Description of the Item" required>
                                                 </div>
                                                 <div class="form-group">
                                                         <label>Item Price</label>
-                                                        <input type="text" class="form-control" name="item_price" required>
+                                                        <input type="number" class="form-control" name="item_price" title="Price of the Item" min="0.00" placeholder="0.00" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Item Quantity</label>
+                                                    <input type="number" class="form-control" name="item_quantity" title="Quantity of the Item" min="0"  placeholder="0" required>
+                                                 </div>
+                                                 <label>Is this Menu Deliverable? </label>
+                                                    <div class="radio">
+                                                    <label><input type="radio" id="deliverable" name="deliverable" value="1">Deliverable</label>
+                                                    <label><input type="radio" id="mon-deliverable" name="deliverable" value="0">Non-Deliverable</label>
+                                                                
+                                                    </div>
+                                                <div class="row form-group checkbox">
+                                                    <div class="col-md-6">
+                                                            <label title="Ingredient that default with the Item"><b>Default Ingredients</b></label>
+                                                            @for($k=0;$k<count($all_ingredient);$k++)
+                                                            <div> <label>
+                                                                    <input type="checkbox"  name="default[]" value="{{$all_ingredient[$k]->Ingredient_ID}}">
+                                                                    {{$all_ingredient[$k]->Ingredient_Name}}
+                                                                </label></div>
+                                                            @endfor
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                            <label title="other Ingredients of Item used for meal customization "><b>Other Ingredients</b></label>
+                                                            @for($k=0;$k<count($all_ingredient);$k++)
+                                                            <div> <label>
+                                                                    <input type="checkbox"  name="other[]" value="{{$all_ingredient[$k]->Ingredient_ID}}">
+                                                                    {{$all_ingredient[$k]->Ingredient_Name}}
+                                                                </label></div>
+                                                            @endfor
+                                                    </div>
+                                                </div>
+                                                <div> 
+                                                    <label for="exampleInputFile">File input</label>
+                                                    <input type="file" id="exampleInputFile" name="image">
+                                                    <p class="help-block">Select Image of your Menu Item</p>
                                                 </div>
                                                 
                                             </div>

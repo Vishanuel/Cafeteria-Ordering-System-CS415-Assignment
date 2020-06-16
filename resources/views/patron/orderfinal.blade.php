@@ -101,9 +101,11 @@
 								@endif
 
 								<div >
+										@if($items[$j]->Menu_Food_Item_Recipe!=NULL)
 										<b>{{$items[$j]->Food_Name}} Recipe </b></br>
 												{{$items[$j]->Menu_Food_Item_Recipe}}
-								</div>
+										@endif
+							</div>
 							
 						</div>
 						@endfor

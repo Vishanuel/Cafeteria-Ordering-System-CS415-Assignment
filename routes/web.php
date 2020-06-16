@@ -43,7 +43,7 @@ Route::resource('subs_deliv', 'SubscriptionDelivererController');
 
 Route::match(['get', 'post'],'filter_menu', [
     'uses' => 'MenuController@filter'
-
+]);
 Route::match(['get', 'post'],'tutorial_order_create/{menuid}', [
     'uses' => 'TutorialController@create'
 ]);

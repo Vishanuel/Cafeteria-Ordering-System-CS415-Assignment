@@ -71,8 +71,10 @@
 
 							@endfor
 							<div >
-								<b>{{$items[$i]->Food_Name}} Recipe </b></br>
-										{{$items[$i]->Menu_Food_Item_Recipe}}
+								@if($items[$i]->Menu_Food_Item_Recipe!=NULL)
+									<b>{{$items[$i]->Food_Name}} Recipe </b></br>
+											{{$items[$i]->Menu_Food_Item_Recipe}}
+									@endif
 						</div>
 					</div>
 						@endfor

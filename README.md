@@ -11,14 +11,15 @@ Installation:
  4. Add virtual host to your httpd.conf(or httpd-vhosts.conf) file in your Apache Web Server installation directory: 
  
       <VirtualHost *:80>
-            ServerName (*localhost is set by default but welcome to pick any*.)
-            DocumentRoot "(*Directory in which COS application is*)/COS/public"
-            <Directory  "(*Directory in which COS application is*)/COS/">
-                Options +Indexes +Includes +FollowSymLinks +MultiViews
-                AllowOverride All
-                Require local
-            </Directory>
-       </VirtualHost>
+      ServerName (*localhost is set by default but welcome to pick any*.)
+      DocumentRoot "(*Directory in which COS application is*)/COS/public"
+      <Directory  "(*Directory in which COS application is*)/COS/">
+      Options +Indexes +Includes +FollowSymLinks +MultiViews
+      AllowOverride All
+      Require local
+      </Directory>
+      </VirtualHost>
+       
   5. Configure the .env file.    
   6. Access COS app using URL - http://yourhostname:80/ .
 

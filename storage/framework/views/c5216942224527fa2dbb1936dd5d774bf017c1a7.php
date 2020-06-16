@@ -63,7 +63,7 @@
 										<div class="row">
 											<input id="all_ingredient<?php echo e($items[$j]->Menu_Food_Item_ID); ?>" value="<?php echo e(count($cus_ingredients[$j])); ?>"  type="hidden">
 										<div class=" form-group col-md-4 col-xs-6">
-										<label><label style="font-weight:bold;">Ingredient</label></br><input class="real checkbox" name="ingredient<?php echo e($j); ?>[]" id ="<?php echo e($items[$j]->Menu_Food_Item_ID); ?>check<?php echo e($k); ?>" type="checkbox" value="<?php echo e($cus_ingredients[$j][$k]->Ingredient_ID); ?>"
+										<label><label style="font-weight:bold;">Ingredient</label></br><input class="real checkbox" name="ingredient<?php echo e($i); ?>[]" id ="<?php echo e($items[$j]->Menu_Food_Item_ID); ?>check<?php echo e($k); ?>" type="checkbox" value="<?php echo e($cus_ingredients[$j][$k]->Ingredient_ID); ?>"
 											<?php for($m=0;$m<count($ordered_ingredient[$i-1]);$m++): ?>
 											<?php if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ordered_ingredient[$i-1][$m]->Ingredient_ID)): ?>  ? checked : 
 											 <?php endif; ?> <?php endfor; ?> >
@@ -82,7 +82,7 @@
 										<div class="row">
 											<input id="all_ingredient<?php echo e($items[$j]->Menu_Food_Item_ID); ?>" value="<?php echo e(count($cus_ingredients[$j])); ?>"  type="hidden">
 										<div class=" form-group col-md-4 col-xs-6">
-										<label><label style="font-weight:bold;">Ingredient</label></br><input class="real checkbox" name="ingredient<?php echo e($j); ?>[]" id ="<?php echo e($items[$j]->Menu_Food_Item_ID); ?>check<?php echo e($k); ?>" type="checkbox" value="<?php echo e($cus_ingredients[$j][$k]->Ingredient_ID); ?>"
+										<label><label style="font-weight:bold;">Ingredient</label></br><input class="real checkbox" name="ingredient<?php echo e($i); ?>[]" id ="<?php echo e($items[$j]->Menu_Food_Item_ID); ?>check<?php echo e($k); ?>" type="checkbox" value="<?php echo e($cus_ingredients[$j][$k]->Ingredient_ID); ?>"
 											<?php for($m=0;$m<count($ingredients[$i-1]);$m++): ?>
 											<?php if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ingredients[$i-1][$m]->Ingredient_ID)): ?>  ? checked : 
 											 <?php endif; ?> <?php endfor; ?> >

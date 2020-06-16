@@ -13,7 +13,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Order Info</li>
-		<li><a target="_blank" href="{{url('help/OrderConfirmationPage.html')}}">Help</a></li>
+		<li><a target="_blank" href="{{url('help/OrderConfirmationPage.html')}}"><span class="glyphicon glyphicon-question-sign" style="font-size: 15px;"></span></a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -34,7 +34,7 @@
 				<?php $i = 1;?>
 				@foreach($food_selecteds as $food_select)
 				
-				<div id="food_itemd{{$i}}" class="form-group col-md-6">
+				<div id="food_itemd{{$i}}" class="form-group col-md-8">
 					<label>Food Item</label>
 					<select disabled class="form-control select2" id="food_item{{$i}}" name="food_item{{$i}}" style="width: 100%;" Required placeholder="Select food">
 						<option  disabled>Select food</option> 
@@ -59,6 +59,10 @@
 					  <input type="number" class="form-control" readonly id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
 					
+					
+					<div id="hr{{$i}}" class="col-md-12">
+						<hr class=""  width="95%" style="color:grey;background:grey;">
+					</div>
 					<?php $i= $i + 1; ?>
 					
 				@endforeach

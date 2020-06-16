@@ -291,10 +291,11 @@ class OrderController extends Controller
 				$ingredient_quant = $request->input($ingredient_quantity);
 				//$input=$request->all();
 				//dd($input);
+				//dd()
 			for($j=0;$j<count($ingredient_ids);$j++)
 			{
 				DB::table('ordered_ingredient')
-				->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
+				->updateOrInsert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
 
 				/*
 				DB::table('ingredient')

@@ -11,7 +11,7 @@
         <li><a href="<?php echo e(url('home')); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="<?php echo e(url('smpdevice')); ?>">Device</a></li> -->
         <li class="active">Order Info</li>
-		<li><a target="_blank" href="<?php echo e(url('help/OrderConfirmationPage.html')); ?>">Help</a></li>
+		<li><a target="_blank" href="<?php echo e(url('help/OrderConfirmationPage.html')); ?>"><span class="glyphicon glyphicon-question-sign" style="font-size: 15px;"></span></a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -120,7 +120,7 @@
 				</div>
 				<?php endif; ?>
 				
-				<div id="tcostd" class="form-group col-md-2">
+				<div id="tcostd" class="form-group col-md-4">
 				  <label>Total($)</label>
 				
 				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">

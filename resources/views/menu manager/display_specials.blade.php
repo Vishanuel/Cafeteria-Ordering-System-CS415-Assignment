@@ -63,7 +63,7 @@
                                             <div class="form-group">
                                                     <label for="menus">Menu </label>
                                                     
-                                                    <select id="menus" name="menu" class="form-control">
+                                                    <select id="menus" name="menu" class="form-control" required>
                                                         <option value=""></option>
                                                         @for($j=0;$j<count($menu);$j++)
                                                         <option value="{{$menu[$j]->Menu_ID}}"  @if($menu[$j]->Menu_ID == $data[$i]->Menu_ID) selected="selected"@endif>
@@ -78,11 +78,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Special Menu Description</label>
-                                                <input type="text" class="form-control" name="menu_desc" value="{{ $data[$i]->Special_Desc}}">
+                                                <input type="text" class="form-control" name="menu_desc" value="{{ $data[$i]->Special_Desc}}" required>
                                               </div>
                                               <div class="form-group">
                                                     <label>Special Menu Price</label>
-                                                    <input type="text" class="form-control" name="menu_price" value="{{ $data[$i]->Special_Price}}">
+                                                    <input type="number" class="form-control" min="0" name="menu_price" value="{{ $data[$i]->Special_Price}}" required>
                                               </div>
                                              
                                               <label> Menu Items </label>
@@ -153,7 +153,7 @@
                                                  <div class="form-group">
                                                     <label for="menus">Menu </label>
                                                     
-                                                    <select id="menus" name="menu" class="form-control">
+                                                    <select id="menus" name="menu" class="form-control" required>
                                                         <option value=""></option>
                                                         @for($j=0;$j<count($menu);$j++)
                                                         <option value="{{$menu[$j]->Menu_ID}}"><div>{{$menu[$j]->Menu_Date}} 
@@ -167,11 +167,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Special Menu Description</label>
-                                                    <input type="text" class="form-control" name="menu_desc">
+                                                    <input type="text" class="form-control" name="menu_desc" required>
                                               </div>
                                               <div class="form-group">
                                                     <label>Special Menu Price</label>
-                                                    <input type="text" class="form-control" name="menu_price">
+                                                    <input type="number" min="0" class="form-control" name="menu_price" required>
                                               </div>
                                              
                                               <label> Menu Items </label>

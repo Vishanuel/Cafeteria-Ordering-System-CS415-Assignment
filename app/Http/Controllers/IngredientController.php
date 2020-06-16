@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use DB;
 use Auth;
 
@@ -60,6 +61,14 @@ class IngredientController extends Controller
     {
         $input = $request->all();
 
+            $validate_type= Validator::make($request->all(), [
+                'type'  => 'required'
+               ]);
+
+            if ($validate_type->fails()) {
+            return back()
+                    ->with('error','ingredient type was not selected');
+            }
         //get the user ID
         $usr = Auth::user()->id; 
         
@@ -76,7 +85,7 @@ class IngredientController extends Controller
             'Ingredient_Type_ID' => $input["type"]]); 
   
 
-                return redirect('ingredient');
+            return back()->with('success', 'New Ingredient is created successfully');
         //dd($input);
     }
 
@@ -113,12 +122,21 @@ class IngredientController extends Controller
     {
         $input = $request->all();
 
+        $validate_type= Validator::make($request->all(), [
+            'type'  => 'required'
+           ]);
+
+        if ($validate_type->fails()) {
+        return back()
+                ->with('error','ingredient type was not selected');
+        }
+
         DB::table('ingredient')
         ->where('Ingredient_ID','=',$id)
         ->update(['Ingredient_Name' => $input["ingredient_name"],'Ingredient_Type_ID'=>$input["type"],'Ingredient_Price' => $input["ingredient_price"],'Ingredient_Quantity' => $input["ingredient_quantity"]]); 
 
 
-        return redirect('ingredient');
+        return back()->with('success', 'Ingredient is updated successfully');
     }
 
     /**
@@ -130,6 +148,6 @@ class IngredientController extends Controller
     public function destroy($id)
     {
         DB::table('ingredient')->where('Ingredient_ID', '=', $id)->delete();
-        return redirect('ingredient');
+        return back()->with('success', 'Ingredient Deleted successfully');
     }
 }

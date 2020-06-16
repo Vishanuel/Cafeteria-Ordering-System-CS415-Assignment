@@ -99,6 +99,11 @@
 									@endfor
 								
 								@endif
+
+								<div >
+										<b>{{$items[$j]->Food_Name}} Recipe </b></br>
+												{{$items[$j]->Menu_Food_Item_Recipe}}
+								</div>
 							
 						</div>
 						@endfor

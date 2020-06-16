@@ -157,6 +157,7 @@ Route::match(['get', 'post'],'subs_delivery_request/{id}', [
 //
 
 Route::resource('restaurant','RestaurantController');
+Route::resource('tutorial_restaurant','TutorialRestaurantController');
 
 //Route::redirect('/home', '/restaurant');
   

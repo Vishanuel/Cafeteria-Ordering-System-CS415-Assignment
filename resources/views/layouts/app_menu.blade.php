@@ -18,7 +18,7 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
+  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.css')}}">
   <!-- daterange picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- bootstrap datepicker -->
@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="../../dist/css/skins/skin-transparent.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,7 +53,7 @@
 			<nav class="navbar navbar-static-top" style="background: rgba(200, 200, 200, 0.6);">
 				<div class="container">
 					<div class="navbar-header">
-					<a href="#" class="navbar-brand"><b>Cafeteria </b>Ordering System</a>
+					<a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" id="bignav" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a><a href="#" id="smallnav" class="navbar-brand"><b >Cafeteria </b>OS</a>
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
 						<i class="fa fa-bars"></i>
 					</button>
@@ -216,10 +216,34 @@
      Both of these plugins are recommended to enhance the
      user experience. -->
 	 <script>
+	 if($(window).width() < 991) {
+		document.getElementById('bignav').style.display = 'none';
+		document.getElementById('smallnav').style.display = 'block';
+		$('.layout-top-nav').addClass('fixed');
+	}
+	else{
+		document.getElementById('bignav').style.display = 'block';
+		document.getElementById('smallnav').style.display = 'none';
+		$('.layout-top-nav').removeClass('fixed');
+	}
+
+	$(window).on('resize', function() {
+		if($(window).width() < 991) {
+			document.getElementById('bignav').style.display = 'none';
+			document.getElementById('smallnav').style.display = 'block';
+			$('.layout-top-nav').addClass('fixed');
+		}
+		else{
+			document.getElementById('bignav').style.display = 'block';
+			document.getElementById('smallnav').style.display = 'none';
+			$('.layout-top-nav').removeClass('fixed');
+		}
+	});
+	 
 	 function backbutton(){
 		
 		var url = window.location.href;
-		var n = url.search("home");
+		var n = url.search("menu_manager");
 		//alert(n);
 		if(n == -1){
 			history.back(-1);
@@ -231,7 +255,7 @@
 	}
 	
 	var url = window.location.href;
-	var n = url.search("home");
+	var n = url.search("menu_manager");
 	if(n != -1){
 		document.getElementById('backbutton').style.display = 'none';
 	}

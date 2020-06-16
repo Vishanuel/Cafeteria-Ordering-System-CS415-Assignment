@@ -18,7 +18,23 @@ class TutorialController extends Controller
      */
     public function index()
     {
+		function time_to_decimal($time) {
+			$timeArr = explode(':', $time);
+			$decTime = ($timeArr[0]*3600) + ($timeArr[1]*60) + ($timeArr[2]);
+		 
+			return $decTime;
+		}
+		echo time_to_decimal(date("H:i:s"))."\n";
+		echo time_to_decimal(date("h:i:s"))."\n";
+		echo date("H:i:s");
 		
+		
+		//
+		echo time_to_decimal(date("H:i:s"))."\n";
+		
+		if(time_to_decimal(date("H:i:s")) >= time_to_decimal("05:00:00") && time_to_decimal(date("H:i:s")) <= time_to_decimal("18:20:00")){
+			echo "stupid";
+		}
         /*
 		$employee_id = DB::table('patron')
 		->select('Employee_ID')

@@ -18,7 +18,23 @@ class TutorialController extends Controller
      */
     public function index()
     {
+		function time_to_decimal($time) {
+			$timeArr = explode(':', $time);
+			$decTime = ($timeArr[0]*3600) + ($timeArr[1]*60) + ($timeArr[2]);
+		 
+			return $decTime;
+		}
+		echo time_to_decimal(date("H:i:s"))."\n";
+		echo time_to_decimal(date("h:i:s"))."\n";
+		echo date("H:i:s");
 		
+		
+		//
+		echo time_to_decimal(date("H:i:s"))."\n";
+		
+		if(time_to_decimal(date("H:i:s")) >= time_to_decimal("05:00:00") && time_to_decimal(date("H:i:s")) <= time_to_decimal("18:19:00")){
+			echo "stupid";
+		}
         /*
 		$employee_id = DB::table('patron')
 		->select('Employee_ID')
@@ -251,29 +267,9 @@ class TutorialController extends Controller
 		->first();
 		
 		
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
-		->where('User_ID','=',Auth::id())
-		->first();
-			
-		$id_deletion=DB::table('cos_order')
-		->where('Employee_ID','=', $employee_id->Employee_ID)
-		->where('Cos_Order_Meal_Status','=','orderingg')
-		->select('Cos_Order_Num')
-		->first();
 		
-		if(!empty($id_deletion)){
-			$orderid = $id_deletion->Cos_Order_Num;
-			
-		}
+		$orderid = 1;
 		
-		if(empty($orderid)){
-			$orderid=DB::table('cos_order')->max('Cos_Order_Num');
-			$orderid++;
-			if(empty($orderid)){
-				$orderid = 1;
-			}
-		}	
 		
 		return view('patron.tutorial.orderview',compact('items','ingredients','cus_ingredients'))->with(['specialfoods'=>$specialfoods, 'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'orderid' => $orderid, 'menuid' => $menuid]);
 		//return view('patron.tutorial.orderview',compact('items','ingredients','cus_ingredients','ordered_item','ordered_ingredient'))->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'menuid' => $menuid, 'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);

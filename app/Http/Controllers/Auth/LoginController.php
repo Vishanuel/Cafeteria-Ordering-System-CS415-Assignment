@@ -32,48 +32,61 @@ class LoginController extends Controller
     //protected $redirectTo = RouteServiceProvider::HOME;
 	protected function authenticated() {
 		 //If user role is patron
+		function time_to_decimal($time) {
+			$timeArr = explode(':', $time);
+			$decTime = ($timeArr[0]*3600) + ($timeArr[1]*60) + ($timeArr[2]);
 		 
+			return $decTime;
+		}
 		 //auth()->user()->login_times;
-		 
-        if(Auth::check() && auth()->user()->usertype == 'Patron')
-        {	
-			if(auth()->user()->login_times == 0){
-				auth()->user()->increment('login_times');
-				return redirect('/tutorial_restaurant');
-			}
-			else{
-				return redirect('/home');
-			}
-        }
+		if(time_to_decimal(date("H:i:s")) >= time_to_decimal("00:00:00") && time_to_decimal(date("H:i:s")) <= time_to_decimal("24:00:00")){
+			
 		
-		else if(Auth::check() && auth()->user()->usertype == 'Student')
-        {
-			if(auth()->user()->login_times == 0){
-				auth()->user()->increment('login_times');
-				return redirect('/tutorial_restaurant');
+			if(Auth::check() && auth()->user()->usertype == 'Patron')
+			{	
+				if(auth()->user()->login_times == 0){
+					auth()->user()->increment('login_times');
+					return redirect('/tutorial_restaurant');
+				}
+				else{
+					return redirect('/home');
+				}
 			}
-			else{
-				return redirect('/student_home');
+			
+			else if(Auth::check() && auth()->user()->usertype == 'Student')
+			{
+				if(auth()->user()->login_times == 0){
+					auth()->user()->increment('login_times');
+					return redirect('/tutorial_restaurant');
+				}
+				else{
+					return redirect('/student_home');
+				}
+				
 			}
-            
-        }
 
-        //If user role is menu manager
-        else if(Auth::check() && auth()->user()->usertype === "Menu Manager")
-        {
-            return redirect('/menu_manager');
-        }   
+			//If user role is menu manager
+			else if(Auth::check() && auth()->user()->usertype === "Menu Manager")
+			{
+				return redirect('/menu_manager');
+			}   
+			
+			else if(Auth::check() && auth()->user()->usertype === 'Cafeteria Staff')
+			{
+				//dd(5);
+				 return redirect('/cafeteria');
+			} 
+			
+			else if(Auth::check() && auth()->user()->usertype === 'Meal Deliverer')
+			{
+				 return redirect('/deliverer');
+			} 
 		
-		else if(Auth::check() && auth()->user()->usertype === 'Cafeteria Staff')
-        {
-			//dd(5);
-             return redirect('/cafeteria');
-        } 
-		
-		else if(Auth::check() && auth()->user()->usertype === 'Meal Deliverer')
-        {
-             return Response::view('meal deliverer.home');
-        } 
+		}
+		else{
+			Auth::logout();
+			return redirect('/welcome')->with('error','Cannot access COS outside of operating hours. Operating hours: 5am - 10pm');
+		}
 	}
     /**
      * Create a new controller instance.

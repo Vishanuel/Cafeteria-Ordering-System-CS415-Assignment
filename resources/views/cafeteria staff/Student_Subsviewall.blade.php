@@ -34,7 +34,7 @@
                 <thead>
                 <tr>
                   <th>Subs ID</th>
-				          <th>Employee ID</th>                  
+				          <th>Student ID</th>                  
                   <th>Food Item Qty</th>
                   <th>Total Price</th>
                   <th>Meal Type</th>
@@ -45,15 +45,14 @@
                   <th>End Date</th>
                   <th>Subscription Frequency</th>
                   <th>Meal Method</th>
-                  <th>Payment Method</th>
                   <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                @foreach($allmealsubs as $allmealsub)
                 <tr>
-                  <td style="text-overflow: ellipsis;">{{ $allmealsub->MealSubs_ID }}</td>
-				          <td style="text-overflow: ellipsis;">{{ $allmealsub->Employee_ID }}</td>
+                  <td style="text-overflow: ellipsis;">{{ $allmealsub->Student_MealSubs_ID }}</td>
+				          <td style="text-overflow: ellipsis;">{{ $allmealsub->Student_ID }}</td>
                   <td style="text-overflow: ellipsis;">{{ $allmealsub->Food_Item_Qty}}</td>
                   <td style="text-overflow: ellipsis;">{{ $allmealsub->Total_Price}}</td>
                   <td style="text-overflow: ellipsis;">{{ $allmealsub->Meal_Type}}</td>
@@ -64,29 +63,14 @@
                   <td style="text-overflow: ellipsis;">{{ $allmealsub->Meal_Subscription_End_Date}}</td>
                   <td style="text-overflow: ellipsis;">{{ $allmealsub->Meal_Subscription_Frequency}}</td>
                   <td style="text-overflow: ellipsis;">{{$allmealsub->Meal_Subscription_Method}}</td>
-                  <td style="text-overflow: ellipsis;">{{$allmealsub->Meal_Subscription_Payment_Method}}</td>
 				  				  <td style="text-overflow: ellipsis;" class="text-center">
-          
-          @if($allmealsub->Meal_Subscription_Payment_Method == "cash")
-					<a class="btn btn-success btn-block btn-flat" type="button" href="{{URL::to('cafe_subs/'.$allmealsub->MealSubs_ID.'/edit')}}">
+                        
+					<a class="btn btn-success btn-block btn-flat" type="button" href="{{URL::to('student_cafe_subs/'.$allmealsub->Student_MealSubs_ID.'/edit')}}">
                         Change meal status
           </a>
-          @endif
-          @if(($allmealsub->Meal_Subscription_Payment_Method == "card" || $allmealsub->Meal_Subscription_Payment_Method == "payroll") && $allmealsub->Paid == 0 )
-            <a class="btn btn-info btn-block btn-flat "  type="button" href="{{URL::to('subs_process_payment/'.$allmealsub->MealSubs_ID)}}">
-              Process Payment
-            </a>
-            @elseif(($allmealsub->Meal_Subscription_Payment_Method == "card" || $allmealsub->Meal_Subscription_Payment_Method == "payroll") && $allmealsub->Paid == 1)
-            <a class="btn btn-success btn-block btn-flat" type="button" href="{{URL::to('cafe_subs/'.$allmealsub->MealSubs_ID.'/edit')}}">
-              Change meal status
-            </a>
-            
-            
-            
-          @endif
           @if($allmealsub->Meal_Subscription_Method == "Delivery")
             @if($allmealsub->Meal_Status == "Prepared")
-					    <a class="btn btn-info btn-block btn-flat "  type="button" href="{{URL::to('subs_delivery_request/'.$allmealsub->MealSubs_ID)}}">
+					    <a class="btn btn-info btn-block btn-flat "  type="button" href="{{URL::to('student_subs_delivery_request/'.$allmealsub->Student_MealSubs_ID)}}">
                         Send Delivery Request
 					    </a>
             @endif

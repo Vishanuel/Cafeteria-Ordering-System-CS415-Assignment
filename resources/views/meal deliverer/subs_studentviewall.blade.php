@@ -36,7 +36,7 @@
 				  <th>SDR ID</th>
                   <th>Meal Subs ID</th>
                   <th>Food Item</th>
-				  <th>Employee_ID</th>
+				  <th>Student_ID</th>
                   <th>Location</th>
                   <th>Meal Type</th>
                   <th>Meal Time</th>
@@ -51,10 +51,10 @@
 				@foreach($deliverers as $deliverer)
 				   @if($deliverer->Meal_Status == "Pending Delivery")
 					<tr>
-					  <td style="text-overflow: ellipsis;">{{ $deliverer->Patron_Subscription_Delivery_Request_ID }}</td>
-                      <td style="text-overflow: ellipsis;">{{ $deliverer->MealSubs_ID }}</td>
+					  <td style="text-overflow: ellipsis;">{{ $deliverer->Student_Subscription_Delivery_Request_ID }}</td>
+                      <td style="text-overflow: ellipsis;">{{ $deliverer->Student_MealSubs_ID }}</td>
                       <td style="text-overflow: ellipsis;">{{ $deliverer->Food_Name }}</td>
-                      <td style="text-overflow: ellipsis;">{{ $deliverer->Employee_ID }}</td>
+                      <td style="text-overflow: ellipsis;">{{ $deliverer->Student_ID }}</td>
                       <td style="text-overflow: ellipsis;">{{ $deliverer->Location_Name }}</td>
 					  <td style="text-overflow: ellipsis;">{{ $deliverer->Meal_Type}}</td>
                       <td style="text-overflow: ellipsis;">{{ $deliverer->Meal_Time}}</td>
@@ -63,13 +63,13 @@
 					  <td style="text-overflow: ellipsis;">{{ $deliverer->Total_Price}}</td>
 					  <td style="text-overflow: ellipsis;" class="text-center">
 							
-						@if(!empty($deliverer->Patron_Subscription_Delivery_Instruction_ID)) 
-						<a class="btn btn-warning btn-flat btn-block" target="_blank" type="button" href="{{URL::to('cafeteria/'.$deliverer->MealSubs_ID)}}">
+						@if(!empty($deliverer->Student_Subscription_Delivery_Instruction_ID)) 
+						<a class="btn btn-warning btn-flat btn-block" target="_blank" type="button" href="{{URL::to('cafeteria/'.$deliverer->Student_MealSubs_ID)}}">
 							Print Delivery Info
 						</a>
 						@endif
 						@if($deliverer->Meal_Status == "Pending Delivery")
-						<a class="btn btn-success btn-flat btn-block" type="button" href="{{URL::to('subs_deliv/'.$deliverer->MealSubs_ID.'/edit')}}">
+						<a class="btn btn-success btn-flat btn-block" type="button" href="{{URL::to('student_subs_deliv/'.$deliverer->Student_MealSubs_ID.'/edit')}}">
 							Meal Delivered
 						</a>
 						@endif		

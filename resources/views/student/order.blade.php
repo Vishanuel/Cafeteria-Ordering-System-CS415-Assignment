@@ -93,6 +93,10 @@
 					</div>
 				
 				
+					<div id="hr{{$i}}" class="col-md-12">
+						<hr class=""  width="95%" style="background:grey;">
+					</div>
+				
 				
 				<div class="col-md-10">
 					<a type="button" id="addfood" class="btn bg-olive btn-flat margin">Add more food item</a>

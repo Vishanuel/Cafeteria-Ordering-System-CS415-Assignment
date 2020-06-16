@@ -172,7 +172,7 @@
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('home')}}" class="btn btn-default btn-flat">Cancel</a>
+                <a href="{{url('/mealsub')}}" class="btn btn-default btn-flat">Cancel</a>
                 <button type="submit" data-barba-prevent="self" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Save Subscription</button>
               </div>
               <!-- /.box-footer -->

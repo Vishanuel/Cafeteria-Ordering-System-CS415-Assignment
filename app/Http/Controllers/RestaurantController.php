@@ -96,7 +96,9 @@ class RestaurantController extends Controller
 		->orderby('category.Category_ID')
 		->get();
 		
-		$categories=DB::table('category')->get();
+		$categories=DB::table('category')
+		->join('order_cutoff','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->get();
 		
 		return view('restaurants.menu')->with(['foods' => $foods, 'categories' => $categories]);
 		

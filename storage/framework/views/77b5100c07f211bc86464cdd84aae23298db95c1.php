@@ -50,7 +50,6 @@
 						<input id="item_total" value="<?php echo e(count($items)); ?>"  type="hidden">
 						<?php for($i=0;$i<count($items);$i++): ?>
 						<div class="check1 checkbox" id="1choice<?php echo e($items[$i]->Menu_Food_Item_ID); ?>" style="display:none;">
-
 							<input id="item_number<?php echo e($i); ?>" value="<?php echo e($items[$i]->Menu_Food_Item_ID); ?>"  type="hidden">
 							</br>
 							<?php for($j=0;$j<count($cus_ingredients[$i]);$j++): ?>
@@ -68,11 +67,16 @@
 									</label>
 									</div>
 								</div>
+
 							<?php endfor; ?>
+							<div >
+								<b><?php echo e($items[$i]->Food_Name); ?> Recipe </b></br>
+										<?php echo e($items[$i]->Menu_Food_Item_Recipe); ?>
+
 						</div>
+					</div>
 						<?php endfor; ?>
 					</div>
-				
 				
 				</div>
 

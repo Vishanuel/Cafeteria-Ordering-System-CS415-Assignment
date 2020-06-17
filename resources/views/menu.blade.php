@@ -11,72 +11,78 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- Bootstrap 3.3.7 -->
-
-  <script src="http://localhost/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+  <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
   <!-- AdminLTE App -->
-  <!-- <script src="http://localhost/bower_components/PACE/pace.min.js"></script> -->
-  <script src="http://localhost/dist/js/adminlte.min.js"></script>
+  <!-- <script src="{{asset('bower_components/PACE/pace.min.js')}}"></script> -->
+  <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
   
   <!-- DataTables -->
+  @if(session('cordova') == 'yes')
+  <script src="{{asset('android/cordova.js')}}"></script>
+  <script src="{{asset('android/app.js')}}"></script>
+  @endif
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
   <script src="https://unpkg.com/@barba/core"></script>
   <script src="https://unpkg.com/@barba/css"></script>
-  <script src="http://localhost/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
   <!-- SlimScroll -->
-  <script src="http://localhost/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="{{asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
   <!-- FastClick -->
-  <script src="http://localhost/bower_components/fastclick/lib/fastclick.js"></script>
+  <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../../dist/js/demo.js"></script>
   <!-- iCheck 1.0.1 -->
-  <script src="http://localhost/plugins/iCheck/icheck.min.js"></script>
+  <script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
   <!-- Select2 -->
-  <script src="http://localhost/bower_components/select2/dist/js/select2.full.min.js"></script>
+  <!--script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script-->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
   <!-- InputMask -->
-  <script src="http://localhost/plugins/input-mask/jquery.inputmask.js"></script>
-  <script src="http://localhost/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-  <script src="http://localhost/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+  <script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
+  <script src="{{asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+  <script src="{{asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
   <!-- date-range-picker -->
-  <script src="http://localhost/bower_components/moment/min/moment.min.js"></script>
-  <script src="http://localhost/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script src="{{asset('bower_components/moment/min/moment.min.js')}}"></script>
+  <script src="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
   <!-- bootstrap datepicker -->
-  <script src="http://localhost/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
   <!-- bootstrap color picker -->
-  <script src="http://localhost/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+  <script src="{{asset('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
   <!-- bootstrap time picker -->
-  <script src="http://localhost/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+  <script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
   <!-- ChartJS -->
-  <script src="http://localhost/bower_components/chart.js/Chart.js"></script>
+  <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
   <!-- jvectormap  -->
  
   <!-- Tell the browser to be responsive to screen width -->
- <!-- <link rel="stylesheet" href="http://localhost/glyphicon.css"> -->
-  <link rel="stylesheet" href="http://localhost/glyphicon.css"></link>
-  <link rel="stylesheet" href="http://localhost/plugins/pace/pace.min.css">
+ <!-- <link rel="stylesheet" href="{{asset('glyphicon.css')}}"> -->
+  <link rel="stylesheet" href="{{asset('glyphicon.css')}}"></link>
+  <link rel="stylesheet" href="{{asset('plugins/pace/pace.min.css')}}">
   <!-- Select2 -->
-  <link rel="stylesheet" href="http://localhost/bower_components/select2/dist/css/select2.css">
+  <!--link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}"-->
   
-  <link rel="stylesheet" href="http://localhost/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="http://localhost/bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="http://localhost/bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- DataTables -->
-  <link rel="stylesheet" href="http://localhost/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="http://localhost/dist/css/AdminLTE.css">
+  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.css')}}">
   <!-- daterange picker -->
-  <link rel="stylesheet" href="http://localhost/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="http://localhost/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
   <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="http://localhost/plugins/iCheck/all.css">
+  <link rel="stylesheet" href="{{asset('plugins/iCheck/all.css')}}">
   <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="http://localhost/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
   <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="http://localhost/plugins/timepicker/bootstrap-timepicker.min.css">
+  <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   <!-- jvectormap -->
   
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -243,7 +249,7 @@
    
 	<div class="container" >
       <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.13
+        <b>Version</b> 3
       </div>
       
     </div>

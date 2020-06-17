@@ -143,7 +143,7 @@
 			<li class="divider"></li>
 			<li><a href="{{URL::to('register')}}" >Payment Registration</a></li>
 		  @elseif(Auth::user()->usertype == "Student")
-		    <li><a href="{{URL::to('student_home')}}" >Homes</a></li>
+		    <li><a href="{{URL::to('student_home')}}" >Home</a></li>
 		    <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
 
 			<li><a href="{{URL::to('student_order')}}" >View Previous Orders</a></li>

@@ -13,7 +13,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Menu</li>
-		<li><a target="_blank" href="{{url('help/PickingtheMenu.html')}}">Help</a></li>
+		<li><a target="_blank" href="{{url('help/PickingtheMenu.html')}}"><span class="glyphicon glyphicon-question-sign" style="font-size: 15px;"></span></a></li>
       </ol>
     </section>
 <!-- Main content -->
@@ -21,12 +21,19 @@
 		
 		
 		
-		<?php $menuid = -1;?>
+		<?php $menuid = -1;
+		function time_to_decimal($time) {
+			$timeArr = explode(':', $time);
+			$decTime = ($timeArr[0]*3600) + ($timeArr[1]*60) + ($timeArr[2]);
+		 
+			return $decTime;
+		}
+		?>
 						
         <!-- left column --><div class="row">
 		
         @foreach($categories as $category)
-
+		@if(time_to_decimal(date("H:i:s")) <= time_to_decimal($category->Order_Cutoff_Time))
 		 <div class="row">
 			<div class="col-md-12 col-xs-12">
 			  <div class="box loading" style="background: rgba(255, 255, 255, 1); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);z-index:999;">
@@ -70,9 +77,6 @@
 						<a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('order_create/'.$menuid )}}">
 							Place order
 						</a>
-						<a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('custom_meal',$food->Restaurant_ID)}}">
-							Customize Meal
-						</a>
 						@elseif(Auth::user()->usertype == "Student")
 					    <a class=" btn btn-info btn-flat pull-right" type="button" href="{{URL::to('student_order_create/'.$menuid )}}">
 							Place order
@@ -97,6 +101,16 @@
 			 
 				
 			</div>
+			@else
+			<div class="box-header" style="background: rgba(255, 255, 255, 0); "> 
+				
+				<div class="col-md-12 col-xs-12">
+					<div id="2" class="callout callout-danger" ><h3 class="box-title">{{$category->Category_Name}} Menu</h3><p>Unfortunately, there is no available {{$category->Category_Name}} menu for this date. Sorry for any inconvenience caused.</p></div>
+				</div>
+			</div>
+			
+			@endif
+			
 		@endforeach
         <!--/.col (right) -->
       

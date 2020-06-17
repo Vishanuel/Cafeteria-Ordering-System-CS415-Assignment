@@ -16,15 +16,16 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::redirect('/','/welcome');
+Route::redirect('/','/welcome')->middleware('guest');
 //Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
 Route::resource('welcome','WelcomeController');
+Route::resource('cordova','CordovaController');
 Route::resource('order','OrderController');
+Route::resource('tutorial','TutorialController');
 Route::resource('student_order','OrderStudentController');
 Route::resource('home','HomeController');
 Route::resource('student_home','HomeStudentController');
 Route::resource('menu', 'MenuController');
-Route::resource('recipe', 'RecipeController');
 Route::resource('menu_manager', 'MenuManagerHomeController');
 Route::resource('category', 'CategoryController');
 Route::resource('specialmenu', 'SpecialsController');
@@ -39,8 +40,21 @@ Route::resource('mealsub','MealSubsController');
 Route::resource('cafe_subs','Cafe_MealSubsController');
 Route::resource('subs_deliv', 'SubscriptionDelivererController');
 
+
 Route::match(['get', 'post'],'filter_menu', [
     'uses' => 'MenuController@filter'
+]);
+Route::match(['get', 'post'],'tutorial_order_create/{menuid}', [
+    'uses' => 'TutorialController@create'
+]);
+
+Route::match(['get', 'post'],'tutorial_order_payment', [
+    'uses' => 'TutorialController@payment'
+]);
+
+Route::match(['get', 'post'],'tutorial_order_payment_confirm', [
+    'uses' => 'TutorialController@confirm'
+
 ]);
 
 Route::match(['get', 'post'],'student_order_create/{menuid}', [
@@ -148,6 +162,8 @@ Route::match(['get', 'post'],'subs_delivery_request/{id}', [
 //
 
 Route::resource('restaurant','RestaurantController');
+Route::resource('tutorial_restaurant','TutorialRestaurantController');
 
 //Route::redirect('/home', '/restaurant');
+
   

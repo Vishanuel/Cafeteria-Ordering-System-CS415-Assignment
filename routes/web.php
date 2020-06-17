@@ -20,6 +20,8 @@ Route::redirect('/','/welcome')->middleware('guest');
 //Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
 Route::resource('welcome','WelcomeController');
 Route::resource('cordova','CordovaController');
+
+Route::group(['middleware' => ['auth']], function(){
 Route::resource('order','OrderController');
 Route::resource('tutorial','TutorialController');
 Route::resource('student_order','OrderStudentController');
@@ -211,7 +213,7 @@ Route::match(['get', 'post'],'student_mealsub_payment', [
 
 Route::resource('restaurant','RestaurantController');
 Route::resource('tutorial_restaurant','TutorialRestaurantController');
-
+});
 //Route::redirect('/home', '/restaurant');
 
 

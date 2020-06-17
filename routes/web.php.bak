@@ -45,6 +45,7 @@ Route::resource('subs_deliv', 'SubscriptionDelivererController');
 Route::resource('student_subs_deliv', 'StudentSubscriptionDelivererController');
 Route::resource('student_mealsub','StudentMealSubsController');
 Route::resource('student_cafe_subs','Cafe_MealSubs_StudentController');
+ROute::resource('recipe','RecipeController');
 
 Route::match(['get', 'post'],'filter_menu', [
     'uses' => 'MenuController@filter'

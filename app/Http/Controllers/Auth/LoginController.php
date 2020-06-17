@@ -39,7 +39,7 @@ class LoginController extends Controller
 			return $decTime;
 		}
 		 //auth()->user()->login_times;
-		if(time_to_decimal(date("H:i:s")) >= time_to_decimal("05:00:00") && time_to_decimal(date("H:i:s")) <= time_to_decimal("22:00:00")){
+		if(time_to_decimal(date("H:i:s")) >= time_to_decimal("00:00:00") && time_to_decimal(date("H:i:s")) <= time_to_decimal("24:00:00")){
 			
 		
 			if(Auth::check() && auth()->user()->usertype == 'Patron')

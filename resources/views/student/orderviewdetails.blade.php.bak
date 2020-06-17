@@ -117,7 +117,7 @@
 				</div>
 				@endif
 				
-				<div id="tcostd" class="form-group col-md-2">
+				<div id="tcostd" class="form-group col-md-4">
 				  <label>Total($)</label>
 				
 				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">

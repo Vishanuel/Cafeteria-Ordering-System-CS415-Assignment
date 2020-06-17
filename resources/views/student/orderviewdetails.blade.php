@@ -205,10 +205,10 @@
 					<div class="form-group col-md-6">
 					
 					  <label>Delivery Time</label>
-					  <select disabled class="form-control " id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
-							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
+					  <select disabled class="form-control " id="location_times" name="location_times" style="width: 100%;"  placeholder="Select location">
+							<option  disabled>Select delivery time </option> 
 							@if($mealmethod == "delivery")
-								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
+								<option  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
 							@endif 
 						</select>
 						

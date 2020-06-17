@@ -32,6 +32,7 @@ class CafeteriaController extends Controller
 		->where('menu.Restaurant_ID','=',$restaurant_id->Restaurant_ID)
 		->where('Cos_Order_Meal_Status','!=','orderingg')
 		->where('Cos_Order_Meal_Status','!=','Editing')
+		//->where('Cos_Order_Meal_Status','!=','Cancelled')
 		->get()
 		->unique('Cos_Order_Num');
 		

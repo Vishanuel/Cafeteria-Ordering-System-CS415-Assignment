@@ -32,6 +32,7 @@ class CafeteriaController extends Controller
 		->where('menu.Restaurant_ID','=',$restaurant_id->Restaurant_ID)
 		->where('Cos_Order_Meal_Status','!=','orderingg')
 		->where('Cos_Order_Meal_Status','!=','Editing')
+		->where('Cos_Order_Meal_Status','!=','Cancelled')
 		->get()
 		->unique('Cos_Order_Num');
 		
@@ -168,10 +169,10 @@ class CafeteriaController extends Controller
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('cafeteria staff.orderviewdetailsprint')->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+			return view('cafeteria staff.orderviewdetailsprint',compact('items','ingredients','cus_ingredients','ordered_item','ordered_ingredient'))->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		return view('cafeteria staff.orderviewdetailsprint')->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		return view('cafeteria staff.orderviewdetailsprint',compact('items','ingredients','cus_ingredients','ordered_item','ordered_ingredient'))->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
 
@@ -285,10 +286,10 @@ class CafeteriaController extends Controller
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('cafeteria staff.orderviewdetails')->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+			return view('cafeteria staff.orderviewdetails',compact('items','ingredients','cus_ingredients','ordered_item','ordered_ingredient'))->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		return view('cafeteria staff.orderviewdetails')->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		return view('cafeteria staff.orderviewdetails',compact('items','ingredients','cus_ingredients','ordered_item','ordered_ingredient'))->with(['approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
 		
     }

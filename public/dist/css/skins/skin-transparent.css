@@ -36,7 +36,20 @@
   background-color: #367fa9;
 }
 
+
+
 @media (min-width: 767px) {
+
+.customdivider{
+	
+	z-index:0;
+	margin-bottom:0; 
+	border:none;
+	margin-top:15px; 
+	height:1px; 
+	background: rgba(255, 255, 255, 0.2);
+}	
+
 .skin-blue .main-header .navbar {
   background-color: #3c8dbc;
   color: rgba(230, 230, 230, 0.5);
@@ -75,7 +88,74 @@
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
+	
+	.navbar-collapse{
+		background: url('../../img/restaurant/login22.jpg') center center ;
+		background-repeat: no-repeat; 
+		background-attachment: fixed; 
+		background-size: cover;
+		
+		padding-left:0px;
+		padding-right:0px;
+		border-top: 0px;
+		
+	}
+	
+	.navbar-collapse > ul{
+		//
+		/*
+		list-style: none;
+		  height: 100vw;
+		  background: red;
+		  margin: 0;
+		  padding: 0;
+		  display: flex;
+		  flex-direction: column
+		*/
+		//list-style: none;
+		
+		//display: table;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 93vh;
+		background: rgba(200, 200, 200, 0.6);
+		
+	}	
+	/*
+	.navbar-collapse > ul > li{
+		flex: 1;
+		//vertical-align: middle;
+		//background:gray;
+		margin: 0px;
+		font-size:20px;
+		display: table-row;
+	}	
+	
+	.navbar-collapse > ul > li.divider{
+		flex: 0;
+		//background:gray;
+		margin: 0px;
+		
+		display:none;
+	}	
+		
+	.navbar-collapse > ul > li > a{
+		display: table-cell;
+		vertical-align: middle;
+		padding: 1em 3em;
+	}	
+	*/
+	.customdivider{
+	z-index:0;
+	margin-bottom:0; 
+	border:none;
+	margin-top:0px; 
+	height:1px; 
+	background: rgba(255, 255, 255, 0.2);
+	}	
+	
   .full{
 	position: absolute;
 	top: 0; 

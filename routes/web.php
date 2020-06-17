@@ -16,10 +16,12 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::redirect('/','/welcome');
+Route::redirect('/','/welcome')->middleware('guest');
 //Route::get('/home', 'HomeController@index')->name('home')->middleware('usertype');
 Route::resource('welcome','WelcomeController');
+Route::resource('cordova','CordovaController');
 Route::resource('order','OrderController');
+Route::resource('tutorial','TutorialController');
 Route::resource('student_order','OrderStudentController');
 Route::resource('home','HomeController');
 Route::resource('student_home','HomeStudentController');
@@ -34,12 +36,31 @@ Route::resource('cafeteria', 'CafeteriaController');
 Route::resource('deliverer', 'DelivererController');
 Route::resource('register','RegisterController');
 Route::resource('studentregister','RegisterStudentController');
+//Route::resource('mealsub','MealSubsController');
+//Route::resource('cafe_subs','Cafe_MealSubsController');
+Route::resource('subs_deliv', 'SubscriptionDelivererController');
 Route::resource('mealsub','MealSubsController');
 Route::resource('cafe_subs','Cafe_MealSubsController');
 Route::resource('subs_deliv', 'SubscriptionDelivererController');
 Route::resource('student_subs_deliv', 'StudentSubscriptionDelivererController');
 Route::resource('student_mealsub','StudentMealSubsController');
 Route::resource('student_cafe_subs','Cafe_MealSubs_StudentController');
+
+Route::match(['get', 'post'],'filter_menu', [
+    'uses' => 'MenuController@filter'
+]);
+Route::match(['get', 'post'],'tutorial_order_create/{menuid}', [
+    'uses' => 'TutorialController@create'
+]);
+
+Route::match(['get', 'post'],'tutorial_order_payment', [
+    'uses' => 'TutorialController@payment'
+]);
+
+Route::match(['get', 'post'],'tutorial_order_payment_confirm', [
+    'uses' => 'TutorialController@confirm'
+
+]);
 
 Route::match(['get', 'post'],'student_order_create/{menuid}', [
     'uses' => 'OrderStudentController@create'
@@ -119,7 +140,8 @@ Route::match(['get', 'post'],'order_edit_approved/{orderid}', [
     'uses' => 'OrderController@editapproved'
 ])->name('order_edit_approved');
 
-//
+
+
 //Patron Meal Subs
 //
 Route::match(['get', 'post'],'mealsub_add', [
@@ -161,7 +183,6 @@ Route::match(['get', 'post'],'student_subs_delivery_request/{id}', [
     'uses' => 'Cafe_MealSubs_StudentController@delivery_request'
 ]);
 
-Route::resource('restaurant','RestaurantController');
 
 //
 //Student Meal Subs
@@ -185,7 +206,12 @@ Route::match(['get', 'post'],'student_mealsub_remove/{id}', [
 Route::match(['get', 'post'],'student_mealsub_payment', [
     'uses' => 'StudentMealSubsController@payment'
 ]);
+                 
 
+Route::resource('restaurant','RestaurantController');
+Route::resource('tutorial_restaurant','TutorialRestaurantController');
 
 //Route::redirect('/home', '/restaurant');
+
+
   

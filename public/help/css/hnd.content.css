@@ -72,47 +72,35 @@ a.rvts12, span.rvts12
 }
 span.rvts13
 {
- font-size: 16pt;
- font-weight: bold;
+ font-size: 11pt;
  color: #00527f;
 }
 span.rvts14
 {
- font-size: 11pt;
- color: #00527f;
+ color: ;
 }
 span.rvts15
 {
- color: ;
-}
-span.rvts16
-{
  color: #00527f;
 }
-span.rvts17
+span.rvts16
 {
  font-size: 12pt;
  color: #00527f;
 }
-span.rvts18
+span.rvts17
 {
  color: #bf0000;
 }
-span.rvts19
+span.rvts18
 {
  color: #ffffff;
 }
+span.rvts19
+{
+ color: #00527f;
+}
 span.rvts20
-{
- font-size: 16pt;
- font-weight: bold;
- color: #00527f;
-}
-span.rvts21
-{
- color: #00527f;
-}
-span.rvts22
 {
  color: #c00000;
 }
@@ -147,14 +135,6 @@ p,ul,ol /* Paragraph Style */
  text-align: center;
 }
 .rvps5
-{
- text-align: left;
- text-indent: 0px;
- page-break-after: avoid;
- padding: 0px 0px 0px 0px;
- margin: 16px 0px 4px 0px;
-}
-.rvps6
 {
  text-indent: 48px;
 }

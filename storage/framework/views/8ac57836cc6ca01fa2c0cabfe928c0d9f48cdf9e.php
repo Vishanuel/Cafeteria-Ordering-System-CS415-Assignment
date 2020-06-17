@@ -9,7 +9,7 @@
         <small style="color:rgba(230,230,230,1);"> screen ....</small>
       </h1> 
      <ol class="breadcrumb">
-        <li><a target="_blank" href="<?php echo e(url('help/COS.html')); ?>">Help</a></li>
+        <li><a target="_blank" href="<?php echo e(url('help/COS.html')); ?>"><span class="glyphicon glyphicon-question-sign" style="font-size: 15px;"></span></a></li>
       
       
       </ol>
@@ -47,11 +47,11 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Cos_Order_Num</th>
-                  <th>Cos_Order_Date_Time</th>
-                  <th>Cos_Meal_Date_Time</th>
-                  <th>Cos_Order_Meal_Status</th>
-                  <th>Cos_Order_Cost</th>
+                  <th>Order Number</th>
+                  <th>Date Order Placed</th>
+                  <th>Meal Date</th>
+                  <th>Meal Status</th>
+                  <th>Cost</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -62,13 +62,12 @@
                   <td style="text-overflow: ellipsis;"><?php echo e($order->Cos_Order_Date_Time); ?></td>
                   <td style="text-overflow: ellipsis;"><?php echo e($order->Cos_Meal_Date_Time); ?></td>
                   <td style="text-overflow: ellipsis;"><?php echo e($order->Cos_Order_Meal_Status); ?></td>
-                  <td style="text-overflow: ellipsis;"><?php echo e($order->Cos_Order_Cost); ?></td>
+                  <td style="text-overflow: ellipsis;">$<?php echo e(number_format((float)$order->Cos_Order_Cost, 2, '.', '')); ?></td>
 				  <td style="text-overflow: ellipsis;" class="text-center">
                         
 						 
 					<a class="btn btn-info btn-flat" type="button" href="<?php echo e(URL::to('order_edit_details/'.$order->Cos_Order_Num)); ?>">
-                              <span class="fa fa-pencil">
-                              </span>
+                              
                         Show details
 					</a>
 							

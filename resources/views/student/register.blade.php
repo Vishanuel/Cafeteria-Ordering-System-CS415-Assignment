@@ -15,7 +15,7 @@
         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
        <!-- <li><a href="{{url('smpdevice')}}">Device</a></li> -->
         <li class="active">Register</li>
-		<li><a target="_blank" href="{{url('help/RegistrationProcess.html')}}">Help</a></li>
+		<li><a target="_blank" href="{{url('help/RegistrationProcess.html')}}"><span class="glyphicon glyphicon-question-sign" style="font-size: 15px;"></span></a></li>
       </ol>
     </section>
 <!-- Main content -->

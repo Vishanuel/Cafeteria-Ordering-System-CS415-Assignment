@@ -165,4 +165,5 @@ Route::resource('restaurant','RestaurantController');
 Route::resource('tutorial_restaurant','TutorialRestaurantController');
 
 //Route::redirect('/home', '/restaurant');
+
   

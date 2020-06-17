@@ -67,6 +67,7 @@
 						{{-- <li class="active"><a href="{{URL::to('menu/create')}}">Create Menu <span class="sr-only">(current)</span></a></li> --}}
 						<li class="active"><a href="{{URL::to('specialmenu')}}">Special Menus<span class="sr-only">(current)</span></a></li>
 						<li class="active"><a href="{{URL::to('item')}}"> Menu Items<span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="{{URL::to('recipe')}}"> Recipes<span class="sr-only">(current)</span></a></li>
 						<li class="active"><a href="{{URL::to('ingredient')}}">Item Ingredients<span class="sr-only">(current)</span></a></li>
 						{{-- <li><a href="#">Link</a></li>
 						<li class="dropdown">

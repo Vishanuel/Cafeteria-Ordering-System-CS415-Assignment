@@ -18,7 +18,7 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
+  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.css')}}">
   <!-- daterange picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- bootstrap datepicker -->
@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="../../dist/css/skins/skin-transparent.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,7 +53,7 @@
 			<nav class="navbar navbar-static-top" style="background: rgba(200, 200, 200, 0.6);">
 				<div class="container">
 					<div class="navbar-header">
-					<a href="#" class="navbar-brand"><b>Cafeteria </b>Ordering System</a>
+					<a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" id="bignav" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a><a href="#" id="smallnav" class="navbar-brand" style="hidden"><b >Cafeteria </b>OS</a>
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
 						<i class="fa fa-bars"></i>
 					</button>
@@ -62,12 +62,13 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="{{URL::to('menu_manager')}}">Home<span class="sr-only">(current)</span></a></li>
-						<li class="active"><a href="{{URL::to('menu')}}">Menus<span class="sr-only">(current)</span></a></li>
+						<li ><a href="{{URL::to('menu_manager')}}">Home<span class="sr-only">(current)</span></a></li>
+						<li><a href="{{URL::to('menu')}}">Menus<span class="sr-only">(current)</span></a></li>
 						{{-- <li class="active"><a href="{{URL::to('menu/create')}}">Create Menu <span class="sr-only">(current)</span></a></li> --}}
-						<li class="active"><a href="{{URL::to('specialmenu')}}">Special Menus<span class="sr-only">(current)</span></a></li>
-						<li class="active"><a href="{{URL::to('item')}}"> Menu Items<span class="sr-only">(current)</span></a></li>
-						<li class="active"><a href="{{URL::to('ingredient')}}">Item Ingredients<span class="sr-only">(current)</span></a></li>
+						<li ><a href="{{URL::to('specialmenu')}}">Special Menus<span class="sr-only">(current)</span></a></li>
+						<li ><a href="{{URL::to('item')}}"> Menu Items<span class="sr-only">(current)</span></a></li>
+						<li ><a href="{{URL::to('recipe')}}"> Recipes<span class="sr-only">(current)</span></a></li>
+						<li ><a href="{{URL::to('ingredient')}}">Item Ingredients<span class="sr-only">(current)</span></a></li>
 						{{-- <li><a href="#">Link</a></li>
 						<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -114,9 +115,9 @@
 							
 							<!-- Menu Footer-->
 							<li class="user-footer">
-							<div class="pull-left">
+							{{-- <div class="pull-left">
 								<a href="#" class="btn btn-default btn-flat">Profile</a>
-							</div>
+							</div> --}}
 							<div class="pull-right">
 							<form id="logout-form" action="{{ route('logout') }}" method="POST">
 									@csrf
@@ -131,6 +132,7 @@
 					<!-- /.navbar-custom-menu -->
 				</div>
 				<!-- /.container-fluid -->
+				 <hr class="customdivider" width="90%" style="">
 			</nav>
 		</header>
 	<!-- Full Width Column -->
@@ -148,11 +150,16 @@
 		@if(session()->has('warning'))
 			<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
 		@endif
-		{{-- <div width="100%" class="backgroundimg" style="position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+		<div width="100%" class="backgroundimg" style="position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 			<div width="100%" class="whiteoverlay" style="padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
 			<hr width="90%" style="margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
 			</div>
-		</div> --}}
+		</div>
+		<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
+		
+		</div>
+		</div>
 		@yield('content')
 		</div>
 		<!-- /.container -->
@@ -161,7 +168,7 @@
 	<footer class="main-footer">
 		<div class="container">
 		<div class="pull-right hidden-xs">
-			<b>Version</b> 2.4.13
+			<b>Version</b> 3
 		</div>
 		</div>
 		<!-- /.container -->
@@ -170,6 +177,7 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 {{-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
@@ -208,17 +216,44 @@
 <script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
-
+@if(session('cordova') == 'yes')
+  <script src="{{asset('android/cordova.js')}}"></script>
+  <script src="{{asset('android/app.js')}}"></script>
+  @endif
 <!-- jvectormap  -->
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
 	 <script>
+	 if($(window).width() < 991) {
+		document.getElementById('bignav').style.display = 'none';
+		document.getElementById('smallnav').style.display = 'block';
+		$('.layout-top-nav').addClass('fixed');
+	}
+	else{
+		document.getElementById('bignav').style.display = 'block';
+		document.getElementById('smallnav').style.display = 'none';
+		$('.layout-top-nav').removeClass('fixed');
+	}
+
+	$(window).on('resize', function() {
+		if($(window).width() < 991) {
+			document.getElementById('bignav').style.display = 'none';
+			document.getElementById('smallnav').style.display = 'block';
+			$('.layout-top-nav').addClass('fixed');
+		}
+		else{
+			document.getElementById('bignav').style.display = 'block';
+			document.getElementById('smallnav').style.display = 'none';
+			$('.layout-top-nav').removeClass('fixed');
+		}
+	});
+	 
 	 function backbutton(){
 		
 		var url = window.location.href;
-		var n = url.search("home");
+		var n = url.search("menu_manager");
 		//alert(n);
 		if(n == -1){
 			history.back(-1);
@@ -230,7 +265,7 @@
 	}
 	
 	var url = window.location.href;
-	var n = url.search("home");
+	var n = url.search("menu_manager");
 	if(n != -1){
 		document.getElementById('backbutton').style.display = 'none';
 	}

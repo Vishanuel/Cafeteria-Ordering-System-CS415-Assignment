@@ -56,6 +56,8 @@
 					  <label>Price ($)</label>
 					  <input type="number" class="form-control" readonly id="price<?php echo e($i); ?>" name="price<?php echo e($i); ?>" Required readonly value="">
 					</div>
+
+					
 					
 					<?php $i= $i + 1; ?>
 					
@@ -75,7 +77,8 @@
 					<option id="meal_status" name="meal_status"  disabled value="" >Change meal status</option> 
 					<option id="meal_status" name="meal_status" <?php if($meal_subs->Meal_Status == "Pending"): ?> selected <?php endif; ?> value="Pending">Pending</option>
 					<option id="meal_status" name="meal_status" <?php if($meal_subs->Meal_Status == "Prepared"): ?> selected <?php endif; ?> value="Prepared">Prepared</option>
-					
+					<option id="meal_status" name="meal_status" <?php if($meal_subs->Meal_Status == "Cancelled"): ?> selected <?php endif; ?> value="Cancelled">Cancelled</option>
+					<option id="meal_status" name="meal_status" <?php if($meal_subs->Meal_Status == "Completed"): ?> selected <?php endif; ?> value="Completed">Completed</option>
 				</select>
 				
 			</div>
@@ -91,7 +94,7 @@
 			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="<?php echo e(URL::to('cafeteria_subs')); ?>" class="btn btn-default btn-flat">Back</a>
+                <a href="<?php echo e(URL::to('cafe_subs')); ?>" class="btn btn-default btn-flat">Back</a>
 				
 				<button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li> 
 				Save Subscription

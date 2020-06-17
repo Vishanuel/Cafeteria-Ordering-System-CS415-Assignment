@@ -153,6 +153,17 @@
                       </select>
                   </div>
 
+                  <div class="form-group col-md-12">
+                    <div id="subspaymethd1" class="form-group col-md-6">
+                      <label>Payment Method</label>
+                        <select class="mealsub form-control select2" id="subspaymeth" name="subspaymeth" style="width: 100%;" Required placeholder="Select Payment Method">
+                            <option disabled>Method of Payment</option>                             
+                            <option  Required value="cash">Cash</option>
+                            <option  Required value="payroll">Payroll Deduction</option>
+                            <option  Required value="card">Credit Card</option>                                                                                                                                                                                  
+                        </select>
+                    </div>
+
                   <div class="form-group col-md-6">					         
                     <label>Delivery Location</label>
                     <select class="form-control select2" id="location_id" name="location_id" style="width: 100%;" Required placeholder="Select location">

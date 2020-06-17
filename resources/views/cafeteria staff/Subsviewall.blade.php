@@ -45,6 +45,7 @@
                   <th>End Date</th>
                   <th>Subscription Frequency</th>
                   <th>Meal Method</th>
+                  <th>Payment Method</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -63,11 +64,26 @@
                   <td style="text-overflow: ellipsis;">{{ $allmealsub->Meal_Subscription_End_Date}}</td>
                   <td style="text-overflow: ellipsis;">{{ $allmealsub->Meal_Subscription_Frequency}}</td>
                   <td style="text-overflow: ellipsis;">{{$allmealsub->Meal_Subscription_Method}}</td>
+                  <td style="text-overflow: ellipsis;">{{$allmealsub->Meal_Subscription_Payment_Method}}</td>
 				  				  <td style="text-overflow: ellipsis;" class="text-center">
-                        
+          
+          @if($allmealsub->Meal_Subscription_Payment_Method == "cash")
 					<a class="btn btn-success btn-block btn-flat" type="button" href="{{URL::to('cafe_subs/'.$allmealsub->MealSubs_ID.'/edit')}}">
                         Change meal status
           </a>
+          @endif
+          @if(($allmealsub->Meal_Subscription_Payment_Method == "card" || $allmealsub->Meal_Subscription_Payment_Method == "payroll") && $allmealsub->Paid == 0 )
+            <a class="btn btn-info btn-block btn-flat "  type="button" href="{{URL::to('subs_process_payment/'.$allmealsub->MealSubs_ID)}}">
+              Process Payment
+            </a>
+            @elseif(($allmealsub->Meal_Subscription_Payment_Method == "card" || $allmealsub->Meal_Subscription_Payment_Method == "payroll") && $allmealsub->Paid == 1)
+            <a class="btn btn-success btn-block btn-flat" type="button" href="{{URL::to('cafe_subs/'.$allmealsub->MealSubs_ID.'/edit')}}">
+              Change meal status
+            </a>
+            
+            
+            
+          @endif
           @if($allmealsub->Meal_Subscription_Method == "Delivery")
             @if($allmealsub->Meal_Status == "Prepared")
 					    <a class="btn btn-info btn-block btn-flat "  type="button" href="{{URL::to('subs_delivery_request/'.$allmealsub->MealSubs_ID)}}">

@@ -31,7 +31,7 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Cos Order Num</th>
+                  <th>Order Num</th>
 				  <th>Customer Name</th>
                   <th>Cos Order Date Time</th>
                   <th>Cos Meal Date Time</th>
@@ -69,7 +69,7 @@
 					</a>
 					<?php endif; ?>
 					<a class="btn btn-success btn-block btn-flat" type="button" href="<?php echo e(URL::to('cafeteria/'.$order->Cos_Order_Num.'/edit')); ?>">
-                        Change delivery status
+                        Change meal status
 					</a>
 							
                     </td>

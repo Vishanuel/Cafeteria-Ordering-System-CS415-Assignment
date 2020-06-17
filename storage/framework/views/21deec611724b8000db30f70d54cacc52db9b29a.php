@@ -1,27 +1,38 @@
 <?php $__env->startSection('content'); ?>
-<section class="content-header text-center"></section>
+<section class="content-header text-center">
+    
+</section>
     <section class="content">
             <div class="box">
                     <div class="box-header with-border text-center">
                         <h3 class="box-title">Menu Ingredients</h3>
+                        <a  target="_blank" href="<?php echo e(url('Mhelp/ViewingIngredients.html')); ?>" class="pull-right" title="Get Help">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
                     </div>
 
                     <div class="box-body ">
                     <table class="table table-bordered table-striped text-center" id ="example1">
                     <tr>
-                        <th>Menu Item</th>
                         <th>Ingredient Name</th>
+                        <th>Ingredient Price</th>
+                        <th>Ingredient Quantity</th>
                         <th>Ingredient Type</th>
                         <th>Action</th>
                     </tr>
                         <?php for($i=0;$i<count($ingredients);$i++): ?>
                         <tr>
+                           
                             <td >
-                                <?php echo e($ingredients[$i]->Food_Name); ?>
+                                <?php echo e($ingredients[$i]->Ingredient_Name); ?>
 
                             </td>
                             <td >
-                                <?php echo e($ingredients[$i]->Ingredient_Name); ?>
+                                <?php echo e($ingredients[$i]->Ingredient_Price); ?>
+
+                            </td>
+                            <td >
+                                <?php echo e($ingredients[$i]->Ingredient_Quantity); ?>
 
                             </td>
                             <td >
@@ -30,18 +41,18 @@
                             </td>
                            
                             <td >
-                                <a data-toggle="modal" data-target="#<?php echo e($ingredients[$i]->Item_Ingredient_ID); ?>">
+                                <a data-toggle="modal" data-target="#<?php echo e($ingredients[$i]->Ingredient_ID); ?>">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a> 
-                                <a data-toggle="modal" data-target="#delete<?php echo e($ingredients[$i]->Item_Ingredient_ID); ?>">
+                                <a data-toggle="modal" data-target="#delete<?php echo e($ingredients[$i]->Ingredient_ID); ?>">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </td>
 
-                                <div class="modal fade" id="<?php echo e($ingredients[$i]->Item_Ingredient_ID); ?>" data-backdrop="static" data-keyboard="false">
+                                <div class="modal fade" id="<?php echo e($ingredients[$i]->Ingredient_ID); ?>" data-backdrop="static" data-keyboard="false">
                                     <div class="modal-dialog">
                                       <div class="modal-content">
-                                            <form method="post" action="<?php echo e(route('ingredient.update', $ingredients[$i]->Item_Ingredient_ID)); ?>" enctype="multipart/form-data">
+                                            <form method="post" action="<?php echo e(route('ingredient.update', $ingredients[$i]->Ingredient_ID)); ?>" enctype="multipart/form-data">
                                                 <?php echo method_field('PATCH'); ?> 
                                                  <?php echo csrf_field(); ?>
                                                 <div class="modal-header">
@@ -50,19 +61,19 @@
                                                     <h4 class="modal-title">Edit Ingredient</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label for="menus">Menu Item Name</label>
-                                                        
-                                                        <select id="menus" name="menu_item" class="form-control">
-                                                            <?php for($j=0;$j<count($menu);$j++): ?>
-                                                            <option value=<?php echo e($menu[$j]->Menu_Food_Item_ID); ?> <?php if($menu[$j]->Menu_Food_Item_ID == $ingredients[$i]->Item_ID): ?> selected="selected"<?php endif; ?>><?php echo e($menu[$j]->Food_Name); ?></option>
-                                                            <?php endfor; ?>
-                                                          </select>
-                                                    </div>
+                                                   
                                                     <div class="form-group">
                                                         <label>Ingredient Name</label>
-                                                        <input type="text" class="form-control" name="ingredient_name"value="<?php echo e($ingredients[$i]->Ingredient_Name); ?>" required>
+                                                        <input type="text" class="form-control" name="ingredient_name" value="<?php echo e($ingredients[$i]->Ingredient_Name); ?>" required>
                                                   </div>
+                                                  <div class="form-group">
+                                                    <label>Ingredient Price</label>
+                                                    <input type="number" class="form-control" name="ingredient_price" min="0" value="<?php echo e($ingredients[$i]->Ingredient_Price); ?>" placeholder="0.00" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Ingredient Quantity</label>
+                                                    <input type="number" class="form-control" name="ingredient_quantity" min="0" value="<?php echo e($ingredients[$i]->Ingredient_Quantity); ?>" required>
+                                               </div>
                                                  
                                                         <?php for($k=0;$k<count($type);$k++): ?>
                                                         <div>
@@ -83,10 +94,10 @@
                                    </div>
                                 </div>
                                 
-                                <div class="modal fade" id="delete<?php echo e($ingredients[$i]->Item_Ingredient_ID); ?>" >
+                                <div class="modal fade" id="delete<?php echo e($ingredients[$i]->Ingredient_ID); ?>" >
                                         <div class="modal-dialog">
                                           <div class="modal-content">
-                                                <form method="post" action="<?php echo e(route('ingredient.destroy',$ingredients[$i]->Item_Ingredient_ID)); ?>" enctype="multipart/form-data">
+                                                <form method="post" action="<?php echo e(route('ingredient.destroy',$ingredients[$i]->Ingredient_ID)); ?>" enctype="multipart/form-data">
                                                      <?php echo csrf_field(); ?>
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -127,20 +138,19 @@
                                                 <h4 class="modal-title">Create New Ingredient</h4>
                                             </div>
                                             <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label for="menus">Menu Item </label>
-                                                        
-                                                        <select id="menus" name="menu_item" class="form-control">
-                                                            <option value=""></option>
-                                                            <?php for($j=0;$j<count($menu);$j++): ?>
-                                                            <option value="<?php echo e($menu[$j]->Menu_Food_Item_ID); ?>"><?php echo e($menu[$j]->Food_Name); ?></option>
-                                                            <?php endfor; ?>
-                                                          </select>
-                                                    </div>
+                                                   
                                                     <div class="form-group">
                                                         <label>Ingredient Name</label>
                                                         <input type="text" class="form-control" name="ingredient_name" required>
                                                   </div>
+                                                  <div class="form-group">
+                                                    <label>Ingredient Price</label>
+                                                    <input type="number" class="form-control" name="ingredient_price" min="0" placeholder="0.00" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Ingredient Quantity</label>
+                                                    <input type="number" class="form-control" name="ingredient_quantity" min="0" required>
+                                               </div>
                                                  
                                                         <?php for($k=0;$k<count($type);$k++): ?>
                                                         <div>

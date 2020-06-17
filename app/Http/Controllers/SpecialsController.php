@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use DB;
 use Auth;
 
@@ -91,7 +92,16 @@ class SpecialsController extends Controller
         //     'Food' => 'required',
         //     ]);
           $input = $request->all();
-            //dd($input);
+           // dd($input);
+
+            $validate_items= Validator::make($request->all(), [
+                'items'  => 'required'
+               ]);
+
+            if ($validate_items->fails()) {
+            return back()
+                    ->with('error','Menu Items were not selected');
+            }
                    
                     $id =DB::table('specials')->insertGetId(
                         ['Menu_ID' => $input["menu"],
@@ -106,7 +116,7 @@ class SpecialsController extends Controller
                                 );  
                             }  
     
-                    return redirect('specialmenu');
+                            return back()->with('success', 'Special Menu Is Created successfully');
     }
 
     /**
@@ -165,6 +175,15 @@ class SpecialsController extends Controller
         //     ]);
             
         $input = $request->all();
+
+        $validate_items= Validator::make($request->all(), [
+            'items'  => 'required'
+           ]);
+
+        if ($validate_items->fails()) {
+        return back()
+                ->with('error','Menu Items were not selected');
+        }
         //dd($input);
                $menu= DB::table('specials')
                 ->where('Special_ID','=', $id)
@@ -179,7 +198,7 @@ class SpecialsController extends Controller
                             );  
                         }  
 
-                return redirect('specialmenu');
+                        return back()->with('success', 'Special Menu is Updated successfully');
                     
     }
 
@@ -193,6 +212,6 @@ class SpecialsController extends Controller
     {
         DB::table('specials')->where('Special_ID', '=', $id)->delete();
 
-        return redirect('specialmenu');
+        return back()->with('success', 'Special Menu Deleted successfully');
     }
 }

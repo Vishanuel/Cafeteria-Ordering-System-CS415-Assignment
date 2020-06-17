@@ -39,7 +39,7 @@
 						<option  disabled>Select food</option> 
 						@foreach ($foods as $food )
 							<option Required @if($food_select->Menu_Food_Item_ID == $food->Menu_Food_Item_ID) selected value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @else value="{{ $food->Menu_Food_Item_ID}} {{$food->Quantity}} {{$food->Price}}" @endif >
-								{{ $food->Food_Name }}
+								{{ $food->Food_Name }} - ${{$food->Price}} - {{$food->Food_Desc}}
 							</option>
 							
 						@endforeach
@@ -48,21 +48,50 @@
 					
 					
 					
-					<div id="quantityd{{$i}}" class="form-group col-md-2">
+					<div id="quantityd{{$i}}" class="form-group col-md-3">
 					  <label>Quantity</label>
 					  <input type="number" class="form-control" readonly id="quantity{{$i}}" name="quantity{{$i}}" max="" min="1" Required value="{{$food_select->Quantity}}">
 					</div>
 			
-					<div id="priced{{$i}}" class="form-group col-md-2">
+					<div id="priced{{$i}}" class="form-group col-md-3">
 					  <label>Price ($)</label>
 					  <input type="number" class="form-control" readonly id="price{{$i}}" name="price{{$i}}" Required readonly value="">
+					</div>
+					
+					<div id="items{{$i}}" class="col-md-12">
+						@for($j=0;$j<count($items);$j++)
+							<div class="check{{$j}} checkbox" id="{{$i}}choice{{$items[$j]->Menu_Food_Item_ID}}" style="display:none;">
+								<input id="item_number{{$i}}" value="{{$items[$i]->Menu_Food_Item_ID}}"  type="hidden">
+							@if($items[$j]->Menu_Food_Item_ID==$ordered_item[$i-1]->Menu_Food_Item_ID)
+								@for($k=0;$k<count($cus_ingredients[$j]);$k++)
+									
+								<div class="row" id="idrow{{$k}}"><input id="all_ingredient{{$items[$j]->Menu_Food_Item_ID}}" value="{{count($cus_ingredients[$j])}}"  type="hidden">
+								<div class=" form-group col-md-4 col-xs-6" id="idformgroup{{$k}}"><label><label class="pull-left" style="font-weight:bold;">Ingredient</label></br><input class="real" name="ingredient{{$i}}[]" id ="{{$items[$j]->Menu_Food_Item_ID}}check{{$k}}" type="checkbox" value="{{$cus_ingredients[$j][$k]->Ingredient_ID}}"
+									@for($m=0;$m<count($ordered_ingredient[$i-1]);$m++)
+									@if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ordered_ingredient[$i-1][$m]->Ingredient_ID))  ? checked : 
+									 @endif @endfor disabled>
+									{{$cus_ingredients[$j][$k]->Ingredient_Name}}</label></div>
+									<div class="form-group col-md-3 col-xs-6 price">
+									<label style="font-weight:bold;">Price($)
+									<input type="number" class="form-control" id="{{$items[$j]->Menu_Food_Item_ID}}ingredient_price{{$cus_ingredients[$j][$k]->Ingredient_ID}}" Required readonly value="{{$cus_ingredients[$j][$k]->Ingredient_Price}}" >
+								</label>
+								</div>
+								  
+							</div>
+								@endfor
+							@endif
+						</div>
+						@endfor
+					</div>
+					<div id="hr{{$i}}" class="col-md-12">
+						<hr class=""  width="95%" style="background:grey;">
 					</div>
 					
 					<?php $i= $i + 1; ?>
 					
 				@endforeach
 				
-				<div id="tcostd" class="form-group col-md-2">
+				<div id="tcostd" class="form-group col-md-4">
 				  <label>Total Cost ($)</label>
 				  <input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
 			   </div>
@@ -138,7 +167,8 @@
 					<option id="meal_status" name="meal_status"  disabled value="" >Change meal status</option> 
 					<option id="meal_status" name="meal_status" @if($cos_order->Cos_Order_Meal_Status == "Approved") selected @endif value="Approved">Approved</option>
 					<option id="meal_status" name="meal_status" @if($cos_order->Cos_Order_Meal_Status == "Prepared") selected @endif value="Prepared">Prepared</option>
-					
+					<option id="meal_status" name="meal_status" @if($cos_order->Cos_Order_Meal_Status == "Cancelled") selected @endif value="Cancelled">Cancelled</option>
+					<option id="meal_status" name="meal_status" @if($cos_order->Cos_Order_Meal_Status == "Completed") selected @endif value="Completed">Completed</option>
 				</select>
 				
 			</div>

@@ -17,13 +17,13 @@ Class SubscriptionDelivererController extends Controller{
 		->where('User_ID','=',Auth::user()->id)
 		->first();
         
-        $deliverers=DB::table('subscription_delivery_request')
-        ->join('subscription_delivery_instruction','subscription_delivery_instruction.Subscription_Delivery_ID','=','subscription_delivery_request.Subscription_Delivery_ID')
-        ->join('meal_subscription','meal_subscription.MealSubs_ID','=','subscription_delivery_instruction.MealSubs_ID')
-        ->join('location','location.Location_ID','=','subscription_delivery_instruction.Location_ID')
+        $deliverers=DB::table('patron_subscription_delivery_request')
+        ->join('patron_subscription_delivery_instruction','patron_subscription_delivery_instruction.Patron_Subscription_Delivery_Instruction_ID','=','patron_subscription_delivery_request.Patron_Subscription_Delivery_Instruction_ID')
+        ->join('meal_subscription','meal_subscription.MealSubs_ID','=','patron_subscription_delivery_instruction.MealSubs_ID')
+        ->join('location','location.Location_ID','=','patron_subscription_delivery_instruction.Location_ID')
         ->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','meal_subscription.Menu_Food_Item_ID')
         ->get()
-        ->unique('Subscription_Delivery_Request_ID');
+        ->unique('Patron_Subscription_Delivery_Request_ID');
 
 		//$deliverers=DB::table('subscription_delivery_request')
         //->join('subscription_delivery_instruction','subscription_delivery_request.Subscription_Delivery_ID','=','subscription_delivery_instruction.Subscription_Delivery_ID')

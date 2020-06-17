@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Mail;
+use App\Mail\SendEmail;
 
 class OrderController extends Controller
 {
@@ -61,16 +62,18 @@ class OrderController extends Controller
 		for($i=0;$i<count($items);$i++)
 		{
 			$ingredients[$i] =DB::table('item_ingredient')
-			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
 		for($i=0;$i<count($items);$i++)
 		{
 			$cus_ingredients[$i] =DB::table('custom_ingredient')
-			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -112,6 +115,9 @@ class OrderController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 				
@@ -157,7 +163,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		//$input = $request->all();
+		//dd($input);
+		
 		$orderid = $request->input('orderid');
 		
 		$menuid = $request->input('menuid');
@@ -212,7 +220,7 @@ class OrderController extends Controller
 		
 			DB::table('cos_order')
 				->insert([
-					['Cos_Order_Num' => $id,'Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN'],
+					['Cos_Order_Num' => $id,'Employee_ID' => $employee_id->Employee_ID, 'Cos_Meal_Date_Time' => $request->input('meal_date') , 'Cos_Order_Date_Time' => date("Y-m-d"), 'Cos_Order_Meal_Status' => 'orderingg', 'Cos_Order_Cost' => $total_cost, 'Cos_Order_Payment_Method' => 'NN', 'Menu_ID' => $menuid],
 		    ]);	
 		
 		$mealmethod = $request->input('mealmethod');
@@ -279,15 +287,27 @@ class OrderController extends Controller
 			->insert([
 				['Cos_Order_Num' => $id, 'Menu_Food_Item_ID' => substr($request->input($food_item), 0, strspn($request->input($food_item), "0123456789")), 'Quantity' => $request->input('quantity'.$i)],
 			]);	
-		$item_ids = DB::table('ordered_food_item')->orderBy('Ordered_Food_Item_ID', 'desc')->first();	
-		$ingredient = "ingredient".$i;
-		$ingredient_ids = $request->input($ingredient);
-		$input=$request->all();
-//dd($input);
-		for($j=0;$j<count($ingredient_ids);$j++)
-		{
-		DB::table('ordered_ingredient')
-		->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
+			$item_ids = DB::table('ordered_food_item')->orderBy('Ordered_Food_Item_ID', 'desc')->first();	
+			$ingredient = "ingredient".$i;
+			$ingredient_quantity = "ingredient".$i;
+			if($request->input($ingredient)){
+				$ingredient_ids = $request->input($ingredient);
+				$ingredient_quant = $request->input($ingredient_quantity);
+				//$input=$request->all();
+				//dd($input);
+				//dd()
+			for($j=0;$j<count($ingredient_ids);$j++)
+			{
+				DB::table('ordered_ingredient')
+				->updateOrInsert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
+
+				/*
+				DB::table('ingredient')
+				->where('Ingredient_ID', $ingredient_ids[$j])
+				->decrement('Ingredient_Quantity',$ingredient_ids[$j]);
+				*/
+			}
+
 		}
 	
 		}
@@ -942,6 +962,7 @@ class OrderController extends Controller
 			$ingredients[$i] =DB::table('item_ingredient')
 			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -950,6 +971,7 @@ class OrderController extends Controller
 			$cus_ingredients[$i] =DB::table('custom_ingredient')
 			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -998,7 +1020,7 @@ class OrderController extends Controller
 		try{
 		$menuid= $request->input('menuid');
 		$orderid = $request->input('orderid');
-		
+		$error="";
 		$special_id = $request->input('special_id');
 		
 		$employee_id = DB::table('patron')
@@ -1175,7 +1197,7 @@ class OrderController extends Controller
 			->where('Cos_Order_Num','=',$orderid)
 			->first();
 			
-			$error="";
+			
 			if($specialquan <= 0){
 				$error = $error."Not enough food item in inventory to cater for your special meal order. Either edit your order or cancel it.\n";
 					
@@ -1502,6 +1524,19 @@ class OrderController extends Controller
 			
 		}
 		
+		
+		$ingredients_ordered = DB::table('ordered_ingredient')
+		->join('ordered_food_item','ordered_ingredient.Ordered_Food_Item_ID','=','ordered_food_item.Ordered_Food_Item_ID')
+		->where('ordered_food_item.Cos_Order_Num','=',$orderid)
+		->get();
+		//->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
+
+		foreach($ingredients_ordered as $ingredient_ordered){
+			DB::table('ingredient')
+			->where('Ingredient_ID', $ingredient_ordered->Ordered_Ingredient_ID)
+			->decrement('Ingredient_Quantity');
+		}
+		
 		$cos_order=DB::table('cos_order')
 		->where('Employee_ID','=',$employee_id->Employee_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
@@ -1570,21 +1605,21 @@ class OrderController extends Controller
 		
 		$data['count'] = $i;
 		$data['username'] = Auth::user()->name;
-        Mail::send('patron.orderemail', $data, function($message) {
+       /* Mail::send('patron.orderemail', $data, function($message) {
  
             $message->to(Auth::user()->email, 'LCNotif')
  
                     ->subject('Order Info');
-        });
-		
-	
-		Mail::send('patron.restaurantemail', $data, function($message) {
+        });*/
+		Mail::to(Auth::user()->email)->queue(new SendEmail($data));
+		Mail::to(Auth::user()->email)->queue(new SendEmail($data));
+		/*Mail::send('patron.restaurantemail', $data, function($message) {
  
             $message->to(Auth::user()->email, 'LCNotif')
  
                     ->subject('Restaurant Order Info');
         });
-		
+		*/
 		return redirect('order')->with('success','Order successful');
 		}
 		
@@ -1721,20 +1756,19 @@ class OrderController extends Controller
      */
     public function edit($orderid)
     {
+		$employee_id = DB::table('patron')
+		->select('Employee_ID')
+		->where('User_ID','=',Auth::user()->id)
+		->first();
 		
-		$menuid=DB::table('ordered_food_item')	
-		->join('menu_food','menu_food.Menu_Food_Item_ID','=','ordered_food_item.Menu_Food_Item_ID')
-		->join('menu','menu_food.Menu_ID','=','menu.Menu_ID')
-		->where('Cos_Order_Num','=',$orderid)
+		$menuid=DB::table('cos_order')	
+		->where('Employee_ID','=',$employee_id->Employee_ID)
+        ->where('Cos_Order_Num', '=', $orderid)
 		->first();
 		
 		$menuid=$menuid->Menu_ID;
 
 		
-		$employee_id = DB::table('patron')
-		->select('Employee_ID')
-		->where('User_ID','=',Auth::user()->id)
-		->first();
 		
 		$cos_order=DB::table('cos_order')
 		->where('Employee_ID','=',$employee_id->Employee_ID)
@@ -1757,6 +1791,9 @@ class OrderController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 					
@@ -1945,6 +1982,7 @@ class OrderController extends Controller
 			$ingredients[$i] =DB::table('item_ingredient')
 			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -1953,6 +1991,7 @@ class OrderController extends Controller
 			$cus_ingredients[$i] =DB::table('custom_ingredient')
 			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
 			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
 			->get()
 			->toArray();
 		}
@@ -2036,6 +2075,26 @@ class OrderController extends Controller
 						DB::table('payroll')->where('Employee_ID', '=',$employee_id->Employee_ID)->update(['Salary' => $salary]);
 												
 					}
+					
+					if($cos_order->Cos_Order_Payment_Method == "card"){
+
+						$card = DB::table("card_payment")
+						->select('Card_Number')
+						->where('Employee_ID','=',$employee_id->Employee_ID)
+						->first();
+						
+						$card_balance = DB::table('card_bank')
+						->select('Card_Balance')
+						->where('Card_Number','=',$card->Card_Number)
+						->first();
+						
+						$card_balance=$card_balance->Card_Balance;
+						
+						$card_balance = $card_balance + $cos_order->Cos_Order_Cost;
+							
+						DB::table('card_bank')->where('Card_Number', '=',$card->Card_Number)->update(['Card_Balance' => $card_balance]);
+						
+					}
 				}
 
 				$special_id=DB::table('ordered_special')
@@ -2074,6 +2133,12 @@ class OrderController extends Controller
 				->where('Cos_Order_Num','=',$id)
 				->orderBy('Ordered_Food_Item_ID', 'DESC')
 				->get();
+				
+				foreach($food_selecteds as $selected_id){
+					$selected_ingredient = DB::table('ordered_ingredient')
+					->where('Ordered_Food_Item_ID','=',$selected_id->Ordered_Food_Item_ID)
+					->get();
+				}
 				
 				foreach($food_selecteds as $food_select){
 					$quantity = DB::table('menu_food_item')
@@ -2180,6 +2245,9 @@ class OrderController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 		
@@ -2198,6 +2266,46 @@ class OrderController extends Controller
 		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 		->orderBy('Ordered_Food_Item_ID', 'DESC')
 		->get();
+
+		$items=DB::table('menu')
+		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->where('menu.Menu_ID','=',$menuid)
+		->get()
+		->toArray();
+
+		for($i=0;$i<count($items);$i++)
+		{
+			$ingredients[$i] =DB::table('item_ingredient')
+			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->join('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->get()
+			->toArray();
+		}
+		for($i=0;$i<count($items);$i++)
+		{
+			$cus_ingredients[$i] =DB::table('custom_ingredient')
+			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->get()
+			->toArray();
+		}
+
+
+		$ordered_item = DB::table('ordered_food_item') //get all the ordered items of the patron
+		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
+		->orderBy('Ordered_Food_Item_ID', 'DESC')
+		->get()
+		->toArray();
+
+		for($j=0;$j<count($ordered_item);$j++)	//get the corresponding ordered ingredients of ordered item
+		{
+			$ordered_ingredient[$j] = DB::table('ordered_ingredient') //get all the ordered ingredients of the item
+			->where('Ordered_Food_Item_ID','=',$ordered_item[$j]->Ordered_Food_Item_ID)
+			->orderBy('Ordered_Food_Item_ID', 'DESC')
+			->get()
+			->toArray();
+		}
 		
 		$mealmethodcheck=DB::table('delivery_instruction')
 		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
@@ -2210,7 +2318,48 @@ class OrderController extends Controller
 		if(empty($special_id)){
 			$special_id = null;
 		}	
-			
+		
+		$items=DB::table('menu')
+		->join('menu_food','menu_food.Menu_ID','=','menu.Menu_ID')
+		->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','menu_food.Menu_Food_Item_ID')
+		->where('menu.Menu_ID','=',$menuid)
+		->get()
+		->toArray();
+		
+		for($i=0;$i<count($items);$i++)
+		{
+			$ingredients[$i] =DB::table('item_ingredient')
+			->where('item_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->join('ingredient','item_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
+			->get()
+			->toArray();
+		}
+		for($i=0;$i<count($items);$i++)
+		{
+			$cus_ingredients[$i] =DB::table('custom_ingredient')
+			->where('custom_ingredient.Item_ID','=',$items[$i]->Menu_Food_Item_ID)
+			->join('ingredient','custom_ingredient.Ingredient_ID','=','ingredient.Ingredient_ID')
+			->where('ingredient.Ingredient_Quantity','>','0')
+			->get()
+			->toArray();
+		}
+
+
+		$ordered_item = DB::table('ordered_food_item') //get all the ordered items of the patron
+		->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
+		->orderBy('Ordered_Food_Item_ID', 'DESC')
+		->get()
+		->toArray();
+
+		for($j=0;$j<count($ordered_item);$j++)	//get the corresponding ordered ingredients of ordered item
+		{
+			$ordered_ingredient[$j] = DB::table('ordered_ingredient') //get all the ordered ingredients of the item
+			->where('Ordered_Food_Item_ID','=',$ordered_item[$j]->Ordered_Food_Item_ID)
+			->orderBy('Ordered_Food_Item_ID', 'DESC')
+			->get()
+			->toArray();
+		}
 			
 		$specialfoods=DB::table('specials')
 		->join('menu','menu.Menu_ID','=','specials.Menu_ID')
@@ -2259,10 +2408,10 @@ class OrderController extends Controller
 			->where('Cos_Order_Num','=',$cos_order->Cos_Order_Num)
 			->first();
 			
-			return view('patron.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
+			return view('patron.orderviewdetails',compact('items','ingredients','cus_ingredients','ordered_item','ordered_ingredient'))->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'delivery_info' => $delivery_info, 'food_selecteds' => $food_selecteds]);
 		
 		}
-		return view('patron.orderviewdetails')->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
+		return view('patron.orderviewdetails',compact('items','ingredients','cus_ingredients','ordered_item','ordered_ingredient'))->with(['specialfoods'=>$specialfoods,'special_id'=>$special_id,'approved'=>$approved,'menuid' => $menuid,'mealmethod' => $mealmethod,'foods' => $foods, 'deduction' => $deduction, 'locations' => $locations, 'order_cutoff' => $order_cutoff, 'cos_order' => $cos_order, 'food_selecteds' => $food_selecteds]);
 		
     }
 }

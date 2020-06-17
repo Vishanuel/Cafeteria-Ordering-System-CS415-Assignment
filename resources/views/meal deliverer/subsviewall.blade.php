@@ -51,7 +51,7 @@
 				@foreach($deliverers as $deliverer)
 				   @if($deliverer->Meal_Status == "Pending Delivery")
 					<tr>
-					  <td style="text-overflow: ellipsis;">{{ $deliverer->Subscription_Delivery_Request_ID }}</td>
+					  <td style="text-overflow: ellipsis;">{{ $deliverer->Patron_Subscription_Delivery_Request_ID }}</td>
                       <td style="text-overflow: ellipsis;">{{ $deliverer->MealSubs_ID }}</td>
                       <td style="text-overflow: ellipsis;">{{ $deliverer->Food_Name }}</td>
                       <td style="text-overflow: ellipsis;">{{ $deliverer->Employee_ID }}</td>
@@ -63,7 +63,7 @@
 					  <td style="text-overflow: ellipsis;">{{ $deliverer->Total_Price}}</td>
 					  <td style="text-overflow: ellipsis;" class="text-center">
 							
-						@if(!empty($deliverer->Subscription_Delivery_ID)) 
+						@if(!empty($deliverer->Patron_Subscription_Delivery_Instruction_ID)) 
 						<a class="btn btn-warning btn-flat btn-block" target="_blank" type="button" href="{{URL::to('cafeteria/'.$deliverer->MealSubs_ID)}}">
 							Print Delivery Info
 						</a>

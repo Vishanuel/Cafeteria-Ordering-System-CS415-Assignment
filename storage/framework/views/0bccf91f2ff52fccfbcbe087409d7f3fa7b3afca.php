@@ -1,6 +1,35 @@
 <?php $__env->startSection('content'); ?>
 
-    <section class="content-header text-center"><h1 >Menu</h1></section>
+<section class="content-header text-center"><h3>MENUS</h3>
+ 
+</section>
+    <section class="content-header">
+    <div>
+      <form method="post" action="filter_menu" enctype="multipart/form-data">
+        <?php echo csrf_field(); ?>
+        <div class="form-group">
+          <label for="Menu_Date">Menu Date: </label>
+                <div class="input-group date col-md-4">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date" class="form-control pull-right" id="datepicker" name="Menu_Date" required>
+                  </div>
+              
+
+          </div>
+          <div>
+         
+          <button type="submit" class="btn btn-default">Filter</button>
+          </div>
+          
+           </form>
+           <button type="button" class="btn btn-default " ><a href="<?php echo e(URL::to('menu')); ?>">Reset</a></button>
+    </div>
+    <a  target="_blank" href="<?php echo e(url('Mhelp/ViewingMenus.html')); ?>" class="pull-right" title="Get Help">
+      <span class="glyphicon glyphicon-question-sign"></span>
+  </a> 
+    </section>
     <section class="content">
         <?php for($i=0;$i<count($cat);$i++): ?>
         <div class="box">
@@ -38,6 +67,7 @@
                              <div><?php echo e($val[$i][$j][$k]->Price); ?></div>
                              <?php endfor; ?>
                          </td>
+                         
                         <td>
                                 <a data-toggle="modal" data-target="#<?php echo e($menu[$i][$j]->Menu_ID); ?>">
                                         <span class="glyphicon glyphicon-edit"></span>
@@ -75,22 +105,19 @@
 
                                             </div>
                                             
-                                            <h2>Menu Items</h2>
-                                            
+                                            <label>Menu Items</label>
                                             <?php for($n=0;$n<count($rest);$n++): ?>
-                                            
-                                                <div class="form-check " >
-                                                  
-                                                      <input  
+                                                <div class="checkbox" >
+                                                  <label><input  
                                                        type="checkbox"  value="<?php echo e($rest[$n]->Menu_Food_Item_ID); ?>"  name="Food[]" 
                                                        <?php for($k=0;$k<count($val[$i][$j]);$k++): ?>
                                                       <?php if(($val[$i][$j][$k]->Menu_Food_Item_ID)==($rest[$n]->Menu_Food_Item_ID)): ?>  ? checked : 
-                                                      <?php endif; ?> <?php endfor; ?>>
-                                                    
-                                                      <label><?php echo e($rest[$n]->Food_Name); ?></label>
+                                                      <?php endif; ?> <?php endfor; ?>><?php echo e($rest[$n]->Food_Name); ?></label>
                                                 </div> 
                                             
-                                            <?php endfor; ?>     
+                                            <?php endfor; ?> 
+                                            
+
                                           </div>
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -156,19 +183,19 @@
                                  <div class="input-group-addon">
                                      <i class="fa fa-calendar"></i>
                                   </div>
-                                    <input type="date" class="form-control pull-right" id="datepicker" name="Menu_Date" required >
+                                    <input type="date" min="<?php echo e(date('mm-dd-yyyy')); ?>" class="form-control pull-right" id="datepicker" name="Menu_Date" required >
                                 </div>
-                              <h4>Menu Items</h4>
+                              <label>Menu Items</label>
                              <?php for($j=0;$j<count($rest);$j++): ?>
-                                  <div class="form-check" name="Food Item">
-                                  <label for="Food[<?php echo e($j); ?>]">
+                                  <div class="checkbox">
+                                  <label>
                                     <input type="checkbox" value="<?php echo e($rest[$j]->Menu_Food_Item_ID); ?>"  name="Food[]">
                                     <?php echo e($rest[$j]->Food_Name); ?>
 
                                   </label>
                                   </div>
                             <?php endfor; ?> 
-                             
+                            
                             </div>
                           <div class="modal-footer">
                           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>

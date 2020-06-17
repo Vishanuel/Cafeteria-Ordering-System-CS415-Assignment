@@ -45,7 +45,10 @@
 <!-- ChartJS -->
 <script src="<?php echo e(asset('bower_components/chart.js/Chart.js')); ?>"></script>
 <!-- jvectormap  -->
-  
+  <?php if(session('cordova') == 'yes'): ?>
+  <script src="<?php echo e(asset('android/cordova.js')); ?>"></script>
+  <script src="<?php echo e(asset('android/app.js')); ?>"></script>
+  <?php endif; ?>
   <!-- Tell the browser to be responsive to screen width -->
   
   <!-- Select2 -->
@@ -91,7 +94,7 @@
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
-  <header class="main-header" style="background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+  <header class="main-header" style="background: url('/dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
     <nav class="navbar navbar-static-top" style="background: rgba(200, 200, 200, 0.6);">
       <div class="container">
         <div class="navbar-header">
@@ -105,7 +108,15 @@
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
 			<li ><a href="<?php echo e(URL::to('cafeteria')); ?>">View Orders <span class="sr-only">(current)</span></a></li>
-			<li ><a href="<?php echo e(URL::to('cafe_subs')); ?>">View Subscriptions <span class="sr-only">(current)</span></a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+				  <li><a href="<?php echo e(URL::to('cafe_subs')); ?>">Patron Subscriptions</a></li>
+				  
+				  <li><a href="<?php echo e(URL::to('student_cafe_subs')); ?>">Student Subscription</a></li>
+				</ul>
+			  </li>
+			
           <!--  <li><a href="<?php echo e(URL::to('order')); ?>">View Orders</a></li> -->
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -188,7 +199,7 @@
 	<?php if(session()->has('warning')): ?>
 		<input type="hidden" value="<?php echo e(Session::get('warning')); ?>" id="hiddenwarningwcs">
 	<?php endif; ?>
-	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('/dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
 	
 	</div>
@@ -640,7 +651,7 @@
 	
 	$( document ).ready(function() {
 		$valuetime=$('#location_time').val();
-		var reload = function() {
+		/*var reload = function() {
 			$('#location_time').find('option').remove().end();
 			meal_date();
 			
@@ -653,7 +664,7 @@
 		  
 		};
 		reload();
-		
+		*/
 	
 		
 		//delivery_time();

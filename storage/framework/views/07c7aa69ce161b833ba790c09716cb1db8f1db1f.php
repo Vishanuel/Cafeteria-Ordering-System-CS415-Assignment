@@ -109,7 +109,15 @@
           <ul class="nav navbar-nav">
             <li ><a href="<?php echo e(URL::to('deliverer')); ?>">View Delivery Requests</a></li>
 			<li ><a href="<?php echo e(URL::to('deliverer/create')); ?>">View Meal Delivered</a></li>
-			<li ><a href="<?php echo e(URL::to('subs_deliv')); ?>">View Subscription Delivery Requests</a></li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown">Subscription Delivery Requests <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+				  <li><a href="<?php echo e(URL::to('subs_deliv')); ?>">Patron Subscription Requests</a></li>
+				  
+				  <li><a href="<?php echo e(URL::to('student_subs_deliv')); ?>">Student Subscription Requests</a></li>
+				</ul>
+			  </li>
+			
           <!--  <li><a href="<?php echo e(URL::to('order')); ?>">View Orders</a></li> -->
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>

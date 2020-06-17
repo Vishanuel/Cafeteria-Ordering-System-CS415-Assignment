@@ -53,7 +53,7 @@
 			<nav class="navbar navbar-static-top" style="background: rgba(200, 200, 200, 0.6);">
 				<div class="container">
 					<div class="navbar-header">
-					<a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" id="bignav" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a><a href="#" id="smallnav" class="navbar-brand"><b >Cafeteria </b>OS</a>
+					<a type="button" id="backbutton" class="backbutton navbar-brand" onclick="backbutton();" ><i class="glyphicon glyphicon-menu-left" style="width:1px;"></i></a><a href="#" id="bignav" class="navbar-brand"  ><b >Cafeteria </b>Ordering System</a><a href="#" id="smallnav" class="navbar-brand" style="hidden"><b >Cafeteria </b>OS</a>
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
 						<i class="fa fa-bars"></i>
 					</button>
@@ -62,13 +62,13 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="<?php echo e(URL::to('menu_manager')); ?>">Home<span class="sr-only">(current)</span></a></li>
-						<li class="active"><a href="<?php echo e(URL::to('menu')); ?>">Menus<span class="sr-only">(current)</span></a></li>
+						<li ><a href="<?php echo e(URL::to('menu_manager')); ?>">Home<span class="sr-only">(current)</span></a></li>
+						<li><a href="<?php echo e(URL::to('menu')); ?>">Menus<span class="sr-only">(current)</span></a></li>
 						
-						<li class="active"><a href="<?php echo e(URL::to('specialmenu')); ?>">Special Menus<span class="sr-only">(current)</span></a></li>
-						<li class="active"><a href="<?php echo e(URL::to('item')); ?>"> Menu Items<span class="sr-only">(current)</span></a></li>
-						<li class="active"><a href="<?php echo e(URL::to('recipe')); ?>"> Recipes<span class="sr-only">(current)</span></a></li>
-						<li class="active"><a href="<?php echo e(URL::to('ingredient')); ?>">Item Ingredients<span class="sr-only">(current)</span></a></li>
+						<li ><a href="<?php echo e(URL::to('specialmenu')); ?>">Special Menus<span class="sr-only">(current)</span></a></li>
+						<li ><a href="<?php echo e(URL::to('item')); ?>"> Menu Items<span class="sr-only">(current)</span></a></li>
+						<li ><a href="<?php echo e(URL::to('recipe')); ?>"> Recipes<span class="sr-only">(current)</span></a></li>
+						<li ><a href="<?php echo e(URL::to('ingredient')); ?>">Item Ingredients<span class="sr-only">(current)</span></a></li>
 						
 					</ul>
 					</div>

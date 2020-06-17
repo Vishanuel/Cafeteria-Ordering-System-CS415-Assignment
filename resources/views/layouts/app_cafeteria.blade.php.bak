@@ -45,7 +45,10 @@
 <!-- ChartJS -->
 <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
 <!-- jvectormap  -->
-  
+  @if(session('cordova') == 'yes')
+  <script src="{{asset('android/cordova.js')}}"></script>
+  <script src="{{asset('android/app.js')}}"></script>
+  @endif
   <!-- Tell the browser to be responsive to screen width -->
   
   <!-- Select2 -->
@@ -91,7 +94,7 @@
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
-  <header class="main-header" style="background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+  <header class="main-header" style="background: url('/dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
     <nav class="navbar navbar-static-top" style="background: rgba(200, 200, 200, 0.6);">
       <div class="container">
         <div class="navbar-header">
@@ -105,7 +108,15 @@
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
 			<li ><a href="{{URL::to('cafeteria')}}">View Orders <span class="sr-only">(current)</span></a></li>
-			<li ><a href="{{URL::to('cafe_subs')}}">View Subscriptions <span class="sr-only">(current)</span></a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+				  <li><a href="{{URL::to('cafe_subs')}}">Patron Subscriptions</a></li>
+				  
+				  <li><a href="{{URL::to('student_cafe_subs')}}">Student Subscription</a></li>
+				</ul>
+			  </li>
+			
           <!--  <li><a href="{{URL::to('order')}}">View Orders</a></li> -->
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -639,7 +650,7 @@
 	
 	$( document ).ready(function() {
 		$valuetime=$('#location_time').val();
-		var reload = function() {
+		/*var reload = function() {
 			$('#location_time').find('option').remove().end();
 			meal_date();
 			
@@ -652,7 +663,7 @@
 		  
 		};
 		reload();
-		
+		*/
 	
 		
 		//delivery_time();

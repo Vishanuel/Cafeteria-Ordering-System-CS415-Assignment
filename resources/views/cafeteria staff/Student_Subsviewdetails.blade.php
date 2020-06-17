@@ -78,6 +78,8 @@
 					<option id="meal_status" name="meal_status"  disabled value="" >Change meal status</option> 
 					<option id="meal_status" name="meal_status" @if($meal_subs->Meal_Status == "Pending") selected @endif value="Pending">Pending</option>
 					<option id="meal_status" name="meal_status" @if($meal_subs->Meal_Status == "Prepared") selected @endif value="Prepared">Prepared</option>
+					<option id="meal_status" name="meal_status" @if($meal_subs->Meal_Status == "Cancelled") selected @endif value="Cancelled">Cancelled</option>
+					<option id="meal_status" name="meal_status" @if($meal_subs->Meal_Status == "Completed") selected @endif value="Completed">Completed</option>
 					
 				</select>
 				

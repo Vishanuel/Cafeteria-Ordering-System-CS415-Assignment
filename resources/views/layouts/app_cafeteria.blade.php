@@ -94,7 +94,7 @@
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
-  <header class="main-header" style="background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+  <header class="main-header" style="background: url('/dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
     <nav class="navbar navbar-static-top" style="background: rgba(200, 200, 200, 0.6);">
       <div class="container">
         <div class="navbar-header">
@@ -198,7 +198,7 @@
 	@if(session()->has('warning'))
 		<input type="hidden" value="{{Session::get('warning')}}" id="hiddenwarningwcs">
 	@endif
-	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+	<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('/dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
 	
 	</div>
@@ -650,7 +650,7 @@
 	
 	$( document ).ready(function() {
 		$valuetime=$('#location_time').val();
-		var reload = function() {
+		/*var reload = function() {
 			$('#location_time').find('option').remove().end();
 			meal_date();
 			
@@ -663,7 +663,7 @@
 		  
 		};
 		reload();
-		
+		*/
 	
 		
 		//delivery_time();

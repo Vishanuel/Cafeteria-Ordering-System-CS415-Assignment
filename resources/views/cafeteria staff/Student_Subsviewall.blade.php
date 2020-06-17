@@ -67,7 +67,7 @@
                         
 					<a class="btn btn-success btn-block btn-flat" type="button" href="{{URL::to('student_cafe_subs/'.$allmealsub->Student_MealSubs_ID.'/edit')}}">
                         Change meal status
-          </a>
+					</a>
           @if($allmealsub->Meal_Subscription_Method == "Delivery")
             @if($allmealsub->Meal_Status == "Prepared")
 					    <a class="btn btn-info btn-block btn-flat "  type="button" href="{{URL::to('student_subs_delivery_request/'.$allmealsub->Student_MealSubs_ID)}}">

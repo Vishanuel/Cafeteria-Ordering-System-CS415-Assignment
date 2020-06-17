@@ -60,7 +60,7 @@
 					  <input type="number" class="form-control" disabled id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
 				
-					<div id="items{{$i}}" class="col-md-12">
+				<div id="items{{$i}}" class="col-md-12">
 						@for($j=0;$j<count($items);$j++)
 							<div class="check{{$j}} checkbox" id="{{$i}}choice{{$items[$j]->Menu_Food_Item_ID}}" style="display:none;">
 								<input id="item_number{{$i}}" value="{{$items[$i]->Menu_Food_Item_ID}}"  type="hidden">
@@ -74,7 +74,7 @@
 									 @endif @endfor disabled>
 									{{$cus_ingredients[$j][$k]->Ingredient_Name}}</label></div>
 									<div class="form-group col-md-3 col-xs-6 price">
-									<label style="font-weight:bold;">Price($)thr
+									<label style="font-weight:bold;">Price($)
 									<input type="number" class="form-control" id="{{$items[$j]->Menu_Food_Item_ID}}ingredient_price{{$cus_ingredients[$j][$k]->Ingredient_ID}}" Required readonly value="{{$cus_ingredients[$j][$k]->Ingredient_Price}}" >
 								</label>
 								</div>
@@ -135,7 +135,7 @@
 				<div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio"  class="minimal" name="mealmethod"  id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif>
+						  <input type="radio"  class="minimal" name="mealmethod"  id="optionsRadios2" value="pick-up" @if($mealmethod == "pick-up") checked @endif @if($mealmethod == "delivery") disabled @endif>
 						  Pick-up meal from restaurant
 						</label>
 					</div>

@@ -298,9 +298,9 @@ class OrderStudentController extends Controller
 				->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
 
 
-				DB::table('ingredient')
+				/*DB::table('ingredient')
 				->where('Ingredient_ID', $ingredient_ids[$j])
-				->decrement('Ingredient_Quantity',$ingredient_ids[$j]);
+				->decrement('Ingredient_Quantity',$ingredient_ids[$j]);*/
 			}
 
 		}
@@ -1524,6 +1524,18 @@ class OrderStudentController extends Controller
 			
 		}
 		
+		$ingredients_ordered = DB::table('ordered_ingredient')
+		->join('ordered_food_item','ordered_ingredient.Ordered_Food_Item_ID','=','ordered_food_item.Ordered_Food_Item_ID')
+		->where('ordered_food_item.Cos_Order_Num','=',$orderid)
+		->get();
+		//->insert(['Ordered_Food_Item_ID' => $item_ids->Ordered_Food_Item_ID, 'Ingredient_ID' =>$ingredient_ids[$j]]);	
+
+		foreach($ingredients_ordered as $ingredient_ordered){
+			DB::table('ingredient')
+			->where('Ingredient_ID', $ingredient_ordered->Ordered_Ingredient_ID)
+			->decrement('Ingredient_Quantity');
+		}
+		
 		$cos_order=DB::table('cos_order')
 		->where('Student_ID','=',$student_id->Student_ID)
 		->where('Cos_Order_Meal_Status','=','Editing')
@@ -2070,10 +2082,14 @@ class OrderStudentController extends Controller
 					}
 					*/
 					if($cos_order->Cos_Order_Payment_Method == "card"){
-
+						$student_id = DB::table('student')
+						->select('Student_ID')
+						->where('User_ID','=',Auth::user()->id)
+						->first();
+						
 						$card = DB::table("card_payment")
 						->select('Card_Number')
-						->where('Employee_ID','=',$employee_id->Employee_ID)
+						->where('Student_ID','=',$student_id->Student_ID)
 						->first();
 						
 						$card_balance = DB::table('card_bank')

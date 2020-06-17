@@ -62,7 +62,7 @@
 											<div class="row">
 												<input id="all_ingredient{{$items[$j]->Menu_Food_Item_ID}}" value="{{count($cus_ingredients[$j])}}"  type="hidden">
 											<div class=" form-group col-md-4 col-xs-6">
-											<label><label style="font-weight:bold;">Ingredient</label></br><input class="real checkbox" name="ingredient{{$j}}[]" id ="{{$items[$j]->Menu_Food_Item_ID}}check{{$k}}" type="checkbox" value="{{$cus_ingredients[$j][$k]->Ingredient_ID}}"
+											<label><label style="font-weight:bold;">Ingredient</label></br><input class="real checkbox" name="ingredient{{$i}}[]" id ="{{$items[$j]->Menu_Food_Item_ID}}check{{$k}}" type="checkbox" value="{{$cus_ingredients[$j][$k]->Ingredient_ID}}"
 												@for($m=0;$m<count($ordered_ingredient[$i-1]);$m++)
 												@if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ordered_ingredient[$i-1][$m]->Ingredient_ID))  ? checked : 
 												 @endif @endfor >
@@ -81,7 +81,7 @@
 											<div class="row">
 												<input id="all_ingredient{{$items[$j]->Menu_Food_Item_ID}}" value="{{count($cus_ingredients[$j])}}"  type="hidden">
 											<div class=" form-group col-md-4 col-xs-6">
-											<label><label style="font-weight:bold;">Ingredient</label></br><input class="real checkbox" name="ingredient{{$j}}[]" id ="{{$items[$j]->Menu_Food_Item_ID}}check{{$k}}" type="checkbox" value="{{$cus_ingredients[$j][$k]->Ingredient_ID}}"
+											<label><label style="font-weight:bold;">Ingredient</label></br><input class="real checkbox" name="ingredient{{$i}}[]" id ="{{$items[$j]->Menu_Food_Item_ID}}check{{$k}}" type="checkbox" value="{{$cus_ingredients[$j][$k]->Ingredient_ID}}"
 												@for($m=0;$m<count($ingredients[$i-1]);$m++)
 												@if(($cus_ingredients[$j][$k]->Ingredient_ID)==($ingredients[$i-1][$m]->Ingredient_ID))  ? checked : 
 												 @endif @endfor >
@@ -97,10 +97,8 @@
 									
 									@endif
 									<div >
-											@if($items[$j]->Menu_Food_Item_Recipe!=NULL)
-									<b>{{$items[$j]->Food_Name}} Recipe </b></br>
-											{{$items[$j]->Menu_Food_Item_Recipe}}
-									@endif
+											<b>{{$items[$j]->Food_Name}} Recipe </b></br>
+													{{$items[$j]->Menu_Food_Item_Recipe}}
 									</div>
 							</div>
 							

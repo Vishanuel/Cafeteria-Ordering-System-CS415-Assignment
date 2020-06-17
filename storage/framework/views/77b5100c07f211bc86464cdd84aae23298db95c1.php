@@ -70,9 +70,11 @@
 
 							<?php endfor; ?>
 							<div >
-								<b><?php echo e($items[$i]->Food_Name); ?> Recipe </b></br>
-										<?php echo e($items[$i]->Menu_Food_Item_Recipe); ?>
+									<?php if($items[$i]->Menu_Food_Item_Recipe!=NULL): ?>
+									<b><?php echo e($items[$i]->Food_Name); ?> Recipe </b></br>
+											<?php echo e($items[$i]->Menu_Food_Item_Recipe); ?>
 
+									<?php endif; ?>
 						</div>
 					</div>
 						<?php endfor; ?>

@@ -88,7 +88,7 @@
 }
 
 
-@media (max-width: 991px) {
+@media (max-width: 767px) {
 	
 	.navbar-collapse{
 		background: url('../../img/restaurant/login22.jpg') center center ;

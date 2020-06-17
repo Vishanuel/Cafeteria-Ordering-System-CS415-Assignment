@@ -147,6 +147,7 @@
 		    <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
 
 			<li><a href="{{URL::to('student_order')}}" >View Previous Orders</a></li>
+			<li class="divider"></li>	
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">

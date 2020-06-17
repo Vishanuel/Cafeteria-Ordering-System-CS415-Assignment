@@ -108,7 +108,15 @@
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
 			<li ><a href="{{URL::to('cafeteria')}}">View Orders <span class="sr-only">(current)</span></a></li>
-			<li ><a href="{{URL::to('cafe_subs')}}">View Subscriptions <span class="sr-only">(current)</span></a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+				  <li><a href="{{URL::to('cafe_subs')}}">Patron Subscriptions</a></li>
+				  
+				  <li><a href="{{URL::to('student_cafe_subs')}}">Student Subscription</a></li>
+				</ul>
+			  </li>
+			
           <!--  <li><a href="{{URL::to('order')}}">View Orders</a></li> -->
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>

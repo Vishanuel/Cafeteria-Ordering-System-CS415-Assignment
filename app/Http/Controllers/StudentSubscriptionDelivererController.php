@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 
-Class SubscriptionDelivererController extends Controller{
+Class StudentSubscriptionDelivererController extends Controller{
 
 
     public function index()
@@ -17,13 +17,13 @@ Class SubscriptionDelivererController extends Controller{
 		->where('User_ID','=',Auth::user()->id)
 		->first();
         
-        $deliverers=DB::table('patron_subscription_delivery_request')
-        ->join('patron_subscription_delivery_instruction','patron_subscription_delivery_instruction.Patron_Subscription_Delivery_Instruction_ID','=','patron_subscription_delivery_request.Patron_Subscription_Delivery_Instruction_ID')
-        ->join('meal_subscription','meal_subscription.MealSubs_ID','=','patron_subscription_delivery_instruction.MealSubs_ID')
-        ->join('location','location.Location_ID','=','patron_subscription_delivery_instruction.Location_ID')
-        ->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','meal_subscription.Menu_Food_Item_ID')
+        $deliverers=DB::table('student_subscription_delivery_request')
+        ->join('student_subscription_delivery_instruction','student_subscription_delivery_instruction.Student_Subscription_Delivery_Instruction_ID','=','student_subscription_delivery_request.Student_Subscription_Delivery_Instruction_ID')
+        ->join('student_meal_subscription','student_meal_subscription.Student_MealSubs_ID','=','student_subscription_delivery_instruction.Student_MealSubs_ID')
+        ->join('location','location.Location_ID','=','student_subscription_delivery_instruction.Location_ID')
+        ->join('menu_food_item','menu_food_item.Menu_Food_Item_ID','=','student_meal_subscription.Menu_Food_Item_ID')
         ->get()
-        ->unique('Patron_Subscription_Delivery_Request_ID');
+        ->unique('Student_Subscription_Delivery_Request_ID');
 
 		//$deliverers=DB::table('subscription_delivery_request')
         //->join('subscription_delivery_instruction','subscription_delivery_request.Subscription_Delivery_ID','=','subscription_delivery_instruction.Subscription_Delivery_ID')
@@ -40,14 +40,14 @@ Class SubscriptionDelivererController extends Controller{
 		//->get()
 		//->unique('D_Request_ID');
 		
-		return view('meal deliverer.subsviewall')->with(['deliverers' => $deliverers]);
+		return view('meal deliverer.subs_studentviewall')->with(['deliverers' => $deliverers]);
     }
 
     public function edit($id)
     {
         //
-		DB::table('meal_subscription')->where('MealSubs_ID','=',$id)->update(['Meal_Status'=>'Delivered']);
-		return redirect('/subs_deliv')->with('success','Meal Delivered');
+		DB::table('student_meal_subscription')->where('Student_MealSubs_ID','=',$id)->update(['Meal_Status'=>'Delivered']);
+		return redirect('/student_subs_deliv')->with('success','Meal Delivered');
     }
 
 }

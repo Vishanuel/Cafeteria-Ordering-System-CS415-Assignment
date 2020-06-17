@@ -73,6 +73,12 @@
                 </span>
                   Edit Subscription
               </a>
+
+              <a class="btn btn-info btn-flat" type="button" href="{{URL::to('mealsub_remove/'.$allmealsub->MealSubs_ID)}}">
+                <span class="fa fa-pencil">
+                </span>
+                  Delete Subscription
+              </a>
 					
                     </td>
                 </tr>

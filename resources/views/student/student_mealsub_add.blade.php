@@ -26,7 +26,7 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-              <form id="subscriptionform" role="form" method="POST" action="{{action('MealSubsController@store')}}" enctype="multipart/form-data">
+              <form id="subscriptionform" role="form" method="POST" action="{{action('StudentMealSubsController@store')}}" enctype="multipart/form-data">
 			   @csrf
                 <!-- text input -->
 				<div class="form-group col-md-12">
@@ -159,7 +159,7 @@
                         <select class="mealsub form-control select2" id="subspaymeth" name="subspaymeth" style="width: 100%;" Required placeholder="Select Payment Method">
                             <option disabled>Method of Payment</option>                             
                             <option  Required value="cash">Cash</option>
-                            <option  Required value="payroll">Payroll Deduction</option>
+                            
                             <option  Required value="card">Credit Card</option>                                                                                                                                                                                  
                         </select>
                     </div>
@@ -183,8 +183,8 @@
 			  
 			<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
-            <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}">
+			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$payment->Student_CardRegister_Status}}"> 
+            <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$mealsubs_id}}">
             <input id="mealsubstat" name="mealsubstat" class="form-group col-md-12" style="display: none" value="Active"> 
             <input id="mealstat" name="mealstat" class="form-group col-md-12" style="display: none" value="Pending"> 
 			
@@ -192,7 +192,7 @@
 			</div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('mealsub_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
+                <a href="{{url('student_mealsub_cancel')}}" class="btn btn-default btn-flat">Cancel</a>
                 <button type="submit" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Save Subscription</button>
               </div>
               <!-- /.box-footer -->

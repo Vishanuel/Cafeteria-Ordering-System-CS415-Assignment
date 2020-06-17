@@ -25,7 +25,7 @@
             </div>
             <!-- /.box-header -->
             <div id="box" class="box-body">
-              <form id="orderform" role="form" method="POST" action="{{route('mealsub.update',$meal_subs->MealSubs_ID)}}" enctype="multipart/form-data">
+              <form id="orderform" role="form" method="POST" action="{{route('student_mealsub.update',$meal_subs->Student_MealSubs_ID)}}" enctype="multipart/form-data">
 			   @csrf
                @method('PUT')
                 <!-- text input -->
@@ -159,7 +159,7 @@
 				
 				<input id="ite" name="iteration" class="form-group col-md-12" style="display: none" value=""> 
 			<div id="q" name="q" value="2" class="form-group col-md-12" style="display: none">2</div>
-			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Patron_Deduction_Status}}"> 
+			<input id="deduction" name="deduction" class="form-group col-md-12" style="display: none" value="{{$deduction->Student_CardRegister_Status}}"> 
             <input id="orderid" name="orderid" class="form-group col-md-12" style="display: none" value="{{$orderid}}">
             
             <input id="mealsubstat" name="mealsubstat" class="form-group col-md-12" style="display: none" value="Active"> 
@@ -172,7 +172,7 @@
             </div>
             <!-- /.box-body -->
 			 <div class="box-footer">
-                <a href="{{url('/mealsub')}}" class="btn btn-default btn-flat">Cancel</a>
+                <a href="{{url('student_mealsub')}}" class="btn btn-default btn-flat">Cancel</a>
                 <button type="submit" data-barba-prevent="self" class="btn btn-success btn-flat pull-right"><li class="glyphicon glyphicon-floppy-disk"></li>Save Subscription</button>
               </div>
               <!-- /.box-footer -->

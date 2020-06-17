@@ -145,8 +145,18 @@
 		  @elseif(Auth::user()->usertype == "Student")
 		    <li><a href="{{URL::to('student_home')}}" >Home</a></li>
 		    <li ><a href="{{URL::to('restaurant')}}" >Place Order <span class="sr-only">(current)</span></a></li>
-            <li><a href="{{URL::to('student_order')}}" >View Previous Orders</a></li>
-			<li><a href="{{URL::to('studentregister')}}" >Payment Registration</a></li>
+
+			<li><a href="{{URL::to('student_order')}}" >View Previous Orders</a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Meal Subscriptions <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+				  <li><a href="{{URL::to('student_mealsub')}}">View Subscriptions</a></li>
+				  
+				  <li><a href="{{URL::to('student_mealsub_add')}}">New Subscription</a></li>
+				</ul>
+			  </li>
+			<li><a href="{{URL::to('studentregister')}}" >Payment Option Registration</a></li>
+
 		  @endif
            
           </ul>

@@ -132,6 +132,7 @@
 					<!-- /.navbar-custom-menu -->
 				</div>
 				<!-- /.container-fluid -->
+				 <hr class="customdivider" width="90%" style="">
 			</nav>
 		</header>
 	<!-- Full Width Column -->
@@ -153,6 +154,11 @@
 			<div width="100%" class="whiteoverlay" style="padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
 			<hr width="90%" style="margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
 			</div>
+		</div>
+		<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
+		
+		</div>
 		</div>
 		@yield('content')
 		</div>

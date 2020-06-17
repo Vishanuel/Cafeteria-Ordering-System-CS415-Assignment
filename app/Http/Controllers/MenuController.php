@@ -219,18 +219,18 @@ class MenuController extends Controller
         $validate_food= Validator::make($request->all(), [
             'Food' => 'required'
         ]); 
-        $validate_deliver= Validator::make($request->all(), [
+       /* $validate_deliver= Validator::make($request->all(), [
             'deliverable' => 'required'
-        ]);
+        ]); */
 
         if ($validate_food->fails()) {
             return redirect('menu')
                         ->with('error','Food Item were not selected');
         }
-        if ($validate_deliver->fails()) {
+        /*if ($validate_deliver->fails()) {
             return redirect('menu')
                         ->with('error','If menu is deliverable or not was not selected');
-        }
+        }*/
            
             
         $input = $request->all();
@@ -247,11 +247,14 @@ class MenuController extends Controller
             ->updateOrInsert(['Menu_Food_Item_ID' => $input["Food"][$i],'Menu_ID' => $id]);  
         }
 
-        DB::table('menu')
+     /*   DB::table('menu')
         ->where('Menu_ID','=',$id)
         ->update(['Menu_Date' => $input["Menu_Date"],'Deliverable' => $input["deliverable"]]); 
-       
-                       
+    */   
+         DB::table('menu')
+        ->where('Menu_ID','=',$id)
+        ->update(['Menu_Date' => $input["Menu_Date"]]);
+		
         return back()->with('success', 'Menu updated successfully');
     }
 

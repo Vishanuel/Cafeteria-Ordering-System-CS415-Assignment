@@ -67,6 +67,7 @@
 						
 						<li class="active"><a href="<?php echo e(URL::to('specialmenu')); ?>">Special Menus<span class="sr-only">(current)</span></a></li>
 						<li class="active"><a href="<?php echo e(URL::to('item')); ?>"> Menu Items<span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="<?php echo e(URL::to('recipe')); ?>"> Recipes<span class="sr-only">(current)</span></a></li>
 						<li class="active"><a href="<?php echo e(URL::to('ingredient')); ?>">Item Ingredients<span class="sr-only">(current)</span></a></li>
 						
 					</ul>
@@ -103,9 +104,7 @@
 							
 							<!-- Menu Footer-->
 							<li class="user-footer">
-							<div class="pull-left">
-								<a href="#" class="btn btn-default btn-flat">Profile</a>
-							</div>
+							
 							<div class="pull-right">
 							<form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST">
 									<?php echo csrf_field(); ?>
@@ -120,6 +119,7 @@
 					<!-- /.navbar-custom-menu -->
 				</div>
 				<!-- /.container-fluid -->
+				 <hr class="customdivider" width="90%" style="">
 			</nav>
 		</header>
 	<!-- Full Width Column -->
@@ -137,7 +137,16 @@
 		<?php if(session()->has('warning')): ?>
 			<input type="hidden" value="<?php echo e(Session::get('warning')); ?>" id="hiddenwarningwcs">
 		<?php endif; ?>
+		<div width="100%" class="backgroundimg" style="position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+			<div width="100%" class="whiteoverlay" style="padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
+			<hr width="90%" style="margin-bottom:0; border:none;margin-top:0; height:1px; background: rgba(255, 255, 255, 0.2);">
+			</div>
+		</div>
+		<div width="100%" class="backgroundimg" style="z-index:0;position:absolute;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: url('../dist/img/restaurant/login22.jpg') center center ;background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+		<div width="100%" class="whiteoverlay" style="z-index:0;padding: 100 auto;height:150px;bottom:100;left:0;right:0;background: rgba(200, 200, 200, 0.6);">
 		
+		</div>
+		</div>
 		<?php echo $__env->yieldContent('content'); ?>
 		</div>
 		<!-- /.container -->
@@ -194,7 +203,10 @@
 <script src="<?php echo e(asset('plugins/timepicker/bootstrap-timepicker.min.js')); ?>"></script>
 <!-- ChartJS -->
 <script src="<?php echo e(asset('bower_components/chart.js/Chart.js')); ?>"></script>
-
+<?php if(session('cordova') == 'yes'): ?>
+  <script src="<?php echo e(asset('android/cordova.js')); ?>"></script>
+  <script src="<?php echo e(asset('android/app.js')); ?>"></script>
+  <?php endif; ?>
 <!-- jvectormap  -->
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

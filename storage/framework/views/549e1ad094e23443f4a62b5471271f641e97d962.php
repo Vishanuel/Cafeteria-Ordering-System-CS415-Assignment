@@ -1,13 +1,16 @@
 <?php $__env->startSection('content'); ?>
-<section class="content-header text-center"></section>
+<section class="content-header">
+    
+</section>
     <section class="content">
         <div class="box">
             <div class="box-header with-border text-center">
                 <h3 class="box-title">Special Menus</h3>
+                <a  target="_blank" href="<?php echo e(url('Mhelp/ViewingSpecialMenu.html')); ?>" class="pull-right" title="Get Help">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </a>
             </div>
-
             <div class="box-body">
-            <div class="table-responsive">
                 <table class="table table-bordered table-striped" id ="example1">
                 <tr>
                     <th>Menu Date</th>
@@ -59,7 +62,7 @@
                                             <div class="form-group">
                                                     <label for="menus">Menu </label>
                                                     
-                                                    <select id="menus" name="menu" class="form-control">
+                                                    <select id="menus" name="menu" class="form-control" required>
                                                         <option value=""></option>
                                                         <?php for($j=0;$j<count($menu);$j++): ?>
                                                         <option value="<?php echo e($menu[$j]->Menu_ID); ?>"  <?php if($menu[$j]->Menu_ID == $data[$i]->Menu_ID): ?> selected="selected"<?php endif; ?>>
@@ -76,21 +79,21 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Special Menu Description</label>
-                                                <input type="text" class="form-control" name="menu_desc" value="<?php echo e($data[$i]->Special_Desc); ?>">
+                                                <input type="text" class="form-control" name="menu_desc" value="<?php echo e($data[$i]->Special_Desc); ?>" required>
                                               </div>
                                               <div class="form-group">
                                                     <label>Special Menu Price</label>
-                                                    <input type="text" class="form-control" name="menu_price" value="<?php echo e($data[$i]->Special_Price); ?>">
+                                                    <input type="number" class="form-control" min="0" name="menu_price" value="<?php echo e($data[$i]->Special_Price); ?>" required>
                                               </div>
                                              
-                                              <label>Select Menu Items for Special Menu </label>
+                                              <label> Menu Items </label>
                                               <?php for($k=0;$k<count($items);$k++): ?>
-                                              <div>
-                                              <input type="checkbox" name="items[]" value="<?php echo e($items[$k]->Menu_Food_Item_ID); ?>" 
+                                              <div class="checkbox">
+                                            <label><input type="checkbox" name="items[]" value="<?php echo e($items[$k]->Menu_Food_Item_ID); ?>" 
                                               <?php for($n=0;$n<count($val[$i]);$n++): ?>
                                                       <?php if(($val[$i][$n]->Menu_Food_Item_ID)==($items[$k]->Menu_Food_Item_ID)): ?>  ? checked : 
                                                       <?php endif; ?> <?php endfor; ?>>
-                                              <label for="type"><?php echo e($items[$k]->Food_Name); ?></label>
+                                             <?php echo e($items[$k]->Food_Name); ?></label>
                                               </div>
                                               <?php endfor; ?>    
                                              
@@ -134,7 +137,7 @@
                  <?php endfor; ?>
                 </table>
                 <a data-toggle="modal" data-target="#add">
-                        <span class="glyphicon glyphicon-plus pull-right">Add Special Menu</span>
+                        <span class="glyphicon glyphicon-plus pull-right" title="click to add or create new special menus"></span>
                     </a>
 
                     <div class="modal fade" id="add" data-backdrop="static" data-keyboard="false">
@@ -151,7 +154,7 @@
                                                  <div class="form-group">
                                                     <label for="menus">Menu </label>
                                                     
-                                                    <select id="menus" name="menu" class="form-control">
+                                                    <select id="menus" name="menu" class="form-control" required>
                                                         <option value=""></option>
                                                         <?php for($j=0;$j<count($menu);$j++): ?>
                                                         <option value="<?php echo e($menu[$j]->Menu_ID); ?>"><div><?php echo e($menu[$j]->Menu_Date); ?> 
@@ -166,18 +169,18 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Special Menu Description</label>
-                                                    <input type="text" class="form-control" name="menu_desc">
+                                                    <input type="text" class="form-control" name="menu_desc" required>
                                               </div>
                                               <div class="form-group">
                                                     <label>Special Menu Price</label>
-                                                    <input type="text" class="form-control" name="menu_price">
+                                                    <input type="number" min="0" class="form-control" name="menu_price" required>
                                               </div>
                                              
-                                              <label>Select Menu Items for Special Menu </label>
+                                              <label> Menu Items </label>
                                               <?php for($k=0;$k<count($items);$k++): ?>
-                                              <div>
-                                              <input type="checkbox" name="items[]" value="<?php echo e($items[$k]->Menu_Food_Item_ID); ?>">
-                                              <label for="type"><?php echo e($items[$k]->Food_Name); ?></label>
+                                              <div class="checkbox">
+                                                <label><input type="checkbox" name="items[]" value="<?php echo e($items[$k]->Menu_Food_Item_ID); ?>">
+                                              <?php echo e($items[$k]->Food_Name); ?></label>
                                               </div>
                                               <?php endfor; ?>    
                                              
@@ -189,7 +192,7 @@
                                     </form>
                              </div>
                            </div>
-                        </div>
+                    
                         
             </div>
     

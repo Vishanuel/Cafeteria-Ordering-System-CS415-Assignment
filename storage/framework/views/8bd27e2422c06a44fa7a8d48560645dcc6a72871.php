@@ -103,7 +103,7 @@
 			<div class="box-header" style="background: rgba(255, 255, 255, 0); "> 
 				
 				<div class="col-md-12 col-xs-12">
-					<div id="2" class="callout callout-danger" ><h3 class="box-title"><?php echo e($category->Category_Name); ?> Menu</h3><p>Unfortunately, there is no available <?php echo e($category->Category_Name); ?> menu for this date. Sorry for any inconvenience caused.</p></div>
+					<div id="2" class="callout callout-danger" ><h3 class="box-title"><?php echo e($category->Category_Name); ?> Menu</h3><p>Unfortunately, the cuttoff time for <?php echo e($category->Category_Name); ?> menu for this date has reached. Sorry for any inconvenience caused.</p></div>
 				</div>
 			</div>
 			

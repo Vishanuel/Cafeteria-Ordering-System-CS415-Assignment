@@ -1,4 +1,10 @@
 <?php $__env->startSection('content'); ?>
+
+<div class="panel-heading">
+    <a  target="_blank" href="<?php echo e(url('Mhelp/COS.html')); ?>" class="pull-right" title="Get Help">
+        <span class="glyphicon glyphicon-question-sign"></span>
+    </a> 
+</div>
 <!-- left column -->
 <div class="row">
 
@@ -10,6 +16,7 @@
                 style="background: rgba(255, 255, 255, 1); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);z-index:999;">
                 <div class="box-header with-border">
                     <h3 class="box-title"><?php echo e($cat[$i]->Category_Name); ?> Menu</h3>
+                   
                 </div>
 
                 <div class="box-body">

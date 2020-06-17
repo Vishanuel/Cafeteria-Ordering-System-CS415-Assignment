@@ -45,7 +45,10 @@
 <!-- ChartJS -->
 <script src="<?php echo e(asset('bower_components/chart.js/Chart.js')); ?>"></script>
 <!-- jvectormap  -->
-  
+  <?php if(session('cordova') == 'yes'): ?>
+  <script src="<?php echo e(asset('android/cordova.js')); ?>"></script>
+  <script src="<?php echo e(asset('android/app.js')); ?>"></script>
+  <?php endif; ?>
   <!-- Tell the browser to be responsive to screen width -->
   
   <!-- Select2 -->

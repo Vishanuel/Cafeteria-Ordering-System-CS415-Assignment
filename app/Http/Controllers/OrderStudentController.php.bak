@@ -2213,6 +2213,9 @@ class OrderStudentController extends Controller
 		->get();
 		
 		$order_cutoff=DB::table('order_cutoff')
+		->join('category','category.Order_Cutoff_ID','=','order_cutoff.Order_Cutoff_ID')
+		->join('menu','menu.Category_ID','=','category.Category_ID')
+		->where('menu.Menu_ID','=',$menuid)
 		->select('Order_Cutoff_Time')
 		->first();
 		

@@ -2069,6 +2069,25 @@ class OrderStudentController extends Controller
 												
 					}
 					*/
+					if($cos_order->Cos_Order_Payment_Method == "card"){
+
+						$card = DB::table("card_payment")
+						->select('Card_Number')
+						->where('Employee_ID','=',$employee_id->Employee_ID)
+						->first();
+						
+						$card_balance = DB::table('card_bank')
+						->select('Card_Balance')
+						->where('Card_Number','=',$card->Card_Number)
+						->first();
+						
+						$card_balance=$card_balance->Card_Balance;
+						
+						$card_balance = $card_balance + $cos_order->Cos_Order_Cost;
+							
+						DB::table('card_bank')->where('Card_Number', '=',$card->Card_Number)->update(['Card_Balance' => $card_balance]);
+						
+					}
 				}
 
 				$special_id=DB::table('ordered_special')

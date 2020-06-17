@@ -60,7 +60,7 @@
 					  <input type="number" class="form-control" disabled id="price{{$i}}" name="price{{$i}}" Required readonly value="">
 					</div>
 				
-				<div id="items{{$i}}" class="col-md-12">
+					<div id="items{{$i}}" class="col-md-12">
 						@for($j=0;$j<count($items);$j++)
 							<div class="check{{$j}} checkbox" id="{{$i}}choice{{$items[$j]->Menu_Food_Item_ID}}" style="display:none;">
 								<input id="item_number{{$i}}" value="{{$items[$i]->Menu_Food_Item_ID}}"  type="hidden">
@@ -74,7 +74,7 @@
 									 @endif @endfor disabled>
 									{{$cus_ingredients[$j][$k]->Ingredient_Name}}</label></div>
 									<div class="form-group col-md-3 col-xs-6 price">
-									<label style="font-weight:bold;">Price($)
+									<label style="font-weight:bold;">Price($)thr
 									<input type="number" class="form-control" id="{{$items[$j]->Menu_Food_Item_ID}}ingredient_price{{$cus_ingredients[$j][$k]->Ingredient_ID}}" Required readonly value="{{$cus_ingredients[$j][$k]->Ingredient_Price}}" >
 								</label>
 								</div>
@@ -117,7 +117,7 @@
 				</div>
 				@endif
 				
-				<div id="tcostd" class="form-group col-md-2">
+				<div id="tcostd" class="form-group col-md-4">
 				  <label>Total($)</label>
 				
 				<input type="number" class="form-control" id="tcost" name="tcost" Required readonly value="">
@@ -206,9 +206,9 @@
 					
 					  <label>Delivery Time</label>
 					  <select disabled class="form-control " id="location_time" name="location_time" style="width: 100%;"  placeholder="Select location">
-							<option id="location_time" name="location_time"  disabled>Select delivery time </option> 
+							<option  disabled>Select delivery time </option> 
 							@if($mealmethod == "delivery")
-								<option id="location_time" name="location_time"  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
+								<option  value="{{$delivery_info->D_Time_Window}}" >{{$delivery_info->D_Time_Window}} </option>
 							@endif 
 						</select>
 						

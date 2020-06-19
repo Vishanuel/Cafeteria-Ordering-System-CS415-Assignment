@@ -152,7 +152,7 @@ class MealSubsController extends Controller
 		$paymentmethod = $request->input('subspaymeth');
 		$total_cost = $request->input('tcost');
 		$mealsubs_id = $id;
-		
+		$name = Auth()->user()->name;
 
 		$deduction=DB::table('patron')
 		->where('Patron_FName','=', $name)

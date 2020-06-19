@@ -583,8 +583,8 @@
 			time++;
 		}
 		time = time + 15;
-		if(time < 600){
-			time = 600;	
+		if(time < 420){
+			time = 420;	
 		}
 		
 		var dd = String(today.getDate()).padStart(2, '0');
@@ -595,7 +595,7 @@
 		//alert(1);
 		if($('#meal_date').val() != todaydate){
 			//alert(2);
-			time = 600;	
+			time = 420;	
 		}
 		
 		
@@ -610,7 +610,7 @@
 		var hours, minutes, ampm;
 		var hour, minute, amp;
 		var test;
-		for(var i = 600; i <= finaltime; i += 15){
+		for(var i = 420; i <= finaltime; i += 15){
 			test = i % 10;
 			if(test != 0){i+=15;}
 			

@@ -42,7 +42,7 @@
 				<div class="form-group">
 					<div class="radio col-md-6 ">
 						<label>
-						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios2" value="cash" @if($mealmethod=="Delivery") disabled @endif @if($deduction->Student_CardRegister_Status == 0) checked @endif>
+						  <input type="radio" class="minimal" name="mealmethod" id="optionsRadios2" value="cash" checked @if($mealmethod=="Delivery") disabled @endif @if($deduction->Student_CardRegister_Status == 0) checked @endif>
 						  Cash Payment at pickup
 						</label>
 				    </div>

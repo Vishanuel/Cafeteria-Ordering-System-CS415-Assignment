@@ -97,6 +97,14 @@
 									<?php endfor; ?>
 								
 								<?php endif; ?>
+
+								<div >
+										<?php if($items[$j]->Menu_Food_Item_Recipe!=NULL): ?>
+										<b><?php echo e($items[$j]->Food_Name); ?> Recipe </b></br>
+												<?php echo e($items[$j]->Menu_Food_Item_Recipe); ?>
+
+										<?php endif; ?>
+							</div>
 							
 						</div>
 						<?php endfor; ?>
